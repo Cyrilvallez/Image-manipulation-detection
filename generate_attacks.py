@@ -9,6 +9,9 @@ Created on Mon Feb 14 08:29:00 2022
 # =============================================================================
 # This script generates numerous variations of an image, designed to test
 # the robustness of different hashing algorithms
+#
+# With default argument, it takes ~8 s to perform and save all attacks on disk
+# Thus it should take ~1 h for 500 images as a reference
 # =============================================================================
 
 import numpy as np
@@ -55,8 +58,7 @@ def noise_attack(path, g_var=[0.01, 0.02, 0.05], s_var=[0.01, 0.02, 0.05],
     
     # Gaussian noise 
     for var in g_var:
-        gaussian = util.random_noise(array, mode='gaussian',
-                                             mean=0, var=var, seed=234)
+        gaussian = util.random_noise(array, mode='gaussian', mean=0, var=var)
         gaussian = util.img_as_ubyte(gaussian)
         gaussian = Image.fromarray(gaussian)
         id_gaussian = 'gaussian_noise_' + str(var)
@@ -64,8 +66,7 @@ def noise_attack(path, g_var=[0.01, 0.02, 0.05], s_var=[0.01, 0.02, 0.05],
     
     # Salt and pepper noise
     for amount in sp_amount:
-        sp = util.random_noise(array, mode='s&p',
-                                       amount=amount, seed=234)
+        sp = util.random_noise(array, mode='s&p', amount=amount)
         sp = util.img_as_ubyte(sp)
         sp = Image.fromarray(sp)
         id_sp = 's&p_noise_' + str(amount)
@@ -73,8 +74,7 @@ def noise_attack(path, g_var=[0.01, 0.02, 0.05], s_var=[0.01, 0.02, 0.05],
       
     # Speckle noise 
     for var in s_var:
-        speckle = util.random_noise(array, mode='speckle',mean=0,
-                                        var=var, seed=234)
+        speckle = util.random_noise(array, mode='speckle', mean=0, var=var)
         speckle = util.img_as_ubyte(speckle)
         speckle = Image.fromarray(speckle)
         id_speckle = 'speckle_noise_' + str(var)
@@ -115,6 +115,7 @@ def filter_attack(path, g_kernel=[1, 2, 3], m_kernel=[3, 5, 7], **kwargs):
         out[id_median] = median
     
     return out
+
 
 def compression_attack(path, quality_factors=[10, 50, 90], **kwargs):
     ''' Generates jpeg compressed versions of the original image.
@@ -344,6 +345,7 @@ def brightness_attack(path, factors_bright=[0.6, 0.8, 1.2, 1.4], **kwargs):
         
     return out
 
+
 def sharpness_attack(path, factors_sharp=[0.6, 0.8, 1.2, 1.4], **kwargs):
     ''' Generates sharpness changed versions of the original image
     - inputs : 
@@ -425,6 +427,8 @@ def text_attack(path, lengths=[10, 20, 30, 40, 50], **kwargs):
 
 # =============================================================================
 # =============================================================================
+# =============================================================================
+
 
 # Define the legal arguments for all the attacks functions
 VALID = ['g_var', 's_var', 'sp_amount', 'g_kernel', 'm_kernel', 'quality_factors',
@@ -461,17 +465,41 @@ def perform_all_attacks(path, **kwargs):
     
     return out
 
-path = 'test_images/lenna.png'
-im = Image.open(path)
 
-test = perform_all_attacks(path)
-keys = list(test.keys())
-test[keys[0]]
+def save_attack(attacks, save_name, extension='PNG'):
+    ''' Save the result of one (or multiple) attack on disk.
+    - inputs : 
+        attacks : Dictionary containing the attacked images (as returned by an
+                  attack function)
+        save_name : the prefix name to save the files (they will be saved as
+                    save_name_attack_id.format for example, where attack_id
+                    is the name of the given attack)
+        extension : format used to save the images (png by default as it is not
+                    lossy)
+    '''
+    
+    for key in attacks.keys():
+        name = save_name + '_' + key + '.' + extension.lower()
+        attacks[key].save(name, format=extension)
 
 
-
-
-
-
-
-
+def perform_all_and_save(path, save_name, extension='PNG', **kwargs):
+    ''' Perform all of the attacks on a given image and save them on disk.
+    - inputs : 
+        path : PIL image or path to image file
+        save_name : the prefix name to save the files (they will be saved as
+                    save_name_attack_id.format for example, where attack_id
+                    is the name of the given attack)
+        extension : format used to save the images (png by default as it is not
+                  lossy)
+    '''
+    
+    attacks = perform_all_attacks(path, **kwargs)
+    save_attack(attacks, save_name, extension)
+        
+        
+        
+        
+        
+        
+        
