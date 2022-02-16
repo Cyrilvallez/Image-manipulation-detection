@@ -11,6 +11,7 @@ Created on Mon Feb 14 08:29:00 2022
 # the robustness of different hashing algorithms
 #
 # With default argument, it takes ~8 s to perform and save all attacks on disk
+# for 1 image
 # Thus it should take ~1 h for 500 images as a reference
 # =============================================================================
 
