@@ -17,6 +17,7 @@ from skimage import util, transform
 import string
 from io import BytesIO
 from tqdm import tqdm
+np.random.seed(256)
 
 def _find(path):
     ''' Internal functions intended to return a PIL image (useful to limit 
@@ -383,10 +384,10 @@ def text_attack(path, lengths=[10, 20, 30, 40, 50], **kwargs):
     # List of characters for random strings
     characters = list(string.ascii_lowercase + string.ascii_uppercase \
                       + string.digits + ' ')
-    # Get a font. The size is calculated so that it is 30 for a 512-width
+    # Get a font. The size is calculated so that it is 40 for a 512-width
     # image, and changes linearly from this reference, so it always
-    # takes the same relative space on different images
-    font = ImageFont.truetype('Arial.ttf', round(30*width/512))
+    # takes the same relative horizontal space on different images
+    font = ImageFont.truetype('Impact.ttf', round(40*width/512))
     # get a drawing context
     context = ImageDraw.Draw(im)
     
@@ -401,22 +402,35 @@ def text_attack(path, lengths=[10, 20, 30, 40, 50], **kwargs):
         # Random string generation
         sentence = ''.join(np.random.choice(characters, size=length,
                                             replace=True))
-        # insert a newline in the middle
-        sentence = sentence[0:len(sentence)//2] + '\n' + \
-            sentence[len(sentence)//2:]
-        # Random color generation
-        color = tuple(np.random.randint(0, 256, 3))
+        # insert a newline every 20 characters
+        for i in range(len(sentence)//20):
+            sentence = sentence[0:20*(i+1)+i] + '\n' + \
+                sentence[20*(i+1)+1:]
         
         # Get the width and height of the text box
-        dims = context.multiline_textbbox((0,0), sentence, font=font)
+        dims = context.multiline_textbbox((0,0), sentence, font=font,
+                                          stroke_width=2)
         w = dims[2] - dims[0]
         h = dims[3] - dims[1]
         
         # Random text position making sure that all text fits
-        x = np.random.randint(0, width-w)
-        y = np.random.randint(h+1, height-h)
+        x = np.random.randint(10, width-w-10)
+        y = np.random.randint(10, height-h-10)
+        
+        # Compute either white text back edegs or inverse based on mean
+        #mean = np.mean(np.array(im)[x:x+w+1, y:y+h+1, :])
+        #if mean <= 3*255/4:
+        #    color = 'white'
+        #    stroke = 'black'
+        #else:
+        #    color = 'black'
+        #    stroke = 'white'
+        
+        color = 'white'
+        stroke = 'black'
 
-        context.multiline_text((x, y), sentence, font=font, fill=color)
+        context.multiline_text((x, y), sentence, font=font, fill=color,
+                               stroke_fill=stroke, stroke_width=2, align='center')
         id_text = 'text_' + str(length)
         out[id_text] = img
         
