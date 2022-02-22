@@ -9,9 +9,9 @@ Created on Wed Feb 16 15:09:45 2022
 import numpy as np
 from PIL import Image
 import sys
-sys.path.append("/Users/cyrilvallez/Desktop")
-from imagehash import imagehash
 import os
+sys.path.append(os.path.dirname(os.getcwd()))
+import imagehash
 
 img_ref = Image.open('data/lena.png')
 img_adv = Image.open('data/peppers.png')

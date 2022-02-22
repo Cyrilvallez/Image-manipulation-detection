@@ -9,10 +9,6 @@ Created on Mon Feb 14 08:29:00 2022
 # =============================================================================
 # This script generates numerous variations of an image, designed to test
 # the robustness of different hashing algorithms
-#
-# With default argument, it takes ~8 s to perform and save all attacks on disk
-# for 1 image
-# Thus it should take ~1 h for 500 images as a reference
 # =============================================================================
 
 import numpy as np
@@ -20,6 +16,7 @@ from PIL import Image, ImageFilter, ImageEnhance, ImageDraw, ImageFont
 from skimage import util, transform
 import string
 from io import BytesIO
+from tqdm import tqdm
 
 def _find(path):
     ''' Internal functions intended to return a PIL image (useful to limit 
@@ -388,7 +385,7 @@ def text_attack(path, lengths=[10, 20, 30, 40, 50], **kwargs):
                       + string.digits + ' ')
     # Get a font. The size is calculated so that it is 30 for a 512-width
     # image, and changes linearly from this reference, so it always
-    # takes the same relative horitontal space on different images
+    # takes the same relative space on different images
     font = ImageFont.truetype('Arial.ttf', round(30*width/512))
     # get a drawing context
     context = ImageDraw.Draw(im)
@@ -497,7 +494,112 @@ def perform_all_and_save(path, save_name, extension='PNG', **kwargs):
     
     attacks = perform_all_attacks(path, **kwargs)
     save_attack(attacks, save_name, extension)
+    
+    
+def perform_all_and_save_list(path_list, save_name_list=None, extension='PNG',
+                              **kwargs):
+    ''' Perform all of the attacks on all images in a list and save them on disk.
+    - inputs : 
+        path_list : List of path names to the images
+        save_name_list : the prefix name to save the files (they will be saved as
+                    save_name_attack_id.format for example, where attack_id
+                    is the name of the given attack).
+                    If not given, will default to path_list names assuming 
+                    that the only dot (.) is for the extension
+        extension : format used to save the images (png by default as it is not
+                  lossy)
+    '''
+    
+    if save_name_list is None:
+        save_name_list = [name.split('.')[0] for name in path_list]
+    
+    for path, save_name in tqdm(zip(path_list, save_name_list)):
+        perform_all_and_save(path, save_name, **kwargs)
         
+        
+def retrieve_ids(**kwargs):
+    ''' Retrieves the IDs of the attacks performed with the parameters in
+    kwargs. This is useful to compute the ROC curves for each attack separately
+    later on.
+    - inputs : 
+        named attack parameters
+                 
+    - outputs :
+        all IDs for the attack parameters (list)
+    '''
+    # First check that all arguments are valids
+    for arg in kwargs.keys():
+        if (arg not in VALID):
+            raise TypeError('Unexpected keyword argument \'' + arg + '\'')
+    
+    IDs = []
+    
+    # Loop again 
+    for arg in kwargs.keys():
+        
+        # Not pretty but works. Just loop over all possible attacks.
+        if (arg=='g_var'):
+            for value in kwargs[arg]:
+                IDs.append('gaussian_noise_' + str(value))
+        elif (arg=='s_var'):
+            for value in kwargs[arg]:
+                IDs.append('speckle_noise_' + str(value))
+        elif (arg=='sp_amount'):
+            for value in kwargs[arg]:
+                IDs.append('s&p_noise_' + str(value))
+        elif (arg=='g_kernel'):
+            for value in kwargs[arg]:
+                g_size = str(2*value+1)
+                IDs.append('gaussian_filter_' + g_size + 'x' + g_size)
+        elif (arg=='m_kernel'):
+            for value in kwargs[arg]:
+                IDs.append('median_filter_' + str(value) + 'x' + str(value))
+        elif (arg=='quality_factors'):
+            for value in kwargs[arg]:
+                IDs.append('compressed_jpg_' + str(value))
+        elif (arg=='ratios'):
+            for value in kwargs[arg]:
+                IDs.append('scaled_' + str(value))
+        elif (arg=='percentages'):
+            for value in kwargs[arg]:
+                if ('resize_crop' in kwargs.keys()):
+                    if (kwargs['resize_crop']):
+                        IDs.append('cropped_' + str(value) + '_resized')
+                    else:
+                        IDs.append('cropped_' + str(value))
+                else:
+                    IDs.append('cropped_' + str(value) + '_resized')    
+        elif (arg=='angles_rot'):
+            for value in kwargs[arg]:
+                if ('resize_rot' in kwargs.keys()):
+                    if (kwargs['resize_rot']):
+                        IDs.append('rotated_' + str(value)  + '_resized')
+                    else:
+                        IDs.append('rotated_' + str(value))
+                else:
+                    IDs.append('rotated_' + str(value) + '_resized')       
+        elif (arg=='angles_shear'):
+            for value in kwargs[arg]:
+                IDs.append('sheared_' + str(value))
+        elif (arg=='factors_contrast'):
+            for value in kwargs[arg]:
+                IDs.append('contrast_enhanced_' + str(value))
+        elif (arg=='factors_color'):
+            for value in kwargs[arg]:
+                IDs.append('color_enhanced_' + str(value))
+        elif (arg=='factors_bright'):
+            for value in kwargs[arg]:
+                IDs.append('brightness_enhanced_' + str(value))
+        elif (arg=='factors_sharp'):
+            for value in kwargs[arg]:
+                IDs.append('sharpness_enhanced_' + str(value))
+        elif (arg=='lengths'):
+            for value in kwargs[arg]:                           
+                IDs.append('text_' + str(value))
+    
+    return IDs
+            
+
         
         
         

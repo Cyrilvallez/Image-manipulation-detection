@@ -6,7 +6,10 @@ Created on Tue Mar 23 14:39:26 2021
 @author: cyrilvallez
 """
 
+import os
 import matplotlib.pyplot as plt
+
+os.environ["PATH"] += os.pathsep + '/Library/TeX/texbin/'
 
 plt.rcParams['text.latex.preamble'] = r"""
 \usepackage{mathtools}
