@@ -20,43 +20,64 @@ from tqdm import tqdm
 np.random.seed(256)
 
 def _find(path):
-    ''' Internal functions intended to return a PIL image (useful to limit 
+    """
+    Internal functions intended to return a PIL image (useful to limit 
         reuse of this snippet)
-    - inputs : 
-        path : PIL image or path to image file
-    '''
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image
+
+    Returns
+    -------
+    image : PIL image
+        The corresponding PIL image.
+
+    """
+    
     if (type(path) == str):
-        im = Image.open(path)
+        image = Image.open(path)
     else:
-        im = path
+        image = path
         
-    return im
+    return image
 
 # =============================================================================
 # =============================================================================
 # ================================ ATTACKS =====================================
 
 
-def noise_attack(path, g_var=[0.01, 0.02, 0.05], s_var=[0.01, 0.02, 0.05],
-                 sp_amount=[0.05, 0.1, 0.15], **kwargs):
-    ''' Generates noisy versions of the original image.
-    - inputs : 
-        path : PIL image or path to image file
-        g_var : list of variances of gaussian noise
-        s_var : list of variances of speckle noise
-        sp_amount : list of amount of salt and pepper noise
-        
-    - outputs :
-        noisy images variations (as PIL images)
-    '''
+def noise_attack(path, gaussian_var=(0.01, 0.02, 0.05), speckle_var=(0.01, 0.02, 0.05),
+                 sp_amount=(0.05, 0.1, 0.15), **kwargs):
+    """
+    Generates noisy versions of the original image.
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    gaussian_var : Tuple, optional
+        Variances for the Gaussian noise. The default is (0.01, 0.02, 0.05).
+    speckle_var : Tuple, optional
+        Variances for the Speckle noise. The default is (0.01, 0.02, 0.05).
+    sp_amount : Tuple, optional
+        Amounts of salt and pepper. The default is (0.05, 0.1, 0.15).
+
+    Returns
+    -------
+    out : Dictionary
+        Noisy images variations (as PIL images)
+
+    """
     
-    im = _find(path)
-    array = np.array(im)
+    image = _find(path)
+    array = np.array(image)
     
     out = {}
     
     # Gaussian noise 
-    for var in g_var:
+    for var in gaussian_var:
         gaussian = util.random_noise(array, mode='gaussian', mean=0, var=var)
         gaussian = util.img_as_ubyte(gaussian)
         gaussian = Image.fromarray(gaussian)
@@ -72,7 +93,7 @@ def noise_attack(path, g_var=[0.01, 0.02, 0.05], s_var=[0.01, 0.02, 0.05],
         out[id_sp] = sp
       
     # Speckle noise 
-    for var in s_var:
+    for var in speckle_var:
         speckle = util.random_noise(array, mode='speckle', mean=0, var=var)
         speckle = util.img_as_ubyte(speckle)
         speckle = Image.fromarray(speckle)
@@ -82,50 +103,69 @@ def noise_attack(path, g_var=[0.01, 0.02, 0.05], s_var=[0.01, 0.02, 0.05],
     return out
 
 
-def filter_attack(path, g_kernel=[1, 2, 3], m_kernel=[3, 5, 7], **kwargs):
-    ''' Generates filtered versions of the original image.
-    - inputs : 
-        path : PIL image or path to image file
-        g_kernel : list of sizes for the gaussian filter in one direction,
-                   from the CENTER pixel (thus a size of 1 gives a 3x3 filter,
-                   2 gives 5x5 filter etc)
-        m_kernel : list of sizes for the median filter (true size,
-                   give 3 for a 3x3 filter)
-        
-    - outputs :
-        filtered variations (as PIL images)
-    '''
+def filter_attack(path, gaussian_kernel=(1, 2, 3),
+                  median_kernel=(3, 5, 7), **kwargs):
+    """
+    Generates filtered versions of the original image.
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    gaussian_kernel : Tuple, optional
+        Sizes for the gaussian filter in one direction, from the CENTER pixel
+        (thus a size of 1 gives a 3x3 filter, 2 gives 5x5 filter etc).
+        The default is (1, 2, 3).
+    median_kernel : Tuple, optional
+        Sizes for the median filter (true size, give 3 for a 3x3 filter).
+        The default is (3, 5, 7).
+
+    Returns
+    -------
+    out : Dictionary
+        Filtered variations if the image (as PIL images)
+
+    """
     
-    im = _find(path)
+    image = _find(path)
         
     out = {}
     
     # Gaussian filter
-    for size in g_kernel:
-        gaussian = im.filter(ImageFilter.GaussianBlur(radius=size))
+    for size in gaussian_kernel:
+        gaussian = image.filter(ImageFilter.GaussianBlur(radius=size))
         g_size = str(2*size+1)
         id_gaussian = 'gaussian_filter_' + g_size + 'x' + g_size
         out[id_gaussian] = gaussian
     
     # Median filter
-    for size in m_kernel:
-        median = im.filter(ImageFilter.MedianFilter(size=size))
+    for size in median_kernel:
+        median = image.filter(ImageFilter.MedianFilter(size=size))
         id_median = 'median_filter_' + str(size) + 'x' + str(size)
         out[id_median] = median
     
     return out
 
 
-def compression_attack(path, quality_factors=[10, 50, 90], **kwargs):
-    ''' Generates jpeg compressed versions of the original image.
-    - inputs : 
-        path : PIL image or path to image file
-        quality_factors : list of all the desired qualities
+def compression_attack(path, quality_factors=(10, 50, 90), **kwargs):
+    """
+    Generates jpeg compressed versions of the original image.
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    quality_factors : Tuple, optional
+        All of the desired compression qualities. The default is (10, 50, 90).
+
+    Returns
+    -------
+    out : Dictionary
+        Compressed variations (as PIL images)
         
-    - outputs :
-        compressed variations (as PIL images)
-    '''
-    im = _find(path)
+    """
+    
+    image = _find(path)
         
     out = {}
     
@@ -134,7 +174,7 @@ def compression_attack(path, quality_factors=[10, 50, 90], **kwargs):
         
         # Trick to compress using jpg without actually saving to disk
         with BytesIO() as f:
-            im.save(f, format='JPEG', quality=factor)
+            image.save(f, format='JPEG', quality=factor)
             f.seek(0)
             img = Image.open(f)
             img.load()
@@ -143,61 +183,78 @@ def compression_attack(path, quality_factors=[10, 50, 90], **kwargs):
     return out
 
 
-def scaling_attack(path, ratios=[0.4, 0.8, 1.2, 1.6], **kwargs):
-    ''' Generates rescaled versions of the original image.
-    - inputs : 
-        path : PIL image or path to image file
-        ratios : list of all the desired scaling ratios
-        
-    - outputs :
-        scaled variations (as PIL images)
-    '''
+def scaling_attack(path, ratios=(0.4, 0.8, 1.2, 1.6), **kwargs):
+    """
+    Generates rescaled versions of the original image.
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    ratios : Tuple, optional
+        All of the desired scaling ratios. The default is (0.4, 0.8, 1.2, 1.6).
+
+    Returns
+    -------
+    out : Dictionary
+        Scaled variations (as PIL images).
+
+    """
     
-    im = _find(path)
+    image = _find(path)
         
-    width, height = im.size
+    width, height = image.size
     out = {}
 
     for ratio in ratios:
         id_ratio = 'scaled_' + str(ratio)
-        out[id_ratio] = im.resize((round(ratio*width), round(ratio*height)),
+        out[id_ratio] = image.resize((round(ratio*width), round(ratio*height)),
                                      resample=Image.LANCZOS)
     
     return out
 
 
-def cropping_attack(path, percentages=[5, 10, 20, 40, 60], resize_crop=True,
+def cropping_attack(path, percentages=(5, 10, 20, 40, 60), resize_crop=True,
                     **kwargs):
-    ''' Generates cropped versions of the original image
-    - inputs : 
-        path : PIL image or path to image file
-        percentage : list of desired cropped percentages (5 means we crop
-                     5% of the image)
-        resize_crop : boolean indicating if cropped images should be resized to
-                 original size ot not
-                 
-    - outputs :
-        cropped variations (as PIL images)
-    '''
+    """
+    Generates cropped versions of the original image
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    percentages : Tuple, optional
+        Desired cropped percentages (5 means we crop 5% of the image). We crop
+        from the center of the image. The default is (5, 10, 20, 40, 60).
+    resize_crop : Boolean, optional
+        Indicates if cropped images should be resized to original size or
+        not. The default is True.
+
+    Returns
+    -------
+    out : Dictionary
+        Cropped variations (as PIL images)
+
+    """
     
-    im = _find(path)
+    image = _find(path)
         
-    width, height = im.size
+    width, height = image.size
     out = {}
     
     for percentage in percentages:
         id_crop = 'cropped_' + str(percentage)
-        r = 1 - percentage/100
+        ratio = 1 - percentage/100
         midx = width//2 + 1
         midy = height//2 + 1
-        w = r*width
-        h = r*height
-        left = midx - w//2 - 1
-        right = midx + w//2
-        top = midy - h//2 - 1
-        bottom = midy + h//2
+        new_width = ratio*width
+        new_height = ratio*height
+        left = midx - new_width//2 - 1
+        right = midx + new_width//2
+        top = midy - new_height//2 - 1
+        bottom = midy + new_height//2
         
-        cropped = im.crop((left, top, right, bottom))
+        cropped = image.crop((left, top, right, bottom))
         
         if (resize_crop):
             cropped = cropped.resize((width, height))
@@ -208,28 +265,37 @@ def cropping_attack(path, percentages=[5, 10, 20, 40, 60], resize_crop=True,
     return out
             
     
-def rotation_attack(path, angles_rot=[5, 10, 20, 40, 60], resize_rot=True,
+def rotation_attack(path, angles_rot=(5, 10, 20, 40, 60), resize_rot=True,
                     **kwargs):
-    ''' Generates rotated versions of the original image
-    - inputs : 
-        path : PIL image or path to image file
-        angles_rot : list of desired angles of rotation (in degrees counter
-                     clockwise)
-        resize_rot : boolean indicating if rotated images including the boundary
-                     zone should be resized to original size ot not
-                 
-    - outputs :
-        rotated variations (as PIL images)
-    '''
+    """
+    Generates rotated versions of the original image
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    angles_rot : Tuple, optional
+        Desired angles of rotation (in degrees counter-clockwise).
+        The default is (5, 10, 20, 40, 60).
+    resize_rot : Boolean, optional
+        Indicates if rotated images including the boundary zone should be
+        resized to original size ot not. The default is True.
+
+    Returns
+    -------
+    out : Dictionary
+        Rotated variations (as PIL images).
+
+    """
     
-    im = _find(path)
+    image = _find(path)
         
-    size = im.size
+    size = image.size
     out = {}
 
     for angle in angles_rot:
         id_angle = 'rotated_' + str(angle) 
-        rotated = im.rotate(angle, expand=True, resample=Image.BICUBIC)
+        rotated = image.rotate(angle, expand=True, resample=Image.BICUBIC)
         
         if (resize_rot):
             rotated = rotated.resize(size, resample=Image.LANCZOS)
@@ -240,20 +306,28 @@ def rotation_attack(path, angles_rot=[5, 10, 20, 40, 60], resize_rot=True,
     return out
 
 
-def shearing_attack(path, angles_shear=[1, 2, 5, 10, 20], **kwargs):
-    ''' Generates sheared versions of the original image
-    - inputs : 
-        path : PIL image or path to image file
-        angles_shear : list of desired shear angles (in degrees counter
-                       clockwise)
-                 
-    - outputs :
-        sheared variations (as PIL images)
-    '''
+def shearing_attack(path, angles_shear=(1, 2, 5, 10, 20), **kwargs):
+    """
+    Generates sheared versions of the original image
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    angles_shear : Tuple, optional
+        Desired shear angles (in degrees counter-clockwise). The default
+        is (1, 2, 5, 10, 20).
+
+    Returns
+    -------
+    out : Dictionary
+        Sheared variations (as PIL images).
+
+    """
     
-    im = _find(path)
+    image = _find(path)
     
-    array = np.array(im)
+    array = np.array(image)
     
     # trsnform the angles in radians
     angles_rad = np.pi/180*np.array(angles_shear)
@@ -273,113 +347,155 @@ def shearing_attack(path, angles_shear=[1, 2, 5, 10, 20], **kwargs):
     return out
 
 
-def contrast_attack(path, factors_contrast=[0.6, 0.8, 1.2, 1.4], **kwargs):
-    ''' Generates contrast changed versions of the original image
-    - inputs : 
-        path : PIL image or path to image file
-        factors_contrast : list of the enhancement factor
-                 
-    - outputs :
-        contrast changed images (as PIL images)
-    '''
+def contrast_attack(path, factors_contrast=(0.6, 0.8, 1.2, 1.4), **kwargs):
+    """
+    Generates contrast changed versions of the original image
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    factors_contrast : Tuple, optional
+        Desired enhancement factors. The default is (0.6, 0.8, 1.2, 1.4).
+
+    Returns
+    -------
+    out : Dictionary
+        Contrast changed images (as PIL images).
+
+    """
     
-    im = _find(path)
+    image = _find(path)
         
-    enhancer = ImageEnhance.Contrast(im)
+    enhancer = ImageEnhance.Contrast(image)
     
     out = {}
     
-    for f in factors_contrast:
-        enhanced = enhancer.enhance(f)
-        id_enhanced = 'contrast_enhanced_' + str(f)
+    for factor in factors_contrast:
+        enhanced = enhancer.enhance(factor)
+        id_enhanced = 'contrast_enhanced_' + str(factor)
         out[id_enhanced] = enhanced
         
     return out
 
 
-def color_attack(path, factors_color=[0.6, 0.8, 1.2, 1.4], **kwargs):
-    ''' Generates color changed versions of the original image
-    - inputs : 
-        path : PIL image or path to image file
-        factors_color : list of the enhancement factor
-                 
-    - outputs :
-        color changed images (as PIL images)
-    '''
+def color_attack(path, factors_color=(0.6, 0.8, 1.2, 1.4), **kwargs):
+    """
+    Generates color changed versions of the original image
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    factors_color : Tuple, optional
+        Desired enhancement factors. The default is (0.6, 0.8, 1.2, 1.4).
+
+    Returns
+    -------
+    out : Dictionary
+        Color changed images (as PIL images).
+
+    """
     
-    im = _find(path)
+    image = _find(path)
         
-    enhancer = ImageEnhance.Color(im)
+    enhancer = ImageEnhance.Color(image)
     
     out = {}
     
-    for f in factors_color:
-        enhanced = enhancer.enhance(f)
-        id_enhanced = 'color_enhanced_' + str(f)
+    for factor in factors_color:
+        enhanced = enhancer.enhance(factor)
+        id_enhanced = 'color_enhanced_' + str(factor)
         out[id_enhanced] = enhanced
         
     return out
 
 
-def brightness_attack(path, factors_bright=[0.6, 0.8, 1.2, 1.4], **kwargs):
-    ''' Generates brightness changed versions of the original image
-    - inputs : 
-        path : PIL image or path to image file
-        factors_bright : list of the enhancement factor
-                 
-    - outputs :
-        brightness changed images (as PIL images)
-    '''
+def brightness_attack(path, factors_bright=(0.6, 0.8, 1.2, 1.4), **kwargs):
+    """
+    Generates brightness changed versions of the original image
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    factors_bright : Tuple, optional
+        Desired enhancement factors. The default is (0.6, 0.8, 1.2, 1.4).
+
+    Returns
+    -------
+    out : Dictionary
+        Brightness changed images (as PIL images).
+
+    """
     
-    im = _find(path)
+    image = _find(path)
         
-    enhancer = ImageEnhance.Brightness(im)
+    enhancer = ImageEnhance.Brightness(image)
     
     out = {}
     
-    for f in factors_bright:
-        enhanced = enhancer.enhance(f)
-        id_enhanced = 'brightness_enhanced_' + str(f)
+    for factor in factors_bright:
+        enhanced = enhancer.enhance(factor)
+        id_enhanced = 'brightness_enhanced_' + str(factor)
         out[id_enhanced] = enhanced
         
     return out
 
 
-def sharpness_attack(path, factors_sharp=[0.6, 0.8, 1.2, 1.4], **kwargs):
-    ''' Generates sharpness changed versions of the original image
-    - inputs : 
-        path : PIL image or path to image file
-        factors_sharp : list of the enhancement factor
-                 
-    - outputs :
-        sharpness changed images (as PIL images)
-    '''
+def sharpness_attack(path, factors_sharp=(0.6, 0.8, 1.2, 1.4), **kwargs):
+    """
+    Generates sharpness changed versions of the original image.
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    factors_sharp : Tuple, optional
+        Desired enhancement factors. The default is (0.6, 0.8, 1.2, 1.4).
+
+    Returns
+    -------
+    out : Dictionary
+        Sharpness changed images (as PIL images).
+
+    """
     
-    im = _find(path)
+    image = _find(path)
         
-    enhancer = ImageEnhance.Sharpness(im)
+    enhancer = ImageEnhance.Sharpness(image)
     
     out = {}
     
-    for f in factors_sharp:
-        enhanced = enhancer.enhance(f)
-        id_enhanced = 'sharpness_enhanced_' + str(f)
+    for factor in factors_sharp:
+        enhanced = enhancer.enhance(factor)
+        id_enhanced = 'sharpness_enhanced_' + str(factor)
         out[id_enhanced] = enhanced
         
     return out
 
 
-def text_attack(path, lengths=[10, 20, 30, 40, 50], **kwargs):
-    ''' Generates random text at random position in the original image
-    - inputs : 
-        path : PIL image or path to image file
-                 
-    - outputs :
-        text added image (as PIL images)
-    '''
+def text_attack(path, lengths=(10, 20, 30, 40, 50), **kwargs):
+    """
+    Generates random text at random position in the original image.
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    lengths : Tuple, optional
+        Length (number of character) of the added text. The default
+        is (10, 20, 30, 40, 50).
+
+    Returns
+    -------
+    out : Dictionary
+        Text added image (as PIL images).
+
+    """
     
-    im = _find(path)
-    width, height = im.size
+    image = _find(path)
+    width, height = image.size
     
     # List of characters for random strings
     characters = list(string.ascii_lowercase + string.ascii_uppercase \
@@ -388,14 +504,12 @@ def text_attack(path, lengths=[10, 20, 30, 40, 50], **kwargs):
     # image, and changes linearly from this reference, so it always
     # takes the same relative horizontal space on different images
     font = ImageFont.truetype('Impact.ttf', round(40*width/512))
-    # get a drawing context
-    context = ImageDraw.Draw(im)
     
     out = {}
         
     for length in lengths:
         
-        img = im.copy()
+        img = image.copy()
         # get a drawing context
         context = ImageDraw.Draw(img)
         
@@ -410,12 +524,12 @@ def text_attack(path, lengths=[10, 20, 30, 40, 50], **kwargs):
         # Get the width and height of the text box
         dims = context.multiline_textbbox((0,0), sentence, font=font,
                                           stroke_width=2)
-        w = dims[2] - dims[0]
-        h = dims[3] - dims[1]
+        width_text = dims[2] - dims[0]
+        height_text = dims[3] - dims[1]
         
         # Random text position making sure that all text fits
-        x = np.random.randint(10, width-w-10)
-        y = np.random.randint(10, height-h-10)
+        x = np.random.randint(10, width-width_text-10)
+        y = np.random.randint(10, height-height_text-10)
         
         # Compute either white text back edegs or inverse based on mean
         #mean = np.mean(np.array(im)[x:x+w+1, y:y+h+1, :])
@@ -443,20 +557,39 @@ def text_attack(path, lengths=[10, 20, 30, 40, 50], **kwargs):
 
 
 # Define the legal arguments for all the attacks functions
-VALID = ['g_var', 's_var', 'sp_amount', 'g_kernel', 'm_kernel', 'quality_factors',
-         'ratios', 'percentages', 'resize_crop', 'angles_rot', 'resize_rot',
-         'angles_shear', 'factors_contrast', 'factors_color', 'factors_bright',
-         'factors_sharp', 'lengths']
+VALID = ['gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
+         'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
+         'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
+         'factors_bright', 'factors_sharp', 'lengths']
 
 
 def perform_all_attacks(path, **kwargs):
-    ''' Perform all of the attacks on a given image.
-    - inputs : 
-        path : PIL image or path to image file
-                 
-    - outputs :
-        all attacked images (as PIL images)
-    '''
+    """
+    Perform all of the attacks on a given image.
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    **kwargs : Named attack arguments.
+        All of the attack parameters. Valid names are :
+        'gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
+        'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
+        'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
+        'factors_bright', 'factors_sharp', 'lengths'
+
+    Raises
+    ------
+    TypeError
+        If one of the name arguments is not valid.
+
+    Returns
+    -------
+    out : Dictionary
+        All attacked versions of the given image (as PIL images).
+
+    """
+    
     for arg in kwargs.keys():
         if (arg not in VALID):
             raise TypeError('Unexpected keyword argument \'' + arg + '\'')
@@ -479,32 +612,59 @@ def perform_all_attacks(path, **kwargs):
 
 
 def save_attack(attacks, save_name, extension='PNG'):
-    ''' Save the result of one (or multiple) attack on disk.
-    - inputs : 
-        attacks : Dictionary containing the attacked images (as returned by an
-                  attack function)
-        save_name : the prefix name to save the files (they will be saved as
-                    save_name_attack_id.format for example, where attack_id
-                    is the name of the given attack)
-        extension : format used to save the images (png by default as it is not
-                    lossy)
-    '''
-    
+    """
+    Save the result of one (or multiple) attack on disk.
+
+    Parameters
+    ----------
+    attacks : Dictionary
+        Contains the attacked images (as returned by an attack function)
+    save_name : str
+        the prefix name to save the files (they will be saved as
+        save_name_attack_id.format for example, where attack_id is the name
+        of the given attack)
+    extension : str, optional
+        Format used to save the images (png by default as it is not lossy).
+        The default is 'PNG'.
+
+    Returns
+    -------
+    None.
+
+    """
+
     for key in attacks.keys():
         name = save_name + '_' + key + '.' + extension.lower()
         attacks[key].save(name, format=extension)
 
 
 def perform_all_and_save(path, save_name, extension='PNG', **kwargs):
-    ''' Perform all of the attacks on a given image and save them on disk.
-    - inputs : 
-        path : PIL image or path to image file
-        save_name : the prefix name to save the files (they will be saved as
-                    save_name_attack_id.format for example, where attack_id
-                    is the name of the given attack)
-        extension : format used to save the images (png by default as it is not
-                  lossy)
-    '''
+    """
+    Perform all of the attacks on a given image and save them on disk.
+
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    save_name : str
+        the prefix name to save the files (they will be saved as
+        save_name_attack_id.format for example, where attack_id is the name
+        of the given attack)
+    extension : str, optional
+        Format used to save the images (png by default as it is not lossy).
+        The default is 'PNG'.
+    **kwargs : Named attack arguments.
+        All of the attack parameters. Valid names are :
+        'gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
+        'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
+        'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
+        'factors_bright', 'factors_sharp', 'lengths'
+
+    Returns
+    -------
+    None.
+
+    """
     
     attacks = perform_all_attacks(path, **kwargs)
     save_attack(attacks, save_name, extension)
@@ -512,35 +672,68 @@ def perform_all_and_save(path, save_name, extension='PNG', **kwargs):
     
 def perform_all_and_save_list(path_list, save_name_list=None, extension='PNG',
                               **kwargs):
-    ''' Perform all of the attacks on all images in a list and save them on disk.
-    - inputs : 
-        path_list : List of path names to the images
-        save_name_list : the prefix name to save the files (they will be saved as
-                    save_name_attack_id.format for example, where attack_id
-                    is the name of the given attack).
-                    If not given, will default to path_list names assuming 
-                    that the only dot (.) is for the extension
-        extension : format used to save the images (png by default as it is not
-                  lossy)
-    '''
+    """
+    Perform all of the attacks on all images in a list and save them on disk.
+
+    Parameters
+    ----------
+    path_list : array of str
+        Path names to the images.
+    save_name_list : array of str, optional
+        the prefix names to save the files (they will be saved as 
+        save_name_attack_id.format for example, where attack_id is the name of
+        the given attack). If not given, will default to path_list names assuming
+        that the last dot (.) is for the extension. The default is None.
+    extension : str, optional
+        Format used to save the images (png by default as it is not lossy).
+        The default is 'PNG'.
+    **kwargs : Named attack arguments.
+        All of the attack parameters. Valid names are :
+        'gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
+        'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
+        'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
+        'factors_bright', 'factors_sharp', 'lengths'
+
+    Returns
+    -------
+    None.
+
+    """
     
     if save_name_list is None:
-        save_name_list = [name.split('.')[0] for name in path_list]
+        save_name_list = [name.rsplit('.', 1)[0] for name in path_list]
     
     for path, save_name in tqdm(zip(path_list, save_name_list)):
         perform_all_and_save(path, save_name, **kwargs)
         
         
 def retrieve_ids(**kwargs):
-    ''' Retrieves the IDs of the attacks performed with the parameters in
+    """
+    Retrieves the IDs of the attacks performed with the parameters in
     kwargs. This is useful to compute the ROC curves for each attack separately
     later on.
-    - inputs : 
-        named attack parameters
-                 
-    - outputs :
-        all IDs for the attack parameters (list)
-    '''
+
+    Parameters
+    ----------
+    **kwargs : Named attack arguments.
+        All of the attack parameters. Valid names are :
+        'gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
+        'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
+        'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
+        'factors_bright', 'factors_sharp', 'lengths'
+
+    Raises
+    ------
+    TypeError
+        If one of the name arguments is not valid.
+
+    Returns
+    -------
+    IDs : List
+        The IDs of the attacks.
+
+    """
+    
     # First check that all arguments are valids
     for arg in kwargs.keys():
         if (arg not in VALID):

@@ -18,7 +18,7 @@ from helpers import Plot
 from PIL import Image
 import time
 from tqdm import tqdm
-import matplotlib.pyplot as plt
+import Create_plot as plot
 
 # Parameters that were used for the attacks. This is needed to compute
 # the ROC curves for each attack separately
@@ -144,22 +144,8 @@ for k, attack in tqdm(enumerate(IDs)):
             recall[i,j] = TP/(TP + FN)
             fpr[i,j] = FP/(FP + TN)
             
-    # ROC curves
-    plt.figure(figsize=[6.4*1.5, 4.8*1.5])
-    for i in range(len(algos)):
-        plt.plot(fpr[i,:], recall[i,:], '-+')
-    plt.xlabel('False positive rate (FPR)')
-    plt.ylabel('True positive rate (Recall)')
-    plt.legend(names)
-    plt.xticks(0.1*np.arange(11))
-    plt.yticks(0.1*np.arange(11))
-    title = ' '.join(attack.split('_'))
-    # for latex output
-    if '&' in title:
-        title = title.replace('&', '\\&')
-    plt.title(title)
-    plt.grid()
-    if save:
-        plt.savefig('Results/Details/Roc_curves_' + attack + '.pdf', bbox_inches='tight')
-    plt.show()
+    # Plot the ROC curves
+    plot.ROC_curves(fpr, recall, names, title=' '.join(attack.split('_')),
+                    save=save, filename='Results/Details/Roc_curves_' + attack + '.pdf')
+            
     

@@ -18,7 +18,7 @@ from helpers import Plot
 from PIL import Image
 import time
 from tqdm import tqdm
-import matplotlib.pyplot as plt
+import Create_plot as plot
 
 path_db = 'BSDS500/Identification/'
 path_id = 'BSDS500/Identification_attacks/'
@@ -94,67 +94,16 @@ for i in tqdm(range(len(algos))):
 #%%
 # Plots
 
-save = True
+save=True
 
-# ROC curves
-plt.figure(figsize=[6.4*1.5, 4.8*1.5])
-for i in range(len(algos)):
-    plt.plot(fpr[i,:], recall[i,:], '-+')
-plt.xlabel('False positive rate (FPR)')
-plt.ylabel('True positive rate (Recall)')
-plt.legend(names)
-plt.xticks(0.1*np.arange(11))
-plt.yticks(0.1*np.arange(11))
-plt.grid()
-if save:
-    plt.savefig('Results/General/Roc_curves.pdf', bbox_inches='tight')
-plt.show()
+plot.ROC_curves(fpr, recall, names, save=save,
+                filename='Results/General/Roc_curves.pdf')
 
+filenames = ['Results/General/Metrics_' + name + '.pdf' for name in names]
+plot.metrics_plot(accuracy, precision, recall, fpr, BERs, names, save=save,
+                  filenames=filenames)
 
-# Accuracy, recall, precision curves
-for i in range(len(algos)):
-    name = names[i]
-    plt.figure()
-    plt.plot(BERs, accuracy[i,:], 'b-+')
-    plt.plot(BERs, precision[i,:], 'r-+')
-    plt.plot(BERs, recall[i,:], 'g-+')
-    plt.plot(BERs, fpr[i,:], 'y-+')
-    plt.xlabel('BER threshold')
-    plt.ylabel('Metrics')
-    plt.legend(['Accuracy', 'Precision', 'Recall', 'FPR'])
-    plt.title(name)
-    plt.grid()
-    if save:
-        plt.savefig('Results/General/Metrics_' + name + '.pdf', bbox_inches='tight')
-    plt.show()
+plot.time_comparison(time_identification, time_db, names, save=save,
+                     filename='Results/General/Time.pdf')
     
-# Time bar plots
-time_average = np.mean(time_identification, axis=1)
-sorting = np.argsort(-time_average) # sort in decreasing order
-time_average = time_average[sorting]
-time_db = time_db[sorting]
-names = np.array(names)[sorting]
-time_average_str = [time.strftime('%M:%S', time.gmtime(a)) for a in time_average]
-time_db_str = [time.strftime('%M:%S', time.gmtime(a)) for a in time_db]
-
-y = np.arange(0, 2*len(names), 2)
-height = 0.8  
-
-max_ = int(np.max(np.floor(1/60*time_average)))
-ticks = [f'{i*(max_//4)}:00' for i in range(6)]
-x = [i*(max_//4)*60 for i in range(6)]
-
-plt.figure(figsize=[6.4*1.3, 4.8*1.3])
-rects1 = plt.barh(y-height/2, time_average, height, color='r')
-rects2 = plt.barh(y+height/2, time_db, height, color='b')
-plt.bar_label(rects1, labels=time_average_str, padding=3)
-plt.bar_label(rects2, labels=time_db_str, padding=3)
-plt.legend([f'Identification (mean\nover {len(BERs)} runs)', 'Database creation'])
-plt.xlabel('Time [min:sec]')
-plt.xticks(x, ticks)
-plt.xlim(right=np.max(time_average) + 100) # to fit labels
-plt.yticks(y, names)
-if save:
-    plt.savefig('Results/General/Time.pdf', bbox_inches='tight')
-plt.show()
 
