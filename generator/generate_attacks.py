@@ -48,8 +48,9 @@ def _find(path):
 # ================================ ATTACKS =====================================
 
 
-def noise_attack(path, gaussian_var=(0.01, 0.02, 0.05), speckle_var=(0.01, 0.02, 0.05),
-                 sp_amount=(0.05, 0.1, 0.15), **kwargs):
+def noise_attack(path, gaussian_variances=(0.01, 0.02, 0.05), 
+                 speckle_variances=(0.01, 0.02, 0.05),
+                 salt_pepper_amounts=(0.05, 0.1, 0.15), **kwargs):
     """
     Generates noisy versions of the original image.
 
@@ -57,11 +58,11 @@ def noise_attack(path, gaussian_var=(0.01, 0.02, 0.05), speckle_var=(0.01, 0.02,
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    gaussian_var : Tuple, optional
+    gaussian_variances : Tuple, optional
         Variances for the Gaussian noise. The default is (0.01, 0.02, 0.05).
-    speckle_var : Tuple, optional
+    speckle_variances : Tuple, optional
         Variances for the Speckle noise. The default is (0.01, 0.02, 0.05).
-    sp_amount : Tuple, optional
+    salt_pepper_amounts : Tuple, optional
         Amounts of salt and pepper. The default is (0.05, 0.1, 0.15).
 
     Returns
@@ -77,7 +78,7 @@ def noise_attack(path, gaussian_var=(0.01, 0.02, 0.05), speckle_var=(0.01, 0.02,
     out = {}
     
     # Gaussian noise 
-    for var in gaussian_var:
+    for var in gaussian_variances:
         gaussian = util.random_noise(array, mode='gaussian', mean=0, var=var)
         gaussian = util.img_as_ubyte(gaussian)
         gaussian = Image.fromarray(gaussian)
@@ -85,7 +86,7 @@ def noise_attack(path, gaussian_var=(0.01, 0.02, 0.05), speckle_var=(0.01, 0.02,
         out[id_gaussian] = gaussian
     
     # Salt and pepper noise
-    for amount in sp_amount:
+    for amount in salt_pepper_amounts:
         sp = util.random_noise(array, mode='s&p', amount=amount)
         sp = util.img_as_ubyte(sp)
         sp = Image.fromarray(sp)
@@ -93,7 +94,7 @@ def noise_attack(path, gaussian_var=(0.01, 0.02, 0.05), speckle_var=(0.01, 0.02,
         out[id_sp] = sp
       
     # Speckle noise 
-    for var in speckle_var:
+    for var in speckle_variances:
         speckle = util.random_noise(array, mode='speckle', mean=0, var=var)
         speckle = util.img_as_ubyte(speckle)
         speckle = Image.fromarray(speckle)
@@ -103,8 +104,8 @@ def noise_attack(path, gaussian_var=(0.01, 0.02, 0.05), speckle_var=(0.01, 0.02,
     return out
 
 
-def filter_attack(path, gaussian_kernel=(1, 2, 3),
-                  median_kernel=(3, 5, 7), **kwargs):
+def filter_attack(path, gaussian_kernels=(1, 2, 3),
+                  median_kernels=(3, 5, 7), **kwargs):
     """
     Generates filtered versions of the original image.
 
@@ -112,11 +113,11 @@ def filter_attack(path, gaussian_kernel=(1, 2, 3),
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    gaussian_kernel : Tuple, optional
+    gaussian_kernels : Tuple, optional
         Sizes for the gaussian filter in one direction, from the CENTER pixel
         (thus a size of 1 gives a 3x3 filter, 2 gives 5x5 filter etc).
         The default is (1, 2, 3).
-    median_kernel : Tuple, optional
+    median_kernels : Tuple, optional
         Sizes for the median filter (true size, give 3 for a 3x3 filter).
         The default is (3, 5, 7).
 
@@ -132,14 +133,14 @@ def filter_attack(path, gaussian_kernel=(1, 2, 3),
     out = {}
     
     # Gaussian filter
-    for size in gaussian_kernel:
+    for size in gaussian_kernels:
         gaussian = image.filter(ImageFilter.GaussianBlur(radius=size))
         g_size = str(2*size+1)
         id_gaussian = 'gaussian_filter_' + g_size + 'x' + g_size
         out[id_gaussian] = gaussian
     
     # Median filter
-    for size in median_kernel:
+    for size in median_kernels:
         median = image.filter(ImageFilter.MedianFilter(size=size))
         id_median = 'median_filter_' + str(size) + 'x' + str(size)
         out[id_median] = median
@@ -147,7 +148,7 @@ def filter_attack(path, gaussian_kernel=(1, 2, 3),
     return out
 
 
-def compression_attack(path, quality_factors=(10, 50, 90), **kwargs):
+def compression_attack(path, compression_quality_factors=(10, 50, 90), **kwargs):
     """
     Generates jpeg compressed versions of the original image.
 
@@ -155,7 +156,7 @@ def compression_attack(path, quality_factors=(10, 50, 90), **kwargs):
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    quality_factors : Tuple, optional
+    compression_quality_factors : Tuple, optional
         All of the desired compression qualities. The default is (10, 50, 90).
 
     Returns
@@ -169,7 +170,7 @@ def compression_attack(path, quality_factors=(10, 50, 90), **kwargs):
         
     out = {}
     
-    for factor in quality_factors:
+    for factor in compression_quality_factors:
         id_factor = 'compressed_jpg_' + str(factor)
         
         # Trick to compress using jpg without actually saving to disk
@@ -183,7 +184,7 @@ def compression_attack(path, quality_factors=(10, 50, 90), **kwargs):
     return out
 
 
-def scaling_attack(path, ratios=(0.4, 0.8, 1.2, 1.6), **kwargs):
+def scaling_attack(path, scaling_ratios=(0.4, 0.8, 1.2, 1.6), **kwargs):
     """
     Generates rescaled versions of the original image.
 
@@ -191,7 +192,7 @@ def scaling_attack(path, ratios=(0.4, 0.8, 1.2, 1.6), **kwargs):
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    ratios : Tuple, optional
+    scaling_ratios : Tuple, optional
         All of the desired scaling ratios. The default is (0.4, 0.8, 1.2, 1.6).
 
     Returns
@@ -206,7 +207,7 @@ def scaling_attack(path, ratios=(0.4, 0.8, 1.2, 1.6), **kwargs):
     width, height = image.size
     out = {}
 
-    for ratio in ratios:
+    for ratio in scaling_ratios:
         id_ratio = 'scaled_' + str(ratio)
         out[id_ratio] = image.resize((round(ratio*width), round(ratio*height)),
                                      resample=Image.LANCZOS)
@@ -214,8 +215,8 @@ def scaling_attack(path, ratios=(0.4, 0.8, 1.2, 1.6), **kwargs):
     return out
 
 
-def cropping_attack(path, percentages=(5, 10, 20, 40, 60), resize_crop=True,
-                    **kwargs):
+def cropping_attack(path, cropping_percentages=(5, 10, 20, 40, 60),
+                    resize_cropping=True, **kwargs):
     """
     Generates cropped versions of the original image
 
@@ -223,10 +224,10 @@ def cropping_attack(path, percentages=(5, 10, 20, 40, 60), resize_crop=True,
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    percentages : Tuple, optional
+    cropping_percentages : Tuple, optional
         Desired cropped percentages (5 means we crop 5% of the image). We crop
         from the center of the image. The default is (5, 10, 20, 40, 60).
-    resize_crop : Boolean, optional
+    resize_cropping : Boolean, optional
         Indicates if cropped images should be resized to original size or
         not. The default is True.
 
@@ -242,7 +243,7 @@ def cropping_attack(path, percentages=(5, 10, 20, 40, 60), resize_crop=True,
     width, height = image.size
     out = {}
     
-    for percentage in percentages:
+    for percentage in cropping_percentages:
         id_crop = 'cropped_' + str(percentage)
         ratio = 1 - percentage/100
         midx = width//2 + 1
@@ -256,7 +257,7 @@ def cropping_attack(path, percentages=(5, 10, 20, 40, 60), resize_crop=True,
         
         cropped = image.crop((left, top, right, bottom))
         
-        if (resize_crop):
+        if (resize_cropping):
             cropped = cropped.resize((width, height))
             id_crop += '_resized'
             
@@ -265,8 +266,8 @@ def cropping_attack(path, percentages=(5, 10, 20, 40, 60), resize_crop=True,
     return out
             
     
-def rotation_attack(path, angles_rot=(5, 10, 20, 40, 60), resize_rot=True,
-                    **kwargs):
+def rotation_attack(path, rotation_angles=(5, 10, 20, 40, 60),
+                    resize_rotation=True, **kwargs):
     """
     Generates rotated versions of the original image
 
@@ -274,10 +275,10 @@ def rotation_attack(path, angles_rot=(5, 10, 20, 40, 60), resize_rot=True,
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    angles_rot : Tuple, optional
+    rotation_angles : Tuple, optional
         Desired angles of rotation (in degrees counter-clockwise).
         The default is (5, 10, 20, 40, 60).
-    resize_rot : Boolean, optional
+    resize_rotation : Boolean, optional
         Indicates if rotated images including the boundary zone should be
         resized to original size ot not. The default is True.
 
@@ -293,11 +294,11 @@ def rotation_attack(path, angles_rot=(5, 10, 20, 40, 60), resize_rot=True,
     size = image.size
     out = {}
 
-    for angle in angles_rot:
+    for angle in rotation_angles:
         id_angle = 'rotated_' + str(angle) 
         rotated = image.rotate(angle, expand=True, resample=Image.BICUBIC)
         
-        if (resize_rot):
+        if (resize_rotation):
             rotated = rotated.resize(size, resample=Image.LANCZOS)
             id_angle += '_resized'
             
@@ -306,7 +307,7 @@ def rotation_attack(path, angles_rot=(5, 10, 20, 40, 60), resize_rot=True,
     return out
 
 
-def shearing_attack(path, angles_shear=(1, 2, 5, 10, 20), **kwargs):
+def shearing_attack(path, shearing_angles=(1, 2, 5, 10, 20), **kwargs):
     """
     Generates sheared versions of the original image
 
@@ -314,7 +315,7 @@ def shearing_attack(path, angles_shear=(1, 2, 5, 10, 20), **kwargs):
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    angles_shear : Tuple, optional
+    shearing_angles : Tuple, optional
         Desired shear angles (in degrees counter-clockwise). The default
         is (1, 2, 5, 10, 20).
 
@@ -330,11 +331,11 @@ def shearing_attack(path, angles_shear=(1, 2, 5, 10, 20), **kwargs):
     array = np.array(image)
     
     # trsnform the angles in radians
-    angles_rad = np.pi/180*np.array(angles_shear)
+    angles_rad = np.pi/180*np.array(shearing_angles)
     
     out = {}
     
-    for angle, degree in zip(angles_rad, angles_shear):
+    for angle, degree in zip(angles_rad, shearing_angles):
         id_shear = 'sheared_' + str(degree)
         
         transfo = transform.AffineTransform(shear=angle)
@@ -347,7 +348,7 @@ def shearing_attack(path, angles_shear=(1, 2, 5, 10, 20), **kwargs):
     return out
 
 
-def contrast_attack(path, factors_contrast=(0.6, 0.8, 1.2, 1.4), **kwargs):
+def contrast_attack(path, contrast_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     """
     Generates contrast changed versions of the original image
 
@@ -355,7 +356,7 @@ def contrast_attack(path, factors_contrast=(0.6, 0.8, 1.2, 1.4), **kwargs):
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    factors_contrast : Tuple, optional
+    contrast_factors : Tuple, optional
         Desired enhancement factors. The default is (0.6, 0.8, 1.2, 1.4).
 
     Returns
@@ -371,7 +372,7 @@ def contrast_attack(path, factors_contrast=(0.6, 0.8, 1.2, 1.4), **kwargs):
     
     out = {}
     
-    for factor in factors_contrast:
+    for factor in contrast_factors:
         enhanced = enhancer.enhance(factor)
         id_enhanced = 'contrast_enhanced_' + str(factor)
         out[id_enhanced] = enhanced
@@ -379,7 +380,7 @@ def contrast_attack(path, factors_contrast=(0.6, 0.8, 1.2, 1.4), **kwargs):
     return out
 
 
-def color_attack(path, factors_color=(0.6, 0.8, 1.2, 1.4), **kwargs):
+def color_attack(path, color_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     """
     Generates color changed versions of the original image
 
@@ -387,7 +388,7 @@ def color_attack(path, factors_color=(0.6, 0.8, 1.2, 1.4), **kwargs):
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    factors_color : Tuple, optional
+    color_factors : Tuple, optional
         Desired enhancement factors. The default is (0.6, 0.8, 1.2, 1.4).
 
     Returns
@@ -403,7 +404,7 @@ def color_attack(path, factors_color=(0.6, 0.8, 1.2, 1.4), **kwargs):
     
     out = {}
     
-    for factor in factors_color:
+    for factor in color_factors:
         enhanced = enhancer.enhance(factor)
         id_enhanced = 'color_enhanced_' + str(factor)
         out[id_enhanced] = enhanced
@@ -411,7 +412,7 @@ def color_attack(path, factors_color=(0.6, 0.8, 1.2, 1.4), **kwargs):
     return out
 
 
-def brightness_attack(path, factors_bright=(0.6, 0.8, 1.2, 1.4), **kwargs):
+def brightness_attack(path, brightness_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     """
     Generates brightness changed versions of the original image
 
@@ -419,7 +420,7 @@ def brightness_attack(path, factors_bright=(0.6, 0.8, 1.2, 1.4), **kwargs):
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    factors_bright : Tuple, optional
+    brightness_factors : Tuple, optional
         Desired enhancement factors. The default is (0.6, 0.8, 1.2, 1.4).
 
     Returns
@@ -435,7 +436,7 @@ def brightness_attack(path, factors_bright=(0.6, 0.8, 1.2, 1.4), **kwargs):
     
     out = {}
     
-    for factor in factors_bright:
+    for factor in brightness_factors:
         enhanced = enhancer.enhance(factor)
         id_enhanced = 'brightness_enhanced_' + str(factor)
         out[id_enhanced] = enhanced
@@ -443,7 +444,7 @@ def brightness_attack(path, factors_bright=(0.6, 0.8, 1.2, 1.4), **kwargs):
     return out
 
 
-def sharpness_attack(path, factors_sharp=(0.6, 0.8, 1.2, 1.4), **kwargs):
+def sharpness_attack(path, sharpness_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     """
     Generates sharpness changed versions of the original image.
 
@@ -451,7 +452,7 @@ def sharpness_attack(path, factors_sharp=(0.6, 0.8, 1.2, 1.4), **kwargs):
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    factors_sharp : Tuple, optional
+    sharpness_factors : Tuple, optional
         Desired enhancement factors. The default is (0.6, 0.8, 1.2, 1.4).
 
     Returns
@@ -467,7 +468,7 @@ def sharpness_attack(path, factors_sharp=(0.6, 0.8, 1.2, 1.4), **kwargs):
     
     out = {}
     
-    for factor in factors_sharp:
+    for factor in sharpness_factors:
         enhanced = enhancer.enhance(factor)
         id_enhanced = 'sharpness_enhanced_' + str(factor)
         out[id_enhanced] = enhanced
@@ -475,7 +476,7 @@ def sharpness_attack(path, factors_sharp=(0.6, 0.8, 1.2, 1.4), **kwargs):
     return out
 
 
-def text_attack(path, lengths=(10, 20, 30, 40, 50), **kwargs):
+def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
     """
     Generates random text at random position in the original image.
 
@@ -483,7 +484,7 @@ def text_attack(path, lengths=(10, 20, 30, 40, 50), **kwargs):
     ----------
     path : PIL image or str
         PIL image or path to the image.
-    lengths : Tuple, optional
+    text_lengths : Tuple, optional
         Length (number of character) of the added text. The default
         is (10, 20, 30, 40, 50).
 
@@ -507,7 +508,7 @@ def text_attack(path, lengths=(10, 20, 30, 40, 50), **kwargs):
     
     out = {}
         
-    for length in lengths:
+    for length in text_lengths:
         
         img = image.copy()
         # get a drawing context
@@ -557,10 +558,12 @@ def text_attack(path, lengths=(10, 20, 30, 40, 50), **kwargs):
 
 
 # Define the legal arguments for all the attacks functions
-VALID = ['gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
-         'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
-         'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
-         'factors_bright', 'factors_sharp', 'lengths']
+VALID = ['gaussian_variances', 'speckle_variances', 'salt_pepper_amounts',
+         'gaussian_kernels', 'median_kernels', 'compression_quality_factors',
+         'scaling_ratios', 'cropping_percentages', 'resize_cropping',
+         'rotation_angles', 'resize_rotation', 'shearing_angles',
+         'contrast_factors', 'color_factors', 'brightness_factors',
+         'sharpness_factors', 'text_lengths']
 
 
 def perform_all_attacks(path, **kwargs):
@@ -573,10 +576,12 @@ def perform_all_attacks(path, **kwargs):
         PIL image or path to the image.
     **kwargs : Named attack arguments.
         All of the attack parameters. Valid names are :
-        'gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
-        'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
-        'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
-        'factors_bright', 'factors_sharp', 'lengths'
+        'gaussian_variances', 'speckle_variances', 'salt_pepper_amounts',
+        'gaussian_kernels', 'median_kernels', 'compression_quality_factors',
+        'scaling_ratios', 'cropping_percentages', 'resize_cropping',
+        'rotation_angles', 'resize_rotation', 'shearing_angles',
+        'contrast_factors', 'color_factors', 'brightness_factors',
+        'sharpness_factors', 'text_lengths'
 
     Raises
     ------
@@ -655,10 +660,12 @@ def perform_all_and_save(path, save_name, extension='PNG', **kwargs):
         The default is 'PNG'.
     **kwargs : Named attack arguments.
         All of the attack parameters. Valid names are :
-        'gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
-        'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
-        'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
-        'factors_bright', 'factors_sharp', 'lengths'
+        'gaussian_variances', 'speckle_variances', 'salt_pepper_amounts',
+        'gaussian_kernels', 'median_kernels', 'compression_quality_factors',
+        'scaling_ratios', 'cropping_percentages', 'resize_cropping',
+        'rotation_angles', 'resize_rotation', 'shearing_angles',
+        'contrast_factors', 'color_factors', 'brightness_factors',
+        'sharpness_factors', 'text_lengths'
 
     Returns
     -------
@@ -689,10 +696,12 @@ def perform_all_and_save_list(path_list, save_name_list=None, extension='PNG',
         The default is 'PNG'.
     **kwargs : Named attack arguments.
         All of the attack parameters. Valid names are :
-        'gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
-        'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
-        'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
-        'factors_bright', 'factors_sharp', 'lengths'
+        'gaussian_variances', 'speckle_variances', 'salt_pepper_amounts',
+        'gaussian_kernels', 'median_kernels', 'compression_quality_factors',
+        'scaling_ratios', 'cropping_percentages', 'resize_cropping',
+        'rotation_angles', 'resize_rotation', 'shearing_angles',
+        'contrast_factors', 'color_factors', 'brightness_factors',
+        'sharpness_factors', 'text_lengths'
 
     Returns
     -------
@@ -717,10 +726,12 @@ def retrieve_ids(**kwargs):
     ----------
     **kwargs : Named attack arguments.
         All of the attack parameters. Valid names are :
-        'gaussian_var', 'speckle_var', 'sp_amount', 'gaussian_kernel', 'median_kernel',
-        'quality_factors', 'ratios', 'percentages', 'resize_crop', 'angles_rot',
-        'resize_rot', 'angles_shear', 'factors_contrast', 'factors_color',
-        'factors_bright', 'factors_sharp', 'lengths'
+        'gaussian_variances', 'speckle_variances', 'salt_pepper_amounts',
+        'gaussian_kernels', 'median_kernels', 'compression_quality_factors',
+        'scaling_ratios', 'cropping_percentages', 'resize_cropping',
+        'rotation_angles', 'resize_rotation', 'shearing_angles',
+        'contrast_factors', 'color_factors', 'brightness_factors',
+        'sharpness_factors', 'text_lengths'
 
     Raises
     ------
@@ -738,71 +749,58 @@ def retrieve_ids(**kwargs):
     for arg in kwargs.keys():
         if (arg not in VALID):
             raise TypeError('Unexpected keyword argument \'' + arg + '\'')
-    
+            
+    # Initialize output
     IDs = []
     
-    # Loop again 
-    for arg in kwargs.keys():
-        
-        # Not pretty but works. Just loop over all possible attacks.
-        if (arg=='g_var'):
-            for value in kwargs[arg]:
-                IDs.append('gaussian_noise_' + str(value))
-        elif (arg=='s_var'):
-            for value in kwargs[arg]:
-                IDs.append('speckle_noise_' + str(value))
-        elif (arg=='sp_amount'):
-            for value in kwargs[arg]:
-                IDs.append('s&p_noise_' + str(value))
-        elif (arg=='g_kernel'):
-            for value in kwargs[arg]:
-                g_size = str(2*value+1)
-                IDs.append('gaussian_filter_' + g_size + 'x' + g_size)
-        elif (arg=='m_kernel'):
-            for value in kwargs[arg]:
-                IDs.append('median_filter_' + str(value) + 'x' + str(value))
-        elif (arg=='quality_factors'):
-            for value in kwargs[arg]:
-                IDs.append('compressed_jpg_' + str(value))
-        elif (arg=='ratios'):
-            for value in kwargs[arg]:
-                IDs.append('scaled_' + str(value))
-        elif (arg=='percentages'):
-            for value in kwargs[arg]:
-                if ('resize_crop' in kwargs.keys()):
-                    if (kwargs['resize_crop']):
-                        IDs.append('cropped_' + str(value) + '_resized')
-                    else:
-                        IDs.append('cropped_' + str(value))
-                else:
-                    IDs.append('cropped_' + str(value) + '_resized')    
-        elif (arg=='angles_rot'):
-            for value in kwargs[arg]:
-                if ('resize_rot' in kwargs.keys()):
-                    if (kwargs['resize_rot']):
-                        IDs.append('rotated_' + str(value)  + '_resized')
-                    else:
-                        IDs.append('rotated_' + str(value))
-                else:
-                    IDs.append('rotated_' + str(value) + '_resized')       
-        elif (arg=='angles_shear'):
-            for value in kwargs[arg]:
-                IDs.append('sheared_' + str(value))
-        elif (arg=='factors_contrast'):
-            for value in kwargs[arg]:
-                IDs.append('contrast_enhanced_' + str(value))
-        elif (arg=='factors_color'):
-            for value in kwargs[arg]:
-                IDs.append('color_enhanced_' + str(value))
-        elif (arg=='factors_bright'):
-            for value in kwargs[arg]:
-                IDs.append('brightness_enhanced_' + str(value))
-        elif (arg=='factors_sharp'):
-            for value in kwargs[arg]:
-                IDs.append('sharpness_enhanced_' + str(value))
-        elif (arg=='lengths'):
-            for value in kwargs[arg]:                           
-                IDs.append('text_' + str(value))
+    # 
+    if ('resize_cropping' in kwargs.keys()):
+        resize_cropping = kwargs['resize_cropping']
+    else:
+        resize_cropping = True
+    
+    if ('resize_rotation' in kwargs.keys()):
+        resize_rotation = kwargs['resize_rotation']
+    else:
+        resize_rotation = True
+    
+    # Convenient wrapper function to use for switch
+    def wrapper(format_, gaussian_filter=False):
+        def add_to_IDS(array):
+            if (not gaussian_filter):
+                for value in array:
+                    IDs.append(format_.format(val=value))
+            else:
+                for value in array:
+                    IDs.append(format_.format(val=2*value+1))
+        return add_to_IDS
+    
+    # Switch dictionary
+    switch_dic = {
+        'gaussian_variances': wrapper('gaussian_noise_{val}'),
+        'speckle_variances': wrapper('speckle_noise_{val}'),
+        'salt_pepper_amounts': wrapper('s&p_noise_{val}'),
+        'gaussian_kernels': wrapper('gaussian_filter_{val}x{val}', gaussian_filter=True),
+        'median_kernels': wrapper('median_filter_{val}x{val}'),
+        'compression_quality_factors': wrapper('compressed_jpg_{val}'),
+        'scaling_ratios': wrapper('scaled_{val}'),
+        'cropping_percentages': wrapper('cropped_{val}_resized') if resize_cropping \
+            else wrapper('cropped_{val}'),
+        'rotation_angles': wrapper('rotated_{val}_resized') if resize_rotation \
+            else wrapper('rotated_{val}'),
+        'shearing_angles': wrapper('sheared_{val}'),
+        'contrast_factors': wrapper('contrast_enhanced_{val}'),
+        'color_factors': wrapper('color_enhanced_{val}')   ,
+        'brightness_factors': wrapper('brightness_enhanced_{val}'),
+        'sharpness_factors': wrapper('sharpness_enhanced_{val}'),
+        'text_lengths': wrapper('text_{val}')
+        }
+    
+    # Performs the switch on the intersection of keys (not only on kwargs.keys()
+    # because the keys may contains e.g `resize_cropping` which is not included on
+    # the switch and thus would raise an error)
+    for key in (kwargs.keys() & switch_dic.keys()):
+        switch_dic[key](kwargs[key])
     
     return IDs
             
