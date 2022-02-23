@@ -6,7 +6,10 @@ Created on Fri Feb 18 11:19:25 2022
 @author: cyrilvallez
 """
 
-# Compares the different robust hash algorithms in details for each manipulation
+# =============================================================================
+#  Compares the different robust hash algorithms in details for each
+#  manipulation
+# =============================================================================
 
 import numpy as np
 import os
@@ -14,10 +17,9 @@ import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 from imagehash import imagehash as ih
 from generator import generate_attacks as ga
-from helpers import Plot
 from PIL import Image
-import time
 from tqdm import tqdm
+import pandas as pd
 import Create_plot as plot
 
 # Parameters that were used for the attacks. This is needed to compute
@@ -68,6 +70,10 @@ path_ct = 'BSDS500/Control_attacks/'
     
 # Whether to save the plots on disk or not
 save = True
+
+# Initialize pandas dataframe to record the data and easily save it to file
+frame = pd.DataFrame(columns=['attack', 'algos', 'fpr', 'recall', 'accuracy',
+                              'precision'])
 
 algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash, ih.colorhash, ih.hist_hash,
          ih.crop_resistant_hash]
@@ -159,5 +165,20 @@ for k, attack in tqdm(enumerate(IDs)):
     # Plot the ROC curves
     plot.ROC_curves(fpr, recall, names, title=' '.join(attack.split('_')),
                     save=save, filename='Results/Details/Roc_curves_' + attack + '.pdf')
+    
+    other = pd.DataFrame({
+        'attack': attack, 
+        'algos': [names], 
+        'fpr': [fpr.tolist()],                          
+        'recall': [recall.tolist()],
+        'accuracy': [accuracy.tolist()],
+        'precision': [precision.tolist()]
+        })
+    
+    frame = pd.concat([frame, other], ignore_index=True)
+    
+#%%
+# Save to files
+frame.to_csv('Results/Details/data_metrics.csv', index=False)
             
     

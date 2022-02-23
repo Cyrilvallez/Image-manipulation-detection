@@ -6,6 +6,10 @@ Created on Thu Feb 17 09:28:50 2022
 @author: cyrilvallez
 """
 
+# =============================================================================
+# Performs the attacks in both groups
+# =============================================================================
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
@@ -14,55 +18,69 @@ import random
 # Set the seed
 random.seed(256)
 
+# Parameters for the attacks
+GAUSSIAN_VARIANCES = (0.01, 0.02, 0.05)
+SPECKLE_VARIANCES = (0.01, 0.02, 0.05)
+SALT_PEPPER_AMOUNTS = (0.05, 0.1, 0.15)
+GAUSSIAN_KERNELS = (1, 2, 3)
+MEDIAN_KERNELS = (3, 5, 7)
+COMPRESSION_QUALITY_FACTORS = (10, 50, 90)
+SCALING_RATIOS = (0.4, 0.8, 1.2, 1.6)
+CROPPING_PERCENTAGES = (5, 10, 20, 40, 60)
+RESIZE_CROPPING = True
+ROTATION_ANGLES = (5, 10, 20, 40, 60)
+RESIZE_ROTATION = True
+SHEARING_ANGLES = (1, 2, 5, 10, 20)
+CONTRAST_FACTORS = (0.6, 0.8, 1.2, 1.4)
+COLOR_FACTORS = (0.6, 0.8, 1.2, 1.4)
+BRIGHTNESS_FACTORS = (0.6, 0.8, 1.2, 1.4)
+SHARPNESS_FACTORS = (0.6, 0.8, 1.2, 1.4)
+TEXT_LENGTHS = (10, 20, 30, 40, 50)
+
+params = {
+    'gaussian_variances': GAUSSIAN_VARIANCES,
+    'speckle_variances': SPECKLE_VARIANCES,
+    'salt_pepper_amounts': SALT_PEPPER_AMOUNTS,
+    'gaussian_kernels': GAUSSIAN_KERNELS,
+    'median_kernels': MEDIAN_KERNELS,
+    'compression_quality_factors': COMPRESSION_QUALITY_FACTORS,
+    'scaling_ratios': SCALING_RATIOS,
+    'cropping_percentages': CROPPING_PERCENTAGES,
+    'resize_cropping': RESIZE_CROPPING,
+    'rotation_angles': ROTATION_ANGLES,
+    'resize_rotation': RESIZE_ROTATION,
+    'shearing_angles': SHEARING_ANGLES,
+    'contrast_factors': CONTRAST_FACTORS,
+    'color_factors': COLOR_FACTORS,
+    'brightness_factors': BRIGHTNESS_FACTORS,
+    'sharpness_factors': SHARPNESS_FACTORS,
+    'text_lengths': TEXT_LENGTHS
+    }
+
 # Number of images on which to perform the attacks in both groups
 N = 100
-
-G_VAR = [0.01, 0.02, 0.05]
-S_VAR = [0.01, 0.02, 0.05]
-SP_AMOUNT = [0.05, 0.1, 0.15]
-G_KERNEL = [1, 2, 3]
-M_KERNEL = [3, 5, 7]
-QUALITY_FACTORS = [10, 50, 90]
-RATIOS = [0.4, 0.8, 1.2, 1.6]
-PERCENTAGES = [5, 10, 20, 40, 60]
-RESIZE_CROP = True
-ANGLES_ROT = [5, 10, 20, 40, 60]
-RESIZE_ROT = True
-ANGLES_SHEAR = [1, 2, 5, 10, 20]
-FACTORS_CONTRAST = [0.6, 0.8, 1.2, 1.4]
-FACTORS_COLOR = [0.6, 0.8, 1.2, 1.4]
-FACTORS_BRIGHT = [0.6, 0.8, 1.2, 1.4]
-FACTORS_SHARP = [0.6, 0.8, 1.2, 1.4]
-LENGTHS = [10, 20, 30, 40, 50]
-
-params = {'g_var':G_VAR, 's_var':S_VAR, 'sp_amount':SP_AMOUNT, 'g_kernel':G_KERNEL,
-          'm_kernel':M_KERNEL, 'quality_factors':QUALITY_FACTORS,
-         'ratios':RATIOS, 'percentages':PERCENTAGES, 'resize_crop':RESIZE_CROP,
-         'angles_rot':ANGLES_ROT, 'resize_rot':RESIZE_ROT, 'angles_shear':ANGLES_SHEAR,
-         'factors_contrast':FACTORS_CONTRAST, 'factors_color':FACTORS_COLOR,
-         'factors_bright':FACTORS_BRIGHT, 'factors_sharp':FACTORS_SHARP,
-         'lengths':LENGTHS}
 
 
 path1 = 'BSDS500/Identification/'
 path2 = 'BSDS500/Control/'
 
-dest1 = 'BSDS500/Identification_attacks/'
-dest2 = 'BSDS500/Control_attacks/'
+destination1 = 'BSDS500/Identification_attacks/'
+destination2 = 'BSDS500/Control_attacks/'
 
-names_id = os.listdir(path1)
-names_ct = os.listdir(path2)
+names_identification = os.listdir(path1)
+names_control = os.listdir(path2)
 
-random.shuffle(names_id)
-random.shuffle(names_ct)
+random.shuffle(names_identification)
+random.shuffle(names_control)
 
-images_id = [path1 + name for name in names_id[0:N]]
-images_ct = [path2 + name for name in names_ct[0:N]]
+images_identification = [path1 + name for name in names_identification[0:N]]
+images_control = [path2 + name for name in names_control[0:N]]
 
-save_id = [dest1 + name.split('.')[0] for name in names_id[0:N]]
-save_ct = [dest2 + name.split('.')[0] for name in names_ct[0:N]]
+save_identification = [destination1 + name.split('.')[0] for name \
+                       in names_identification[0:N]]
+save_control = [destination2 + name.split('.')[0] for name in names_control[0:N]]
 
-ga.perform_all_and_save_list(images_id, save_name_list=save_id,
+ga.perform_all_and_save_list(images_identification, save_name_list=save_identification,
                              extension='PNG', **params)
-ga.perform_all_and_save_list(images_ct, save_name_list=save_ct,
+ga.perform_all_and_save_list(images_control, save_name_list=save_control,
                              extension='PNG', **params)

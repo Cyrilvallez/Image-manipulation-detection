@@ -7,17 +7,19 @@ Created on Thu Feb 17 10:36:05 2022
 
 """
 
+# =============================================================================
 # Compares the different robust hash algorithms
+# =============================================================================
 
 import numpy as np
 import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 from imagehash import imagehash as ih
-from helpers import Plot
 from PIL import Image
 import time
 from tqdm import tqdm
+import pandas as pd
 import Create_plot as plot
 
 path_db = 'BSDS500/Identification/'
@@ -106,4 +108,18 @@ plot.metrics_plot(accuracy, precision, recall, fpr, BERs, names, save=save,
 plot.time_comparison(time_identification, time_db, names, save=save,
                      filename='Results/General/Time.pdf')
     
+#%%
+# Creates a pandas dataframe to easily save the data for later reuse
+
+frame = pd.DataFrame({
+    'algo': names,
+    'time_db': time_db,
+    'time_identification': time_identification.tolist(),
+    'accuracy': accuracy.tolist(),
+    'precision': precision.tolist(),
+    'recall': recall.tolist(),
+    'fpr': fpr.tolist(),
+    })
+
+frame.to_csv('Results/General/data_metrics.csv', index=False)
 
