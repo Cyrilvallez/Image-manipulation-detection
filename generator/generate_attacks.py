@@ -171,7 +171,7 @@ def compression_attack(path, compression_quality_factors=(10, 50, 90), **kwargs)
     out = {}
     
     for factor in compression_quality_factors:
-        id_factor = 'compressed_jpg_' + str(factor)
+        id_factor = 'jpg_compression_' + str(factor)
         
         # Trick to compress using jpg without actually saving to disk
         with BytesIO() as f:
@@ -208,7 +208,7 @@ def scaling_attack(path, scaling_ratios=(0.4, 0.8, 1.2, 1.6), **kwargs):
     out = {}
 
     for ratio in scaling_ratios:
-        id_ratio = 'scaled_' + str(ratio)
+        id_ratio = 'scaling_' + str(ratio)
         out[id_ratio] = image.resize((round(ratio*width), round(ratio*height)),
                                      resample=Image.LANCZOS)
     
@@ -244,7 +244,7 @@ def cropping_attack(path, cropping_percentages=(5, 10, 20, 40, 60),
     out = {}
     
     for percentage in cropping_percentages:
-        id_crop = 'cropped_' + str(percentage)
+        id_crop = 'cropping_' + str(percentage)
         ratio = 1 - percentage/100
         midx = width//2 + 1
         midy = height//2 + 1
@@ -259,7 +259,7 @@ def cropping_attack(path, cropping_percentages=(5, 10, 20, 40, 60),
         
         if (resize_cropping):
             cropped = cropped.resize((width, height))
-            id_crop += '_resized'
+            id_crop += '_and_rescaling'
             
         out[id_crop] = cropped
         
@@ -295,12 +295,12 @@ def rotation_attack(path, rotation_angles=(5, 10, 20, 40, 60),
     out = {}
 
     for angle in rotation_angles:
-        id_angle = 'rotated_' + str(angle) 
+        id_angle = 'rotation_' + str(angle) 
         rotated = image.rotate(angle, expand=True, resample=Image.BICUBIC)
         
         if (resize_rotation):
             rotated = rotated.resize(size, resample=Image.LANCZOS)
-            id_angle += '_resized'
+            id_angle += '_and_rescaling'
             
         out[id_angle] = rotated
     
@@ -336,7 +336,7 @@ def shearing_attack(path, shearing_angles=(1, 2, 5, 10, 20), **kwargs):
     out = {}
     
     for angle, degree in zip(angles_rad, shearing_angles):
-        id_shear = 'sheared_' + str(degree)
+        id_shear = 'shearing_' + str(degree)
         
         transfo = transform.AffineTransform(shear=angle)
         sheared = transform.warp(array, transfo, order=4)
@@ -374,7 +374,7 @@ def contrast_attack(path, contrast_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     
     for factor in contrast_factors:
         enhanced = enhancer.enhance(factor)
-        id_enhanced = 'contrast_enhanced_' + str(factor)
+        id_enhanced = 'contrast_enhancement_' + str(factor)
         out[id_enhanced] = enhanced
         
     return out
@@ -406,7 +406,7 @@ def color_attack(path, color_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     
     for factor in color_factors:
         enhanced = enhancer.enhance(factor)
-        id_enhanced = 'color_enhanced_' + str(factor)
+        id_enhanced = 'color_enhancement_' + str(factor)
         out[id_enhanced] = enhanced
         
     return out
@@ -438,7 +438,7 @@ def brightness_attack(path, brightness_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     
     for factor in brightness_factors:
         enhanced = enhancer.enhance(factor)
-        id_enhanced = 'brightness_enhanced_' + str(factor)
+        id_enhanced = 'brightness_enhancement_' + str(factor)
         out[id_enhanced] = enhanced
         
     return out
@@ -470,7 +470,7 @@ def sharpness_attack(path, sharpness_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     
     for factor in sharpness_factors:
         enhanced = enhancer.enhance(factor)
-        id_enhanced = 'sharpness_enhanced_' + str(factor)
+        id_enhanced = 'sharpness_enhancement_' + str(factor)
         out[id_enhanced] = enhanced
         
     return out
@@ -546,7 +546,7 @@ def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
 
         context.multiline_text((x, y), sentence, font=font, fill=color,
                                stroke_fill=stroke, stroke_width=2, align='center')
-        id_text = 'text_' + str(length)
+        id_text = 'text_length_' + str(length)
         out[id_text] = img
         
     return out
@@ -782,18 +782,18 @@ def retrieve_ids(**kwargs):
         'salt_pepper_amounts': wrapper('s&p_noise_{val}'),
         'gaussian_kernels': wrapper('gaussian_filter_{val}x{val}', gaussian_filter=True),
         'median_kernels': wrapper('median_filter_{val}x{val}'),
-        'compression_quality_factors': wrapper('compressed_jpg_{val}'),
-        'scaling_ratios': wrapper('scaled_{val}'),
-        'cropping_percentages': wrapper('cropped_{val}_resized') if resize_cropping \
-            else wrapper('cropped_{val}'),
-        'rotation_angles': wrapper('rotated_{val}_resized') if resize_rotation \
-            else wrapper('rotated_{val}'),
-        'shearing_angles': wrapper('sheared_{val}'),
-        'contrast_factors': wrapper('contrast_enhanced_{val}'),
-        'color_factors': wrapper('color_enhanced_{val}')   ,
-        'brightness_factors': wrapper('brightness_enhanced_{val}'),
-        'sharpness_factors': wrapper('sharpness_enhanced_{val}'),
-        'text_lengths': wrapper('text_{val}')
+        'compression_quality_factors': wrapper('jpg_compression_{val}'),
+        'scaling_ratios': wrapper('scaling_{val}'),
+        'cropping_percentages': wrapper('cropping_{val}_and_rescaling') if \
+            resize_cropping else wrapper('cropping_{val}'),
+        'rotation_angles': wrapper('rotation_{val}_and_rescaling') if \
+            resize_rotation else wrapper('rotation_{val}'),
+        'shearing_angles': wrapper('shearing_{val}'),
+        'contrast_factors': wrapper('contrast_enhancement_{val}'),
+        'color_factors': wrapper('color_enhancement_{val}')   ,
+        'brightness_factors': wrapper('brightness_enhancement_{val}'),
+        'sharpness_factors': wrapper('sharpness_enhancement_{val}'),
+        'text_lengths': wrapper('text_length_{val}')
         }
     
     # Performs the switch on the intersection of keys (not only on kwargs.keys()
