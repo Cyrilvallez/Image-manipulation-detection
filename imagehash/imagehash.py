@@ -145,13 +145,13 @@ class ImageHash(object):
         )
     
     def match_db(self, other_hashes, bit_error_rate=0.25):
-        '''
+        """
         Check if the hash match a hash in the given database.
         
         :param other_hashes: The DB. A list of image hashes to compare against
         :param bit_error_rate: Percentage of bits which can be incorrect
         Defaults to 0.25 if unset, which means the hash can be 25% different
-        '''
+        """
         
         for hash_ in other_hashes:
             if self.matches(hash_, bit_error_rate=bit_error_rate):
@@ -160,7 +160,7 @@ class ImageHash(object):
     
     
     def match_db_image(self, other_hashes, bit_error_rate=0.25):
-        '''
+        """
         Check if the hash match a hash in the given database.
         
         :param other_hashes: The DB. A dictionary of the form {image_name:hash}
@@ -169,7 +169,7 @@ class ImageHash(object):
         Defaults to 0.25 if unset, which means the hash can be 25% different
         
         output : all image_name matching the hash
-        '''
+        """
         
         names = []
         for key in other_hashes.keys():
@@ -527,13 +527,13 @@ class ImageMultiHash(object):
     #===================================== ADDED FUNCTIONS ====================
     
     def match_db(self, other_hashes, bit_error_rate=None):
-        '''
+        """
         Check if the multi hash match a multi hash in the given database.
         
         :param other_hashes: The DB. A list of image multi hashes to compare against
         :param bit_error_rate: Percentage of bits which can be incorrect, an alternative to the hamming cutoff.
         Defaults to 0.25 if unset, which means the hash can be 25% different
-        '''
+        """
         
         for hash_ in other_hashes:
             if self.matches(hash_, bit_error_rate=bit_error_rate):
@@ -542,7 +542,7 @@ class ImageMultiHash(object):
     
     
     def match_db_image(self, other_hashes, bit_error_rate=0.25):
-        '''
+        """
         Check if the hash match a hash in the given database.
         
         :param other_hashes: The DB. A dictionary of the form {image_name:hash}
@@ -551,7 +551,7 @@ class ImageMultiHash(object):
         Defaults to 0.25 if unset, which means the hash can be 25% different
         
         output : all image_name matching the hash
-        '''
+        """
         
         names = []
         for key in other_hashes.keys():

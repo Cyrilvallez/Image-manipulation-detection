@@ -6,6 +6,11 @@ Created on Tue Mar 23 14:39:26 2021
 @author: cyrilvallez
 """
 
+# =============================================================================
+# Some defaults parameters for better plots, matching the font and sizes of
+# latex reports
+# =============================================================================
+
 import os
 import matplotlib.pyplot as plt
 
