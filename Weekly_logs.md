@@ -1,5 +1,7 @@
 # Weekly logs
 
+These are logs that I will update every week in order to keep track of my work (and possibly so that other are also able to follow it).
+
 ## Table of contents
 1. [Week 1 : 07/02](#week1)
 2. [Week 2 : 14/02](#week2)
