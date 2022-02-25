@@ -17,6 +17,8 @@ from helpers import Plot
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+import pandas as pd
+import seaborn as sns
 
 
 def ROC_curves(fpr, recall, legend, large_ticks=True, title=None,
@@ -200,3 +202,188 @@ def time_comparison(time_identification, time_db, labels, save=False,
     if save:
         plt.savefig(filename, bbox_inches='tight')
     plt.show()
+    
+    
+    
+def _find_lowest_biggest_frequencies(frequencies, N_rows, N_cols,
+                                     path_attacked_imgs, N_lowest, N_biggest):
+    
+    keys = np.array(list(frequencies.keys()))
+
+    # Find images supposed to be identified 
+    attacked_images = []
+    for key in frequencies.keys():
+        for file in os.listdir(path_attacked_imgs):
+            if file.split('_', 1)[0] == key.rsplit('.', 1)[0]:
+                attacked_images.append(key)
+                break
+    attacked_images = np.array(attacked_images)
+    
+    # The number of the images as ints
+    img_numbers = np.array([int(key.split('.')[0].replace('data', '')) for key in keys])
+    attacked_img_numbers = np.array([int(key.split('.')[0].replace('data', '')) for key in attacked_images])
+        
+    # Reorder the keys according to the image number
+    sorting = np.argsort(img_numbers)
+    img_numbers = img_numbers[sorting]
+    keys = keys[sorting]
+    
+    sorting = np.argsort(attacked_img_numbers)
+    attacked_img_numbers = attacked_img_numbers[sorting]
+    attacked_images = attacked_images[sorting]
+    
+    ID_least_identified = np.zeros((N_rows, N_cols, N_lowest))
+    ID_most_identified = np.zeros((N_rows, N_cols, N_biggest))
+    value_least_identified = np.zeros((N_rows, N_cols, N_lowest))
+    value_most_identified = np.zeros((N_rows, N_cols, N_biggest))
+    
+    for i in range(N_rows):
+        for j in range(N_cols):
+            tot_least_identified = []
+            tot_most_identified = np.zeros(len(keys))
+            for k, key in enumerate(keys):
+                if key in attacked_images:
+                    tot_least_identified.append(frequencies[key][i, j, 0])
+                tot_most_identified[k] = frequencies[key][i, j, 1] + frequencies[key][i, j, 2]
+            tot_least_identified = np.array(tot_least_identified)
+            lowest = np.argsort(tot_least_identified, kind='mergesort')[0:N_lowest]
+            biggest = np.argsort(tot_most_identified, kind='mergesort')[-N_biggest:]
+            ID_least_identified[i,j,:] = attacked_img_numbers[lowest]
+            ID_most_identified[i,j,:] = img_numbers[biggest]
+            value_least_identified[i,j,:] = tot_least_identified[lowest]
+            value_most_identified[i,j,:] = tot_most_identified[biggest]
+            
+    return (ID_least_identified, ID_most_identified, value_least_identified,
+            value_most_identified)
+
+    
+def frequency_pannels(frequencies, path_attacked_imgs, algo_names, BERs, N_lowest=20,
+                      N_biggest=50, save=False, filename=None):
+    
+    if save and filename is None:
+        filename = 'Results/Mapping/pannel_'
+    
+    N_rows = len(algo_names)
+    N_cols = len(BERs)
+    
+    (ID_least_identified, ID_most_identified, value_least_identified,
+     value_most_identified) = _find_lowest_biggest_frequencies(frequencies, N_rows, N_cols,
+                                          path_attacked_imgs, N_lowest, N_biggest)
+            
+    ID = [ID_least_identified, ID_most_identified]
+    value = [value_least_identified, value_most_identified]
+    title = [f'{N_lowest} least recognized images in correctly identified images',
+             f'{N_biggest} most recognized images in incorrectly identified images']
+    savenames = ['correct', 'incorrect']
+    cols = [f'BER {BERs[i]:.2f}' for i in range(len(BERs))]
+    rows = np.array(algo_names)
+    pad = 5 # in points
+            
+    for k in range(2):
+        
+        X = ID[k]
+        Y = value[k]
+            
+        fig, axes = plt.subplots(N_rows, N_cols, figsize=(20,15), sharex=True,
+                                 sharey='col')
+
+        for i in range(N_rows):
+            for j in range(N_cols):
+                ax = axes[i][j]
+                ax.scatter(X[i,j,:], Y[i,j,:], color='b', s=10)
+
+        for ax, col in zip(axes[0], cols):
+            ax.annotate(col, xy=(0.5, 1), xytext=(0, pad),
+                        xycoords='axes fraction', textcoords='offset points',
+                        size=20, ha='center', va='baseline')
+
+        for ax, row in zip(axes[:,0], rows):
+            ax.annotate(row, xy=(0, 0.5), xytext=(-ax.yaxis.labelpad - pad, 0),
+                        xycoords=ax.yaxis.label, textcoords='offset points',
+                        size=20, ha='right', va='center')
+            
+        plt.suptitle(title[k], y=1, fontsize=30)
+        fig.tight_layout()
+        if save:
+            plt.savefig(filename + savenames[k] + '.pdf', bbox_inches='tight')
+        plt.show()
+    
+    
+    
+
+def similarity_heatmaps(frequencies, path_attacked_imgs, algo_names, BERs,
+                        N_lowest=20, N_biggest=50, save=False, filename=None):
+    
+    if save and filename is None:
+        filename = 'Results/Mapping/heatmap_'
+        
+    N_rows = len(algo_names)
+    N_cols = len(BERs)
+
+    least_identified, most_identified, _, _ = _find_lowest_biggest_frequencies(
+        frequencies, N_rows, N_cols, path_attacked_imgs, N_lowest, N_biggest)
+            
+    # Plot heatmaps with respect to algorithms
+    for j in range(N_cols):
+        similarities = np.zeros((N_rows, N_rows))
+        
+        for i in range(N_rows):
+            for k in range(N_rows):
+                similarities[i,k] = np.isin(least_identified[i,j,:],
+                        least_identified[k,j,:]).sum()/N_lowest
+                
+        frame = pd.DataFrame(similarities, columns=algo_names, index=algo_names)
+        
+        plt.figure()
+        sns.heatmap(frame, center=0.5, annot=True)
+        title = f'Similarity proportion between {N_lowest} least recognized images'  + \
+            f'\nBER threshold {BERs[j]:.2f}'
+        plt.title(title)
+        if save:
+            plt.savefig(filename + f'{BERs[j]:.2f}.pdf', bbox_inches='tight')
+        plt.show()
+        
+    
+    BERs_str = [f'{BERs[i]:.2f}' for i in range(N_cols)]
+        
+    # Plot heatmaps with respect to BERs
+    for i in range(N_rows):
+        similarities = np.zeros((N_cols, N_cols))
+        
+        for j in range(N_cols):
+            for k in range(N_cols):
+                similarities[j,k] = np.isin(least_identified[i,j,:],
+                        least_identified[i,k,:]).sum()/N_lowest
+                
+        frame = pd.DataFrame(similarities, columns=BERs_str, index=BERs_str)
+        
+        plt.figure()
+        sns.heatmap(frame, center=0.5, annot=True)
+        title = f'Similarity proportion between {N_lowest} least recognized images'  + \
+            '\n' + algo_names[i]
+        plt.title(title)
+        if save:
+            plt.savefig(filename + algo_names[i] + '.pdf', bbox_inches='tight')
+        plt.show()
+        
+        
+    # Plot heatmap with respect to algorithm for biggest non-detected
+    similarities = np.zeros((N_rows, N_rows))
+    
+    for i in range(N_rows):
+        for k in range(N_rows):
+            similarities[i,k] = np.isin(most_identified[i,-1,:],
+                most_identified[k,-1,:]).sum()/N_biggest
+                
+    frame = pd.DataFrame(similarities, columns=algo_names, index=algo_names)
+        
+    plt.figure()
+    sns.heatmap(frame, center=0.5, annot=True)
+    title = f'Similarity proportion between {N_biggest} most wrongly identified images'  + \
+        f'\nBER threshold {BERs[-1]:.2f}'
+    plt.title(title)
+    if save:
+        plt.savefig(filename + f'incorrect_{BERs[-1]:.2f}.pdf', bbox_inches='tight')
+    plt.show()
+        
+        

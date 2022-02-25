@@ -24,7 +24,10 @@ sys.path.append(os.path.dirname(os.getcwd()))
 from imagehash import imagehash as ih
 from PIL import Image
 from tqdm import tqdm
+import matplotlib.pyplot as plt
 import Create_plot as plot
+import pandas as pd
+import seaborn as sns
 
 path_db = 'BSDS500/Identification/'
 path_id = 'BSDS500/Identification_attacks/'
@@ -33,6 +36,8 @@ path_ct = 'BSDS500/Control_attacks/'
 algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash, ih.crop_resistant_hash]
 names = ['average hash', 'phash', 'dhash', 'whash', 'crop resistant hash']
 BERs = np.linspace(0, 0.2, 5)
+
+#%%
 
 # Initialize a dictionary of frequencies for each image
 # Each key is an image name and its value is an array which will hold 
@@ -67,8 +72,8 @@ for i in tqdm(range(len(algos))):
             detected = hash_.match_db_image(db, bit_error_rate=rate)
             for name in detected:
                 # this was correctly identified. Assumes that the first '_' in 
-                # the original file separates the name and the attack id
-                if file.split('_')[0] in name:
+                # the original file separates the name and the attack id 
+                if file.split('_', 1)[0] == name.rsplit('.', 1)[0]:
                     frequencies[name][i,j,0] += 1
                 # This was correctly identified but not for the right image in the db
                 else:
@@ -87,94 +92,70 @@ np.save('frequencies.npy', frequencies)
         
 #%%
 # Plots
+import Create_plot as plot
+plot.detection_frequencies(frequencies, path_id, names, BERs)
 
+#%%
+
+N_rows = len(names)
+N_cols = len(BERs)
+    
 keys = np.array(list(frequencies.keys()))
-index = np.arange(len(keys))
-img_number = np.zeros(len(index))
 
+# Find images supposed to be identified 
+identified = []
+for key in keys:
+    for file in os.listdir(path_id):
+        if file.split('_', 1)[0] == key.rsplit('.', 1)[0]:
+            identified.append(key)
+            break
+identified = np.array(identified)
+    
+img_number = np.zeros(len(keys))
+# The number of the images for labels
 for i, key in enumerate(keys):
     number = key.split('.')[0].replace('data', '')
     img_number[i] = int(number)
     
-    
-#%%
+sorting = np.argsort(img_number)
+img_number = img_number[sorting]
+keys = keys[sorting]
+        
+# Indices of images which must be identified
+indices = np.isin(keys, identified)
+keys_identified = keys[indices]
+img_number_identified = img_number[indices]
 
-def plot_algo(row, dim, axs, N=5):
-    tot = np.zeros((len(keys), N))
-    for i, key in enumerate(keys):
-        for j in range(N):
-            tot[i,j] = frequencies[key][row,j,dim]
-            
-    for j, ax in enumerate(axs):
-        valid = tot[:,j] > 0
-        ax.scatter(index[valid], tot[:,j][valid])
-        ax.set_xticks(index, img_number)
-        
-        
-        
-        
-         
-        
-    
-fig, axes = plt.subplots(7, 5, figsize=(20,15), sharex=True, sharey='col')
+N_min = 20
+out = np.zeros((N_rows, N_cols, N_min))
 
-for i in range(len(algos)):
-    plot_algo(i, 0, axes[i])
+for i in range(N_rows):
+    for j in range(N_cols):
+        tot = np.zeros(len(keys_identified))
+        for k, key in enumerate(keys_identified):
+            tot[k] = frequencies[key][i, j, 0]
+        lowest = np.argsort(tot)[0:N_min]
+        out[i,j,:] = img_number_identified[lowest]
+        
+        
+for j in range(N_cols):
     
-    
-cols = [f'BER {BERs[j]:.2f}' for j in range(5)]
-rows = np.array(names)
-pad = 5 # in points
-
-for ax, col in zip(axes[0], cols):
-    ax.annotate(col, xy=(0.5, 1), xytext=(0, pad),
-                xycoords='axes fraction', textcoords='offset points',
-                size=20, ha='center', va='baseline')
-
-for ax, row in zip(axes[:,0], rows):
-    ax.annotate(row, xy=(0, 0.5), xytext=(-ax.yaxis.labelpad - pad, 0),
-                xycoords=ax.yaxis.label, textcoords='offset points',
-                size=20, ha='right', va='center')
-    
-fig.tight_layout()
-#fig.subplots_adjust(left=0.15, top=0.95)
-    
-plt.savefig('test.pdf', bbox_inches='tight')
-plt.show()
+    data = np.zeros((N_rows, N_rows))
+    for i in range(N_rows):
+        for k in range(N_rows):
+            data[i,k] = np.isin(out[i,j,:], out[k,j,:]).sum()/N_min
+    frame = pd.DataFrame(data, columns=names, index=names)
+    plt.figure()
+    sns.heatmap(frame, center=0.5, annot=True)
+    title = f'Similarity proportion between {N_min} least recognized images'  + \
+        f'\nBER threshold {BERs[j]:.2f}'
+    plt.title(title)
+    plt.show()
+        
 
 #%%
-
-keys = list(frequencies.keys())
-index = np.arange(250)
-tot = np.zeros(250)
-
-for i, key in enumerate(keys):
-    tot[i] = frequencies[key][0,-1,1]
-    
-plt.figure()
-plt.scatter(index[tot > 0], tot[tot > 0])
-plt.show()
-
-plt.figure()
-plt.scatter(np.array(keys)[tot > 0], tot[tot > 0])
-plt.xticks(np.array(keys)[tot > 0], np.array(keys)[tot > 0], rotation='vertical')
-plt.show()
-
+plot.similarity_heatmaps(frequencies, path_id, names, BERs, save=True)
 
 #%%
-N = 0
-N2 = 0
-test = []
-problem = []
-
-file = os.listdir(path_id)[56]
-for name in detected:
-        # this was correctly identified, assumes that the only dot in 
-        # the original name is for the extension
-        test.append(name.split('.')[0])
-        if file.split('_')[0] in name:
-            N += 1
-            problem.append(name)
-        # This was correctly identified but not for the right image in the db
-        else:
-            N2 += 1
+import Create_plot as plot
+plot.frequency_pannels(frequencies, path_id, names, BERs, save=True)
