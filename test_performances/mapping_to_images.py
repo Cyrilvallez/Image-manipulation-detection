@@ -88,74 +88,14 @@ for i in tqdm(range(len(algos))):
                 frequencies[name][i,j,2] += 1
 
  
-np.save('frequencies.npy', frequencies)       
+#%%
+# Save the results
+np.save('Results/Mapping/frequencies.npy', frequencies)       
         
 #%%
 # Plots
-import Create_plot as plot
-plot.detection_frequencies(frequencies, path_id, names, BERs)
+plot.frequency_pannels(frequencies, path_id, names, BERs, save=True,
+                       filename='Results/Mapping/pannel_')
 
-#%%
-
-N_rows = len(names)
-N_cols = len(BERs)
-    
-keys = np.array(list(frequencies.keys()))
-
-# Find images supposed to be identified 
-identified = []
-for key in keys:
-    for file in os.listdir(path_id):
-        if file.split('_', 1)[0] == key.rsplit('.', 1)[0]:
-            identified.append(key)
-            break
-identified = np.array(identified)
-    
-img_number = np.zeros(len(keys))
-# The number of the images for labels
-for i, key in enumerate(keys):
-    number = key.split('.')[0].replace('data', '')
-    img_number[i] = int(number)
-    
-sorting = np.argsort(img_number)
-img_number = img_number[sorting]
-keys = keys[sorting]
-        
-# Indices of images which must be identified
-indices = np.isin(keys, identified)
-keys_identified = keys[indices]
-img_number_identified = img_number[indices]
-
-N_min = 20
-out = np.zeros((N_rows, N_cols, N_min))
-
-for i in range(N_rows):
-    for j in range(N_cols):
-        tot = np.zeros(len(keys_identified))
-        for k, key in enumerate(keys_identified):
-            tot[k] = frequencies[key][i, j, 0]
-        lowest = np.argsort(tot)[0:N_min]
-        out[i,j,:] = img_number_identified[lowest]
-        
-        
-for j in range(N_cols):
-    
-    data = np.zeros((N_rows, N_rows))
-    for i in range(N_rows):
-        for k in range(N_rows):
-            data[i,k] = np.isin(out[i,j,:], out[k,j,:]).sum()/N_min
-    frame = pd.DataFrame(data, columns=names, index=names)
-    plt.figure()
-    sns.heatmap(frame, center=0.5, annot=True)
-    title = f'Similarity proportion between {N_min} least recognized images'  + \
-        f'\nBER threshold {BERs[j]:.2f}'
-    plt.title(title)
-    plt.show()
-        
-
-#%%
-plot.similarity_heatmaps(frequencies, path_id, names, BERs, save=True)
-
-#%%
-import Create_plot as plot
-plot.frequency_pannels(frequencies, path_id, names, BERs, save=True)
+plot.similarity_heatmaps(frequencies, path_id, names, BERs, save=True,
+                         filename='Results/Mapping/heatmap_')

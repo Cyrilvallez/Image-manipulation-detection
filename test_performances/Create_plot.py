@@ -56,8 +56,9 @@ def ROC_curves(fpr, recall, legend, large_ticks=True, title=None,
         filename = 'Results/General/ROC_curves.pdf'
         
     # for latex output (there is a '&' in some default attack names)
-    if '&' in title:
-        title = title.replace('&', '\\&')
+    if title is not None:
+        if '&' in title:
+            title = title.replace('&', '\\&')
     
     fpr = np.array(fpr)
     recall = np.array(recall)

@@ -63,9 +63,9 @@ params = {
 
 IDs = ga.retrieve_ids(**params)
 
-path_db = 'BSDS5002/Identification/'
-path_id = 'BSDS5002/Identification_attacks/'
-path_ct = 'BSDS5002/Control_attacks/'
+path_db = 'BSDS500/Identification/'
+path_id = 'BSDS500/Identification_attacks/'
+path_ct = 'BSDS500/Control_attacks/'
     
 # Whether to save the plots on disk or not
 save = True
