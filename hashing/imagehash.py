@@ -785,4 +785,4 @@ def hist_hash(image, L=12, sigma=3, lambda_=0.55):
             hash_.append(count[i]/count[j] >= 1)
     
     return ImageHash(np.array(hash_))
-    
+

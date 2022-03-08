@@ -15,7 +15,8 @@ import numpy as np
 import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
-from imagehash import imagehash as ih
+from hashing import imagehash as ih
+from hashing import neuralhash as nh
 from PIL import Image
 import time
 from tqdm import tqdm
@@ -26,10 +27,12 @@ path_db = 'BSDS500/Identification/'
 path_id = 'BSDS500/Identification_attacks/'
 path_ct = 'BSDS500/Control_attacks/'
 
-algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash, ih.colorhash, ih.hist_hash,
-         ih.crop_resistant_hash]
-names = ['average hash', 'phash', 'dhash', 'whash', 'color hash', 'hist hash',
-         'crop resistant hash']
+#algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash, ih.colorhash, ih.hist_hash,
+#         ih.crop_resistant_hash]
+#names = ['average hash', 'phash', 'dhash', 'whash', 'color hash', 'hist hash',
+#         'crop resistant hash']
+algos = [nh.inception_hash, nh.simclr_hash]
+names = ['inception hash', 'simclr hash']
 BERs = np.linspace(0, 0.4, 10)
 
 time_db = np.zeros(len(algos))
@@ -96,30 +99,33 @@ for i in tqdm(range(len(algos))):
 #%%
 # Plots
 
-save=True
+save=False
 
 plot.ROC_curves(fpr, recall, names, save=save,
-                filename='Results/General/Roc_curves.pdf')
+                filename='Results/General/ROC_curves_neural_hash.pdf')
 
 filenames = ['Results/General/Metrics_' + name + '.pdf' for name in names]
 plot.metrics_plot(accuracy, precision, recall, fpr, BERs, names, save=save,
                   filenames=filenames)
 
 plot.time_comparison(time_identification, time_db, names, save=save,
-                     filename='Results/General/Time.pdf')
+                     filename='Results/General/Time_neural_hash.pdf')
     
 #%%
 # Creates a pandas dataframe to easily save the data for later reuse
 
-frame = pd.DataFrame({
-    'algo': names,
-    'time_db': time_db,
-    'time_identification': time_identification.tolist(),
-    'accuracy': accuracy.tolist(),
-    'precision': precision.tolist(),
-    'recall': recall.tolist(),
-    'fpr': fpr.tolist(),
-    })
+save_file=False
 
-frame.to_csv('Results/General/data_metrics.csv', index=False)
+if save_file:
+    frame = pd.DataFrame({
+        'algo': names,
+        'time_db': time_db,
+        'time_identification': time_identification.tolist(),
+        'accuracy': accuracy.tolist(),
+        'precision': precision.tolist(),
+        'recall': recall.tolist(),
+        'fpr': fpr.tolist(),
+        })
+    
+    frame.to_csv('Results/General/data_metrics_neural_hash.csv', index=False)
 

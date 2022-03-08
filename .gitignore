@@ -3,4 +3,4 @@
 .vscode
 __pycache__
 test_performances/BSDS500
-test_performances/BSDS5002
+hashing/SimCLR

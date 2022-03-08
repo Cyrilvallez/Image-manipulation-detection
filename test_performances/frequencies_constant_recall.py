@@ -21,39 +21,47 @@ import numpy as np
 import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
-from imagehash import imagehash as ih
+from hashing import imagehash as ih
 from PIL import Image
 from tqdm import tqdm
-import matplotlib.pyplot as plt
 import Create_plot as plot
-import pandas as pd
-import seaborn as sns
+import json
 
 path_db = 'BSDS500/Identification/'
 path_id = 'BSDS500/Identification_attacks/'
 path_ct = 'BSDS500/Control_attacks/'
 
-algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash, ih.crop_resistant_hash]
-names = ['average hash', 'phash', 'dhash', 'whash', 'crop resistant hash']
-BERs = np.linspace(0, 0.2, 5)
+#algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash, ih.crop_resistant_hash]
+#names = ['average hash', 'phash', 'dhash', 'whash', 'crop resistant hash']
+recall = [0.8, 0.9]
+# Manual values for constant recall for each algo
+#BERs = [[0.115, 0.19], [0.17, 0.31], [0.15, 0.27], [0.12, 0.18], [0.07, 0.2]]
+
+algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash]
+names = ['average hash', 'phash', 'dhash', 'whash']
+BERs = [[0.115, 0.19], [0.17, 0.31], [0.15, 0.27], [0.12, 0.18]]
 
 #%%
 
 # Initialize a dictionary of frequencies for each image
 # Each key is an image name and its value is an array which will hold 
-# the frequencies of detections for each algorithm and BER threshold
+# the frequencies of detections for each algorithm and recall
 frequencies = {}
 
-for file in os.listdir(path_db):
-    # Convention : last dimension hold (correct identification, correct 
-    # identification but to wrong image, incorrect identification)
-    frequencies[file] = np.zeros((len(algos), len(BERs), 3)).astype(int)
+# Find images supposed to be identified and append them to the dictionary
+for key in os.listdir(path_db):
+     for file in os.listdir(path_id):
+         if file.split('_', 1)[0] == key.rsplit('.', 1)[0]:
+             # Convention : the dictionary hold an array (algorithm, recall)
+             frequencies[key] = np.zeros((len(algos), len(recall))).astype(int)
+             break
 
 
 for i in tqdm(range(len(algos))):
     
     algo = algos[i]
     name = names[i]
+    BER = BERs[i]
     
     # Create the database
     db = {}
@@ -64,7 +72,7 @@ for i in tqdm(range(len(algos))):
         
 
     # Identification
-    for j, rate in tqdm(enumerate(BERs)):
+    for j, rate in tqdm(enumerate(BER)):
     
         for file in os.listdir(path_id):
             img = Image.open(path_id + file)
@@ -74,28 +82,26 @@ for i in tqdm(range(len(algos))):
                 # this was correctly identified. Assumes that the first '_' in 
                 # the original file separates the name and the attack id 
                 if file.split('_', 1)[0] == name.rsplit('.', 1)[0]:
-                    frequencies[name][i,j,0] += 1
-                # This was correctly identified but not for the right image in the db
-                else:
-                    frequencies[name][i,j,1] += 1
-        
-        for file in os.listdir(path_ct):
-            img = Image.open(path_ct + file)
-            hash_ = algo(img)
-            detected = hash_.match_db_image(db, bit_error_rate=rate)
-            for name in detected:
-                # this was incorrectly identified
-                frequencies[name][i,j,2] += 1
-
- 
-#%%
-# Save the results
-np.save('Results/Mapping/frequencies.npy', frequencies)       
+                    frequencies[name][i,j] += 1
+    
         
 #%%
 # Plots
-plot.frequency_pannels(frequencies, path_id, names, BERs, save=True,
-                       filename='Results/Mapping/pannel_')
 
-plot.similarity_heatmaps(frequencies, path_id, names, BERs, save=True,
-                         filename='Results/Mapping/heatmap_')
+save = True
+
+plot.frequency_pannels(frequencies, path_id, 'recall', names, recall, save=save,
+                       filename='Results/Mapping/test_pannel_')
+
+plot.similarity_heatmaps(frequencies, path_id, 'recall', names, recall, save=save,
+                       filename='Results/Mapping/test_heatmap_')
+
+#%%
+
+save = False
+filename = 'TP_frequency_test.json' 
+
+if save:
+    with open(filename, 'w') as fp:
+        json.dump(frequencies, fp, indent=1, default=lambda x: x.tolist())
+        

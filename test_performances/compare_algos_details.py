@@ -15,7 +15,7 @@ import numpy as np
 import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
-from imagehash import imagehash as ih
+from hashing import imagehash as ih
 from generator import generate_attacks as ga
 from PIL import Image
 from tqdm import tqdm

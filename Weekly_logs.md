@@ -84,3 +84,81 @@ Among other things, I also took some time to clean up the code for the generator
 > test_performances/Create_plot.py 
 
 I also began to read papers on Neural Hashing, and wrote those logs.
+
+## Week 4 : 28/02 <a name="week4"></a>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-zv4m{border-color:#ffffff;text-align:left;vertical-align:top}
+.tg .tg-8jgo{border-color:#ffffff;text-align:center;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-8jgo" rowspan="2">Algorithm</th>
+    <th class="tg-8jgo" colspan="3">Recall</th>
+    <th class="tg-8jgo" colspan="3">FPR</th>
+  </tr>
+  <tr>
+    <th class="tg-8jgo">0.7</th>
+    <th class="tg-8jgo">0.8</th>
+    <th class="tg-8jgo">0.9</th>
+    <th class="tg-8jgo">0.2</th>
+    <th class="tg-8jgo">0.3</th>
+    <th class="tg-8jgo">0.4</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-zv4m">Ahash</td>
+    <td class="tg-8jgo">0.04</td>
+    <td class="tg-8jgo">0.115</td>
+    <td class="tg-8jgo">0.19</td>
+    <td class="tg-8jgo">0.18</td>
+    <td class="tg-8jgo"></td>
+    <td class="tg-8jgo"></td>
+  </tr>
+  <tr>
+    <td class="tg-zv4m">Phash</td>
+    <td class="tg-8jgo">0.07</td>
+    <td class="tg-8jgo">0.17</td>
+    <td class="tg-8jgo">0.31</td>
+    <td class="tg-8jgo">0.29</td>
+    <td class="tg-8jgo"></td>
+    <td class="tg-8jgo"></td>
+  </tr>
+  <tr>
+    <td class="tg-zv4m">Dhash</td>
+    <td class="tg-8jgo">0.05</td>
+    <td class="tg-8jgo">0.15</td>
+    <td class="tg-8jgo">0.27</td>
+    <td class="tg-8jgo"></td>
+    <td class="tg-8jgo"></td>
+    <td class="tg-8jgo"></td>
+  </tr>
+  <tr>
+    <td class="tg-zv4m">Whash</td>
+    <td class="tg-8jgo">0.04</td>
+    <td class="tg-8jgo">0.12</td>
+    <td class="tg-8jgo">0.18</td>
+    <td class="tg-8jgo"></td>
+    <td class="tg-8jgo"></td>
+    <td class="tg-8jgo"></td>
+  </tr>
+  <tr>
+    <td class="tg-zv4m">CRhash</td>
+    <td class="tg-8jgo">0.03</td>
+    <td class="tg-8jgo">0.07</td>
+    <td class="tg-8jgo">0.2</td>
+    <td class="tg-8jgo"></td>
+    <td class="tg-8jgo"></td>
+    <td class="tg-8jgo"></td>
+  </tr>
+</tbody>
+</table>
+
+BER thresholds for constant recall/FPR for the different algos.
