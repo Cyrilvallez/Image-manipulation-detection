@@ -33,4 +33,9 @@ from torchvision.models import inception_v3
 
 path = 'test_performances/BSDS500/Control/'
 
-hashes = nh.inception_hash(path, device='cpu')
+def find(name, path):
+    for root, dirs, files in os.walk(path):
+        if name in files:
+            return os.path.join(root, name)
+        
+test = find('resnet50-2x.pth', os.path.dirname(os.getcwd()))

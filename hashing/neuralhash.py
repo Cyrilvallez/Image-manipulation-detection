@@ -143,7 +143,7 @@ def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     # Load the model if it has not being loaded already
     if SIMCLR is None:
         SIMCLR = resnet_wider.resnet50x2()
-        CHECKPOINT = torch.load('/Users/cyrilvallez/Desktop/Project/hashing/SimCLR/resnet50-2x.pth')
+        CHECKPOINT = torch.load(os.path.dirname(os.getcwd()) + '/hashing/SimCLR/resnet50-2x.pth')
         SIMCLR.load_state_dict(CHECKPOINT['state_dict'])
         SIMCLR.fc = nn.Identity()
         SIMCLR.eval()
@@ -192,7 +192,7 @@ def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     # Load the model if it has not being loaded already
     if SIMCLR is None:
         SIMCLR_FEATURES = resnet_wider.resnet50x2()
-        CHECKPOINT = torch.load('/Users/cyrilvallez/Desktop/Project/hashing/SimCLR/resnet50-2x.pth')
+        CHECKPOINT = torch.load(os.path.dirname(os.getcwd()) + '/hashing/SimCLR/resnet50-2x.pth')
         SIMCLR_FEATURES.load_state_dict(CHECKPOINT['state_dict'])
         SIMCLR_FEATURES.fc = nn.Identity()
         SIMCLR_FEATURES.eval()
