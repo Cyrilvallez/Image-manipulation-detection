@@ -27,12 +27,10 @@ path_db = 'BSDS500/Identification/'
 path_id = 'BSDS500/Identification_attacks/'
 path_ct = 'BSDS500/Control_attacks/'
 
-#algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash, ih.colorhash, ih.hist_hash,
-#         ih.crop_resistant_hash]
-#names = ['average hash', 'phash', 'dhash', 'whash', 'color hash', 'hist hash',
-#         'crop resistant hash']
-algos = [nh.inception_hash, nh.simclr_hash]
-names = ['inception hash', 'simclr hash']
+algos = [ih.average_hash, ih.phash, ih.dhash, ih.whash, ih.colorhash, ih.hist_hash,
+         ih.crop_resistant_hash]
+names = ['average hash', 'phash', 'dhash', 'whash', 'color hash', 'hist hash',
+         'crop resistant hash']
 BERs = np.linspace(0, 0.4, 10)
 
 time_db = np.zeros(len(algos))

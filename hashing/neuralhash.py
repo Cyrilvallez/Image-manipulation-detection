@@ -43,6 +43,28 @@ class ImageDataset(Dataset):
 INCEPTION = None
 
 def inception_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
+    """
+    Neural hash using the pretrained inception v3 pytorch model (pretrained on
+    ImageNet)
+
+    Parameters
+    ----------
+    path_to_imgs : str
+        Path to a folder containing the images to hash.
+    hash_size : int, optional
+        The square of the hash size (to be consistent with imagehash library).
+        The default is 8, resulting in a hash of length 8**2=64.
+    batch_size : int, optional
+        The batch size for the network. The default is 256.
+    device : str, optional
+        Device to run the computations. Either `cpu` or `cuda`. The default is 'cuda'.
+
+    Returns
+    -------
+    hashes : list of hashes
+        Hashes for all the images in the folder `path_to_imgs`.
+
+    """
     
     assert (device=='cpu' or device=='cuda')
     
@@ -92,7 +114,29 @@ def inception_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
 # Initialize the model here for future global use
 SIMCLR = None
 
-def simclr_hash(image, hash_size=8):
+def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
+    """
+    Neural hash using the pretrained SimCLR model with resnet50-2x as architecture
+    (pretrained on ImageNet, and ported from tensorflow)
+
+    Parameters
+    ----------
+    path_to_imgs : str
+        Path to a folder containing the images to hash.
+    hash_size : int, optional
+        The square of the hash size (to be consistent with imagehash library).
+        The default is 8, resulting in a hash of length 8**2=64.
+    batch_size : int, optional
+        The batch size for the network. The default is 256.
+    device : str, optional
+        Device to run the computations. Either `cpu` or `cuda`. The default is 'cuda'.
+
+    Returns
+    -------
+    hashes : list of hashes
+        Hashes for all the images in the folder `path_to_imgs`.
+
+    """
     
     # The model is defined as global so that it is not loaded at every call
     global SIMCLR
@@ -103,34 +147,45 @@ def simclr_hash(image, hash_size=8):
         SIMCLR.load_state_dict(CHECKPOINT['state_dict'])
         SIMCLR.fc = nn.Identity()
         SIMCLR.eval()
+        SIMCLR.to(torch.device(device))
 
     # No normalization as the original model
-    transform = T.Compose([
+    transforms = T.Compose([
         T.Resize(256, interpolation=Image.LANCZOS),
         T.CenterCrop(224),
         T.ToTensor()
         ])
-    img = transform(image)
-    img = torch.unsqueeze(img, 0)
-
-    with torch.no_grad():
-        features = SIMCLR(img).numpy()
-    features = np.squeeze(features)
-
+    
+    # Creates the dataloader to easily iterate on images
+    dataset = ImageDataset(path_to_imgs, transforms, device=device)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
+    
     # random hyperplanes (with constant seed to always get the same)
     np.random.seed(135)
-    hyperplanes = 2*np.random.rand(hash_size**2, 4096) - 1
+    hyperplanes = 2*np.random.rand(4096, hash_size**2) - 1
     
-    hash_ = hyperplanes@features > 0
+    hashes = []
+
+    for imgs in dataloader:
+        # Apply the pretrained model
+        with torch.no_grad():
+            features = SIMCLR(imgs).cpu().numpy()
+        # Computes the dot products between each image and the hyperplanes and
+        # Select the bits depending on orientation 
+        img_hashes = features@hyperplanes > 0
+        
+        for img_hash in img_hashes:
+            hashes.append(ImageHash(img_hash))
+            
     
-    return ImageHash(hash_)
+    return hashes
 
 
 
 # Initialize the model here for future global use
 SIMCLR_FEATURES = None
 
-def simclr_features(image, hash_size=8):
+def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     
     # The model is defined as global so that it is not loaded at every call
     global SIMCLR_FEATURES
@@ -141,19 +196,29 @@ def simclr_features(image, hash_size=8):
         SIMCLR_FEATURES.load_state_dict(CHECKPOINT['state_dict'])
         SIMCLR_FEATURES.fc = nn.Identity()
         SIMCLR_FEATURES.eval()
+        SIMCLR_FEATURES.to(torch.device(device))
 
     # No normalization as the original model
-    transform = T.Compose([
+    transforms = T.Compose([
         T.Resize(256, interpolation=Image.LANCZOS),
         T.CenterCrop(224),
         T.ToTensor()
         ])
-    img = transform(image)
-    img = torch.unsqueeze(img, 0)
+    
+    # Creates the dataloader to easily iterate on images
+    dataset = ImageDataset(path_to_imgs, transforms, device=device)
+    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
+    
+    features = []
 
-    with torch.no_grad():
-        features = SIMCLR_FEATURES(img).numpy()
-    features = np.squeeze(features)
+    for imgs in dataloader:
+        # Apply the pretrained model
+        with torch.no_grad():
+            feature_imgs = SIMCLR(imgs).cpu().numpy()
+            
+        for feature in feature_imgs:
+            features.append(feature)
+        
 
     return features
 
