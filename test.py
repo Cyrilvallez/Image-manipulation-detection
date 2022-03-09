@@ -10,6 +10,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from hashing import imagehash as ih
 from hashing import neuralhash as nh
+from hashing.SimCLR import resnet_wider
 from generator import generate_attacks as ga
 from skimage.transform import radon
 import random
@@ -31,11 +32,21 @@ from torchvision.models import inception_v3
 
 #%%
 
-path = 'test_performances/BSDS500/Control/'
+SIMCLR = None
+device = 'cpu'
 
-def find(name, path):
-    for root, dirs, files in os.walk(path):
-        if name in files:
-            return os.path.join(root, name)
-        
-test = find('resnet50-2x.pth', os.path.dirname(os.getcwd()))
+t0 = time.time()
+
+# Load the model if it has not being loaded already
+if SIMCLR is None:
+    SIMCLR = resnet_wider.resnet50x2()
+    try:
+        CHECKPOINT = torch.load(os.path.expanduser('~/Project/hashing/SimCLR/resnet50-2x.pth'))
+    except FileNotFoundError:
+        CHECKPOINT = torch.load(os.path.expanduser('~/Desktop/Project/hashing/SimCLR/resnet50-2x.pth'))
+    SIMCLR.load_state_dict(CHECKPOINT['state_dict'])
+    SIMCLR.fc = nn.Identity()
+    SIMCLR.eval()
+    SIMCLR.to(torch.device(device))
+    
+dt = time.time() - t0

@@ -42,8 +42,6 @@ class ImageDataset(Dataset):
         return image
     
 
-# Initialize the model here for future global use
-INCEPTION = None
 
 def inception_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     """
@@ -71,15 +69,12 @@ def inception_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     
     assert (device=='cpu' or device=='cuda')
     
-    # The model is defined as global so that it is not loaded at every call
-    global INCEPTION
-    # Load the model if it has not being loaded already
-    if INCEPTION is None:
-        INCEPTION = inception_v3(pretrained=True, transform_input=False)
-        # Overrides last Linear layer
-        INCEPTION.fc = nn.Identity()
-        INCEPTION.eval()
-        INCEPTION.to(torch.device(device))
+    # Load the model 
+    inception = inception_v3(pretrained=True, transform_input=False)
+    # Overrides last Linear layer
+    inception.fc = nn.Identity()
+    inception.eval()
+    inception.to(torch.device(device))
         
     # Process the image 
     transforms = T.Compose([
@@ -101,7 +96,7 @@ def inception_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     for imgs in dataloader:
         # Apply the pretrained model
         with torch.no_grad():
-            features = INCEPTION(imgs).cpu().numpy()
+            features = inception(imgs).cpu().numpy()
         # Computes the dot products between each image and the hyperplanes and
         # Select the bits depending on orientation 
         img_hashes = features@hyperplanes > 0
@@ -113,9 +108,6 @@ def inception_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     return hashes
 
 
-
-# Initialize the model here for future global use
-SIMCLR = None
 
 def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     """
@@ -141,19 +133,16 @@ def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
 
     """
     
-    # The model is defined as global so that it is not loaded at every call
-    global SIMCLR
-    # Load the model if it has not being loaded already
-    if SIMCLR is None:
-        SIMCLR = resnet_wider.resnet50x2()
-        try:
-            CHECKPOINT = torch.load(os.path.expanduser('~/Project/hashing/SimCLR/resnet50-2x.pth'))
-        except FileNotFoundError:
-            CHECKPOINT = torch.load(os.path.expanduser('~/Desktop/Project/hashing/SimCLR/resnet50-2x.pth'))
-        SIMCLR.load_state_dict(CHECKPOINT['state_dict'])
-        SIMCLR.fc = nn.Identity()
-        SIMCLR.eval()
-        SIMCLR.to(torch.device(device))
+    # Load the model 
+    simclr = resnet_wider.resnet50x2()
+    try:
+        checkpoint = torch.load(os.path.expanduser('~/Project/hashing/SimCLR/resnet50-2x.pth'))
+    except FileNotFoundError:
+        checkpoint = torch.load(os.path.expanduser('~/Desktop/Project/hashing/SimCLR/resnet50-2x.pth'))
+    simclr.load_state_dict(checkpoint['state_dict'])
+    simclr.fc = nn.Identity()
+    simclr.eval()
+    simclr.to(torch.device(device))
 
     # No normalization as the original model
     transforms = T.Compose([
@@ -175,7 +164,7 @@ def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     for imgs in dataloader:
         # Apply the pretrained model
         with torch.no_grad():
-            features = SIMCLR(imgs).cpu().numpy()
+            features = simclr(imgs).cpu().numpy()
         # Computes the dot products between each image and the hyperplanes and
         # Select the bits depending on orientation 
         img_hashes = features@hyperplanes > 0
@@ -188,24 +177,19 @@ def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
 
 
 
-# Initialize the model here for future global use
-SIMCLR_FEATURES = None
 
 def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     
-    # The model is defined as global so that it is not loaded at every call
-    global SIMCLR_FEATURES
-    # Load the model if it has not being loaded already
-    if SIMCLR is None:
-        SIMCLR_FEATURES = resnet_wider.resnet50x2()
-        try:
-            CHECKPOINT = torch.load(os.path.expanduser('~/Project/hashing/SimCLR/resnet50-2x.pth'))
-        except FileNotFoundError:
-            CHECKPOINT = torch.load(os.path.expanduser('~/Desktop/Project/hashing/SimCLR/resnet50-2x.pth'))
-        SIMCLR_FEATURES.load_state_dict(CHECKPOINT['state_dict'])
-        SIMCLR_FEATURES.fc = nn.Identity()
-        SIMCLR_FEATURES.eval()
-        SIMCLR_FEATURES.to(torch.device(device))
+    # Load the model 
+    simclr = resnet_wider.resnet50x2()
+    try:
+        checkpoint = torch.load(os.path.expanduser('~/Project/hashing/SimCLR/resnet50-2x.pth'))
+    except FileNotFoundError:
+        checkpoint = torch.load(os.path.expanduser('~/Desktop/Project/hashing/SimCLR/resnet50-2x.pth'))
+    simclr.load_state_dict(checkpoint['state_dict'])
+    simclr.fc = nn.Identity()
+    simclr.eval()
+    simclr.to(torch.device(device))
 
     # No normalization as the original model
     transforms = T.Compose([
@@ -223,7 +207,7 @@ def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     for imgs in dataloader:
         # Apply the pretrained model
         with torch.no_grad():
-            feature_imgs = SIMCLR_FEATURES(imgs).cpu().numpy()
+            feature_imgs = simclr(imgs).cpu().numpy()
             
         for feature in feature_imgs:
             features.append(feature)
