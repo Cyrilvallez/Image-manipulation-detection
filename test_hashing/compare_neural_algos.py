@@ -127,3 +127,17 @@ if save_file:
     
     frame.to_csv('Results/General/data_metrics_neural_hash_feature.csv', index=False)
 
+#%%
+
+data = pd.read_csv('Results/General/data_metrics_neural_hash_feature.csv')
+names = data['algo']
+time_db = pd.eval(data['time_db']).astype(float)
+time_identification = pd.eval(data['time_identification']).astype(float)
+accuracy = pd.eval(data['accuracy']).astype(float)
+precision = pd.eval(data['precision']).astype(float)
+recall = pd.eval(data['recall']).astype(float)
+fpr = pd.eval(data['fpr']).astype(float)
+
+
+
+

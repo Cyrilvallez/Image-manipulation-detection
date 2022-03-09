@@ -25,7 +25,10 @@ class ImageDataset(Dataset):
     """
     
     def __init__(self, path_to_imgs, transforms, device='cuda'):
-        self.img_paths = [path_to_imgs + name for name in os.listdir(path_to_imgs)]
+        if type(path_to_imgs) == str:
+            self.img_paths = [path_to_imgs + name for name in os.listdir(path_to_imgs)]
+        elif type(path_to_imgs) == list:
+            self.img_paths = path_to_imgs
         self.transforms = transforms
         self.device = device
 
@@ -33,7 +36,7 @@ class ImageDataset(Dataset):
         return len(self.img_paths)
     
     def __getitem__(self, index):
-        image = Image.open(self.img_paths[index])
+        image = Image.open(self.img_paths[index]).convert('RGB')
         image = self.transforms(image)
         image = image.to(torch.device(self.device))
         return image
@@ -143,7 +146,10 @@ def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     # Load the model if it has not being loaded already
     if SIMCLR is None:
         SIMCLR = resnet_wider.resnet50x2()
-        CHECKPOINT = torch.load(os.path.dirname(os.getcwd()) + '/hashing/SimCLR/resnet50-2x.pth')
+        try:
+            CHECKPOINT = torch.load(os.path.expanduser('~/Project/hashing/SimCLR/resnet50-2x.pth'))
+        except FileNotFoundError:
+            CHECKPOINT = torch.load(os.path.expanduser('~/Desktop/Project/hashing/SimCLR/resnet50-2x.pth'))
         SIMCLR.load_state_dict(CHECKPOINT['state_dict'])
         SIMCLR.fc = nn.Identity()
         SIMCLR.eval()
@@ -192,7 +198,10 @@ def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     # Load the model if it has not being loaded already
     if SIMCLR is None:
         SIMCLR_FEATURES = resnet_wider.resnet50x2()
-        CHECKPOINT = torch.load(os.path.dirname(os.getcwd()) + '/hashing/SimCLR/resnet50-2x.pth')
+        try:
+            CHECKPOINT = torch.load(os.path.expanduser('~/Project/hashing/SimCLR/resnet50-2x.pth'))
+        except FileNotFoundError:
+            CHECKPOINT = torch.load(os.path.expanduser('~/Desktop/Project/hashing/SimCLR/resnet50-2x.pth'))
         SIMCLR_FEATURES.load_state_dict(CHECKPOINT['state_dict'])
         SIMCLR_FEATURES.fc = nn.Identity()
         SIMCLR_FEATURES.eval()
@@ -214,7 +223,7 @@ def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
     for imgs in dataloader:
         # Apply the pretrained model
         with torch.no_grad():
-            feature_imgs = SIMCLR(imgs).cpu().numpy()
+            feature_imgs = SIMCLR_FEATURES(imgs).cpu().numpy()
             
         for feature in feature_imgs:
             features.append(feature)
@@ -222,17 +231,17 @@ def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
 
     return features
 
-def cosine_similarity(a, b):
+def cosine_distance(a, b):
     """
-    cosine similarity between 0 and 1
+    cosine distance between 0 and 1
     """
     assert(len(a) == len(b))
     
-    return 1/2 + 1/2*np.dot(a,b)/np.linalg.norm(a)/np.linalg.norm(b)
+    return 1 - 1/2 - 1/2*np.dot(a,b)/np.linalg.norm(a)/np.linalg.norm(b)
 
 def features_matching(a, b, threshold):
-    
-    return cosine_similarity(a, b) <= threshold
+
+    return cosine_distance(a, b) <= threshold
 
 def match_db(a, db, threshold):
     

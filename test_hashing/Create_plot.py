@@ -173,12 +173,15 @@ def time_comparison(time_identification, time_db, labels, save=False,
     if save and filename is None:
         filename = 'Results/General/Time.pdf'
         
+    time_identification = np.array(time_identification)
+    time_db = np.array(time_db)
+        
     _, M = time_identification.shape
     
     time_average = np.mean(time_identification, axis=1)
     sorting = np.argsort(-time_average) # sort in decreasing order
     time_average = time_average[sorting]
-    time_DB = time_db[sorting]
+    time_db = time_db[sorting]
     names = np.array(labels)[sorting]
     time_average_str = [time.strftime('%M:%S', time.gmtime(a)) for a in time_average]
     time_db_str = [time.strftime('%M:%S', time.gmtime(a)) for a in time_db]
@@ -192,7 +195,7 @@ def time_comparison(time_identification, time_db, labels, save=False,
 
     plt.figure(figsize=[6.4*1.3, 4.8*1.3])
     rects1 = plt.barh(y-height/2, time_average, height, color='r')
-    rects2 = plt.barh(y+height/2, time_DB, height, color='b')
+    rects2 = plt.barh(y+height/2, time_db, height, color='b')
     plt.bar_label(rects1, labels=time_average_str, padding=3)
     plt.bar_label(rects2, labels=time_db_str, padding=3)
     plt.legend([f'Identification (mean\nover {M} runs)', 'Database creation'])

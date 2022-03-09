@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar  2 15:44:04 2022
+Created on Wed Mar  9 10:27:10 2022
 
 @author: cyrilvallez
 """
@@ -18,8 +18,8 @@ HASH_SIZE = 8
 
 path_ref = ['data/lena.png']
 path_adv = ['data/peppers.png']
-hash_ref = nh.inception_hash(path_ref, hash_size=HASH_SIZE, device='cpu')[0]
-hash_adv = nh.inception_hash(path_adv, hash_size=HASH_SIZE, device='cpu')[0]
+feature_ref = nh.simclr_features(path_ref, hash_size=HASH_SIZE, device='cpu')[0]
+feature_adv = nh.simclr_features(path_adv, hash_size=HASH_SIZE, device='cpu')[0]
 
 distances_ref = []
 distances_adv = []
@@ -29,15 +29,14 @@ t0 = time.time()
 paths = ['data/' + file for file in os.listdir('data') if (file.startswith('lena') \
                                                            and file != 'lena.png')]
 
-hashes = nh.inception_hash(paths, hash_size=HASH_SIZE, device='cpu')
+features = nh.simclr_features(paths, hash_size=HASH_SIZE, device='cpu')
 
-for hash_ in hashes:
-        distances_ref.append(hash_ref.BER(hash_))
-        distances_adv.append(hash_adv.BER(hash_))
+for feature in features:
+        distances_ref.append(nh.cosine_distance(feature, feature_ref))
+        distances_adv.append(nh.cosine_distance(feature, feature_adv))
         
 dt = time.time() - t0
 
 print(f'Mean of distances to Lena: {np.mean(distances_ref)}')
 print(f'Mean of distances to Peppers: {np.mean(distances_adv)}')
 print(f'Time needed for 58 images : {dt:.2f} s')
-
