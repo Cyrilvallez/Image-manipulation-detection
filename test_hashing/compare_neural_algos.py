@@ -97,17 +97,17 @@ for i in tqdm(range(len(algos))):
 #%%
 # Plots
 
-save=True
+#save=True
 
-plot.ROC_curves(fpr, recall, names, save=save,
-                filename='Results/General/ROC_curves_hash_feature.pdf')
+#plot.ROC_curves(fpr, recall, names, save=save,
+#                filename='Results/General/ROC_curves_hash_feature.pdf')
 
-filenames = ['Results/General/Metrics_' + name + '.pdf' for name in names]
-plot.metrics_plot(accuracy, precision, recall, fpr, BERs, names, save=save,
-                  filenames=filenames)
+#filenames = ['Results/General/Metrics_' + name + '.pdf' for name in names]
+#plot.metrics_plot(accuracy, precision, recall, fpr, BERs, names, save=save,
+#                  filenames=filenames)
 
-plot.time_comparison(time_identification, time_db, names, save=save,
-                     filename='Results/General/Time_neural_hash_feature.pdf')
+#plot.time_comparison(time_identification, time_db, names, save=save,
+#                     filename='Results/General/Time_neural_hash_feature.pdf')
     
 #%%
 # Creates a pandas dataframe to easily save the data for later reuse
@@ -129,14 +129,14 @@ if save_file:
 
 #%%
 
-data = pd.read_csv('Results/General/data_metrics_neural_hash_feature.csv')
-names = data['algo']
-time_db = pd.eval(data['time_db']).astype(float)
-time_identification = pd.eval(data['time_identification']).astype(float)
-accuracy = pd.eval(data['accuracy']).astype(float)
-precision = pd.eval(data['precision']).astype(float)
-recall = pd.eval(data['recall']).astype(float)
-fpr = pd.eval(data['fpr']).astype(float)
+#data = pd.read_csv('Results/General/data_metrics_neural_hash_feature.csv')
+#names = data['algo']
+#time_db = pd.eval(data['time_db']).astype(float)
+#time_identification = pd.eval(data['time_identification']).astype(float)
+#accuracy = pd.eval(data['accuracy']).astype(float)
+#precision = pd.eval(data['precision']).astype(float)
+#recall = pd.eval(data['recall']).astype(float)
+#fpr = pd.eval(data['fpr']).astype(float)
 
 
 
