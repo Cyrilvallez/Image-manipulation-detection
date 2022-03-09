@@ -78,7 +78,7 @@ def inception_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
         
     # Process the image 
     transforms = T.Compose([
-        T.Resize((299,299), interpolation=Image.LANCZOS),
+        T.Resize((299,299), interpolation=T.InterpolationMode.LANCZOS),
         T.ToTensor(),
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
@@ -146,7 +146,7 @@ def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
 
     # No normalization as the original model
     transforms = T.Compose([
-        T.Resize(256, interpolation=Image.LANCZOS),
+        T.Resize(256, interpolation=T.InterpolationMode.LANCZOS),
         T.CenterCrop(224),
         T.ToTensor()
         ])
@@ -179,6 +179,30 @@ def simclr_hash(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
 
 
 def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
+    """
+    Neural hash using the pretrained SimCLR model with resnet50-2x as architecture
+    (pretrained on ImageNet, and ported from tensorflow). However, in this version 
+    there is no real "hash", we only record the Euclidean mapping given by
+    the network in order to compute the cosine distance between images.
+
+    Parameters
+    ----------
+    path_to_imgs : str
+        Path to a folder containing the images to hash.
+    hash_size : int, optional
+        The square of the hash size (to be consistent with imagehash library).
+        The default is 8, resulting in a hash of length 8**2=64.
+    batch_size : int, optional
+        The batch size for the network. The default is 256.
+    device : str, optional
+        Device to run the computations. Either `cpu` or `cuda`. The default is 'cuda'.
+
+    Returns
+    -------
+    hashes : list of hashes
+        Hashes for all the images in the folder `path_to_imgs`.
+
+    """
     
     # Load the model 
     simclr = resnet_wider.resnet50x2()
@@ -193,7 +217,7 @@ def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
 
     # No normalization as the original model
     transforms = T.Compose([
-        T.Resize(256, interpolation=Image.LANCZOS),
+        T.Resize(256, interpolation=T.InterpolationMode.LANCZOS),
         T.CenterCrop(224),
         T.ToTensor()
         ])
@@ -215,19 +239,66 @@ def simclr_features(path_to_imgs, hash_size=8, batch_size=256, device='cuda'):
 
     return features
 
+
 def cosine_distance(a, b):
     """
-    cosine distance between 0 and 1
+    Cosine distance between vectors.
+
+    Parameters
+    ----------
+    a, b : Arrays
+        The vectors on which to compute the cosine distance.
+
+    Returns
+    -------
+    Float
+        The cosine distance between 0 and 1.
+
     """
     assert(len(a) == len(b))
     
     return 1 - 1/2 - 1/2*np.dot(a,b)/np.linalg.norm(a)/np.linalg.norm(b)
 
+
 def features_matching(a, b, threshold):
+    """
+    Check if the cosine distance between two vectors is less than a threshold.
+
+    Parameters
+    ----------
+    a, b : Arrays
+        The vectors on which to perform the check.
+    threshold : Float
+        The threshold (value between 0 and 1).
+
+    Returns
+    -------
+    Boolean
+        Whether or not the cosine distance is less than threshold.
+
+    """
 
     return cosine_distance(a, b) <= threshold
 
+
 def match_db(a, db, threshold):
+    """
+    Check if there is a vector in the database db for which the cosine distance
+    with vector a is less than a threshold.
+
+    Parameters
+    ----------
+    a, b : Arrays
+        The vectors on which to perform the check.
+    threshold : Float
+        The threshold (value between 0 and 1).
+
+    Returns
+    -------
+    Boolean
+        Whether or not there is a cosine distance less than threshold.
+
+    """
     
     for feature in db:
         if features_matching(a, feature, threshold):
