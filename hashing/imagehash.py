@@ -34,6 +34,7 @@ from __future__ import (absolute_import, division, print_function)
 
 from PIL import Image, ImageFilter
 import numpy as np
+import os
 #import scipy.fftpack
 #import pywt
 __version__ = "4.2.1"
@@ -144,36 +145,37 @@ class ImageHash(object):
             key=lambda other_hash: self.BER(other_hash)
         )
     
-    def match_db(self, other_hashes, bit_error_rate=0.25):
+    def match_db(self, database, threshold=0.25):
         """
         Check if the hash match a hash in the given database.
         
-        :param other_hashes: The DB. A list of image hashes to compare against
-        :param bit_error_rate: Percentage of bits which can be incorrect
+        :param database: The DB. A dictionary of the form {image_name:hash}
+        of image hashes to compare against
+        :param threshold: Percentage of bits which can be incorrect
         Defaults to 0.25 if unset, which means the hash can be 25% different
         """
         
-        for hash_ in other_hashes:
-            if self.matches(hash_, bit_error_rate=bit_error_rate):
+        for hash_ in database.values():
+            if self.matches(hash_, bit_error_rate=threshold):
                 return True
         return False
     
     
-    def match_db_image(self, other_hashes, bit_error_rate=0.25):
+    def match_db_image(self, database, threshold=0.25):
         """
         Check if the hash match a hash in the given database.
         
-        :param other_hashes: The DB. A dictionary of the form {image_name:hash}
+        :param database: The DB. A dictionary of the form {image_name:hash}
         of image hashes to compare against
-        :param bit_error_rate: Percentage of bits which can be incorrect
+        :param threshold: Percentage of bits which can be incorrect
         Defaults to 0.25 if unset, which means the hash can be 25% different
         
         output : all image_name matching the hash
         """
         
         names = []
-        for key in other_hashes.keys():
-            if self.matches(other_hashes[key], bit_error_rate=bit_error_rate):
+        for key in database.keys():
+            if self.matches(database[key], bit_error_rate=threshold):
                 names.append(key)
         
         return names
@@ -526,36 +528,37 @@ class ImageMultiHash(object):
     
     #===================================== ADDED FUNCTIONS ====================
     
-    def match_db(self, other_hashes, bit_error_rate=None):
+    def match_db(self, database, threshold=0.25):
         """
         Check if the multi hash match a multi hash in the given database.
         
-        :param other_hashes: The DB. A list of image multi hashes to compare against
-        :param bit_error_rate: Percentage of bits which can be incorrect, an alternative to the hamming cutoff.
+        :param database: The DB. A dictionary of the form {image_name:hash}
+        of image hashes to compare against
+        :param threshold: Percentage of bits which can be incorrect, an alternative to the hamming cutoff.
         Defaults to 0.25 if unset, which means the hash can be 25% different
         """
         
-        for hash_ in other_hashes:
-            if self.matches(hash_, bit_error_rate=bit_error_rate):
+        for hash_ in database.values():
+            if self.matches(hash_, bit_error_rate=threshold):
                 return True
         return False
     
     
-    def match_db_image(self, other_hashes, bit_error_rate=0.25):
+    def match_db_image(self, database, threshold=0.25):
         """
         Check if the hash match a hash in the given database.
         
-        :param other_hashes: The DB. A dictionary of the form {image_name:hash}
+        :param database: The DB. A dictionary of the form {image_name:hash}
         of image hashes to compare against
-        :param bit_error_rate: Percentage of bits which can be incorrect
+        :param threshold: Percentage of bits which can be incorrect
         Defaults to 0.25 if unset, which means the hash can be 25% different
         
         output : all image_name matching the hash
         """
         
         names = []
-        for key in other_hashes.keys():
-            if self.matches(other_hashes[key], bit_error_rate=bit_error_rate):
+        for key in database.keys():
+            if self.matches(database[key], bit_error_rate=threshold):
                 names.append(key)
         
         return names
@@ -728,15 +731,6 @@ def crop_resistant_hash(
 
 # =============================================================================
 # =============================================================================
-# =============================================================================
-# =============================================================================
-# =============================================================================
-# =============================================================================
-# =============================================================================
-# =============================================================================
-# =============================================================================
-# =============================================================================
-# =============================================================================
 # ============================== ADDED FUNCTIONS ==============================
 
 
@@ -785,4 +779,62 @@ def hist_hash(image, L=12, sigma=3, lambda_=0.55):
             hash_.append(count[i]/count[j] >= 1)
     
     return ImageHash(np.array(hash_))
+
+
+
+
+
+# Mapping from string to actual algorithms
+CLASSICAL_MODEL_SWITCH = {
+    'Ahash': average_hash,
+    'Phash': phash,
+    'Dhash': dhash,
+    'Whash': whash,
+    'Crop resistant hash': crop_resistant_hash
+    }
+
+class ClassicalHash(object):
+    """
+    Wrapper class to represent together an algorithm and its hash size
+    """
+    
+    def __init__(self, algo, hash_size=8):
+        if (algo not in CLASSICAL_MODEL_SWITCH.keys()):
+            raise ValueError(f'Algorithm must be one of {list(CLASSICAL_MODEL_SWITCH.keys())}')
+            
+        self.algorithm = CLASSICAL_MODEL_SWITCH[algo]
+        self.name = algo
+        self.hash_size = hash_size
+        
+    def __str__(self):
+        return f'{self.name} {self.hash_size**2} bits'
+        
+    def __call__(self, path_to_imgs):
+        """
+        Compute the hashes for all images in the directory `path_to_imgs``, or all
+        images in the list of paths `path_to_imgs`.
+
+        Parameters
+        ----------
+        path_to_imgs : str or list of str
+            Directory or list of paths to images
+
+        Returns
+        -------
+        List
+            List of image hashes.
+
+        """
+        if type(path_to_imgs) == str:
+            img_paths = [path_to_imgs + name for name in os.listdir(path_to_imgs)]
+        elif type(path_to_imgs) == list:
+            img_paths = path_to_imgs
+        
+        hashes = []
+        
+        for img in img_paths:
+            image = Image.open(img)
+            hashes.append(self.algorithm(image, hash_size=self.hash_size))
+            
+        return hashes
 

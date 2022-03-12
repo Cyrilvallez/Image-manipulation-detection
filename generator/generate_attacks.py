@@ -15,6 +15,7 @@ import numpy as np
 from PIL import Image, ImageFilter, ImageEnhance, ImageDraw, ImageFont
 from skimage import util, transform
 import string
+import os
 from io import BytesIO
 from tqdm import tqdm
 np.random.seed(256)
@@ -36,7 +37,7 @@ def _find(path):
 
     """
     
-    if (type(path) == str):
+    if (type(path) == str or type(path) == np.str_):
         image = Image.open(path)
     else:
         image = path
@@ -803,11 +804,5 @@ def retrieve_ids(**kwargs):
         switch_dic[key](kwargs[key])
     
     return IDs
-            
 
-        
-        
-        
-        
-        
         

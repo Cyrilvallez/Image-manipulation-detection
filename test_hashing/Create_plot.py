@@ -189,10 +189,6 @@ def time_comparison(time_identification, time_db, labels, save=False,
     y = np.arange(0, 2*len(names), 2)
     height = 0.8  
 
-    max_ = int(np.max(np.floor(1/60*time_average)))
-    ticks = [f'{i*(max_//4)}:00' for i in range(6)]
-    x = [i*(max_//4)*60 for i in range(6)]
-
     plt.figure(figsize=[6.4*1.3, 4.8*1.3])
     rects1 = plt.barh(y-height/2, time_average, height, color='r')
     rects2 = plt.barh(y+height/2, time_db, height, color='b')
@@ -200,8 +196,12 @@ def time_comparison(time_identification, time_db, labels, save=False,
     plt.bar_label(rects2, labels=time_db_str, padding=3)
     plt.legend([f'Identification (mean\nover {M} runs)', 'Database creation'])
     plt.xlabel('Time [min:sec]')
-    plt.xticks(x, ticks)
-    plt.xlim(right=np.max(time_average) + 100) # to fit labels
+    
+    xlocs, _ = plt.xticks()
+    xlabels = [time.strftime('%M:%S', time.gmtime(a)) for a in xlocs]
+    
+    plt.xticks(xlocs, xlabels)
+    plt.xlim(right=1.08*np.max(time_average)) # to fit labels
     plt.yticks(y, names)
     if save:
         plt.savefig(filename, bbox_inches='tight')
