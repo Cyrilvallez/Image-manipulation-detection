@@ -6,6 +6,9 @@ These are logs that I will update every week in order to keep track of my work (
 1. [Week 1 : 07/02](#week1)
 2. [Week 2 : 14/02](#week2)
 3. [Week 3 : 21/02](#week3)
+4. [Week 4 : 28/02](#week4)
+5. [Week 5 : 07/03](#week5)
+
    
 
 
@@ -87,6 +90,19 @@ I also began to read papers on Neural Hashing, and wrote those logs.
 
 ## Week 4 : 28/02 <a name="week4"></a>
 
+I began this week with a lot a paper reading. First on GANs and Inception Score/Frechet Inception Distance (IS/FID), then on modern computer vision architectures (Inception, ResNet,...), and finally on self-supervised methods for learning a consistant image representation in the Euclidean space. 
+
+The most interesting papers on self-supervised methods were :
+
+1. A Simple Framework for Contrastive Learning of Visual Representations
+2. FaceNet: A Unified Embedding for Face Recognition and Clustering
+3. Revisiting Self-Supervised Visual Representation Learning
+4. Towards K-means-friendly Spaces: Simultaneous Deep Learning and Clustering
+
+Paper 3. provides a very nice overview of what is efficient or not, and would be worth re-reading in the future before trying to train/fine-tune networks.
+
+This took between 2 and 3 days to understand and be comfortable with all this material. In the end of the week, I explored the idea of the previous week of mapping image detection to images to try to detect pathological images. For this, the following table summarizes the BER thresholds for a constant recall and FPT between algorithms. It was possible to obtain (almost) equal recall by modyfiying the thresholds for each algorithm, however, it was not the case for FPR, as for example for Phash, a change in BER threshold corresponding from just one more bit allowed to flip would result in FPR going from about 0.2 to 0.8. Thus, it is possible to fairly compare images which are less detected in images that are supposed to be detected, but not images that are most detected in images not supposed to be detected.
+
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;}
 .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -162,3 +178,19 @@ I also began to read papers on Neural Hashing, and wrote those logs.
 </table>
 
 BER thresholds for constant recall/FPR for the different algos.
+
+
+After this was done, I started to experiment with neural hashing. First, I took the pre-trained Inception v3 network from PyTorch, removed the last layer mapping features to classes in the training set (ImageNet), and multiplied those features with a random matrix to obtain a binary hash of a given length. All images are pre-processed in the same fashion as they were for training. The performance was not as satisfactory as I hoped so, as it was quite clearly worse than basic hash algorithms.
+
+I also took some time to setup a clean environment for me to work on the GPU cluster, and to understand how the setup was going to work.
+
+The goal for next week is to use a pre-trained SimCLR model from paper 1., which I think would be better as it was train in self-supervised fashion, compared to Inception v3 which was trained for classification and whose features might be biased for this task instead of offering a clear representation of the image.
+
+
+## Week 5 : 07/03 <a name="week5"></a>
+
+In the spirit of what I started last week, I first looked at the SimCLR approach to perform neural hashing. The authors provided their code and pre-trained model in tensorflow, but by chance someone coded a conversion to pytorch. I used this, and took the SimCLR v1 ResNet 2x model to use as a model for neural hashing. As before, the images are pre-processed in the same way as they were for training. This model performed better than the Inception v3 model trained on ImageNet for hashing, but not much. 
+
+My first thought was then towards the hashing process : transforming the features to binary hash using a random matrix may not be satisfactory, in the sense that we may loose too much information. Indeed, multiplying with a random matrix and assigning 0 or 1 depending on the sign of the output corresponds to just looking at the side of which the points are from random hyperplanes (represented by random normal vectors, all of which aggregated corresponds to the random matrix). To verify this hypothesis, I had to compare the performances when using the raw features for matching the images. But for this, one needs a coherent distance for thresholding and decisin-making (this image is the same as this one or not), which is the case of a binary hash is the difference in bits and BER threshold. As the Euclidean distance is not bounded and there is no way to know the maximum a priori (before hashing all images), I used the cosine distance, which can be very conveniently normalized between 0 and 1, allowing to directly compare to the hashing process using the same thresholds as the BER thresholds (which are also comprised between 0 and 1). This approach provided a large increase in performance, comforting the idea that multiplying with a matrix looses information, or is at least not an optimal way to transform the features into binary hashes. 
+
+The remaining part of the week was mostly used to create a framework allowing me to easily work with neural hashing in mini-batches instead of image after image (as with standard hashing) for performance, as well as allowing me to use in the same way neural hashing and classical hashing scheme, for easy comparison between all mathods. Different other improvements were added in the code, for example in the generation of figures. The goal of this work is to be able to extensively test the hashing schemes next week in a convenient and easy manner, and on a much bigger scale (bigger datasets).
