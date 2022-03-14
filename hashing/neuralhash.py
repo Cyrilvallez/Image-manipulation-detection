@@ -195,7 +195,7 @@ class ImageIterableDataset(IterableDataset):
         self.device = device
 
     def __len__(self):
-        return len(self.img_paths)
+        return len(self.imgs_to_attack)
     
     def __iter__(self):
         
@@ -324,7 +324,7 @@ def _create_db(model, path_to_imgs, transforms, raw_features=False, features_siz
                 
                 
 def _hashing(model, path_to_imgs, transforms, database, threshold, raw_features=False,
-             features_size=None, attack_fraction=0.3,hash_size=8, batch_size=256,
+             features_size=None, attack_fraction=0.3, hash_size=8, batch_size=256,
              device='cuda'):
     """
     Hash images using model, and check for matches in the database.
@@ -376,7 +376,8 @@ def _hashing(model, path_to_imgs, transforms, database, threshold, raw_features=
     imgs_to_attack, imgs_to_attack_names = _partition_dataset(path_to_imgs, attack_fraction)
     
     # Creates the dataloader to easily iterate on images
-    dataset = ImageIterableDataset(imgs_to_attack, transforms, device=device)
+    dataset = ImageIterableDataset(imgs_to_attack, imgs_to_attack_names,
+                                   transforms, device=device)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
     
     # random hyperplanes (with constant seed to always get the same for constant
@@ -452,51 +453,7 @@ def _hashing(model, path_to_imgs, transforms, database, threshold, raw_features=
 
 
 
-def inception_hash(path_to_imgs, database=None, threshold=None, raw_features=False,
-                   features_size=None, hash_size=8, attack_fraction=0.3, batch_size=256,
-                   device='cuda'):
-    """
-    Neural hash using the pretrained inception v3 pytorch model (pretrained on
-    ImageNet)
-
-    Parameters
-    ----------
-    path_to_imgs : Str or list of str
-        The path to a directory containing images or a list of path to images.
-        Attacks are performed on only `attack_fraction` if `path_to_imgs` is a
-        str (directory).
-    database : List of ImageHash or ImageFeatures, optional
-        The database to compare in. If this is `None`, then the function will
-        create the dabase instead of looking into it. The default is None.
-    threshold : Float, optional
-        The threshold for identitication of `database` is given. If `database` 
-        is None, this is ignored. The default is None.
-    raw_features : Boolean, optional
-        If true, the output features of the network are not hashed, and features are 
-        returned.
-    features_size : Int
-        Size of the output of the `model` in the Euclidean space.
-    hash_size : int, optional
-        The square of the hash size (to be consistent with imagehash library).
-        The default is 8, resulting in a hash of length 8**2=64.
-    attack_fraction : Float, optional
-        Fraction of the directory `path_to_imgs` used to generate attacks, if 
-        `path_to_imgs` is a str. If `path_to_imgs` is a list, it is ignored.
-        The default is 0.3.
-    batch_size : int, optional
-        The batch size for the network. The default is 256.
-    device : str, optional
-        Device to run the computations. Either `cpu` or `cuda`. The default is 'cuda'.
-
-
-    Returns
-    -------
-    TYPE List of ImageHash or ImageFeatures if `database` is None, tuple
-    of dict otherwise
-        If `database` is None, return the database. Otherwise, return the 
-        positive/negatives on the database.
-
-    """
+def load_inception(device='cuda'):
     
     assert (device=='cpu' or device=='cuda')
     
@@ -514,45 +471,12 @@ def inception_hash(path_to_imgs, database=None, threshold=None, raw_features=Fal
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
     
-    if database is None:
-        return _create_db(inception, path_to_imgs, transforms, raw_features,
-                          features_size, hash_size=hash_size, batch_size=batch_size,
-                          device=device)
-            
-    else:
-        return _hashing(inception, path_to_imgs, attack_fraction, transforms, database, 
-                        threshold, raw_features, features_size, hash_size=hash_size,
-                        batch_size=batch_size, device=device)
+    return inception, transforms
 
 
 
-def simclr_hash(path_to_imgs, hash_size=8, raw_features=False, 
-                batch_size=256, device='cuda'):
-    """
-    Neural hash using the pretrained SimCLR model with resnet50-2x as architecture
-    (pretrained on ImageNet, and ported from tensorflow)
-
-    Parameters
-    ----------
-    path_to_imgs : str
-        Path to a folder containing the images to hash.
-    hash_size : int, optional
-        The square of the hash size (to be consistent with imagehash library).
-        The default is 8, resulting in a hash of length 8**2=64.
-    raw_features : Boolean, optional
-        If true, the output features of the network are not hashed, and features are 
-        returned.
-    batch_size : int, optional
-        The batch size for the network. The default is 256.
-    device : str, optional
-        Device to run the computations. Either `cpu` or `cuda`. The default is 'cuda'.
-
-    Returns
-    -------
-    hashes : list of hashes
-        Hashes for all the images in the folder `path_to_imgs`.
-
-    """
+def load_simclr(device='cuda'):
+    
     
     assert (device=='cpu' or device=='cuda')
     
@@ -574,44 +498,15 @@ def simclr_hash(path_to_imgs, hash_size=8, raw_features=False,
         T.ToTensor()
         ])
     
-    # Creates the dataloader to easily iterate on images
-    dataset = ImageDataset(path_to_imgs, transforms, device=device)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
-    
-    # random hyperplanes (with constant seed to always get the same for constant
-    # hash size)
-    if (not raw_features):
-        rng = np.random.default_rng(seed=135)
-        hyperplanes = 2*rng.rand(4096, hash_size**2) - 1
-    
-    fingerprints = []
-
-    for imgs in dataloader:
-        # Apply the pretrained model
-        with torch.no_grad():
-            features = simclr(imgs).cpu().numpy()
-        
-        if (not raw_features):
-            # Computes the dot products between each image and the hyperplanes and
-            # Select the bits depending on orientation 
-            img_hashes = features@hyperplanes > 0
-        
-            for img_hash in img_hashes:
-                fingerprints.append(ImageHash(img_hash))
-                
-        else:
-            for feature in features:
-                fingerprints.append(ImageFeatures(feature))
-            
-    
-    return fingerprints
+    return simclr, transforms
 
 
 # Mapping from string to actual algorithms
-NEURAL_MODEL_SWITCH = {
-    'Inception': inception_hash,
-    'SimCLR': simclr_hash
+NEURAL_MODEL_LOADER = {
+    'Inception': load_inception,
+    'SimCLR': load_simclr
     }
+
 
 # Mapping from string to feature size output of networks
 NEURAL_MODEL_FEATURES_SIZE = {
@@ -619,7 +514,8 @@ NEURAL_MODEL_FEATURES_SIZE = {
     'SimCLR': 4096
     }
 
-class NeuralHash(object):
+
+class NeuralAlgorithm(object):
     """
     Wrapper class to represent together an algorithm and its parameters (hash_size,
     batch_size, device,...)
@@ -627,13 +523,13 @@ class NeuralHash(object):
     
     def __init__(self, model, hash_size=8, batch_size=256, device='cuda',
                  raw_features=False):
-        if (model not in NEURAL_MODEL_SWITCH.keys()):
-            raise ValueError(f'model must be one of {list(NEURAL_MODEL_SWITCH.keys())}')
+        if (model not in NEURAL_MODEL_LOADER.keys()):
+            raise ValueError(f'model must be one of {list(NEURAL_MODEL_LOADER.keys())}')
             
         if (device not in ['cuda', 'cpu']):
             raise ValueError('device must be either `cuda` or `cpu`.')
             
-        self.algorithm = NEURAL_MODEL_SWITCH[model]
+        self.loader = NEURAL_MODEL_LOADER[model]
         self.name = model
         self.hash_size = hash_size
         self.features_size = NEURAL_MODEL_FEATURES_SIZE[model]
@@ -654,3 +550,21 @@ class NeuralHash(object):
                attack_fraction=attack_fraction, batch_size=self.hash_size,
                device=self.device)
 
+
+    def create_database(self, path_to_imgs):
+        
+        model, transforms = self.loader(self.device)
+        
+        return _create_db(model, path_to_imgs, transforms, raw_features=self.raw_features,
+                          features_size=self.features_size, hash_size=self.hash_size,
+                          batch_size=self.batch_size, device=self.device)
+    
+    
+    def match_database(self, path_to_imgs, database, threshold, attack_fraction=0.3):
+        
+        model, transforms = self.loader(self.device)
+        
+        return _hashing(path_to_imgs, database=database, threshold=threshold,
+                        raw_features=self.raw_features, features_size=self.features_size,
+                        hash_size=self.hash_size, attack_fraction=attack_fraction,
+                        batch_size=self.hash_size, device=self.device)

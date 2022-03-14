@@ -34,25 +34,122 @@ import cv2
 
 #%%
 
-path = 'test_hashing/BSDS500/Identification/data32.jpg'
+"""
+class ImageIterableDataset(IterableDataset):
+    
+    def __init__(self, imgs_to_attack, img_names, transforms, device='cuda'):
+        super(IterableDataset).__init__()
+        self.imgs_to_attack = imgs_to_attack
+        self.img_names = img_names
+        self.transforms = transforms
+        self.device = device
 
-image = Image.open(path)
+    def __len__(self):
+        return len(self.imgs_to_attack)
+    
+    def __iter__(self):
+        
+        for img, img_name in zip(self.imgs_to_attack, self.img_names):
+            
+            attacks = generator.perform_all_attacks(img, **generator.ATTACK_PARAMETERS)
+            for key in attacks.keys():
+                image = attacks[key]
+                attack_name = key
+                image = image.convert('RGB')
+                image = self.transforms(image)
+                image = image.to(torch.device(self.device))
+                
+                yield (image, img_name, attack_name)
 
-kernels=(3, 5, 7)
+transforms = T.Compose([
+     T.Resize(256, interpolation=T.InterpolationMode.LANCZOS),
+     T.CenterCrop(224),
+     T.ToTensor()
+     ])
 
-gaussians = []
-medians = []
+path = 'test_hashing/BSDS500/Identification/'
+ 
+imgs_names = [file for file in os.listdir(path)[0:1]]
+imgs = [Image.open(path+file) for file in imgs_names]
 
-t0 = time.time()
-for size in kernels:
-    array = np.array(image)
-    gaussian = cv2.GaussianBlur(array, (size, size), sigmaX=0.6*((size-1)*0.5 - 1) + 0.8,
-                                sigmaY=0.6*((size-1)*0.5 - 1) + 0.8)
-    gaussians.append(Image.fromarray(gaussian))
-    median = cv2.medianBlur(array, size)
-    medians.append(Image.fromarray(median))
-dt = time.time() - t0
+dataset = ImageIterableDataset(imgs, imgs_names, transforms=transforms, device='cpu')
+dataloader = DataLoader(dataset, batch_size=5, shuffle=False)
+"""
 
 
-gaussians[2].save('gaussian.png')
-medians[2].save('median.png')
+path = 'test_hashing/BSDS500/Identification/'
+ 
+imgs_names = [file for file in os.listdir(path)[0:1]]
+imgs = [Image.open(path+file) for file in imgs_names]
+
+class CustomDataset(object):
+    
+    def __init__(self, imgs_to_attack, img_names):
+        super(IterableDataset).__init__()
+        self.imgs_to_attack = imgs_to_attack
+        self.img_names = img_names
+
+    def __len__(self):
+        return len(self.imgs_to_attack)
+    
+    def __iter__(self):
+        
+        for img, img_name in zip(self.imgs_to_attack, self.img_names):
+            
+            attacks = generator.perform_all_attacks(img, **generator.ATTACK_PARAMETERS)
+            for key in attacks.keys():
+                image = attacks[key]
+                attack_name = key
+                image = image.convert('RGB')
+                
+                yield (image, img_name, attack_name)
+                
+test_dataset = CustomDataset(imgs, imgs_names)
+                
+                
+class Loader(object):
+    
+    def __init__(self, dataset, batch_size=256):
+        self.dataset = dataset
+        self.batch_size = batch_size
+        
+    def __iter__(self):
+        
+        iterator = iter(self.dataset)
+        
+        images = []
+        img_names = []
+        attack_names = []
+        count = 0
+        
+        while True:
+            
+            try:
+                image, img_name, attack_name = next(iterator)
+            except StopIteration:
+                yield (images, img_names, attack_names)
+                break
+            
+            images.append(image)
+            img_names.append(img_name)
+            attack_names.append(attack_name)
+            count += 1
+            
+            if count == self.batch_size:
+                
+                count = 0
+                yield (images, img_names, attack_names)
+                images = []
+                img_names = []
+                attack_names = []
+                
+    
+loader = Loader(test_dataset, batch_size=5)
+
+count = 0
+
+for a in loader:
+    count += len(a[0])
+    
+print(count)
+
