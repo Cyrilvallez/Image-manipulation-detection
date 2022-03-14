@@ -13,7 +13,9 @@ Created on Mon Feb 14 08:29:00 2022
 
 import numpy as np
 from PIL import Image, ImageFilter, ImageEnhance, ImageDraw, ImageFont
-from skimage import util, transform
+import torchvision.transforms.functional as F
+from skimage import util
+import cv2
 import string
 import os
 from io import BytesIO
@@ -105,7 +107,7 @@ def noise_attack(path, gaussian_variances=(0.01, 0.02, 0.05),
     return out
 
 
-def filter_attack(path, gaussian_kernels=(1, 2, 3),
+def filter_attack(path, gaussian_kernels=(3, 5, 7),
                   median_kernels=(3, 5, 7), **kwargs):
     """
     Generates filtered versions of the original image.
@@ -115,12 +117,12 @@ def filter_attack(path, gaussian_kernels=(1, 2, 3),
     path : PIL image or str
         PIL image or path to the image.
     gaussian_kernels : Tuple, optional
-        Sizes for the gaussian filter in one direction, from the CENTER pixel
-        (thus a size of 1 gives a 3x3 filter, 2 gives 5x5 filter etc).
-        The default is (1, 2, 3).
+        Sizes for the gaussian filter. The filters will be the same size in both
+        directions, and the standard deviation of the Gaussian is computed as 
+        std = 0.6*((size-1)*0.5 - 1) + 1. The default is (3, 5, 7).
     median_kernels : Tuple, optional
-        Sizes for the median filter (true size, give 3 for a 3x3 filter).
-        The default is (3, 5, 7).
+        Sizes for the median filter. The filters will be the same size in both
+        directions. The default is (3, 5, 7).
 
     Returns
     -------
@@ -130,19 +132,24 @@ def filter_attack(path, gaussian_kernels=(1, 2, 3),
     """
     
     image = _find(path)
+    array = np.array(image)
         
     out = {}
     
     # Gaussian filter
     for size in gaussian_kernels:
-        gaussian = image.filter(ImageFilter.GaussianBlur(radius=size))
-        g_size = str(2*size+1)
-        id_gaussian = 'gaussian_filter_' + g_size + 'x' + g_size
+        std = 0.6*((size-1)*0.5 - 1) + 1
+        gaussian = cv2.GaussianBlur(array, (size, size), sigmaX=std, sigmaY=std)
+        gaussian = Image.fromarray(gaussian)
+        id_gaussian = 'gaussian_filter_' + str(size) + 'x' + str(size)
         out[id_gaussian] = gaussian
     
     # Median filter
     for size in median_kernels:
-        median = image.filter(ImageFilter.MedianFilter(size=size))
+        # cv2 and PIL implementations are completely equivalent but cv2 is
+        # much faster
+        median = cv2.medianBlur(array, size)
+        median = Image.fromarray(median)
         id_median = 'median_filter_' + str(size) + 'x' + str(size)
         out[id_median] = median
     
@@ -211,7 +218,7 @@ def scaling_attack(path, scaling_ratios=(0.4, 0.8, 1.2, 1.6), **kwargs):
     for ratio in scaling_ratios:
         id_ratio = 'scaling_' + str(ratio)
         out[id_ratio] = image.resize((round(ratio*width), round(ratio*height)),
-                                     resample=Image.LANCZOS)
+                                     resample=Image.BICUBIC)
     
     return out
 
@@ -259,13 +266,13 @@ def cropping_attack(path, cropping_percentages=(5, 10, 20, 40, 60),
         cropped = image.crop((left, top, right, bottom))
         
         if (resize_cropping):
-            cropped = cropped.resize((width, height))
+            cropped = cropped.resize((width, height), resample=Image.BICUBIC)
             id_crop += '_and_rescaling'
             
         out[id_crop] = cropped
         
     return out
-            
+          
     
 def rotation_attack(path, rotation_angles=(5, 10, 20, 40, 60),
                     resize_rotation=True, **kwargs):
@@ -300,7 +307,7 @@ def rotation_attack(path, rotation_angles=(5, 10, 20, 40, 60),
         rotated = image.rotate(angle, expand=True, resample=Image.BICUBIC)
         
         if (resize_rotation):
-            rotated = rotated.resize(size, resample=Image.LANCZOS)
+            rotated = rotated.resize(size, resample=Image.BICUBIC)
             id_angle += '_and_rescaling'
             
         out[id_angle] = rotated
@@ -310,7 +317,7 @@ def rotation_attack(path, rotation_angles=(5, 10, 20, 40, 60),
 
 def shearing_attack(path, shearing_angles=(1, 2, 5, 10, 20), **kwargs):
     """
-    Generates sheared versions of the original image
+    Generates sheared versions of the original image, in both directions.
 
     Parameters
     ----------
@@ -329,20 +336,14 @@ def shearing_attack(path, shearing_angles=(1, 2, 5, 10, 20), **kwargs):
     
     image = _find(path)
     
-    array = np.array(image)
-    
-    # trsnform the angles in radians
-    angles_rad = np.pi/180*np.array(shearing_angles)
-    
     out = {}
     
-    for angle, degree in zip(angles_rad, shearing_angles):
-        id_shear = 'shearing_' + str(degree)
+    for shear in shearing_angles:
+        id_shear = 'shearing_' + str(shear)
         
-        transfo = transform.AffineTransform(shear=angle)
-        sheared = transform.warp(array, transfo, order=4)
-        sheared = util.img_as_ubyte(sheared)
-        sheared = Image.fromarray(sheared)
+        # use -shear to shear counter-clockwise, to be consistent with rotation
+        sheared = F.affine(image, angle=0, translate=(0,0), scale=1, shear=(-shear, -shear),
+                             interpolation=F.InterpolationMode.BICUBIC)
         
         out[id_shear] = sheared
         
@@ -766,14 +767,10 @@ def retrieve_ids(**kwargs):
         resize_rotation = True
     
     # Convenient wrapper function to use for switch
-    def wrapper(format_, gaussian_filter=False):
+    def wrapper(format_):
         def add_to_IDS(array):
-            if (not gaussian_filter):
-                for value in array:
-                    IDs.append(format_.format(val=value))
-            else:
-                for value in array:
-                    IDs.append(format_.format(val=2*value+1))
+            for value in array:
+                IDs.append(format_.format(val=value))
         return add_to_IDS
     
     # Switch dictionary
@@ -781,7 +778,7 @@ def retrieve_ids(**kwargs):
         'gaussian_variances': wrapper('gaussian_noise_{val}'),
         'speckle_variances': wrapper('speckle_noise_{val}'),
         'salt_pepper_amounts': wrapper('s&p_noise_{val}'),
-        'gaussian_kernels': wrapper('gaussian_filter_{val}x{val}', gaussian_filter=True),
+        'gaussian_kernels': wrapper('gaussian_filter_{val}x{val}'),
         'median_kernels': wrapper('median_filter_{val}x{val}'),
         'compression_quality_factors': wrapper('jpg_compression_{val}'),
         'scaling_ratios': wrapper('scaling_{val}'),

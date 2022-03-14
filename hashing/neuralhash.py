@@ -448,12 +448,12 @@ def _hashing(model, path_to_imgs, transforms, database, threshold, raw_features=
                     else:
                         image_wise_output[name]['uncorrect detection'] += 1
     
-    return general_output, attack_wise_output, image_wise_output
+    return (general_output, attack_wise_output, image_wise_output)
 
 
 
-def inception_hash(path_to_imgs, threshold, raw_features=False, features_size=None,
-                   database=None, hash_size=8, attack_fraction=0.3, batch_size=256,
+def inception_hash(path_to_imgs, database=None, threshold=None, raw_features=False,
+                   features_size=None, hash_size=8, attack_fraction=0.3, batch_size=256,
                    device='cuda'):
     """
     Neural hash using the pretrained inception v3 pytorch model (pretrained on
@@ -461,23 +461,40 @@ def inception_hash(path_to_imgs, threshold, raw_features=False, features_size=No
 
     Parameters
     ----------
-    path_to_imgs : str
-        Path to a folder containing the images to hash.
-    hash_size : int, optional
-        The square of the hash size (to be consistent with imagehash library).
-        The default is 8, resulting in a hash of length 8**2=64.
+    path_to_imgs : Str or list of str
+        The path to a directory containing images or a list of path to images.
+        Attacks are performed on only `attack_fraction` if `path_to_imgs` is a
+        str (directory).
+    database : List of ImageHash or ImageFeatures, optional
+        The database to compare in. If this is `None`, then the function will
+        create the dabase instead of looking into it. The default is None.
+    threshold : Float, optional
+        The threshold for identitication of `database` is given. If `database` 
+        is None, this is ignored. The default is None.
     raw_features : Boolean, optional
         If true, the output features of the network are not hashed, and features are 
         returned.
+    features_size : Int
+        Size of the output of the `model` in the Euclidean space.
+    hash_size : int, optional
+        The square of the hash size (to be consistent with imagehash library).
+        The default is 8, resulting in a hash of length 8**2=64.
+    attack_fraction : Float, optional
+        Fraction of the directory `path_to_imgs` used to generate attacks, if 
+        `path_to_imgs` is a str. If `path_to_imgs` is a list, it is ignored.
+        The default is 0.3.
     batch_size : int, optional
         The batch size for the network. The default is 256.
     device : str, optional
         Device to run the computations. Either `cpu` or `cuda`. The default is 'cuda'.
 
+
     Returns
     -------
-    hashes : list of hashes
-        Hashes for all the images in the folder `path_to_imgs`.
+    TYPE List of ImageHash or ImageFeatures if `database` is None, tuple
+    of dict otherwise
+        If `database` is None, return the database. Otherwise, return the 
+        positive/negatives on the database.
 
     """
     
@@ -632,8 +649,8 @@ class NeuralHash(object):
         
     def __call__(self, path_to_imgs, threshold, attack_fraction=0.3, database=None):
         
-        return self.algorithm(path_to_imgs, threshold, raw_features=self.raw_features,
-               features_size=self.features_size, database=database, hash_size=self.hash_size,
+        return self.algorithm(path_to_imgs, database=database, threshold=threshold, raw_features=self.raw_features,
+               features_size=self.features_size, hash_size=self.hash_size,
                attack_fraction=attack_fraction, batch_size=self.hash_size,
                device=self.device)
 
