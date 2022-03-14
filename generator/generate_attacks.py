@@ -505,7 +505,7 @@ def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
     # Get a font. The size is calculated so that it is 40 for a 512-width
     # image, and changes linearly from this reference, so it always
     # takes the same relative horizontal space on different images
-    font = ImageFont.truetype('Impact.ttf', round(40*width/512))
+    font = ImageFont.truetype('Fonts/Impact.ttf', round(40*width/512))
     
     out = {}
         
