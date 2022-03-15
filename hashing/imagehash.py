@@ -782,7 +782,7 @@ def hist_hash(image, L=12, sigma=3, lambda_=0.55):
 
 
 
-
+from hashing.general_hash import Algorithm
 
 # Mapping from string to actual algorithms
 CLASSICAL_MODEL_SWITCH = {
@@ -793,48 +793,36 @@ CLASSICAL_MODEL_SWITCH = {
     'Crop resistant hash': crop_resistant_hash
     }
 
-class ClassicalHash(object):
+class ClassicalAlgorithm(Algorithm):
     """
-    Wrapper class to represent together an algorithm and its hash size
+    Wrapper class to represent together a classical algorithm and its parameters
     """
     
-    def __init__(self, algo, hash_size=8):
-        if (algo not in CLASSICAL_MODEL_SWITCH.keys()):
-            raise ValueError(f'Algorithm must be one of {list(CLASSICAL_MODEL_SWITCH.keys())}')
-            
-        self.algorithm = CLASSICAL_MODEL_SWITCH[algo]
-        self.name = algo
-        self.hash_size = hash_size
+    def __init__(self, algorithm, hash_size=8, batch_size=512):
         
-    def __str__(self):
-        return f'{self.name} {self.hash_size**2} bits'
+        Algorithm.__init__(self, algorithm, hash_size, batch_size)
+        self.algorithm = CLASSICAL_MODEL_SWITCH[algorithm]
         
-    def __call__(self, path_to_imgs):
+    
+    def process_batch(self, preprocessed_images):
         """
-        Compute the hashes for all images in the directory `path_to_imgs``, or all
-        images in the list of paths `path_to_imgs`.
+        Process a batch of imgs and convert to a list of ImageHash.
 
         Parameters
         ----------
-        path_to_imgs : str or list of str
-            Directory or list of paths to images
+        preprocessed_images : List or Tuple of PIL images
+            List representing a batch of images.
 
         Returns
         -------
-        List
-            List of image hashes.
+        hashes : List
+            The ImageHash corresponding to the batch of images.
 
         """
-        if type(path_to_imgs) == str:
-            img_paths = [path_to_imgs + name for name in os.listdir(path_to_imgs)]
-        elif type(path_to_imgs) == list:
-            img_paths = path_to_imgs
         
         hashes = []
         
-        for img in img_paths:
-            image = Image.open(img)
+        for image in preprocessed_images:
             hashes.append(self.algorithm(image, hash_size=self.hash_size))
             
         return hashes
-

@@ -34,14 +34,13 @@ import cv2
 
 #%%
 
-"""
+
 class ImageIterableDataset(IterableDataset):
     
-    def __init__(self, imgs_to_attack, img_names, transforms, device='cuda'):
+    def __init__(self, imgs_to_attack, img_names, device='cuda'):
         super(IterableDataset).__init__()
         self.imgs_to_attack = imgs_to_attack
         self.img_names = img_names
-        self.transforms = transforms
         self.device = device
 
     def __len__(self):
@@ -56,31 +55,15 @@ class ImageIterableDataset(IterableDataset):
                 image = attacks[key]
                 attack_name = key
                 image = image.convert('RGB')
-                image = self.transforms(image)
-                image = image.to(torch.device(self.device))
                 
                 yield (image, img_name, attack_name)
+                
+                
 
-transforms = T.Compose([
-     T.Resize(256, interpolation=T.InterpolationMode.LANCZOS),
-     T.CenterCrop(224),
-     T.ToTensor()
-     ])
+def collate(batch):
+    imgs, names, attacks = zip(*batch)
+    return (imgs, names, attacks)
 
-path = 'test_hashing/BSDS500/Identification/'
- 
-imgs_names = [file for file in os.listdir(path)[0:1]]
-imgs = [Image.open(path+file) for file in imgs_names]
-
-dataset = ImageIterableDataset(imgs, imgs_names, transforms=transforms, device='cpu')
-dataloader = DataLoader(dataset, batch_size=5, shuffle=False)
-"""
-
-
-path = 'test_hashing/BSDS500/Identification/'
- 
-imgs_names = [file for file in os.listdir(path)[0:1]]
-imgs = [Image.open(path+file) for file in imgs_names]
 
 class CustomDataset(object):
     
@@ -104,7 +87,6 @@ class CustomDataset(object):
                 
                 yield (image, img_name, attack_name)
                 
-test_dataset = CustomDataset(imgs, imgs_names)
                 
                 
 class Loader(object):
@@ -127,7 +109,8 @@ class Loader(object):
             try:
                 image, img_name, attack_name = next(iterator)
             except StopIteration:
-                yield (images, img_names, attack_names)
+                if len(images) > 0:
+                    yield (images, img_names, attack_names)
                 break
             
             images.append(image)
@@ -143,13 +126,94 @@ class Loader(object):
                 img_names = []
                 attack_names = []
                 
+                
+                
+path = 'test_hashing/BSDS500/Identification/'
+ 
+imgs_names = [file for file in os.listdir(path)[0:30]]
+imgs = [Image.open(path+file) for file in imgs_names]
+                
     
+test_dataset = CustomDataset(imgs, imgs_names)
 loader = Loader(test_dataset, batch_size=5)
 
-count = 0
+dataset = ImageIterableDataset(imgs, imgs_names, device='cpu')
+dataloader = DataLoader(dataset, batch_size=5, shuffle=False, collate_fn=collate)
 
-for a in loader:
-    count += len(a[0])
+transforms = T.Compose([
+     T.Resize(256, interpolation=T.InterpolationMode.BICUBIC),
+     T.CenterCrop(224),
+     T.ToTensor()
+     ])
+
+dt_custom = []
+dt_torch = []
+count_custom = []
+count_torch = []
+
+for i in range(10):
+
+    count = 0
+
+    t0 = time.time()
+
+    for a, _, _ in loader:
+        count += len(a)
     
-print(count)
+        tensors = []
+        for img in a:
+            tensors.append(transforms(img))
+        
+        tot = torch.stack(tensors, dim=0).to('cpu')
+    
+    dt_custom.append(time.time() - t0)
+    count_custom.append(count)
 
+
+    count = 0
+
+    t0 = time.time()
+
+    for a, _, _ in dataloader:
+        count += len(a)
+    
+        tensors = []
+        for img in a:
+            tensors.append(transforms(img))
+        
+        tot = torch.stack(tensors, dim=0).to('cpu')
+    
+    dt_torch.append(time.time() - t0)
+    count_torch.append(count)
+
+print(f'Mean over 10 runs custom : {np.mean(dt_custom):.2f}')
+print(f'Mean over 10 runs torch : {np.mean(dt_torch):.2f}')
+
+        
+#%%
+
+class Parent():
+    
+    def __init__(self, a):
+        self.a = a
+        self.b = 3
+        
+    def test(self):
+        self.a += self.add()
+        
+    def add(self):
+        return 4
+    
+class Child(Parent):
+    
+    def __init__(self, a, b):
+        
+        Parent.__init__(self, a)
+        self.b = b
+        
+    def add(self):
+        return 28
+    
+Test = Child(1)
+Test.test()
+print(Test.a)
