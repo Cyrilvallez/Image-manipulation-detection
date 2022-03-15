@@ -9,13 +9,12 @@ Created on Mon Mar 14 20:14:08 2022
 import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
-from Project import generator
-from hashing.imagehash import imagehash as ih
-from hashing.imagehash import neuralhash as nh
+import generator
 import time
 from torch.utils.data import Dataset, IterableDataset, DataLoader
 import numpy as np
 from PIL import Image
+from tqdm import tqdm
 
 class DatabaseDataset(Dataset):
     """
@@ -129,8 +128,15 @@ def collate(batch):
                 
                 
 
-ADMISSIBLE_ALGORITHMS = list(nh.NEURAL_MODEL_LOADER.keys()) + \
-    list(ih.CLASSICAL_MODEL_SWITCH.keys())
+ADMISSIBLE_ALGORITHMS = [
+    'Ahash',
+    'Phash',
+    'Dhash',
+    'Whash',
+    'Crop resistant hash',
+    'Inception_v3',
+    'SimCLR_v1_ResNet50_2x'
+    ]
                 
                 
 class Algorithm(object):
@@ -152,7 +158,7 @@ class Algorithm(object):
             return f'{self.name} {self.hash_size**2} bits'
 
 
-    def create_database(self, path_to_db):
+    def create_database(self, path_to_db, time_database={}):
         
         self.load_model()
         
@@ -160,6 +166,8 @@ class Algorithm(object):
         dataset = DatabaseDataset(path_to_db)
         dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False,
                                 collate_fn=collate)
+        
+        t0 = time.time()
         
         database = {}
         
@@ -170,6 +178,8 @@ class Algorithm(object):
             
             for i, name in enumerate(image_names):
                 database[name] = fingerprints[i]
+                
+        time_database[str(self)] = time.time() - t0
         
         self.kill_model()
         
@@ -218,7 +228,7 @@ class Algorithm(object):
         
     
     
-def create_dataset(path_to_imgs, fraction, existing_attacks=False, seed=23):
+def create_dataset(path_to_imgs, fraction=0.3, existing_attacks=False, seed=23):
     """
     Randomly chooses a fraction `fraction` of images to attack in a dataset.
 
@@ -227,10 +237,10 @@ def create_dataset(path_to_imgs, fraction, existing_attacks=False, seed=23):
     path_to_imgs : Str or list of str
         The path to a directory containing images or a list of path to images.
         See fraction for details.
-    fraction : Float
+    fraction : Float, optional
         Fraction of images to attack in the directory if `path_to_imgs` is a str.
         If `path_to_imgs` is a list, it is ignored and all images in the list
-        are attacked.
+        are attacked. The default is 0.3.
     existing_attacks : Boolean, optional
         Whether the attacks are already on disk or if they need to be created
         on the fly. The default is False.
@@ -263,7 +273,7 @@ def create_dataset(path_to_imgs, fraction, existing_attacks=False, seed=23):
   
                 
                 
-def hashing(algorithms, thresholds, databases, dataset, general_batch_size):
+def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
     """
     Performs the hashing and matching process for different algorithms and
     thresholds.
@@ -275,12 +285,13 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size):
     thresholds : List
         List of floats corresponding to different thresholds.
     databases : List
-        List of list of ImageHash or ImageFeatures, corresponding to the
+        List of dictionaries of ImageHash or ImageFeatures, corresponding to the
         databases for each algorithm in `algorithms`.
     dataset : IterableDataset
         IterableDataset object with images to attack.
-    general_batch_size : int
-        Batch size for the outer Dataloader, which all algorithms will use.
+    general_batch_size : int, optional
+        Batch size for the outer Dataloader, which all algorithms will use. The
+        default is 512.
 
     Returns
     -------
@@ -342,7 +353,7 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size):
     # important overhead is the loading of big networks, but with large
     # batches, we actually don't load them that much
     
-    for images, image_names, attack_names in dataloader:
+    for images, image_names, attack_names in tqdm(dataloader):
         
         for i, algorithm in enumerate(algorithms):
             

@@ -264,7 +264,7 @@ class NeuralAlgorithm(Algorithm):
         
         if (not self.raw_features):
             rng = np.random.default_rng(seed=135)
-            self.hyperplanes = 2*rng.rand(self.features_size, self.hash_size**2) - 1
+            self.hyperplanes = 2*rng.random((self.features_size, self.hash_size**2)) - 1
         
     def __str__(self):
         if self.raw_features:
