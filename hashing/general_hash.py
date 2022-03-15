@@ -17,10 +17,10 @@ from torch.utils.data import Dataset, IterableDataset, DataLoader
 import numpy as np
 from PIL import Image
 
-class ImageDataset(Dataset):
+class DatabaseDataset(Dataset):
     """
-    Class representing a dataset of images. Convenient to use in conjunction
-    with PyTorch DataLoader.
+    Class representing a dataset of images to create the database. Convenient to 
+    use in conjunction with PyTorch DataLoader.
     """
     
     def __init__(self, path_to_imgs):
@@ -40,13 +40,42 @@ class ImageDataset(Dataset):
             name = self.img_paths[index]
             
         return (image, name)
-                
-                
-                
-class ImageIterableDataset(IterableDataset):
+    
+
+class ExistingAttacksDataset(Dataset):
     """
-    Class representing a dataset of attacks on images. Convenient to use in conjunction
+    Class representing a dataset of existing attacked images. Convenient to use in conjunction
     with PyTorch DataLoader.
+    """
+    
+    def __init__(self, path_to_imgs):
+        if (type(path_to_imgs) == str or type(path_to_imgs) == np.str_):
+            self.img_paths = [path_to_imgs + name for name in os.listdir(path_to_imgs)]
+        elif type(path_to_imgs) == list:
+            self.img_paths = path_to_imgs
+
+    def __len__(self):
+        return len(self.img_paths)
+    
+    def __getitem__(self, index):
+        image = Image.open(self.img_paths[index]).convert('RGB')
+        try:
+            name = self.img_paths[index].rsplit('/', 1)[1]
+        except IndexError:
+            name = self.img_paths[index]
+        # Assumes that the filename convention is name_attackID.extension
+        name, attack_name = name.split('_', 1)
+        extension = attack_name.rsplit('.', 1)[1]
+        name = name + '.' + extension
+            
+        return (image, name, attack_name)
+                
+                
+                
+class PerformAttacksDataset(IterableDataset):
+    """
+    Class representing a dataset where we perform attacks on images on the fly. 
+    Convenient to use in conjunction with PyTorch DataLoader.
     """
     
     def __init__(self, imgs_to_attack):
@@ -128,7 +157,7 @@ class Algorithm(object):
         self.load_model()
         
         # Creates the dataloader to easily iterate on images
-        dataset = ImageDataset(path_to_db)
+        dataset = DatabaseDataset(path_to_db)
         dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False,
                                 collate_fn=collate)
         
@@ -189,7 +218,7 @@ class Algorithm(object):
         
     
     
-def partition_dataset(path_to_imgs, fraction, seed=23):
+def create_dataset(path_to_imgs, fraction, existing_attacks=False, seed=23):
     """
     Randomly chooses a fraction `fraction` of images to attack in a dataset.
 
@@ -202,6 +231,9 @@ def partition_dataset(path_to_imgs, fraction, seed=23):
         Fraction of images to attack in the directory if `path_to_imgs` is a str.
         If `path_to_imgs` is a list, it is ignored and all images in the list
         are attacked.
+    existing_attacks : Boolean, optional
+        Whether the attacks are already on disk or if they need to be created
+        on the fly. The default is False.
     seed : int, optional
         Fixed seed for coherent results. The default is 23.
 
@@ -212,17 +244,22 @@ def partition_dataset(path_to_imgs, fraction, seed=23):
 
     """
     
-    if (type(path_to_imgs) == str or type(path_to_imgs) == np.str_):
-        img_paths = [path_to_imgs + name for name in os.listdir(path_to_imgs)]
+    if existing_attacks:
+        return ExistingAttacksDataset(path_to_imgs)
+    
+    else:
+    
+        if (type(path_to_imgs) == str or type(path_to_imgs) == np.str_):
+            img_paths = [path_to_imgs + name for name in os.listdir(path_to_imgs)]
         
-    elif type(path_to_imgs) == list:
-        img_paths = path_to_imgs
+        elif type(path_to_imgs) == list:
+            img_paths = path_to_imgs
         
-    rng = np.random.default_rng(seed=seed)
-    imgs_to_attack = rng.choice(img_paths, size=round(len(img_paths)*fraction), 
-               replace=False)
+        rng = np.random.default_rng(seed=seed)
+        imgs_to_attack = rng.choice(img_paths, size=round(len(img_paths)*fraction), 
+                                    replace=False)
             
-    return IterableDataset(imgs_to_attack)
+        return PerformAttacksDataset(imgs_to_attack)
   
                 
                 

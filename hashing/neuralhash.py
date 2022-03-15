@@ -6,18 +6,15 @@ Created on Fri Mar  4 09:13:39 2022
 @author: cyrilvallez
 """
 
-from PIL import Image
 import numpy as np
 import os
 import sys
 sys.path.append(os.path.dirname(os.getcwd()))
-from Project import generator
 from hashing.imagehash import ImageHash
 from hashing.general_hash import Algorithm
 import torch
 import torch.nn as nn
 import torchvision.transforms as T
-from torch.utils.data import Dataset, IterableDataset, DataLoader
 from torchvision.models import inception_v3
 from hashing.SimCLR import resnet_wider 
 
