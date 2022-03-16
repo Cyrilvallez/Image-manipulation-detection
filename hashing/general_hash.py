@@ -12,6 +12,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 import generator
 import time
 from torch.utils.data import Dataset, IterableDataset, DataLoader
+from helpers import utils
 import numpy as np
 from PIL import Image
 from tqdm import tqdm
@@ -38,7 +39,11 @@ class DatabaseDataset(Dataset):
         except IndexError:
             name = self.img_paths[index]
             
+        # Removes the extension (name.jpg -> name)
+        name = name.rsplit('.', 1)[0]
+            
         return (image, name)
+    
     
 
 class ExistingAttacksDataset(Dataset):
@@ -62,10 +67,11 @@ class ExistingAttacksDataset(Dataset):
             name = self.img_paths[index].rsplit('/', 1)[1]
         except IndexError:
             name = self.img_paths[index]
+            
         # Assumes that the filename convention is name_attackID.extension
         name, attack_name = name.split('_', 1)
-        extension = attack_name.rsplit('.', 1)[1]
-        name = name + '.' + extension
+        # removes the extension
+        attack_name = attack_name.rsplit('.', 1)[0]
             
         return (image, name, attack_name)
                 
@@ -82,7 +88,7 @@ class PerformAttacksDataset(IterableDataset):
         self.imgs_to_attack = imgs_to_attack
 
     def __len__(self):
-        return len(self.imgs_to_attack)
+        return len(self.imgs_to_attack)*generator.NUMBER_OF_ATTACKS
     
     def __iter__(self):
         
@@ -92,6 +98,9 @@ class PerformAttacksDataset(IterableDataset):
                 img_name = image.rsplit('/', 1)[1]
             except IndexError:
                 img_name = image
+                
+            # removes the extension
+            img_name = img_name.rsplit('.', 1)[0]
             
             attacks = generator.perform_all_attacks(image, **generator.ATTACK_PARAMETERS)
             for key in attacks.keys():
@@ -134,8 +143,8 @@ ADMISSIBLE_ALGORITHMS = [
     'Dhash',
     'Whash',
     'Crop resistant hash',
-    'Inception_v3',
-    'SimCLR_v1_ResNet50_2x'
+    'Inception v3',
+    'SimCLR v1 ResNet50 2x'
     ]
                 
                 
@@ -226,6 +235,42 @@ class Algorithm(object):
         """
         raise NotImplementedError()
         
+        
+def find_attacked_images(dataset):
+    """
+    Find the names of images which are going to be attacked, or are already attacked
+
+    Parameters
+    ----------
+    dataset : PerformAttacksDataset or ExistingAttacksDataset
+        The dataset corresponding to the images.
+
+    Returns
+    -------
+    names : List
+        The names of the images.
+
+    """
+    # if dataset is a PerformAttacksDataset dataset
+    try:
+        images = dataset.imgs_to_attack
+        try:
+            names = [im.rsplit('/', 1)[1].rsplit('.', 1)[0] for im in images]
+        except IndexError:
+            names = [im.rsplit('.', 1)[0] for im in images]
+        
+    # dataset is a ExistingAttacksDataset dataset
+    except AttributeError:
+        images = dataset.img_paths
+        try:
+            names = [im.rsplit('/', 1)[1].split('_', 1)[0] for im in images]
+        except IndexError:
+            names = [im.split('_', 1)[0] for im in images]
+        # Removes duplicates
+        names = list(set(names))
+        
+    return names
+        
     
     
 def create_dataset(path_to_imgs, fraction=0.3, existing_attacks=False, seed=23):
@@ -249,8 +294,8 @@ def create_dataset(path_to_imgs, fraction=0.3, existing_attacks=False, seed=23):
 
     Returns
     -------
-    imgs_to_attack : List of str
-        List of paths towards images to attack.
+    ExistingAttacksDataset or PerformAttacksDataset
+        Dataset of images to attack.
 
     """
     
@@ -270,7 +315,36 @@ def create_dataset(path_to_imgs, fraction=0.3, existing_attacks=False, seed=23):
                                     replace=False)
             
         return PerformAttacksDataset(imgs_to_attack)
-  
+    
+    
+def create_databases(algorithms, path_to_db):
+    """
+    Creates the databases for each algorithm.
+
+    Parameters
+    ----------
+    algorithms : List
+        List of Algorithms (NeuralAlgorithm or ClassicalAlgorithm).
+    path_to_db : str or list of str
+        The path to the folder containing the images for the database (or list
+        of paths corresponding to the database).
+
+    Returns
+    -------
+    databases : List
+        The databases for each algorithm.
+    time_database : Dictionary
+        The time needed to create the database for each algorithm.
+
+    """
+    
+    databases = []
+    time_database = {}
+
+    for algorithm in tqdm(algorithms):
+        databases.append(algorithm.create_database(path_to_db, time_database))
+        
+    return databases, time_database
                 
                 
 def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
@@ -282,8 +356,10 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
     ----------
     algorithms : List
         List of Algorithms (NeuralAlgorithm or ClassicalAlgorithm).
-    thresholds : List
-        List of floats corresponding to different thresholds.
+    thresholds : Array 
+        List of floats corresponding to different thresholds. Or array of arrays
+        of the same size as algorithms, corresponding to different thresholds
+        for each algorithm
     databases : List
         List of dictionaries of ImageHash or ImageFeatures, corresponding to the
         databases for each algorithm in `algorithms`.
@@ -313,6 +389,13 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
     # Creates dataloader on which to iterate
     dataloader = DataLoader(dataset, batch_size=general_batch_size, shuffle=False,
                             collate_fn=collate)
+    
+    # Check whether the thresholds are different for each algo or not
+    if (type(thresholds[0]) == list or type(thresholds[0]) == np.ndarray):
+        assert(len(thresholds) == len(algorithms))
+        custom_thresholds = True
+    else:
+        custom_thresholds = False
         
     # Initialize the different output digests; they are dictionaries with
     # meaningful names
@@ -324,14 +407,19 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
     
     all_attack_names = generator.retrieve_ids(**generator.ATTACK_PARAMETERS)
     
-    for algorithm in algorithms:
+    for i, algorithm in enumerate(algorithms):
         
         general_output[str(algorithm)] = {}
         attack_wise_output[str(algorithm)] = {}
         image_wise_output[str(algorithm)] = {}
         running_time [str(algorithm)] = 0
         
-        for threshold in thresholds:
+        if custom_thresholds:
+            algo_thresholds = thresholds[i]
+        else:
+            algo_thresholds = thresholds
+        
+        for threshold in algo_thresholds:
             
             general_output[str(algorithm)][f'Threshold {threshold:.3f}'] = \
                 {'detection':0, 'no detection':0}
@@ -363,6 +451,12 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
             # Select database corresponding to that algorithm
             database = databases[i]
             
+            # Select thresholds corresponding to that algorithm
+            if custom_thresholds:
+                algo_thresholds = thresholds[i]
+            else:
+                algo_thresholds = thresholds
+            
             t0 = time.time()
             
             # Pre-process the images
@@ -376,7 +470,7 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
             
             t0 = time.time()
             
-            for threshold in thresholds:
+            for threshold in algo_thresholds:
         
                 for fingerprint, img_name, attack_name in zip(fingerprints, image_names,
                                                               attack_names):
@@ -395,6 +489,7 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
                             [attack_name]['no detection'] += 1
                 
                     for name in detected:
+
                         if name == img_name:
                             image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
                                 [name]['correct detection'] += 1
@@ -412,4 +507,52 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
     
     return (general_output, attack_wise_output, image_wise_output, running_time)
 
+
+
+def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
+                  negative_dataset, general_batch_size=512):
+    """
+    Perform the hashing and matchup of both a experimental and control group
+    of images, and outputs the (processed) metrics of the experiment.
+
+    Parameters
+    ----------
+    algorithms : List
+        List of Algorithms (NeuralAlgorithm or ClassicalAlgorithm).
+    thresholds : Array 
+        List of floats corresponding to different thresholds. Or array of arrays
+        of the same size as algorithms, corresponding to different thresholds
+        for each algorithm
+    path_to_db : str or list of str
+        The path to the folder containing the images for the database (or list
+        of paths corresponding to the database).
+    positive_dataset : ExistingAttacksDataset or PerformAttacksDataset
+        Dataset with attacked versions of images in the database.
+    negative_dataset : ExistingAttacksDataset or PerformAttacksDataset
+        Dataset with attacked versions of images not present in the database.
+    general_batch_size : int, optional
+        Batch size for the outer Dataloader, which all algorithms will use. The
+        default is 512.
+
+    Returns
+    -------
+    final_digest : Tuple of dictionaries
+        The metrics of the experiment for each algorithm and thresholds.
+
+    """
+    
+    databases, time_database = create_databases(algorithms, path_to_db)
+    
+    positive_digest = hashing(algorithms, thresholds, databases, positive_dataset,
+                              general_batch_size)
+    negative_digest = hashing(algorithms, thresholds, databases, negative_dataset,
+                              general_batch_size)
+    
+    attacked_image_names = find_attacked_images(positive_dataset)
+    
+    final_digest = utils.process_digests(positive_digest, negative_digest,
+                                         attacked_image_names)
+    final_digest = (*final_digest, time_database)
+    
+    return final_digest
 

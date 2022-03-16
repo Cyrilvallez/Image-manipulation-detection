@@ -47,3 +47,6 @@ ATTACK_PARAMETERS = {
     'sharpness_factors': SHARPNESS_FACTORS,
     'text_lengths': TEXT_LENGTHS
     }
+
+NUMBER_OF_ATTACKS = sum([len(param) for param in ATTACK_PARAMETERS.values() \
+                         if type(param) != bool])

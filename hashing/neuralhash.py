@@ -215,26 +215,26 @@ def load_simclr_v1_resnet50_2x(device='cuda'):
 
 # Mapping from string to actual algorithms
 NEURAL_MODEL_LOADER = {
-    'Inception_v3': load_inception_v3,
-    'SimCLR_v1_ResNet50_2x': load_simclr_v1_resnet50_2x
+    'Inception v3': load_inception_v3,
+    'SimCLR v1 ResNet50 2x': load_simclr_v1_resnet50_2x
     }
 
 
 # Mapping from string to feature size output of networks
 NEURAL_MODEL_FEATURES_SIZE = {
-    'Inception_v3': 2048,
-    'SimCLR_v1_ResNet50_2x': 4096
+    'Inception v3': 2048,
+    'SimCLR v1 ResNet50 2x': 4096
     }
 
 # Mapping from string to pre-processing transforms of networks
 NEURAL_MODEL_TRANSFORMS = {
-    'Inception_v3': T.Compose([
+    'Inception v3': T.Compose([
         T.Resize((299,299), interpolation=T.InterpolationMode.LANCZOS),
         T.ToTensor(),
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ]),
     
-    'SimCLR_v1_ResNet50_2x': T.Compose([
+    'SimCLR v1 ResNet50 2x': T.Compose([
         T.Resize(256, interpolation=T.InterpolationMode.LANCZOS),
         T.CenterCrop(224),
         T.ToTensor()
