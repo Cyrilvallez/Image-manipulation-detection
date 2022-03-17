@@ -717,7 +717,8 @@ def perform_all_and_save_list(path_list, save_name_list=None, extension='PNG',
     if save_name_list is None:
         save_name_list = [name.rsplit('.', 1)[0] for name in path_list]
     
-    for path, save_name in tqdm(zip(path_list, save_name_list)):
+    for path, save_name in tqdm(zip(path_list, save_name_list), 
+                                total=len(path_list)):
         perform_all_and_save(path, save_name, **kwargs)
         
         

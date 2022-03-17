@@ -24,26 +24,26 @@ params = generator.ATTACK_PARAMETERS
 N = 100
 
 
-path1 = 'BSDS500/Identification/'
-path2 = 'BSDS500/Control/'
+path1 = 'Datasets/BSDS500/Experimental/'
+path2 = 'Datasets/BSDS500/Control/'
 
-destination1 = 'BSDS500/Identification_attacks/'
-destination2 = 'BSDS500/Control_attacks/'
+destination1 = 'Datasets/BSDS500/Experimental_attacks/'
+destination2 = 'Datasets/BSDS500/Control_attacks/'
 
-names_identification = os.listdir(path1)
+names_experimental = os.listdir(path1)
 names_control = os.listdir(path2)
 
-random.shuffle(names_identification)
+random.shuffle(names_experimental)
 random.shuffle(names_control)
 
-images_identification = [path1 + name for name in names_identification[0:N]]
+images_experimental = [path1 + name for name in names_experimental[0:N]]
 images_control = [path2 + name for name in names_control[0:N]]
 
-save_identification = [destination1 + name.split('.')[0] for name \
-                       in names_identification[0:N]]
+save_experimental = [destination1 + name.split('.')[0] for name \
+                       in names_experimental[0:N]]
 save_control = [destination2 + name.split('.')[0] for name in names_control[0:N]]
 
-generator.perform_all_and_save_list(images_identification, save_name_list=save_identification,
+generator.perform_all_and_save_list(images_experimental, save_name_list=save_experimental,
                              extension='PNG', **params)
 generator.perform_all_and_save_list(images_control, save_name_list=save_control,
                              extension='PNG', **params)

@@ -16,9 +16,9 @@ random.seed(256)
 import shutil
 import os
 
-source_dir = 'BSDS500'
-target_dir1 = 'BSDS500/Identification'
-target_dir2 = 'BSDS500/Control'
+source_dir = 'Datasets/BSDS500'
+target_dir1 = 'Datasets/BSDS500/Experimental'
+target_dir2 = 'Datasets/BSDS500/Control'
     
 file_names = os.listdir(source_dir)
 # Remove non image data files

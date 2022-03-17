@@ -10,9 +10,11 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import hashing
 import generator
+from tqdm import tqdm
 
 #%%
-path_db = 'test_hashing/BSDS500/Identification/'
+path_db = 'Datasets/BSDS500/Experimental/'
+image = path_db + 'data5.jpg'
 
 algos = [
     hashing.NeuralAlgorithm('Inception v3', hash_size=8, batch_size=512, device='cpu'),
@@ -20,4 +22,4 @@ algos = [
                        device='cpu')
     ]
 
-databases,_ = hashing.create_databases(algos, path_db)
+    
