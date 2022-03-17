@@ -796,6 +796,18 @@ CLASSICAL_MODEL_SWITCH = {
 class ClassicalAlgorithm(Algorithm):
     """
     Wrapper class to represent together a classical algorithm and its parameters
+    
+    Attributes
+     ----------
+     algorithm : str
+         The name of the model.
+     hash_size : Int, optional
+         Square of the hash size (to be consistent with imagehash). Thus the actual
+         hash size will be hash_size**2. Ignored if `raw_features` is set to True.
+         The default is 8.
+     batch_size : int, optional
+         Batch size for the database creation. The default is 512.
+         
     """
     
     def __init__(self, algorithm, hash_size=8, batch_size=512):
