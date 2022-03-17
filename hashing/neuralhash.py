@@ -17,6 +17,69 @@ import torch.nn as nn
 import torchvision.transforms as T
 from torchvision.models import inception_v3
 from hashing.SimCLR import resnet_wider 
+import scipy.spatial.distance as distance
+
+
+def cosine_distance(vector, other_vector):
+    """
+    Cosine distance between two vectors.
+
+    Parameters
+    ----------
+    vector, other_vector : arrays
+        Vectors to compare.
+
+    Raises
+    ------
+    TypeError
+        If both vectors are not the same length.
+
+    Returns
+    -------
+    Float
+        The cosine distance between both vectors (between 0 and 1).
+
+    """
+    
+    if len(vector) != len(other_vector):
+        raise TypeError('Vectors must be of the same length.')
+    
+    return 1 - 1/2 - 1/2*np.dot(vector, other_vector)/ \
+        np.linalg.norm(vector)/np.linalg.norm(other_vector)
+        
+        
+def jensen_shannon_distance(vector, other_vector):
+    """
+    Jensen Shannon distance between two vectors.
+
+    Parameters
+    ----------
+    vector, other_vector : arrays
+        Vectors to compare.
+
+    Raises
+    ------
+    TypeError
+        If both vectors are not the same length.
+
+    Returns
+    -------
+    Float
+        The Jensen-Shannon distance between both vectors (between 0 and 1).
+
+    """
+   
+    if len(vector) != len(other_vector):
+        raise TypeError('Vectors must be of the same length.')
+        
+    return distance.jensenshannon(vector, other_vector, base=2)
+
+
+# Distance functions to use for the distance in the case of raw features
+DISTANCE_FUNCTIONS = {
+'Cosine': cosine_distance,
+'Jensen-Shannon': jensen_shannon_distance
+}
 
 
 class ImageFeatures(object):
@@ -25,10 +88,11 @@ class ImageFeatures(object):
     ImageFeatures or databases of ImageFeatures.
     """
     
-    def __init__(self, features):
+    def __init__(self, features, distance='Cosine'):
         self.features = np.array(features).squeeze()
         if (len(self.features.shape) > 1):
             raise TypeError('ImageFeature array must be 1D')
+        self.distance_function = DISTANCE_FUNCTIONS[distance]
 
     def __str__(self):
         return str(self.features)
@@ -47,38 +111,10 @@ class ImageFeatures(object):
     def __len__(self):
         return self.features.size
     
-    
-    def cosine_distance(self, other):
-        """
-        Cosine distance between current ImageFeatures and another one.
-
-        Parameters
-        ----------
-        other : ImageFeatures
-            The other ImageFeatures.
-
-        Raises
-        ------
-        TypeError
-            If both ImageFeatures are not the same length.
-
-        Returns
-        -------
-        Float
-            The cosine distance between both ImageFeatures (between 0 and 1).
-
-        """
-        
-        if len(self) != len(other):
-            raise TypeError('ImageFeatures must be of the same length.')
-        
-        return 1 - 1/2 - 1/2*np.dot(self.features, other.features)/ \
-            np.linalg.norm(self.features)/np.linalg.norm(other.features)
-
 
     def matches(self, other, threshold=0.25):
         """
-        Check if the cosine distance between current ImageFeatures and another
+        Check if the distance between current ImageFeatures and another
         ImageFeatures is less than a threshold.
 
         Parameters
@@ -95,12 +131,12 @@ class ImageFeatures(object):
 
         """
 
-        return self.cosine_distance(other) <= threshold
+        return self.distance_function(self.features, other.features) <= threshold
     
     
     def match_db(self, database, threshold=0.25):
         """
-        Check if there is a ImageFeatures in the database for which the cosine distance
+        Check if there is a ImageFeatures in the database for which the distance
         with current ImageFeatures is less than a threshold.
 
         Parameters
@@ -149,8 +185,7 @@ class ImageFeatures(object):
                 names.append(key)
         
         return names
-
-
+    
 
 def load_inception_v3(device='cuda'):
     """
@@ -246,20 +281,43 @@ class NeuralAlgorithm(Algorithm):
     """
     Wrapper class to represent together a neural algorithm and its parameters (hash_size,
     batch_size, device,...)
+
+   Attributes
+    ----------
+    algorithm : str
+        The name of the model.
+    hash_size : Int, optional
+        Square of the hash size (to be consistent with imagehash). Thus the actual
+        hash size will be hash_size**2. Ignored if `raw_features` is set to True.
+        The default is 8.
+    raw_features : Boolean, optional
+        Whether to hash the features or not. The default is False.
+    distance : str, optional
+        The distance function to use if `raw_features` is set to True. Ignored otherwise.
+        The default is 'Cosine'.
+    batch_size : int, optional
+        Batch size for the database creation. The default is 512.
+    device : str, optional
+        The device to use for running the model. The default is 'cuda'.
+
     """
     
-    def __init__(self, algorithm, hash_size=8, batch_size=512, device='cuda',
-                 raw_features=False):
+    def __init__(self, algorithm, hash_size=8, raw_features=False, distance='Cosine',
+                 batch_size=512, device='cuda'):
         
         Algorithm.__init__(self, algorithm, hash_size, batch_size)
             
         if (device not in ['cuda', 'cpu']):
             raise ValueError('device must be either `cuda` or `cpu`.')
             
+        if (distance not in DISTANCE_FUNCTIONS.keys()):
+            raise ValueError(f'Distance function must be one of {DISTANCE_FUNCTIONS.keys()}.')
+            
         self.loader = NEURAL_MODEL_LOADER[algorithm]
         self.features_size = NEURAL_MODEL_FEATURES_SIZE[algorithm]
         self.transforms = NEURAL_MODEL_TRANSFORMS[algorithm]
         self.raw_features = raw_features
+        self.distance = distance
         self.device = device
         
         if (not self.raw_features):
@@ -361,7 +419,7 @@ class NeuralAlgorithm(Algorithm):
         else:
              
             for feature in features:
-                fingerprints.append(ImageFeatures(feature))
+                fingerprints.append(ImageFeatures(feature, self.distance))
                 
         return fingerprints  
         
