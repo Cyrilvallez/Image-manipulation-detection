@@ -659,6 +659,7 @@ def _find_all_segments(pixels, segment_threshold, min_segment_size):
 def crop_resistant_hash(
         image,
         hash_func=None,
+        hash_size=8,
         limit_segments=None,
         segment_threshold=128,
         min_segment_size=500,
@@ -714,7 +715,7 @@ def crop_resistant_hash(
         max_x = (max(coord[1] for coord in segment)+1) * scale_w
         # Compute robust hash for each bounding box
         bounding_box = orig_image.crop((min_x, min_y, max_x, max_y))
-        hashes.append(hash_func(bounding_box))
+        hashes.append(hash_func(bounding_box, hash_size=hash_size))
         # Show bounding box
         # im_segment = image.copy()
         # for pix in segment:
