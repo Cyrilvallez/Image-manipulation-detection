@@ -499,7 +499,7 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
                                 
                             
             # Mean time needed for the matching of batch of hashes
-            running_time[str(algorithm)] += (time.time() - t0)/len(thresholds)
+            running_time[str(algorithm)] += (time.time() - t0)/len(algo_thresholds)
                 
         # Removes the model from memory
         algorithm.kill_model()

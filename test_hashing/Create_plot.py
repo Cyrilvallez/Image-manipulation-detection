@@ -21,30 +21,26 @@ import pandas as pd
 import seaborn as sns
 
 
-def ROC_curves(fpr, recall, legend, large_ticks=True, title=None,
-               save=False, filename=None):
+def ROC_curves(digest, large_ticks=True, save=False, filename=None):
     """
-    Plot different ROC curves on same figure for direct and efficient comparison.
-    
+    Plot ROC curves for each algorithm.
 
     Parameters
     ----------
-    fpr : array of shape (N, M)
-        Each row contains the false positive rate data for a specific
-        method (algorithm).
-    recall : array of shape (N, M)
-        Each row contains the recall data for a specific method (algorithm).
-    legend : array of str of size N.
-        Contains the str for the legend
+    result_dic : Dictionary
+        General or attack-wise digest of an experiment.
     large_ticks : Boolean, optional.
         Whether or not to set ticks from 0 to 1 with step 0.1 in both directions.
         The default is True.
-    title : str, optional
-        Title to give to the figure. The default is None.
     save : Boolean, optional
         Whether to save the figure or not. The default is False.
     filename : str, optional
         The filename used to save the file. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
 
     Returns
     -------
@@ -53,60 +49,111 @@ def ROC_curves(fpr, recall, legend, large_ticks=True, title=None,
     """
     
     if save and filename is None:
-        filename = 'Results/General/ROC_curves.pdf'
+        raise ValueError('You must specify a filename to save the figure.')
         
-    # for latex output (there is a '&' in some default attack names)
-    if title is not None:
-        if '&' in title:
-            title = title.replace('&', '\\&')
+    # Determine if the dictionary contains general or attack_wise results
+    if 'accuracy' in list(list(digest.values())[0].values())[0].keys():
+        attack_wise = False
+    else:
+        attack_wise = True
+            
+    # Initialize stuff
+    legend = []
     
-    fpr = np.array(fpr)
-    recall = np.array(recall)
+    if not attack_wise:
+        fpr = [[] for i in digest.keys()]
+        recall = [[] for i in digest.keys()]
+    else:
+        fpr = {}
+        recall = {}
+        for attack_name in list(list(digest.values())[0].values())[0].keys():
+            fpr[attack_name] = [[] for i in digest.keys()]
+            recall[attack_name] = [[] for i in digest.keys()]
+        
+    # Retrive the values as lists
+    for i, algorithm in enumerate(digest.keys()):
+        
+        legend.append(algorithm)
+        
+        for threshold in sorted(digest[algorithm].keys()):
+            
+            if not attack_wise:
+                
+                fpr[i].append(digest[algorithm][threshold]['fpr'])
+                recall[i].append(digest[algorithm][threshold]['recall'])
+            
+            else:
+                
+                for attack_name in digest[algorithm][threshold].keys():
+                    
+                    fpr[attack_name][i].append(digest[algorithm][threshold][attack_name]['fpr'])
+                    recall[attack_name][i].append(digest[algorithm][threshold][attack_name]['recall'])
+                    
+    # Plot the ROC curves          
     
-    assert(fpr.shape == recall.shape)
+    if not attack_wise:
     
-    plt.figure(figsize=[6.4*1.5, 4.8*1.5])
-    for i in range(len(fpr)):
-        plt.plot(fpr[i,:], recall[i,:], '-+')
-    plt.xlabel('False positive rate (FPR)')
-    plt.ylabel('True positive rate (Recall)')
-    plt.legend(legend)
-    plt.title(title)
-    if large_ticks:
-        plt.xticks(0.1*np.arange(11))
-        plt.yticks(0.1*np.arange(11))
-    plt.grid()
-    if save:
-        plt.savefig(filename, bbox_inches='tight')
-    plt.show()
+        plt.figure(figsize=[6.4*1.5, 4.8*1.5])
+        for i in range(len(fpr)):
+            plt.plot(fpr[i], recall[i], '-+')
+            plt.xlabel('False positive rate (FPR)')
+            plt.ylabel('True positive rate (Recall)')
+            plt.legend(legend)
+            if large_ticks:
+                plt.xticks(0.1*np.arange(11))
+                plt.yticks(0.1*np.arange(11))
+            plt.grid()
+        if save:
+            plt.savefig(filename, bbox_inches='tight')
+        plt.show()
+        
+    else:
+        
+        for attack in fpr.keys():
+            
+            plt.figure(figsize=[6.4*1.5, 4.8*1.5])
+            for i in range(len(fpr[attack])):
+                plt.plot(fpr[attack][i], recall[attack][i], '-+')
+                plt.xlabel('False positive rate (FPR)')
+                plt.ylabel('True positive rate (Recall)')
+                plt.legend(legend)
+                
+                title = attack
+                # for latex output (there is a '&' in some default attack names that latex
+                # does not understand as litteral)
+                if '&' in title:
+                    title = title.replace('&', '\\&')
+                plt.title(title.replace('_', ' '))
+                
+                if large_ticks:
+                    plt.xticks(0.1*np.arange(11))
+                    plt.yticks(0.1*np.arange(11))
+                plt.grid()
+            if save:
+                plt.savefig(filename + '_' + attack + '.pdf', bbox_inches='tight')
+            plt.show()
     
     
-def metrics_plot(accuracy, precision, recall, fpr, BERs, titles, common_ticks=True, 
-                 save=False, filenames=None):
+    
+def metrics_plot(general_digest, common_ticks=True, save=False, filename=None):
     """
-    Creates metrics plot for different methods (algorithms).
+    Creates metrics plot for different algorithms.
 
     Parameters
     ----------
-    accuracy : array of shape (N, M)
-        Each row contains the accuracy data for a specific method (algorithm).
-    precision : array of shape (N, M)
-        Each row contains the precision data for a specific method (algorithm).
-    recall : array of shape (N, M)
-        Each row contains the recall data for a specific method (algorithm).
-    fpr : array of shape (N, M)
-        Each row contains the false positive rate data for a specific
-        method (algorithm).
-    BERs : array of shape (M)
-        Contains the BERs thresholds for each data point.
-    titles : array of str of size N
-        Contains the name identifier for each method (algorithm) to use as title
+    result_dic : Dictionary
+        General digest of an experiment.
     common_ticks : Boolean, optional
         Whether to make all plots have the same ticks. The default is True.
     save : Boolean, optional
         Whether to save the figure or not. The default is False.
-    filenames : list of str of size N, optional
+    filename : list of str of size N, optional
         The filenames used to save the files. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
 
     Returns
     -------
@@ -114,56 +161,68 @@ def metrics_plot(accuracy, precision, recall, fpr, BERs, titles, common_ticks=Tr
 
     """
     
-    if save and filenames is None:
-        filenames = [f'Results/General/Metrics_{titles[i]}.pdf' for i in range(len(accuracy))]
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
         
-    accuracy = np.array(accuracy)
-    precision = np.array(precision)
-    recall = np.array(recall)
-    fpr = np.array(fpr)
+    accuracy = [[] for i in general_digest.keys()]
+    precision = [[] for i in general_digest.keys()]
+    recall = [[] for i in general_digest.keys()]
+    fpr = [[] for i in general_digest.keys()]
+    thresholds = [[] for i in general_digest.keys()]
+    names = []
     
-    assert((accuracy.shape == precision.shape) and (accuracy.shape == recall.shape) 
-           and (accuracy.shape == fpr.shape))
+    for i, algorithm in enumerate(general_digest.keys()):
+        
+        names.append(algorithm)
+        
+        for j, threshold in enumerate(sorted(general_digest[algorithm].keys())):
+            
+            accuracy[i].append(general_digest[algorithm][threshold]['accuracy'])
+            precision[i].append(general_digest[algorithm][threshold]['precision'])
+            recall[i].append(general_digest[algorithm][threshold]['recall'])
+            fpr[i].append(general_digest[algorithm][threshold]['fpr'])
+            thresholds[i].append(float(threshold.split(' ', 1)[1]))
+            
         
     for i in range(len(accuracy)):
         plt.figure()
-        plt.plot(BERs, accuracy[i,:], 'b-+')
-        plt.plot(BERs, precision[i,:], 'r-+')
-        plt.plot(BERs, recall[i,:], 'g-+')
-        plt.plot(BERs, fpr[i,:], 'y-+')
-        plt.xlabel('BER threshold')
+        plt.plot(thresholds[i], accuracy[i], 'b-+')
+        plt.plot(thresholds[i], precision[i], 'r-+')
+        plt.plot(thresholds[i], recall[i], 'g-+')
+        plt.plot(thresholds[i], fpr[i], 'y-+')
+        plt.xlabel('Threshold')
         plt.ylabel('Metrics')
         plt.legend(['Accuracy', 'Precision', 'Recall', 'FPR'])
-        plt.title(titles[i])
+        plt.title(names[i])
         if common_ticks:
             plt.yticks(0.2*np.arange(6))
         plt.grid()
         if save:
-            plt.savefig(filenames[i], bbox_inches='tight')
+            plt.savefig(filename + '_' + names[i] + '.pdf', bbox_inches='tight')
         plt.show()
         
         
         
-def time_comparison(time_identification, time_db, labels, save=False,
-                    filename=None):
+def time_comparison(match_time_digest, db_time_digest, save=False, filename=None):
     """
-    Creates a bar plot comparing the time needed for different methods
+    Creates a bar plot comparing the time needed for different algorithms.
 
     Parameters
     ----------
-    time_identification : array of shape (N, M)
-        Each row containes the time needed for identification of all images
-        for one method (algorithm).
-    time_db : array of shape N
-        Contains the time needed to create the database for all methods
-        (algorithms).
-    labels : array of str of shape N
-        Contains the labels (names) for each method (algorithm).
+    match_time_digest : Dictionary
+        Matching time digest of an experiment.
+    db_time_digest : Dictionary
+        Database creation time digest of an experiment.
     save : Boolean, optional
         Whether or not to save the plot. The default is False.
     filename : str, optional
         The filename used to save the file. The default is None.
 
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
+
     Returns
     -------
     None.
@@ -171,37 +230,45 @@ def time_comparison(time_identification, time_db, labels, save=False,
     """
     
     if save and filename is None:
-        filename = 'Results/General/Time.pdf'
+        raise ValueError('You must specify a filename to save the figure.')
+        
+    time_identification = []
+    time_db = []
+    labels = []
+    
+    assert(match_time_digest.keys() == db_time_digest.keys())
+    
+    for algorithm in match_time_digest.keys():
+        time_identification.append(match_time_digest[algorithm])
+        time_db.append(db_time_digest[algorithm])
+        labels.append(algorithm)
         
     time_identification = np.array(time_identification)
     time_db = np.array(time_db)
         
-    _, M = time_identification.shape
-    
-    time_average = np.mean(time_identification, axis=1)
-    sorting = np.argsort(-time_average) # sort in decreasing order
-    time_average = time_average[sorting]
+    sorting = np.argsort(-time_identification) # sort in decreasing order
+    time_identification = time_identification[sorting]
     time_db = time_db[sorting]
     names = np.array(labels)[sorting]
-    time_average_str = [time.strftime('%M:%S', time.gmtime(a)) for a in time_average]
+    time_identification_str = [time.strftime('%M:%S', time.gmtime(a)) for a in time_identification]
     time_db_str = [time.strftime('%M:%S', time.gmtime(a)) for a in time_db]
 
     y = np.arange(0, 2*len(names), 2)
     height = 0.8  
 
     plt.figure(figsize=[6.4*1.3, 4.8*1.3])
-    rects1 = plt.barh(y-height/2, time_average, height, color='r')
+    rects1 = plt.barh(y-height/2, time_identification, height, color='r')
     rects2 = plt.barh(y+height/2, time_db, height, color='b')
-    plt.bar_label(rects1, labels=time_average_str, padding=3)
+    plt.bar_label(rects1, labels=time_identification_str, padding=3)
     plt.bar_label(rects2, labels=time_db_str, padding=3)
-    plt.legend([f'Identification (mean\nover {M} runs)', 'Database creation'])
+    plt.legend(['Hashing + Identification', 'Database creation'])
     plt.xlabel('Time [min:sec]')
     
     xlocs, _ = plt.xticks()
     xlabels = [time.strftime('%M:%S', time.gmtime(a)) for a in xlocs]
     
     plt.xticks(xlocs, xlabels)
-    plt.xlim(right=1.08*np.max(time_average)) # to fit labels
+    plt.xlim(right=1.08*np.max(time_identification)) # to fit labels
     plt.yticks(y, names)
     if save:
         plt.savefig(filename, bbox_inches='tight')
@@ -209,24 +276,22 @@ def time_comparison(time_identification, time_db, labels, save=False,
     
     
     
-def _find_lowest_biggest_frequencies(frequencies, path_attacked_imgs, kind, N):
+def _find_lowest_biggest_frequencies(image_wise_digest, kind, N):
     """
-    Function to find image number of least identified images and most wrongly
-    identified images from a frequency dictionary.
+    Find image number of least identified images and most wrongly identified images
+    from an image-wise digest from an experiment.
 
     Parameters
     ----------
-    frequencies : Dictionary
-        Contains the frequency of correctly/wrongly identification for each
-        image for each algorithm and each BER.
-    path_attacked_imgs : String
-        Path to the attacked images.
+    image_wise_digest : Dictionary
+        Image-wise digest of an experiment.
     kind : String
-        The kind of analysis it is used for. Either `recall` or `fpr`.
+        The kind of analysis it is used for. Either `constant recall` or 
+        `constant fpr`.
     N : Int
         Number of least correctly recorgnized/most wrongly recognized images
         to consider.
-
+        
     Returns
     -------
     ID : Numpy array
@@ -234,69 +299,78 @@ def _find_lowest_biggest_frequencies(frequencies, path_attacked_imgs, kind, N):
         recognized images (depending on kind).
     value : Numpy array
         The actual number of times the N images were identified.
+    algo_names : List
+        The names of the algorithm used.
 
     """
     
-    keys = np.array(list(frequencies.keys()))
+    keys = np.array(list(list(list(image_wise_digest.values())[0].values())[0].keys()))
     
-    (N_rows, N_cols) = frequencies[keys[0]].shape 
+    N_rows, N_cols = len(image_wise_digest.keys()), len(list(image_wise_digest.values())[0].keys())
     
-    # The number of the images as ints
-    img_numbers = np.array([int(key.split('.')[0].replace('data', '')) for key in keys])
+    # The number of the images as randomly attributed ints
+    img_numbers = np.arange(len(keys))
     
-    # Reorder the keys according to the image number
-    sorting = np.argsort(img_numbers)
-    img_numbers = img_numbers[sorting]
-    keys = keys[sorting]
+    # REORDER ??
     
     ID = np.zeros((N_rows, N_cols, N))
     value = np.zeros((N_rows, N_cols, N))
+    algo_names = []
     
-    for i in range(N_rows):
-        for j in range(N_cols):
+    # Retrive the values as lists
+    for i, algorithm in enumerate(image_wise_digest.keys()):
+    
+        algo_names.append(algorithm)
+    
+        for j, threshold in enumerate(sorted(image_wise_digest[algorithm].keys())):
+            
             total_identified = np.zeros(len(keys))
-            for k, key in enumerate(keys):
-                total_identified[k] = frequencies[key][i, j]
+            
+            for k, image_name in enumerate(image_wise_digest[algorithm][threshold].keys()):
+                
+                total_identified[k] = image_wise_digest[algorithm][threshold][image_name]
                 
             indices = np.argsort(total_identified, kind='mergesort')
-            if kind == 'recall':
+            if kind == 'constant recall':
                 lowest = indices[0:N]
                 ID[i,j,:] = img_numbers[lowest]
                 value[i,j,:] = total_identified[lowest]
-            elif kind == 'fpr':
+            elif kind == 'constant fpr':
                 biggest = indices[-N:]
                 ID[i,j,:] = img_numbers[biggest]
-                value = total_identified[biggest]
+                value[i,j,:] = total_identified[biggest]
             
-    return ID, value
+    return ID, value, algo_names
 
     
-def frequency_pannels(frequencies, path_attacked_imgs, kind, algo_names, metrics,
-                      N=None, save=False, filename=None):
+def frequency_pannels(image_wise_digest, kind, metrics, N=None, save=False,
+                      filename=None):
     """
     Creates frequency pannels showing scatter plots for each algo/constant metric
     with the frequency of identification.
 
     Parameters
     ----------
-    frequencies : Dictionary
-        Contains the frequency of correctly/wrongly identification for each
-        image for each algorithm and each BER.
-    path_attacked_imgs : String
-        Path to the attacked images.
+    image_wise_digest : Dictionary
+        Image-wise digest of an experiment.
     kind : String
-        The kind of analysis it is used for. Either `recall` or `fpr`.
-    algo_names : List of str
-        The names of the algorithms used.
+        The kind of analysis it is used for. Either `constant recall` or 
+        `constant fpr`.
     metrics : List
-        The values of the current metric. Either values for recall, or FPR.
-    N : Int, optional
+        The values of the current metric matching `kind`. Either values for recall,
+        or FPR.
+    N : Int
         Number of least correctly recorgnized/most wrongly recognized images
-        to consider. The default is None.
+        to consider.
     save : Boolean, optional
         Whether to save the plots or not. The default is False.
     filename : String, optional
         Filename to save the plots. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
 
     Returns
     -------
@@ -304,23 +378,28 @@ def frequency_pannels(frequencies, path_attacked_imgs, kind, algo_names, metrics
 
     """
     
-    if N is None and kind == 'recall':
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+    
+    assert (kind == 'constant recall' or kind == 'constant fpr')
+    
+    if N is None and kind == 'constant recall':
         N = 20
-    elif N is None and kind == 'fpr':
+    elif N is None and kind == 'constant fpr':
         N = 50
+    
+    ID, value, algo_names = _find_lowest_biggest_frequencies(image_wise_digest,
+                                                             kind, N)
     
     N_rows = len(algo_names)
     N_cols = len(metrics)
-    
-    ID, value = _find_lowest_biggest_frequencies(frequencies, 
-                                                 path_attacked_imgs, kind, N)
             
-    if kind == 'recall':
+    if kind == 'constant recall':
         title = f'{N} least recognized images in correctly identified images (TP)'
         cols = [f'Recall {metrics[i]:.2f}' for i in range(len(metrics))]
         if save and filename is None:
             filename = 'Results/Mapping/pannel_TP.pdf'
-    elif kind == 'fpr':
+    elif kind == 'constant fpr':
         title = f'{N} most recognized images in incorrectly identified images (FP)'
         cols = [f'FPR {metrics[i]:.2f}' for i in range(len(metrics))]
         if save and filename is None:
@@ -342,45 +421,49 @@ def frequency_pannels(frequencies, path_attacked_imgs, kind, algo_names, metrics
                     size=20, ha='center', va='baseline')
 
     for ax, row in zip(axes[:,0], algo_names):
-        ax.annotate(row, xy=(0, 0.5), xytext=(-ax.yaxis.labelpad - pad, 0),
+        ax.annotate(row, xy=(0, 0.5), xytext=(-ax.yaxis.labelpad - pad - 3, 0),
                     xycoords=ax.yaxis.label, textcoords='offset points',
                     size=20, ha='right', va='center')
-            
+        ax.set(ylabel='Identification count')
+        
+    for ax in axes[-1]:
+        ax.set(xlabel='Image number')
+
     plt.suptitle(title, y=1, fontsize=30)
     fig.tight_layout()
     if save:
         plt.savefig(filename, bbox_inches='tight')
     plt.show()
     
-    
-    
 
-def similarity_heatmaps(frequencies, path_attacked_imgs, kind, algo_names, metrics,
-                      N=None, save=False, filename=None):
+def similarity_heatmaps(image_wise_digest, kind, metrics, N=None, save=False,
+                        filename=None):
     """
     Creates similarity heatmaps plots for least correctly identified/most wrongly 
     identified images.
 
     Parameters
     ----------
-    frequencies : Dictionary
-        Contains the frequency of correctly/wrongly identification for each
-        image for each algorithm and each BER.
-    path_attacked_imgs : String
-        Path to the attacked images.
+    image_wise_digest : Dictionary
+        Image-wise digest of an experiment.
     kind : String
-        The kind of analysis it is used for. Either `recall` or `fpr`.
-    algo_names : List of str
-        The names of the algorithms used.
+        The kind of analysis it is used for. Either `constant recall` or 
+        `constant fpr`.
     metrics : List
-        The values of the current metric. Either values for recall, or FPR.
-    N : Int, optional
+        The values of the current metric matching `kind`. Either values for recall,
+        or FPR.
+    N : Int
         Number of least correctly recorgnized/most wrongly recognized images
-        to consider. The default is None.
+        to consider.
     save : Boolean, optional
         Whether to save the plots or not. The default is False.
     filename : String, optional
         Filename to save the plots. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
 
     Returns
     -------
@@ -388,22 +471,27 @@ def similarity_heatmaps(frequencies, path_attacked_imgs, kind, algo_names, metri
 
     """
     
-    if N is None and kind == 'recall':
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+    
+    assert (kind == 'constant recall' or kind == 'constant fpr')
+    
+    if N is None and kind == 'constant recall':
         N = 20
-    elif N is None and kind == 'fpr':
+    elif N is None and kind == 'constant fpr':
         N = 50
+    
+    ID, _, algo_names = _find_lowest_biggest_frequencies(image_wise_digest,
+                                                         kind, N)
     
     N_rows = len(algo_names)
     N_cols = len(metrics)
     
-    ID, _ = _find_lowest_biggest_frequencies(frequencies, 
-                                                 path_attacked_imgs, kind, N)
-    
-    if kind == 'recall':
+    if kind == 'constant recall':
         title = f'Similarity proportion between {N} least recognized images (TP)\n'
         if save and filename is None:
             filename = 'Results/Mapping/heatmap_TP_'
-    elif kind == 'fpr':
+    elif kind == 'constant fpr':
         title = f'Similarity proportion between {N} most wrongly identified images (FP)\n'
         if save and filename is None:
             filename = 'Results/Mapping/heatmap_FP_'
@@ -444,7 +532,7 @@ def similarity_heatmaps(frequencies, path_attacked_imgs, kind, algo_names, metri
         title_ = title + algo_names[i]
         plt.title(title_)
         if save:
-            plt.savefig(filename + algo_names[i] + '.pdf', bbox_inches='tight')
+            plt.savefig(filename + '_' + algo_names[i] + '.pdf', bbox_inches='tight')
         plt.show()
         
         
