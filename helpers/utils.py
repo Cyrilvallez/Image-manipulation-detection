@@ -6,6 +6,10 @@ Created on Wed Mar 16 10:03:59 2022
 @author: cyrilvallez
 """
 
+# =============================================================================
+# Contains some useful functions to process, save and load data
+# =============================================================================
+
 import json
 
 

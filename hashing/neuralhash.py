@@ -6,19 +6,23 @@ Created on Fri Mar  4 09:13:39 2022
 @author: cyrilvallez
 """
 
+# =============================================================================
+# Contains the neural hashing logic
+# =============================================================================
+
 import numpy as np
 import os
-import sys
-sys.path.append(os.path.dirname(os.getcwd()))
-from hashing.imagehash import ImageHash
-from hashing.general_hash import Algorithm
 import torch
 import torch.nn as nn
 import torchvision.transforms as T
 from torchvision.models import inception_v3
-from hashing.SimCLR import resnet_wider 
 import scipy.spatial.distance as distance
+from hashing.imagehash import ImageHash
+from hashing.general_hash import Algorithm
+from hashing.SimCLR import resnet_wider 
 
+path = os.path.abspath(__file__)
+current_folder = os.path.dirname(path)
 
 def cosine_distance(vector, other_vector):
     """
@@ -236,10 +240,7 @@ def load_simclr_v1_resnet50_2x(device='cuda'):
     
     # Load the model 
     simclr = resnet_wider.resnet50x2()
-    try:
-        checkpoint = torch.load(os.path.expanduser('~/Project/hashing/SimCLR/resnet50-2x.pth'))
-    except FileNotFoundError:
-        checkpoint = torch.load(os.path.expanduser('~/Desktop/Project/hashing/SimCLR/resnet50-2x.pth'))
+    checkpoint = torch.load(current_folder + '/SimCLR/resnet50-2x.pth')
     simclr.load_state_dict(checkpoint['state_dict'])
     simclr.fc = nn.Identity()
     simclr.eval()

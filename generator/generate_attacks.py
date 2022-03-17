@@ -11,6 +11,7 @@ Created on Mon Feb 14 08:29:00 2022
 # the robustness of different hashing algorithms
 # =============================================================================
 
+import os
 import numpy as np
 from PIL import Image, ImageEnhance, ImageDraw, ImageFont
 import torchvision.transforms.functional as F
@@ -20,6 +21,9 @@ import string
 from io import BytesIO
 from tqdm import tqdm
 np.random.seed(256)
+
+path = os.path.abspath(__file__)
+current_folder = os.path.dirname(path)
 
 def _find(path):
     """
@@ -505,7 +509,7 @@ def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
     # Get a font. The size is calculated so that it is 40 for a 512-width
     # image, and changes linearly from this reference, so it always
     # takes the same relative horizontal space on different images
-    font = ImageFont.truetype('Fonts/Impact.ttf', round(40*width/512))
+    font = ImageFont.truetype(current_folder + '/Impact.ttf', round(40*width/512))
     
     out = {}
         

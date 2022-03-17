@@ -2,5 +2,5 @@
 .ipynb_checkpoints
 .vscode
 __pycache__
-test_hashing/BSDS500
+Datasets
 hashing/SimCLR

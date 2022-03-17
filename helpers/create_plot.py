@@ -10,10 +10,7 @@ Created on Tue Feb 22 17:22:28 2022
 # Contains functions to create different plots
 # =============================================================================
 
-import os
-import sys
-sys.path.append(os.path.dirname(os.getcwd()))
-from helpers import Plot
+from helpers import configs_plot
 import matplotlib.pyplot as plt
 import numpy as np
 import time
