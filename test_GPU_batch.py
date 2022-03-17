@@ -13,7 +13,7 @@ path_database = 'Datasets/BSDS500/Experimental/'
 path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_ct = 'Datasets/BSDS500/Control_attacks/'
 
-images = os.listdir(path_experimental)
+images = [path_experimental + file for file in os.listdir(path_experimental)]
 images = images[0:1500]
 #%%
 algos = [
