@@ -33,7 +33,7 @@ N = 5
 
 for i, batch in enumerate(batches):
     for j in range(N):
-        _, _, _, time = hashing.hashing(algos, [0.2], databases, dataset)
+        _, _, _, time = hashing.hashing(algos, [0.2], databases, dataset, general_batch_size=batch)
         for key in time.keys():
             mean[i][key] += time[key]
             
