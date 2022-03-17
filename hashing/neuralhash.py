@@ -81,7 +81,7 @@ def jensen_shannon_distance(vector, other_vector):
 
 # Distance functions to use for the distance in the case of raw features
 DISTANCE_FUNCTIONS = {
-'Cosine': cosine_distance,
+'cosine': cosine_distance,
 'Jensen-Shannon': jensen_shannon_distance
 }
 
@@ -303,7 +303,7 @@ class NeuralAlgorithm(Algorithm):
 
     """
     
-    def __init__(self, algorithm, hash_size=8, raw_features=False, distance='Cosine',
+    def __init__(self, algorithm, hash_size=8, raw_features=False, distance='cosine',
                  batch_size=512, device='cuda'):
         
         Algorithm.__init__(self, algorithm, hash_size, batch_size)
@@ -327,7 +327,7 @@ class NeuralAlgorithm(Algorithm):
         
     def __str__(self):
         if self.raw_features:
-            return f'{self.name} raw features'
+            return f'{self.name} raw features {self.distance}'
         else:
             return f'{self.name} {self.hash_size**2} bits'
  
