@@ -100,7 +100,7 @@ def save_digest(digest, experiment_name):
         save_dictionary(dictionary, experiment_name + extension)
         
         
-def load_digest(experiment_name):
+def load_digest(experiment_folder):
     """
     Load the files corresponding to an experiment digest, as returned by the
     `total_hashing` function.
@@ -117,8 +117,10 @@ def load_digest(experiment_name):
 
     """
     
-    #try:
-        #experiment_name = experiment_folder + experiment_folder.rsplit('/', 1)[1]
+    try:
+        experiment_name = experiment_folder + experiment_folder.rsplit('/', 2)[1]
+    except IndexError:
+        experiment_name = experiment_folder + '/' + experiment_folder
     digest = []
     for extension in DIGEST_FILE_EXTENSIONS:
         digest.append(load_dictionary(experiment_name + extension))

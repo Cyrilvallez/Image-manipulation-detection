@@ -1,7 +1,26 @@
 ---
 name : First_benchmark
 date generated: Thursday 17/03/2022
+GPU(s): 1 a100 
+CPUs: 16
 dataset used: BSDS500, with attacks on disk
+thresholds: np.linspace(0, 0.4, 10)
+algorithms:  [
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=1028),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1028),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=1028),
+    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=1028),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=1028),
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=1028,
+                            device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=1028,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=1028,
+                            device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=1028,
+                            device='cuda', distance='Jensen-Shannon')
+    ]
+general batch size: 1028
 
 ---
 purpose: |

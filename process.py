@@ -14,11 +14,10 @@ from helpers import utils
 from helpers import create_plot as plot
 
 experiment_folder = 'Results/First_benchmark/'
-experiment_name = experiment_folder + 'First_benchmark'
 
 experiment_results = experiment_folder + 'Figures/'
 
-general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_name)
+general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_folder)
 
 
 #%%
