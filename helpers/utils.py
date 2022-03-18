@@ -76,7 +76,7 @@ def load_dictionary(filename):
     
 
 DIGEST_FILE_EXTENSIONS = ('_general.json', '_attacks.json', '_images_pos.json',
-              'images_neg.json', '_match_time.json', '_db_time.json')
+              '_images_neg.json', '_match_time.json', '_db_time.json')
 
 
 def save_digest(digest, experiment_name):
@@ -116,6 +116,9 @@ def load_digest(experiment_name):
         The digest corresponding to the files.
 
     """
+    
+    #try:
+        #experiment_name = experiment_folder + experiment_folder.rsplit('/', 1)[1]
     digest = []
     for extension in DIGEST_FILE_EXTENSIONS:
         digest.append(load_dictionary(experiment_name + extension))

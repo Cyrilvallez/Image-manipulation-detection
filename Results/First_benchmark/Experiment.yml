@@ -1,0 +1,9 @@
+---
+name : First_benchmark
+date generated: Thursday 17/03/2022
+dataset used: BSDS500, with attacks on disk
+
+---
+purpose: |
+Benchmark the new hashing pipeline and get an idea of the computational cost of neural hashing now that it is optimized in batches and run on GPU efficiently. 
+Also get an idea of how well the Jensen-Shannon distance is performing compared to other methods and cosine distance.
