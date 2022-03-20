@@ -16,6 +16,7 @@ import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 import generator
 import time
+import torch
 from torch.utils.data import Dataset, IterableDataset, DataLoader
 from helpers import utils
 import numpy as np
@@ -174,7 +175,9 @@ class Algorithm(object):
 
     def create_database(self, path_to_db, time_database={}):
         
+        print(f'Before loading : {torch.cuda.memory_allocated()}')
         self.load_model()
+        print(f'After loading : {torch.cuda.memory_allocated()}')
         
         # Creates the dataloader to easily iterate on images
         dataset = DatabaseDataset(path_to_db)
@@ -195,7 +198,9 @@ class Algorithm(object):
                 
         time_database[str(self)] = time.time() - t0
         
+        print(f'Before killing : {torch.cuda.memory_allocated()}')
         self.kill_model()
+        print(f'After killing : {torch.cuda.memory_allocated()}')
         
         return database
     
