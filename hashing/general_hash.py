@@ -175,9 +175,7 @@ class Algorithm(object):
 
     def create_database(self, path_to_db, time_database={}):
         
-        print(f'Before loading : {torch.cuda.memory_allocated()/1e9:.2f} GB')
         self.load_model()
-        print(f'After loading : {torch.cuda.memory_allocated()/1e9:.2f} GB')
         
         # Creates the dataloader to easily iterate on images
         dataset = DatabaseDataset(path_to_db)
@@ -198,9 +196,7 @@ class Algorithm(object):
                 
         time_database[str(self)] = time.time() - t0
         
-        print(f'Before killing : {torch.cuda.memory_allocated()/1e9:.2f} GB')
         self.kill_model()
-        print(f'After killing : {torch.cuda.memory_allocated()/1e9:.2f} GB')
         
         return database
     
@@ -455,10 +451,8 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
         
         for i, algorithm in enumerate(algorithms):
             
-            print(f'Before loading : {torch.cuda.memory_allocated()/1e9:.2f} GB')
             # Load the model in memory
             algorithm.load_model()
-            print(f'After loading : {torch.cuda.memory_allocated()/1e9:.2f} GB')
             
             # Select database corresponding to that algorithm
             database = databases[i]
@@ -513,10 +507,8 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
             # Mean time needed for the matching of batch of hashes
             running_time[str(algorithm)] += (time.time() - t0)/len(algo_thresholds)
                 
-            print(f'Before killing : {torch.cuda.memory_allocated()/1e9:.2f} GB')
             # Removes the model from memory
             algorithm.kill_model()
-            print(f'After killing : {torch.cuda.memory_allocated()/1e9:.2f} GB')
     
     
     return (general_output, attack_wise_output, image_wise_output, running_time)
