@@ -11,15 +11,16 @@ from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import hashing
 import generator
 from tqdm import tqdm
+import torch
 
 #%%
 path_db = 'Datasets/BSDS500/Experimental/'
 image = path_db + 'data5.jpg'
 
-algos = [
-    hashing.NeuralAlgorithm('Inception v3', hash_size=8, batch_size=512, device='cpu'),
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, distance='Jensen-Shannon',
-                       device='cpu')
-    ]
+print(f'Before : {torch.cuda.memory_allocated()/1e9:.2f} GB')
+a = torch.random(512, 3, 224, 244)
+print(f'After : {torch.cuda.memory_allocated()/1e9:.2f} GB')
+
+
 
     
