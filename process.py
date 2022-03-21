@@ -13,22 +13,21 @@ Created on Fri Mar 18 09:12:07 2022
 from helpers import utils
 from helpers import create_plot as plot
 
-experiment_folder = 'Results/First_benchmark/'
-
-experiment_results = experiment_folder + 'Figures/'
+experiment_folder = 'Results/Benchmark_dev_machine/'
+figure_folder = experiment_folder + 'Figures/'
 
 general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_folder)
 
 
 #%%
 
-save = True
+save = False
 
 plot.ROC_curves(general, save=save,
-                filename=experiment_results + 'General/ROC_curves.pdf')
+                filename=figure_folder + 'General/ROC_curves.pdf')
 plot.ROC_curves(attacks, save=save,
-                filename=experiment_results + 'Attack_wise/ROC')
+                filename=figure_folder + 'Attack_wise/ROC')
 plot.metrics_plot(general, save=save,
-                  filename=experiment_results + 'General/Metrics')
+                  filename=figure_folder + 'General/Metrics')
 plot.time_comparison(global_time, db_time, save=save,
-                     filename=experiment_results + 'General/time.pdf')
+                     filename=figure_folder + 'General/time.pdf')

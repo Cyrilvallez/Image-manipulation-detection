@@ -93,13 +93,13 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
         plt.figure(figsize=[6.4*1.5, 4.8*1.5])
         for i in range(len(fpr)):
             plt.plot(fpr[i], recall[i], '-+')
-            plt.xlabel('False positive rate (FPR)')
-            plt.ylabel('True positive rate (Recall)')
-            plt.legend(legend)
-            if large_ticks:
-                plt.xticks(0.1*np.arange(11))
-                plt.yticks(0.1*np.arange(11))
-            plt.grid()
+        plt.xlabel('False positive rate (FPR)')
+        plt.ylabel('True positive rate (Recall)')
+        plt.legend(legend)
+        if large_ticks:
+            plt.xticks(0.1*np.arange(11))
+            plt.yticks(0.1*np.arange(11))
+        plt.grid()
         if save:
             plt.savefig(filename, bbox_inches='tight')
         plt.show()
@@ -111,21 +111,21 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
             plt.figure(figsize=[6.4*1.5, 4.8*1.5])
             for i in range(len(fpr[attack])):
                 plt.plot(fpr[attack][i], recall[attack][i], '-+')
-                plt.xlabel('False positive rate (FPR)')
-                plt.ylabel('True positive rate (Recall)')
-                plt.legend(legend)
+            plt.xlabel('False positive rate (FPR)')
+            plt.ylabel('True positive rate (Recall)')
+            plt.legend(legend)
                 
-                title = attack
-                # for latex output (there is a '&' in some default attack names that latex
-                # does not understand as litteral)
-                if '&' in title:
-                    title = title.replace('&', '\\&')
-                plt.title(title.replace('_', ' '))
+            title = attack
+            # for latex output (there is a '&' in some default attack names that latex
+            # does not understand as litteral)
+            if '&' in title:
+                title = title.replace('&', '\\&')
+            plt.title(title.replace('_', ' '))
                 
-                if large_ticks:
-                    plt.xticks(0.1*np.arange(11))
-                    plt.yticks(0.1*np.arange(11))
-                plt.grid()
+            if large_ticks:
+                plt.xticks(0.1*np.arange(11))
+                plt.yticks(0.1*np.arange(11))
+            plt.grid()
             if save:
                 plt.savefig(filename + '_' + attack + '.pdf', bbox_inches='tight')
             plt.show()
