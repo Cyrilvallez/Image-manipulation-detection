@@ -376,6 +376,7 @@ class NeuralAlgorithm(Algorithm):
 
         """
         del self.model
+        torch.cuda.empty_cache()
         
     def process_batch(self, preprocessed_images):
         """
