@@ -29,7 +29,7 @@ databases, _ = hashing.create_databases(algos, path_database)
 batches = [256, 512, 1028, 2048]
 mean = [{str(algos[0]):0, str(algos[1]):0, str(algos[2]):0} for i in range(len(batches))]
 
-N = 5
+N = 1
 
 for i, batch in enumerate(batches):
     for j in range(N):
