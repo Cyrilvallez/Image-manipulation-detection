@@ -1,0 +1,22 @@
+---
+name : JS_distance
+date generated: Monday 21/03/2022
+GPU(s): dev machine (1 rtx)
+CPUs: dev machine (unknown at this point)
+dataset used: BSDS500, with attacks on disk
+thresholds: np.linspace(0, 0.8, 20)
+algorithms:  [
+   hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
+                            device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='Jensen-Shannon')
+    ]
+general batch size: 256
+
+---
+purpose: |
+Test the Jensen-Shannon distance for higher thresholds, as it had a FPR of 0 at a threshold of 0.4 for SimCLR.

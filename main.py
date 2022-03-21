@@ -19,11 +19,11 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=256),
-    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=256),
-    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=256),
-    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=256),
-    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=256),
+    #hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=256),
+    #hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=256),
+    #hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=256),
+    #hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=256),
+    #hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=256),
     hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
                             device='cuda', distance='cosine'),
     hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
@@ -34,7 +34,7 @@ algos = [
                             device='cuda', distance='Jensen-Shannon')
     ]
 
-thresholds = np.linspace(0, 0.4, 10)
+thresholds = np.linspace(0, 0.8, 20)
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
@@ -43,4 +43,4 @@ negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
                                negative_dataset, general_batch_size=256)
 
-utils.save_digest(digest, 'Results/Benchmark_dev_machine')
+utils.save_digest(digest, 'Results/JS_distance')

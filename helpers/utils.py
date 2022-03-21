@@ -75,11 +75,11 @@ def load_dictionary(filename):
     return data
     
 
-DIGEST_FILE_EXTENSIONS = ('_general.json', '_attacks.json', '_images_pos.json',
-              '_images_neg.json', '_match_time.json', '_db_time.json')
+DIGEST_FILE_EXTENSIONS = ('general.json', 'attacks.json', 'images_pos.json',
+              'images_neg.json', 'match_time.json', 'db_time.json')
 
 
-def save_digest(digest, experiment_name):
+def save_digest(digest, experiment_folder):
     """
     Save a whole digest to disk, as returned by the `total_hashing` function.
 
@@ -95,6 +95,11 @@ def save_digest(digest, experiment_name):
     None.
 
     """
+    
+    if experiment_folder[-1] == '/':
+        experiment_name = experiment_folder 
+    else:
+        experiment_name = experiment_folder + '/' 
     
     for dictionary, extension in zip(digest, DIGEST_FILE_EXTENSIONS):
         save_dictionary(dictionary, experiment_name + extension)
@@ -117,10 +122,11 @@ def load_digest(experiment_folder):
 
     """
     
-    try:
-        experiment_name = experiment_folder + experiment_folder.rsplit('/', 2)[1]
-    except IndexError:
-        experiment_name = experiment_folder + '/' + experiment_folder
+    if experiment_folder[-1] == '/':
+        experiment_name = experiment_folder 
+    else:
+        experiment_name = experiment_folder + '/' 
+        
     digest = []
     for extension in DIGEST_FILE_EXTENSIONS:
         digest.append(load_dictionary(experiment_name + extension))
