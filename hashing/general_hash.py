@@ -16,7 +16,6 @@ import sys
 sys.path.append(os.path.dirname(os.getcwd()))
 import generator
 import time
-import torch
 from torch.utils.data import Dataset, IterableDataset, DataLoader
 from helpers import utils
 import numpy as np
@@ -465,15 +464,10 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
             
             t0 = time.time()
             
-            #print(f'Before : {torch.cuda.memory_allocated()/1e9:.2f} GB')
             # Pre-process the images
             imgs = algorithm.preprocess(images)
-            #print(f'After : {torch.cuda.memory_allocated()/1e9:.2f} GB')
             # Computes the hashes or features
             fingerprints = algorithm.process_batch(imgs)
-            # Take corresponding database for matching
-            
-            del imgs
             
             # Time needed to create the fingerprints
             running_time[str(algorithm)] += time.time() - t0
