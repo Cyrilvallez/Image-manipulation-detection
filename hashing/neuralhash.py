@@ -376,8 +376,7 @@ class NeuralAlgorithm(Algorithm):
 
         """
         del self.model
-        torch.cuda.empty_cache()
-        
+
     def process_batch(self, preprocessed_images):
         """
         Process a batch of imgs (Tensor) and convert to a list of ImageHash or
