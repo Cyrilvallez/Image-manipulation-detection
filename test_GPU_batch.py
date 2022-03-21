@@ -17,8 +17,8 @@ images = [path_experimental + file for file in os.listdir(path_experimental)]
 images = images[0:1500]
 #%%
 algos = [
-    hashing.NeuralAlgorithm('Inception v3', hash_size=8, device='cuda', batch_size=2048),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', hash_size=8, device='cuda', batch_size=2048),
+    hashing.NeuralAlgorithm('Inception v3', hash_size=8, device='cuda'),
+    #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', hash_size=8, device='cuda'),
     hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1028)
     ]
 
