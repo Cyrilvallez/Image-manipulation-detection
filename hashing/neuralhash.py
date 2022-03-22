@@ -15,7 +15,7 @@ import os
 import torch
 import torch.nn as nn
 import torchvision.transforms as T
-from torchvision.models import inception_v3
+import torchvision.models as models
 import scipy.spatial.distance as distance
 from hashing.imagehash import ImageHash
 from hashing.general_hash import Algorithm
@@ -211,7 +211,7 @@ def load_inception_v3(device='cuda'):
     assert (device=='cpu' or device=='cuda')
     
     # Load the model 
-    inception = inception_v3(pretrained=True, transform_input=False)
+    inception = models.inception_v3(pretrained=True, transform_input=False)
     # Overrides last Linear layer
     inception.fc = nn.Identity()
     inception.eval()
@@ -307,6 +307,8 @@ NEURAL_MODEL_LOADER = {
     'SimCLR v1 ResNet50 1x': load_simclr_v1(width=1),
     'SimCLR v1 ResNet50 2x': load_simclr_v1(width=2),
     'SimCLR v1 ResNet50 4x': load_simclr_v1(width=4),
+    'SimCLR v2 ResNet50 2x': load_simclr_v2(depth=50, width=2, selective_kernel=True),
+    'SimCLR v2 ResNet101 2x': load_simclr_v2(depth=101, width=2, selective_kernel=True),
     'SimCLR v2 ResNet152 3x': load_simclr_v2(depth=152, width=3, selective_kernel=True),
     }
 
@@ -317,6 +319,8 @@ NEURAL_MODEL_FEATURES_SIZE = {
     'SimCLR v1 ResNet50 1x': 2048,
     'SimCLR v1 ResNet50 2x': 4096,
     'SimCLR v1 ResNet50 4x': 8192,
+    'SimCLR v2 ResNet50 2x': 4096,
+    'SimCLR v2 ResNet101 2x': 4096,
     'SimCLR v2 ResNet152 3x': 6144,
     }
 
@@ -326,6 +330,15 @@ SIMCLR_TRANSFORMS = T.Compose([
     T.Resize(256, interpolation=T.InterpolationMode.LANCZOS),
     T.CenterCrop(224),
     T.ToTensor()
+    ])
+
+
+# Pretrained pytorch models transforms
+PYTORCH_TRANSFORMS = T.Compose([
+    T.Resize((256,256), interpolation=T.InterpolationMode.LANCZOS),
+    T.CenterCrop(224),
+    T.ToTensor(),
+    T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
 
 
@@ -342,6 +355,10 @@ NEURAL_MODEL_TRANSFORMS = {
     'SimCLR v1 ResNet50 2x': SIMCLR_TRANSFORMS,
     
     'SimCLR v1 ResNet50 4x': SIMCLR_TRANSFORMS,
+    
+    'SimCLR v2 ResNet50 2x': SIMCLR_TRANSFORMS,
+    
+    'SimCLR v2 ResNet101 2x': SIMCLR_TRANSFORMS,
     
     'SimCLR v2 ResNet152 3x': SIMCLR_TRANSFORMS,
     }

@@ -24,13 +24,23 @@ algos = [
     #hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=256),
     #hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=256),
     #hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=256),
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
-                            device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
+    #hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
+    #                        device='cuda', distance='cosine'),
+    #hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
+    #                        device='cuda', distance='Jensen-Shannon'),
+    #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
+    #                        device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 1x', raw_features=True, batch_size=100,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
-                            device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=100,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 4x', raw_features=True, batch_size=100,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=100,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=100,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, batch_size=100,
                             device='cuda', distance='Jensen-Shannon')
     ]
 
@@ -41,6 +51,6 @@ negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=256)
+                               negative_dataset, general_batch_size=100)
 
-utils.save_digest(digest, 'Results/JS_distance')
+utils.save_digest(digest, 'SimCLR_JS')

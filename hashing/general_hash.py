@@ -152,6 +152,8 @@ ADMISSIBLE_ALGORITHMS = [
     'SimCLR v1 ResNet50 1x',
     'SimCLR v1 ResNet50 2x',
     'SimCLR v1 ResNet50 4x',
+    'SimCLR v2 ResNet50 2x',
+    'SimCLR v2 ResNet101 2x',
     'SimCLR v2 ResNet152 3x',
     ]
                 
