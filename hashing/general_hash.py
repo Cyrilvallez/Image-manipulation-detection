@@ -149,7 +149,10 @@ ADMISSIBLE_ALGORITHMS = [
     'Whash',
     'Crop resistant hash',
     'Inception v3',
-    'SimCLR v1 ResNet50 2x'
+    'SimCLR v1 ResNet50 1x',
+    'SimCLR v1 ResNet50 2x',
+    'SimCLR v1 ResNet50 4x',
+    'SimCLR v2 ResNet152 3x',
     ]
                 
                 
