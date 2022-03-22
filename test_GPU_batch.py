@@ -21,7 +21,7 @@ algos = [
     #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', hash_size=8, device='cuda'),
     #hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1028)
     hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, device='cuda',
-                            distance='cosine'),
+                            distance='cosine', batch_size=32),
     #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 4x', raw_features=True, device='cuda',
     #                        distance='cosine', batch_size=32),
     ]
