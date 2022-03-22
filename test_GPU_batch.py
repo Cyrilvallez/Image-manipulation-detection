@@ -23,7 +23,7 @@ algos = [
     #hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, device='cuda',
     #                        distance='cosine'),
     hashing.NeuralAlgorithm('SimCLR v1 ResNet50 4x', raw_features=True, device='cuda',
-                            distance='cosine'),
+                            distance='cosine', batch_size=32),
     ]
 
 dataset = hashing.create_dataset(images, existing_attacks=True)
