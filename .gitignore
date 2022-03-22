@@ -3,4 +3,5 @@
 .vscode
 __pycache__
 Datasets
-hashing/SimCLR
+hashing/SimCLRv1
+hashing/SimCLRv2
