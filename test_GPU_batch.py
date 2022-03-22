@@ -17,17 +17,30 @@ images = [path_experimental + file for file in os.listdir(path_experimental)]
 images = images[0:1500]
 #%%
 algos = [
-    hashing.NeuralAlgorithm('Inception v3', hash_size=8, device='cuda'),
+    #hashing.NeuralAlgorithm('Inception v3', hash_size=8, device='cuda'),
     #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', hash_size=8, device='cuda'),
-    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1028)
+    #hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1028)
+    #hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, device='cuda',
+    #                        distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 4x', raw_features=True, device='cuda',
+                            distance='cosine'),
     ]
 
 dataset = hashing.create_dataset(images, existing_attacks=True)
 
 databases, _ = hashing.create_databases(algos, path_database)
 
-batches = [256, 512, 1028, 2048]
-mean = [{str(algos[0]):0, str(algos[1]):0} for i in range(len(batches))]
+batches = [64, 128, 256]
+
+
+
+keys = [str(algo) for algo in algos]
+
+mean = []
+for i in range(len(batches)):
+    mean.append({})
+    for j in range(len(keys)):
+        mean[i][keys[j]] = 0
 
 N = 1
 
