@@ -30,7 +30,7 @@ dataset = hashing.create_dataset(images, existing_attacks=True)
 
 databases, _ = hashing.create_databases(algos, path_database)
 
-batches = [64, 128, 256]
+batches = [64, 90]
 
 
 
