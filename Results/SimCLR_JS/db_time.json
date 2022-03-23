@@ -1,0 +1,8 @@
+{
+	"SimCLR v1 ResNet50 1x raw features Jensen-Shannon": 1.8598709106445312,
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 1.7121248245239258,
+	"SimCLR v1 ResNet50 4x raw features Jensen-Shannon": 2.905538558959961,
+	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": 1.943601369857788,
+	"SimCLR v2 ResNet101 2x raw features Jensen-Shannon": 2.5106306076049805,
+	"SimCLR v2 ResNet152 3x raw features Jensen-Shannon": 4.858547925949097
+}
