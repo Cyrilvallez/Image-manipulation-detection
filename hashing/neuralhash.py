@@ -220,6 +220,81 @@ def load_inception_v3(device='cuda'):
     return inception
 
 
+def load_resnet(depth, width):
+    """
+    Load a resnet model with given depth and width.
+
+    Parameters
+    ----------
+    depth : int
+        Depth of the ResNet model
+    width : int
+        Width multiplier.
+
+    Returns
+    -------
+    load : function
+        A loader function for the ResNet model.
+
+    """
+    
+    if depth==50 and width==1:
+        loader = models.resnet50
+    elif depth==101 and width==1:
+        loader = models.resnet101
+    elif depth==152 and width==1:
+        loader = models.resnet152
+    elif depth==50 and width==2:
+        loader = models.wide_resnet50_2
+    elif depth==101 and width==2:
+        loader = models.wide_resnet101_2
+    else:
+        raise ValueError('This combination of depth and width is not valid.')
+    
+    def load(device='cuda'):
+        
+        assert (device=='cpu' or device=='cuda')
+        
+        # Load the model 
+        resnet = loader(pretrained=True)
+        # Overrides last Linear layer
+        resnet.fc = nn.Identity()
+        resnet.eval()
+        resnet.to(torch.device(device))
+    
+        return resnet
+    
+    return load
+
+
+def load_efficientnet_b7(device='cuda'):
+    """
+    Load the efficient net b7 from Pytorch.
+
+    Parameters
+    ----------
+    device : str, optional
+        Device on which to load the model. The default is 'cuda'.
+
+    Returns
+    -------
+    efficientnet : PyTorch model
+        Efficient net b7.
+
+    """
+    
+    assert (device=='cpu' or device=='cuda')
+    
+    # Load the model 
+    efficientnet = models.efficientnet_b7(pretrained=True)
+    # Overrides last Linear layer
+    efficientnet.classifier = nn.Identity()
+    efficientnet.eval()
+    efficientnet.to(torch.device(device))
+    
+    return efficientnet
+
+
 def load_simclr_v1(width):
     """
     Load the simclr v1 ResNet50 model with the given width.
@@ -304,6 +379,12 @@ def load_simclr_v2(depth, width, selective_kernel=True):
 # Mapping from string to actual algorithms
 NEURAL_MODEL_LOADER = {
     'Inception v3': load_inception_v3,
+    'ResNet50 1x': load_resnet(50, 1),
+    'ResNet101 1x': load_resnet(101, 1),
+    'ResNet152 1x': load_resnet(152, 1),
+    'ResNet50 2x': load_resnet(50, 2),
+    'ResNet101 2x': load_resnet(101, 2),
+    'EfficientNet B7': load_efficientnet_b7,
     'SimCLR v1 ResNet50 1x': load_simclr_v1(width=1),
     'SimCLR v1 ResNet50 2x': load_simclr_v1(width=2),
     'SimCLR v1 ResNet50 4x': load_simclr_v1(width=4),
@@ -316,6 +397,12 @@ NEURAL_MODEL_LOADER = {
 # Mapping from string to feature size output of networks
 NEURAL_MODEL_FEATURES_SIZE = {
     'Inception v3': 2048,
+    'ResNet50 1x': 2048,
+    'ResNet101 1x': 2048,
+    'ResNet152 1x': 2048,
+    'ResNet50 2x': 4096,
+    'ResNet101 2x': 4096,
+    'EfficientNet B7': 2560,
     'SimCLR v1 ResNet50 1x': 2048,
     'SimCLR v1 ResNet50 2x': 4096,
     'SimCLR v1 ResNet50 4x': 8192,
@@ -334,7 +421,7 @@ SIMCLR_TRANSFORMS = T.Compose([
 
 
 # Pretrained pytorch models transforms
-PYTORCH_TRANSFORMS = T.Compose([
+RESNET_TRANSFORMS = T.Compose([
     T.Resize((256,256), interpolation=T.InterpolationMode.LANCZOS),
     T.CenterCrop(224),
     T.ToTensor(),
@@ -346,6 +433,22 @@ PYTORCH_TRANSFORMS = T.Compose([
 NEURAL_MODEL_TRANSFORMS = {
     'Inception v3': T.Compose([
         T.Resize((299,299), interpolation=T.InterpolationMode.LANCZOS),
+        T.ToTensor(),
+        T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ]),
+    
+    'ResNet50 1x' : RESNET_TRANSFORMS,
+    
+    'ResNet101 1x' : RESNET_TRANSFORMS,
+    
+    'ResNet152 1x' : RESNET_TRANSFORMS,
+    
+    'ResNet50 2x': RESNET_TRANSFORMS,
+    
+    'ResNet101 2x': RESNET_TRANSFORMS,
+    
+    'EfficientNet B7': T.Compose([
+        T.Resize((600,600), interpolation=T.InterpolationMode.LANCZOS),
         T.ToTensor(),
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ]),

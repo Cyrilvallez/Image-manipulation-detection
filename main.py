@@ -35,17 +35,19 @@ algos = [
     #                        device='cuda', distance='Jensen-Shannon'),
     #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
     #                        device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 1x', raw_features=True, batch_size=100,
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=150,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=100,
+    hashing.NeuralAlgorithm('ResNet50 1x', raw_features=True, batch_size=150,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 4x', raw_features=True, batch_size=100,
+    hashing.NeuralAlgorithm('ResNet101 1x', raw_features=True, batch_size=150,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=100,
+    hashing.NeuralAlgorithm('ResNet152 1x', raw_features=True, batch_size=150,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=100,
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=150,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, batch_size=100,
+    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=150,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=150,
                             device='cuda', distance='Jensen-Shannon')
     ]
 
@@ -56,6 +58,6 @@ negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=100)
+                               negative_dataset, general_batch_size=150)
 
 utils.save_digest(digest, save_folder)

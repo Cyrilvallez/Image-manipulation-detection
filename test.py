@@ -57,3 +57,22 @@ experiment_folder = 'TEst/bbs/vvi'
 
 utils.save_digest(foo, experiment_folder)
     
+#%%
+
+import torchvision.models as models
+
+image = Image.open('/Users/cyrilvallez/Desktop/Project/Datasets/BSDS500/Control/data221.jpg')
+
+transforms = T.Compose([
+    T.Resize((256,256), interpolation=T.InterpolationMode.LANCZOS),
+    T.CenterCrop(224),
+    T.ToTensor(),
+    T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+
+tensor = transforms(image).unsqueeze(dim=0)
+
+net = models.resnet152(pretrained=True)
+net.fc = nn.Identity()
+
+out = net(tensor)
