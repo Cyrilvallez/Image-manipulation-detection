@@ -11,6 +11,7 @@ Created on Wed Mar 16 10:03:59 2022
 # =============================================================================
 
 import json
+import os
 
 
 def accuracy(TP, FN, FP, TN):
@@ -75,7 +76,7 @@ def load_dictionary(filename):
     return data
     
 
-DIGEST_FILE_EXTENSIONS = ('general.json', 'attacks.json', 'images_pos.json',
+DIGEST_FILE_NAMES = ('general.json', 'attacks.json', 'images_pos.json',
               'images_neg.json', 'match_time.json', 'db_time.json')
 
 
@@ -87,7 +88,7 @@ def save_digest(digest, experiment_folder):
     ----------
     digest : Tuple
         Tuple of dictionary representing an experiment results.
-    experiment_name : str
+    experiment_folder : str
         A name for the files.
 
     Returns
@@ -96,13 +97,17 @@ def save_digest(digest, experiment_folder):
 
     """
     
-    if experiment_folder[-1] == '/':
-        experiment_name = experiment_folder 
-    else:
-        experiment_name = experiment_folder + '/' 
+    # Make sure the path exists, and creates it if this is not the case
+    exist = os.path.exists(experiment_folder)
     
-    for dictionary, extension in zip(digest, DIGEST_FILE_EXTENSIONS):
-        save_dictionary(dictionary, experiment_name + extension)
+    if not exist:
+        os.makedirs(experiment_folder)
+    
+    if experiment_folder[-1] != '/':
+        experiment_folder = experiment_folder + '/' 
+    
+    for dictionary, name in zip(digest, DIGEST_FILE_NAMES):
+        save_dictionary(dictionary, experiment_folder + name)
         
         
 def load_digest(experiment_folder):
@@ -112,7 +117,7 @@ def load_digest(experiment_folder):
 
     Parameters
     ----------
-    experiment_name : str
+    experiment_folder : str
         The name of the experiment.
 
     Returns
@@ -122,14 +127,12 @@ def load_digest(experiment_folder):
 
     """
     
-    if experiment_folder[-1] == '/':
-        experiment_name = experiment_folder 
-    else:
-        experiment_name = experiment_folder + '/' 
+    if experiment_folder[-1] != '/':
+        experiment_folder = experiment_folder + '/' 
         
     digest = []
-    for extension in DIGEST_FILE_EXTENSIONS:
-        digest.append(load_dictionary(experiment_name + extension))
+    for name in DIGEST_FILE_NAMES:
+        digest.append(load_dictionary(experiment_folder + name))
         
     return tuple(digest)
 

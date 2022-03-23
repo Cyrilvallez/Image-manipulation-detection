@@ -40,3 +40,20 @@ mem_bufs = sum([buf.nelement()*buf.element_size() for buf in simclr.buffers()])
 mem_ema = (mem_params + mem_bufs)/1e9 # in bytes
 
 alloc = torch.cuda.max_memory_allocated()/1e9
+
+#%%
+
+from helpers import utils
+
+dic = {'test': 4, 'test2':2}
+foo = []
+
+for i in range(6):
+    foo.append(dic)
+    
+foo = tuple(foo)
+
+experiment_folder = 'TEst/bbs/vvi'
+
+utils.save_digest(foo, experiment_folder)
+    
