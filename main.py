@@ -13,29 +13,11 @@ Created on Thu Mar 17 17:08:12 2022
 import numpy as np
 import hashing 
 from helpers import utils
-import argparse
-import os
 
-# =============================================================================
-# =============================================================================
-
-# Force the use of a user input path where to save the experiment at run-time,
+# Force the use of a user input at run-time to specify the path 
 # so that we do not mistakenly reuse the path from previous experiments
-parser = argparse.ArgumentParser(description='Hashing experiment')
-parser.add_argument('experiment_folder', type=str, help='A name for the experiment')
-args = parser.parse_args()
-experiment_folder = args.experiment_folder
+save_folder = utils.parse_input()
 
-results_folder = 'Results/'
-
-# Check that it does not already exist
-if experiment_folder in os.listdir(results_folder):
-    raise ValueError('This experiment name is already taken. Choose another one.')
-    
-save_folder = results_folder + experiment_folder
-
-# =============================================================================
-# =============================================================================
 
 path_database = 'Datasets/BSDS500/Experimental/'
 path_experimental = 'Datasets/BSDS500/Experimental_attacks/'

@@ -12,6 +12,7 @@ Created on Wed Mar 16 10:03:59 2022
 
 import json
 import os
+import argparse
 
 
 def accuracy(TP, FN, FP, TN):
@@ -235,5 +236,43 @@ def process_digests(positive_digest, negative_digest, attacked_image_names):
                         
     return (general_output, attack_wise_output, image_wise_pos_output, 
             image_wise_neg_output, running_time_output)
+
+
+def parse_input():
+    """
+    Create a parser for command line arguments in order to get the experiment
+    folder. Also check that this folder is valid, in the sense that it is not 
+    already being used.
+    
+    Raises
+    ------
+    ValueError
+        If the experiment name is already taken or not valid.
+
+    Returns
+    -------
+    save_folder : str
+        The path to the folder for saving the experiment digest.
+
+    """
+    # Force the use of a user input at run-time to specify the path 
+    # so that we do not mistakenly reuse the path from previous experiments
+    parser = argparse.ArgumentParser(description='Hashing experiment')
+    parser.add_argument('experiment_folder', type=str, help='A name for the experiment')
+    args = parser.parse_args()
+    experiment_folder = args.experiment_folder
+
+    if '/' in experiment_folder:
+        raise ValueError('The experiment name must not be a path. Please provide a name without any \'/\'.')
+
+    results_folder = 'Results/'
+    save_folder = results_folder + experiment_folder 
+
+    # Check that it does not already exist and contain results
+    if experiment_folder in os.listdir(results_folder):
+        if 'general.json' in os.listdir(save_folder):
+            raise ValueError('This experiment name is already taken. Choose another one.')
+            
+    return save_folder
                         
             
