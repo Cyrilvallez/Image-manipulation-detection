@@ -76,3 +76,24 @@ net = models.resnet152(pretrained=True)
 net.fc = nn.Identity()
 
 out = net(tensor)
+
+#%%
+import numpy as np
+import torch.nn as nn
+import scipy.special as special
+import time
+import torch
+
+a = np.random.rand(2300)
+N = 10000
+
+
+t0 = time.time()
+for i in range(N):
+    b = special.softmax(a)
+dt_scipy = (time.time() - t0)/N
+
+t0 = time.time()
+for i in range(N):
+    b = nn.functional.softmax(torch.from_numpy(a), dim=0).numpy()
+dt_torch = (time.time() - t0)/N

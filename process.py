@@ -10,18 +10,29 @@ Created on Fri Mar 18 09:12:07 2022
 # File to process and plot results from experiments
 # =============================================================================
 
+import os
 from helpers import utils
 from helpers import create_plot as plot
 
-experiment_folder = 'Results/Benchmark_dev_machine/'
+experiment_folder = 'Results/Supervised_models_JS/'
 figure_folder = experiment_folder + 'Figures/'
+   
+if not os.path.exists(figure_folder + 'General/'):
+    os.makedirs(figure_folder + 'General/')
+if not os.path.exists(figure_folder + 'Attack_wise/'):
+    os.makedirs(figure_folder + 'Attack_wise/')
 
 general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_folder)
 
 
 #%%
 
-save = False
+save = True
+
+if not os.path.exists(figure_folder + 'General/'):
+    os.makedirs(figure_folder + 'General/')
+if not os.path.exists(figure_folder + 'Attack_wise/'):
+    os.makedirs(figure_folder + 'Attack_wise/')
 
 plot.ROC_curves(general, save=save,
                 filename=figure_folder + 'General/ROC_curves.pdf')

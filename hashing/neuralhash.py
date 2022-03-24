@@ -80,10 +80,43 @@ def jensen_shannon_distance(vector, other_vector):
     return distance.jensenshannon(vector, other_vector, base=2)
 
 
+def norm(ord):
+    """
+    Returns a function computing the `ord` norm of two vectors, by first applying a 
+    softmax to them and then normalizing so that the result is between 0 and 1.
+
+    Parameters
+    ----------
+    ord : int
+        The order of the norm.
+
+    Returns
+    -------
+    function
+        The function computing the norm.
+
+    """
+    
+    def distance(vector, other_vector):
+    
+        if len(vector) != len(other_vector):
+            raise TypeError('Vectors must be of the same length.')
+    
+        # The double conversion is still faster than e.g scipy softmax implementation
+        vector = nn.functional.softmax(torch.from_numpy(vector), dim=0).numpy()
+        other_vector = nn.functional.softmax(torch.from_numpy(other_vector), dim=0).numpy()
+    
+        return np.linalg.norm(vector - other_vector, ord=ord, axis=0)/len(vector)**(1/ord)
+    
+    return distance
+
+
 # Distance functions to use for the distance in the case of raw features
 DISTANCE_FUNCTIONS = {
-'cosine': cosine_distance,
-'Jensen-Shannon': jensen_shannon_distance
+    'cosine': cosine_distance,
+    'Jensen-Shannon': jensen_shannon_distance,
+    'L2': norm(2),
+    'L1': norm(1),
 }
 
 

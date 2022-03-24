@@ -35,20 +35,14 @@ algos = [
     #                        device='cuda', distance='Jensen-Shannon'),
     #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
     #                        device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=32,
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=150,
+                            device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=150,
+                            device='cuda', distance='L2'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=150,
+                            device='cuda', distance='L1'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=150,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet50 1x', raw_features=True, batch_size=32,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet101 1x', raw_features=True, batch_size=32,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet152 1x', raw_features=True, batch_size=32,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
-                            device='cuda', distance='Jensen-Shannon')
     ]
 
 thresholds = np.linspace(0, 0.8, 20)
