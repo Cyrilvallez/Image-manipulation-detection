@@ -1,0 +1,9 @@
+{
+	"Inception v3 raw features Jensen-Shannon": 1.9618849754333496,
+	"ResNet50 1x raw features Jensen-Shannon": 1.355971336364746,
+	"ResNet101 1x raw features Jensen-Shannon": 1.5034515857696533,
+	"ResNet152 1x raw features Jensen-Shannon": 1.6637177467346191,
+	"ResNet50 2x raw features Jensen-Shannon": 1.5161974430084229,
+	"ResNet101 2x raw features Jensen-Shannon": 1.810276746749878,
+	"EfficientNet B7 raw features Jensen-Shannon": 6.8496105670928955
+}
