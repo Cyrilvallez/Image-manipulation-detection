@@ -9,16 +9,19 @@ Created on Tue Feb 15 10:22:24 2022
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import generator
+import time
 from tqdm import tqdm
 import torch
 import torch.nn as nn
 import torchvision.transforms as T
-#%%
+import os
+import hashing
 import hashing.neuralhash as nh
 from hashing.SimCLRv1 import resnet_wider
 from hashing.SimCLRv2 import resnet as SIMv2
+import scipy.spatial.distance as distance
 
-
+#%%
 
 image = Image.open('/Users/cyrilvallez/Desktop/Project/Datasets/BSDS500/Control/data221.jpg')
 
@@ -41,59 +44,46 @@ mem_ema = (mem_params + mem_bufs)/1e9 # in bytes
 
 alloc = torch.cuda.max_memory_allocated()/1e9
 
-#%%
-
-from helpers import utils
-
-dic = {'test': 4, 'test2':2}
-foo = []
-
-for i in range(6):
-    foo.append(dic)
-    
-foo = tuple(foo)
-
-experiment_folder = 'TEst/bbs/vvi'
-
-utils.save_digest(foo, experiment_folder)
-    
-#%%
-
-import torchvision.models as models
-
-image = Image.open('/Users/cyrilvallez/Desktop/Project/Datasets/BSDS500/Control/data221.jpg')
-
-transforms = T.Compose([
-    T.Resize((256,256), interpolation=T.InterpolationMode.LANCZOS),
-    T.CenterCrop(224),
-    T.ToTensor(),
-    T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
-
-tensor = transforms(image).unsqueeze(dim=0)
-
-net = models.resnet152(pretrained=True)
-net.fc = nn.Identity()
-
-out = net(tensor)
 
 #%%
-import numpy as np
-import torch.nn as nn
-import scipy.special as special
-import time
-import torch
 
-a = np.random.rand(2300)
-N = 10000
+path_database = 'Datasets/BSDS500/Experimental/'
+path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
+attacked = [path_experimental + file for file in os.listdir(path_experimental)[0:500]]
 
+algo = [
+        hashing.NeuralAlgorithm('ResNet50 1x', raw_features=True, batch_size=150,
+                        device='cpu', distance='Jensen-Shannon')
+        ]
+
+db = hashing.create_databases(algo, path_database)
+features = hashing.create_databases(algo, attacked)
+
+db = list(db[0][0].values())
+features = list(features[0][0].values())
+
+#%%
+
+N = 10
 
 t0 = time.time()
-for i in range(N):
-    b = special.softmax(a)
+for k in range(N):
+    for i in db:
+        for j in features:
+            foo = nh.jensen_shannon_distance(i.features, j.features)
+            
+dt_loop = (time.time())/N
+
+t0 = time.time()
+for k in range(N):
+    A = np.zeros((len(db), len(db[0].features)))
+    B = np.zeros((len(features), len(features[0].features)))
+    
+    for i in db:
+        A[i,:] = i.features[0:]
+    for i in features:
+        B[i,:] = i.features[0:]
+        
+    foo = distance.cdist(A,B, metric='jensenshannon', base=2)
+    
 dt_scipy = (time.time() - t0)/N
-
-t0 = time.time()
-for i in range(N):
-    b = nn.functional.softmax(torch.from_numpy(a), dim=0).numpy()
-dt_torch = (time.time() - t0)/N

@@ -45,7 +45,8 @@ algos = [
                             device='cuda', distance='Jensen-Shannon'),
     ]
 
-thresholds = np.linspace(0, 0.8, 20)
+thresholds = [np.linspace(0, 0.4, 10), np.linspace(0, 0.1, 10), np.linspace(0, 0.1, 10), 
+              np.linspace(0, 0.8, 10)]
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)

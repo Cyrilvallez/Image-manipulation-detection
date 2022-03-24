@@ -14,7 +14,9 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-experiment_folder = 'Results/Supervised_models_JS/'
+EXPERIMENT_NAME = 'Test_norms/'
+
+experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
    
 if not os.path.exists(figure_folder + 'General/'):
