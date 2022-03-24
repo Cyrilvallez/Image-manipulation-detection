@@ -25,4 +25,4 @@ eval "$(conda shell.bash hook)"
 # Activate (local) env
 conda activate base
 
-python3 main.py
+python3 main.py Test_norms_custom_thresholds
