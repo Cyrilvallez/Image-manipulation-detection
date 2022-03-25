@@ -70,7 +70,7 @@ for i in tqdm(range(len(database))):
         attack_features = model(tensors).cpu().numpy()
     
     for feat in attack_features:
-        ref_distances.append(L2(ref_features, feat))
+        ref_distances.append(L1(ref_features, feat))
         
 print(f'Min distance for same images : {np.min(ref_distances):.2f}')
 print(f'Mean distance for same images : {np.mean(ref_distances):.2f}')
@@ -95,7 +95,7 @@ for i in tqdm(range(len(database))):
         non_attack_features = model(tensors).cpu().numpy()
     
     for feat in non_attack_features:
-        unknown_distances.append(L2(ref_features, feat))
+        unknown_distances.append(L1(ref_features, feat))
         
 print(f'\nMin distance for unknown images : {np.min(unknown_distances):.2f}')
 print(f'Mean distance for unknown images : {np.mean(unknown_distances):.2f}')
