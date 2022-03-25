@@ -13,11 +13,8 @@
 # Verify working directory
 echo $(pwd)
 
-# Print gpu configuration for this job
-nvidia-smi
-
 # Verify gpu allocation (should be 1 GPU)
-echo $CUDA_VISIBLE_DEVICES
+echo "Number of visible devices before job : $CUDA_VISIBLE_DEVICES"
 
 # Initialize the shell to use local conda
 eval "$(conda shell.bash hook)"
