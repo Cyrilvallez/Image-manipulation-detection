@@ -54,7 +54,7 @@ transforms = T.Compose([
 ref_distances = []
 
 for i in range(len(database)):
-    ref_image = Image.load(path_database + database[i])
+    ref_image = Image.open(path_database + database[i])
     ref_features = model(torch.unsqueeze(transforms(ref_image), dim=0))
     
     tensors = []
@@ -74,7 +74,7 @@ print(f'Mean distance for same images : {np.mean(ref_distances):.2f}')
 unknown_distances = []
 
 for i in range(len(database)):
-    ref_image = Image.load(path_database + database[i])
+    ref_image = Image.open(path_database + database[i])
     ref_features = model(torch.unsqueeze(transforms(ref_image), dim=0))
     
     tensors = []
