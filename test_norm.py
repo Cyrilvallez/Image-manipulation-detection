@@ -55,7 +55,7 @@ ref_distances = []
 
 for i in range(len(database)):
     ref_image = Image.open(path_database + database[i])
-    ref_image = torch.unsqueeze(transforms(ref_image), dim=0)
+    ref_image = torch.unsqueeze(transforms(ref_image), dim=0).to('cuda')
     ref_features = model(ref_image)
     
     tensors = []
@@ -76,7 +76,7 @@ unknown_distances = []
 
 for i in range(len(database)):
     ref_image = Image.open(path_database + database[i])
-    ref_image = torch.unsqueeze(transforms(ref_image), dim=0)
+    ref_image = torch.unsqueeze(transforms(ref_image), dim=0).to('cuda')
     ref_features = model(ref_image)
     
     tensors = []
