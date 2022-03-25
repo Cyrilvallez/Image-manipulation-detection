@@ -56,7 +56,8 @@ ref_distances = []
 for i in range(len(database)):
     ref_image = Image.open(path_database + database[i])
     ref_image = torch.unsqueeze(transforms(ref_image), dim=0).to('cuda')
-    ref_features = model(ref_image)
+    with torch.no_grad():
+        ref_features = model(ref_image).cpu().numpy()
     
     tensors = []
     for img in attacks[i]:
@@ -65,7 +66,8 @@ for i in range(len(database)):
         
     tensors = torch.stack(tensors, dim=0).to('cuda')
     
-    attack_features = model(tensors).cpu().numpy()
+    with torch.no_grad():
+        attack_features = model(tensors).cpu().numpy()
     
     for feat in attack_features:
         ref_distances.append(L1(ref_features, feat))
@@ -77,7 +79,8 @@ unknown_distances = []
 for i in range(len(database)):
     ref_image = Image.open(path_database + database[i])
     ref_image = torch.unsqueeze(transforms(ref_image), dim=0).to('cuda')
-    ref_features = model(ref_image)
+    with torch.no_grad():
+        ref_features = model(ref_image).cpu().numpy()
     
     tensors = []
     for img in non_attacks[i]:
@@ -86,7 +89,8 @@ for i in range(len(database)):
         
     tensors = torch.stack(tensors, dim=0).to('cuda')
     
-    non_attack_features = model(tensors).cpu().numpy()
+    with torch.no_grad():
+        non_attack_features = model(tensors).cpu().numpy()
     
     for feat in non_attack_features:
         unknown_distances.append(L1(ref_features, feat))
