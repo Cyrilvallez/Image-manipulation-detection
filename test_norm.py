@@ -57,7 +57,7 @@ for i in range(len(database)):
     ref_image = Image.open(path_database + database[i])
     ref_image = torch.unsqueeze(transforms(ref_image), dim=0).to('cuda')
     with torch.no_grad():
-        ref_features = model(ref_image).cpu().numpy()
+        ref_features = model(ref_image).cpu().numpy().squeeze()
     
     tensors = []
     for img in attacks[i]:
@@ -80,7 +80,7 @@ for i in range(len(database)):
     ref_image = Image.open(path_database + database[i])
     ref_image = torch.unsqueeze(transforms(ref_image), dim=0).to('cuda')
     with torch.no_grad():
-        ref_features = model(ref_image).cpu().numpy()
+        ref_features = model(ref_image).cpu().numpy().squeeze()
     
     tensors = []
     for img in non_attacks[i]:
