@@ -106,7 +106,8 @@ def norm(ord):
         vector = nn.functional.softmax(torch.from_numpy(vector), dim=0).numpy()
         other_vector = nn.functional.softmax(torch.from_numpy(other_vector), dim=0).numpy()
     
-        return np.linalg.norm(vector - other_vector, ord=ord, axis=0)/len(vector)**(1/ord)
+        #return np.linalg.norm(vector - other_vector, ord=ord, axis=0)/len(vector)**(1/ord)
+        return np.linalg.norm(vector - other_vector, ord=ord, axis=0)
     
     return distance
 
