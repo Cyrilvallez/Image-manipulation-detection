@@ -53,7 +53,7 @@ transforms = T.Compose([
 
 ref_distances = []
 
-for i in range(len(database)):
+for i in tqdm(range(len(database))):
     ref_image = Image.open(path_database + database[i])
     ref_image = torch.unsqueeze(transforms(ref_image), dim=0).to('cuda')
     with torch.no_grad():
@@ -72,16 +72,18 @@ for i in range(len(database)):
     for feat in attack_features:
         ref_distances.append(L1(ref_features, feat))
         
+print(f'Min distance for same images : {np.min(ref_distances):.2f}')
 print(f'Mean distance for same images : {np.mean(ref_distances):.2f}')
+print(f'Max distance for same images : {np.max(ref_distances):.2f}')
 
 unknown_distances = []
 
-for i in range(len(database)):
+for i in tqdm(range(len(database))):
     ref_image = Image.open(path_database + database[i])
     ref_image = torch.unsqueeze(transforms(ref_image), dim=0).to('cuda')
     with torch.no_grad():
         ref_features = model(ref_image).cpu().numpy().squeeze()
-    
+     
     tensors = []
     for img in non_attacks[i]:
         img = Image.open(img)
@@ -95,5 +97,7 @@ for i in range(len(database)):
     for feat in non_attack_features:
         unknown_distances.append(L1(ref_features, feat))
         
+print(f'\nMin distance for unknown images : {np.min(unknown_distances):.2f}')
 print(f'Mean distance for unknown images : {np.mean(unknown_distances):.2f}')
+print(f'Max distance for unknown images : {np.max(unknown_distances):.2f}')
     
