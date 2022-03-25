@@ -105,8 +105,8 @@ def norm(ord):
         # The double conversion is still faster than e.g scipy softmax implementation
         #vector = nn.functional.softmax(torch.from_numpy(vector), dim=0).numpy()
         #other_vector = nn.functional.softmax(torch.from_numpy(other_vector), dim=0).numpy()
-        vector = vector/vector.sum()
-        other_vector = other_vector/other_vector.sum()
+        #vector = vector/vector.sum()
+        #other_vector = other_vector/other_vector.sum()
     
         #return np.linalg.norm(vector - other_vector, ord=ord, axis=0)/len(vector)**(1/ord)
         return np.linalg.norm(vector - other_vector, ord=ord, axis=0)
