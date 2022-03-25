@@ -37,7 +37,7 @@ for img in database:
     attacks.append(attack)
     
 non_attacks = [path_control + file for file in os.listdir(path_control)]
-non_attacks = np.reshape(100, 50).tolist()
+non_attacks = np.reshape(non_attacks, (100, 58)).tolist()
     
 model = nh.load_simclr_v2(50, 2)('cuda')
 
