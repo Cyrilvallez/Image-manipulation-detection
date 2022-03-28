@@ -7,7 +7,7 @@ Created on Mon Mar 28 15:48:23 2022
 """
 
 from hashing.general_hash import Algorithm
-from hashing.imagehash import ImageMultiHash
+from hashing.imagehash import ImageHash, ImageMultiHash
 import skimage.feature as feature
 
 
@@ -17,7 +17,11 @@ def orb(image):
     img = image.convert('L')
     extractor.detect_and_extract(img)
     
-    return ImageMultiHash(extractor.descriptors)
+    hashes = []
+    for hash_ in extractor.descriptors:
+        hashes.append(ImageHash(hash_))
+    
+    return ImageMultiHash(hashes)
 
 # Mapping from string to actual algorithms
 FEATURE_MODEL_SWITCH = {
