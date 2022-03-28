@@ -5,7 +5,7 @@
 #SBATCH --error=%x-%j.err
 #SBATCH --time=1-00:00:00
 #SBATCH --cpus-per-task=16
-#SBATCH --mem-per-cpu=32000
+#SBATCH --mem-per-cpu=16000
 #SBATCH --partition=nodes
 #SBATCH --gres=gpu:a100:1
 #SBATCH --chdir=/cluster/raid/home/cyril.vallez/Project
