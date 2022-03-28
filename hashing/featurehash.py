@@ -6,7 +6,6 @@ Created on Mon Mar 28 15:48:23 2022
 @author: cyrilvallez
 """
 
-from PIL import Image
 from hashing.general_hash import Algorithm
 from hashing.imagehash import ImageMultiHash
 import skimage.feature as feature
@@ -15,7 +14,7 @@ import skimage.feature as feature
 def orb(image):
     extractor = feature.ORB()
     
-    img = Image.open(image).convert('L')
+    img = image.convert('L')
     extractor.detect_and_extract(img)
     
     return ImageMultiHash(extractor.descriptors)

@@ -214,3 +214,4 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 algo_names = ['1', '2', '3', '4']
 frame = plot.AUC_heatmap(attacks, algo_names=algo_names, save=True, filename='test')
+
