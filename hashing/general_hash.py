@@ -148,6 +148,7 @@ ADMISSIBLE_ALGORITHMS = [
     'Dhash',
     'Whash',
     'Crop resistant hash',
+    'ORB',
     'Inception v3',
     'ResNet50 1x',
     'ResNet101 1x',

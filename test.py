@@ -196,29 +196,21 @@ print(f'torch : {res_torch:.3e}')
 print(f'custom : {res_custom:.3e}')
 
 #%%
+import os
+from helpers import utils
+from helpers import create_plot as plot
 
+EXPERIMENT_NAME = 'Test_norms_thresholds/'
 
-N = 100000
-vector = np.random.rand(6096)
-other = np.random.rand(6096)
+experiment_folder = 'Results/' + EXPERIMENT_NAME 
+figure_folder = experiment_folder + 'Figures/'
+   
+if not os.path.exists(figure_folder + 'General/'):
+    os.makedirs(figure_folder + 'General/')
+if not os.path.exists(figure_folder + 'Attack_wise/'):
+    os.makedirs(figure_folder + 'Attack_wise/')
 
-t0 = time.time()
-for k in range(N):
-    foo = jensen_np(vector, other)
-    
-dt = (time.time() - t0)/N
+general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_folder)
 
-#%%
-
-L1 = nh.norm(1)
-L2 = nh.norm(2)
-
-distances = []
-for im in db:
-    for img in features:
-        distances.append(L1(im.features, img.features))
-        
-distances_unknown = []
-for im in db:
-    for img in unknown:
-        distances_unknown.append(L1(im.features, img.features))
+algo_names = ['1', '2', '3', '4']
+frame = plot.AUC_heatmap(attacks, algo_names=algo_names, save=True, filename='test')

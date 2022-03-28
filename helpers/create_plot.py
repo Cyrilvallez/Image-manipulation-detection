@@ -72,7 +72,13 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
         
         legend.append(algorithm)
         
-        for threshold in sorted(digest[algorithm].keys()):
+        # Sort according to thresholds value (for consistency)
+        thresholds = np.array(list(digest[algorithm].keys()))
+        thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
+        sorting = np.argsort(thresholds_values)
+        thresholds = thresholds[sorting]
+        
+        for threshold in thresholds:
             
             if not attack_wise:
                 
@@ -172,13 +178,20 @@ def metrics_plot(general_digest, common_ticks=True, save=False, filename=None):
         
         names.append(algorithm)
         
-        for j, threshold in enumerate(sorted(general_digest[algorithm].keys())):
+        # Sort according to thresholds value (for consistency)
+        thresholds_ = np.array(list(general_digest[algorithm].keys()))
+        thresholds_values = np.array([float(threshold.rsplit(' ',1)[1]) for threshold in\
+                                      thresholds_])
+        sorting = np.argsort(thresholds_values)
+        thresholds_ = thresholds_[sorting]
+        thresholds[i] = thresholds_values[sorting]
+        
+        for j, threshold in enumerate(thresholds_):
             
             accuracy[i].append(general_digest[algorithm][threshold]['accuracy'])
             precision[i].append(general_digest[algorithm][threshold]['precision'])
             recall[i].append(general_digest[algorithm][threshold]['recall'])
             fpr[i].append(general_digest[algorithm][threshold]['fpr'])
-            thresholds[i].append(float(threshold.split(' ', 1)[1]))
             
         
     for i in range(len(accuracy)):
@@ -318,8 +331,14 @@ def _find_lowest_biggest_frequencies(image_wise_digest, kind, N):
     for i, algorithm in enumerate(image_wise_digest.keys()):
     
         algo_names.append(algorithm)
+        
+        # Sort according to thresholds value (for consistency)
+        thresholds = np.array(list(image_wise_digest[algorithm].keys()))
+        thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
+        sorting = np.argsort(thresholds_values)
+        thresholds = thresholds[sorting]
     
-        for j, threshold in enumerate(sorted(image_wise_digest[algorithm].keys())):
+        for j, threshold in enumerate(thresholds):
             
             total_identified = np.zeros(len(keys))
             
@@ -531,6 +550,90 @@ def similarity_heatmaps(image_wise_digest, kind, metrics, N=None, save=False,
         if save:
             plt.savefig(filename + '_' + algo_names[i] + '.pdf', bbox_inches='tight')
         plt.show()
+        
+        
+        
+def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
+    
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+            
+    # Initialize stuff
+    legend = []
+    fpr = {}
+    recall = {}
+    for attack_name in list(list(attacks_digest.values())[0].values())[0].keys():
+        fpr[attack_name] = [[] for i in attacks_digest.keys()]
+        recall[attack_name] = [[] for i in attacks_digest.keys()]
+        
+    # Retrive the values as lists
+    for i, algorithm in enumerate(attacks_digest.keys()):
+        
+        legend.append(algorithm)
+        
+        # Sort according to thresholds value (for consistency)
+        thresholds = np.array(list(attacks_digest[algorithm].keys()))
+        thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
+        sorting = np.argsort(thresholds_values)
+        thresholds = thresholds[sorting]
+        
+        for threshold in thresholds:
+            
+            for attack_name in attacks_digest[algorithm][threshold].keys():
+                    
+                fpr[attack_name][i].append(attacks_digest[algorithm][threshold][attack_name]['fpr'])
+                recall[attack_name][i].append(attacks_digest[algorithm][threshold][attack_name]['recall'])
+     
+    AUC = {}
+    for attack_name in fpr.keys():
+        AUC[attack_name] = []
+        
+    # Compute area under the curve (AUC)
+    for attack_name in fpr.keys():
+        
+        for i in range(len(fpr[attack_name])):
+            
+            auc = np.trapz(recall[attack_name][i], x=fpr[attack_name][i])
+            AUC[attack_name].append(auc)
+            
+    if algo_names is None:
+        frame = pd.DataFrame(AUC, index=legend)
+    else:
+        frame = pd.DataFrame(AUC, index=algo_names)
+        
+    # For latex rendering
+    frame.rename(columns={'s&p_noise_0.15': 's\\&p_noise_0.15',
+                          's&p_noise_0.05': 's\\&p_noise_0.05',
+                          's&p_noise_0.1': 's\\&p_noise_0.15'}, inplace=True)
+    
+    strong_attacks = [
+        'gaussian_noise_0.05',
+        'speckle_noise_0.05',
+        's\\&p_noise_0.15',
+        'gaussian_filter_7x7',
+        'median_filter_7x7',
+        'cropping_60_and_rescaling',
+        'rotation_60_and_rescaling',
+        'shearing_20',
+        'text_length_50',
+        'jpg_compression_10',
+        'scaling_1.6',
+        'color_enhancement_1.4',
+        'sharpness_enhancement_1.4',
+        'contrast_enhancement_1.4',
+        'brightness_enhancement_1.4',
+        ]
+
+    plt.figure()                
+    sns.heatmap(frame[strong_attacks], annot=True)  
+    if save:
+        plt.savefig(filename + '.pdf', bbox_inches='tight')
+    plt.show()
+    
+    return frame
+
+    
+        
         
         
         
