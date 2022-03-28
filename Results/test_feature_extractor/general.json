@@ -1,0 +1,64 @@
+{
+	"ORB 10000 bits": {
+		"Threshold 0.000": {
+			"accuracy": 0.532,
+			"precision": 1.0,
+			"recall": 0.064,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.645,
+			"precision": 1.0,
+			"recall": 0.29,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.673,
+			"precision": 1.0,
+			"recall": 0.346,
+			"fpr": 0.0
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.718,
+			"precision": 1.0,
+			"recall": 0.436,
+			"fpr": 0.0
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.753,
+			"precision": 1.0,
+			"recall": 0.506,
+			"fpr": 0.0
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.783,
+			"precision": 0.9862542955326461,
+			"recall": 0.574,
+			"fpr": 0.008
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.777,
+			"precision": 0.8353510895883777,
+			"recall": 0.69,
+			"fpr": 0.136
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.659,
+			"precision": 0.616398243045388,
+			"recall": 0.842,
+			"fpr": 0.524
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.511,
+			"precision": 0.5056759545923633,
+			"recall": 0.98,
+			"fpr": 0.958
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	}
+}
