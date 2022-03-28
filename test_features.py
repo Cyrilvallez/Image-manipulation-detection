@@ -21,7 +21,7 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.FeatureAlgorithm('ORB', batch_size=512),
+    hashing.FeatureAlgorithm('ORB', batch_size=100),
     ]
 
 thresholds = np.linspace(0, 0.4, 10)
@@ -36,6 +36,6 @@ negative_dataset = hashing.create_dataset(neg_images, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=512)
+                               negative_dataset, general_batch_size=50)
 
 utils.save_digest(digest, save_folder)
