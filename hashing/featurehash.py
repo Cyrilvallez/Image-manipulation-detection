@@ -12,7 +12,7 @@ import skimage.feature as feature
 
 
 def orb(image):
-    extractor = feature.ORB()
+    extractor = feature.ORB(n_keypoints=5)
     
     img = image.convert('L')
     extractor.detect_and_extract(img)
