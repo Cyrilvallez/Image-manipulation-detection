@@ -81,7 +81,7 @@ class ImageDescriptors(object):
         matches = sorted(matches, key = lambda x: x.distance)
         
         # Normalize the hamming distance by the number of bits in the descriptor 
-        # to get the BER threshold
+        # to get the BER thresholdfe
         if (self.matcher == 'Hamming'):
             # Each value in self.descriptors[0] is a byte, thus we multiply by 8 
             # to get the total number of bits in the descriptor
