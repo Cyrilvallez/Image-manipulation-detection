@@ -39,3 +39,4 @@ digest = hashing.total_hashing(algos, thresholds, path_database, positive_datase
                                negative_dataset, general_batch_size=50)
 
 utils.save_digest(digest, save_folder)
+

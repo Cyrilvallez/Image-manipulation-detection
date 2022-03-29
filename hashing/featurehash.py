@@ -8,24 +8,26 @@ Created on Mon Mar 28 15:48:23 2022
 
 from hashing.general_hash import Algorithm
 from hashing.imagehash import ImageHash, ImageMultiHash
-import skimage.feature as feature
+import cv2
+import numpy as np
 
 
-def orb(image):
-    extractor = feature.ORB(n_keypoints=5)
+def ORB(image, n_features=20):
     
-    img = image.convert('L')
-    extractor.detect_and_extract(img)
+    img = np.array(image.convert('L'))
+    
+    orb = cv2.ORB_create(nfeatures=n_features)
+    _, descriptors = orb.detectAndCompute(img, None)
     
     hashes = []
-    for hash_ in extractor.descriptors:
+    for hash_ in descriptors:
         hashes.append(ImageHash(hash_))
     
     return ImageMultiHash(hashes)
 
 # Mapping from string to actual algorithms
 FEATURE_MODEL_SWITCH = {
-    'ORB': orb,
+    'ORB': ORB,
     }
 
 
