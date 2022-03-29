@@ -164,7 +164,7 @@ FEATURE_MODEL_SWITCH = {
 
 
 ALGORITHMS_MATCHER = {
-    'ORB': cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False)
+    'ORB': cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
     }
 
 
