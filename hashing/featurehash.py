@@ -22,12 +22,137 @@ def array_of_bytes_to_bits(array):
     return np.array(out)
 
 
-def ORB(image, n_features=20):
+class ImageDescriptors(object):
+    """
+    Image descriptors encapsulation. Can be used for easy comparisons with other 
+    ImageDescriptors or databases of ImageDescriptors.
+    """
+    
+    def __init__(self, descriptors, matcher):
+        self.descriptors = descriptors
+        self.matcher = matcher
+        
+    def __str__(self):
+        return str(self.features)
+
+    def __repr__(self):
+        return repr(self.features)
+    
+    def __eq__(self, other):
+        assert(self.descriptors.shape == other.descriptors.shape)
+        return np.allclose(self.descriptors, other.descriptors)
+
+    def __ne__(self, other):
+        assert(self.descriptors.shape == other.descriptors.shape)
+        return not np.allclose(self.descriptors, other.descriptors)
+
+    def __len__(self):
+        return len(self.descriptors)
+    
+    
+    def matches(self, other, threshold, cutoff=1):
+        """
+        Check if the distance between current ImageDescriptors and another
+        ImageDescriptors is less than a threshold, for at least cutoff features.
+
+        Parameters
+        ----------
+        other : ImageDescriptors
+            The other ImageDescriptors.
+        threshold : float
+            Threshold for distance identification.
+        cutoff : int, optional
+            The number of descriptor that must be lower than the threshold for
+            a match. The default is 1.
+
+        Returns
+        -------
+        Boolean
+            Whether or not there is a match.
+
+        """
+        
+        match = self.matcher(self.descriptors, other.descriptors)
+        match = sorted(match, key = lambda x: x.distance)
+        
+        return match[cutoff-1].distance <= threshold
+    
+    
+    def match_db(self, database, threshold, cutoff=1):
+        """
+        Check if there is a ImageDescriptors in the database for which the distance
+        with current ImageDescriptors is less than a threshold.
+
+        Parameters
+        ----------
+        database : Dictionary
+            Dictionary of type {'img_name':ImageDescriptors}. Represents the database.
+        threshold : float
+            Threshold for distance identification.
+        cutoff : int, optional
+            The number of descriptor that must be lower than the threshold for
+            a match. The default is 1.
+
+        Returns
+        -------
+        Boolean
+            Whether or not there is a match in the database.
+
+        """
+        
+        for descriptors in database.values():
+            if self.matches(descriptors, threshold=threshold, cutoff=cutoff):
+                return True
+        return False
+    
+    
+    def match_db_image(self, database, threshold, cutoff=1):
+        """
+        Check if the current descriptors match other descriptors in the database.
+
+        Parameters
+        ----------
+        database : Dictionary
+            Dictionary of type {'img_name':ImageDescriptors}. Represents the database.
+        threshold : float
+            Threshold for distance identification.
+        cutoff : int, optional
+            The number of descriptor that must be lower than the threshold for
+            a match. The default is 1.
+
+        Returns
+        -------
+        names : List
+            Name of all images in the database which trigger a similarity with
+            current ImageDescriptors.
+
+        """
+        
+        names = []
+        for key in database.keys():
+            if self.matches(database[key], threshold=threshold, cutoff=cutoff):
+                names.append(key)
+        
+        return names
+    
+    
+
+
+def ORB(image, n_features=20, device='cuda'):
     
     img = np.array(image.convert('L'))
     
-    orb = cv2.ORB_create(nfeatures=n_features)
-    _, descriptors = orb.detectAndCompute(img, None)
+    if device=='cuda':
+        src = cv2.cuda_GpuMat()
+        src.upload(img)
+        
+        orb = cv2.cuda.ORB_create(nfeatures=n_features)
+        _, features = orb.detectAndComputeAsync(img, cv2.cuda_Stream.Null())
+        descriptors = features.download()
+        
+    elif device=='cpu':
+        orb = cv2.ORB_create(nfeatures=n_features)
+        _, descriptors = orb.detectAndCompute(img, None)
     
     hashes = []
     for hash_ in descriptors:
@@ -54,12 +179,16 @@ class FeatureAlgorithm(Algorithm):
          
     """
     
-    def __init__(self, algorithm, batch_size=512, n_features=20):
+    def __init__(self, algorithm, batch_size=512, n_features=20, device='cuda'):
         
         Algorithm.__init__(self, algorithm, batch_size=batch_size)
+        
+        if (device not in ['cuda', 'cpu']):
+            raise ValueError('device must be either `cuda` or `cpu`.')
+            
         self.algorithm = FEATURE_MODEL_SWITCH[algorithm]
         self.n_features = n_features
-        
+        self.device = device
         
     def __str__(self):
         
@@ -85,6 +214,6 @@ class FeatureAlgorithm(Algorithm):
         hashes = []
         
         for image in preprocessed_images:
-            hashes.append(self.algorithm(image, self.n_features))
+            hashes.append(self.algorithm(image, self.n_features, self.device))
             
         return hashes

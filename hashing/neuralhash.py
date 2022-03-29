@@ -129,7 +129,7 @@ class ImageFeatures(object):
     ImageFeatures or databases of ImageFeatures.
     """
     
-    def __init__(self, features, distance='Cosine'):
+    def __init__(self, features, distance='cosine'):
         self.features = np.array(features).squeeze()
         if (len(self.features.shape) > 1):
             raise TypeError('ImageFeature array must be 1D')
@@ -163,7 +163,7 @@ class ImageFeatures(object):
         other : ImageFeatures
             The other ImageFeatures.
         threshold : Float, optional
-            Threshold for cosine distance identification. The default is 0.25.
+            Threshold for distance identification. The default is 0.25.
 
         Returns
         -------
@@ -184,8 +184,8 @@ class ImageFeatures(object):
         ----------
         database : Dictionary
             Dictionary of type {'img_name':ImageFeatures}. Represents the database.
-        threshold : TFloat, optional
-            Threshold for cosine distance identification. The default is 0.25.
+        threshold : Float, optional
+            Threshold for distance identification. The default is 0.25.
 
         Returns
         -------
@@ -210,7 +210,7 @@ class ImageFeatures(object):
         database : Dictionary
             Dictionary of type {'img_name':ImageFeatures}. Represents the database.
         threshold : Float, optional
-            Threshold for cosine distance identification. The default is 0.25.
+            Threshold for distance identification. The default is 0.25.
 
         Returns
         -------
