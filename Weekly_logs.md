@@ -8,7 +8,8 @@ These are logs that I will update every week in order to keep track of my work (
 3. [Week 3 : 21/02](#week3)
 4. [Week 4 : 28/02](#week4)
 5. [Week 5 : 07/03](#week5)
-5. [Week 6 : 14/03](#week6)
+6. [Week 6 : 14/03](#week6)
+7. [Week 7 : 21/03](#week6)
 
    
 
@@ -210,3 +211,14 @@ I compared the results from this experiment to results I already had for some of
 When re-running another experiment after that on the cluster, I got running time prevision much larger than it should compared to the previous experiment times. I also got a strange error maybe linked to memory leak. For this reason, all the benchmarking will have to be done on the epfl machine of Andrei for consistency.
 
 Since everything is running smootly with the library, it is now possible for me to extensively test other networks (I first want to try with other SimCLR networks architectures, and with the v2 version that i know exists), and all of this on bigger datasets for which the image manipulations will be done on-the-fly (which will incure a large overhead to the whole process but will save a very big disk space). I also plan to investigate other distances to see the difference with cosine and Jensen-Shannon.
+
+
+## Week 7 : 21/03 <a name="week7"></a>
+
+This week, I performed several experiments on other models, especially other SimCLR models (v1 and v2). The v2 versions provide better results than all v1 models, but the difference between v2 models is not very significative, suggesting that we can use a smaller model and still get almost as good results as with a bigger model. The Jensen-Shannon distance is still better than cosine (and L1 and L2) distance.
+
+I also added support for L1 and L2 (basically any norm) distances. At first, I clipped the distances to the interval [0,1] (by first applying a softmax or normalization by the sum, so that the feature vector sums to 1, and then dividing by $(\sum x_i)^{(1/ord)}$) to be consistent with the other distances (hamming ratio, J-S and cosine), but this yielded very poor results, since the thresholds to actually see an "in between" between a fpr of 0 and a fpr of 1 were so small that it was completely unusable. Thus I decided to remove the normalization, so that the norm are in the interval [0, $(\sum x_i)^{(1/ord)}$]. However, this did not solve the previous problem, and the thresholds were still way to low. Finally, I decided to remove any normalization, and just use the distances as it is, using a statistical study to get the necessary thresholds. This worked (at least on the BSDS500 dataset) with thresholds between [4, 12] for L2 distance, and [100, 250] for L1. However, as expected these distances perform worse than cosine and J-S. 
+
+I then tried to improve the J-S computation across batches to remove the overhead, but did not succeed. I first tested different implementations that would be used in the same spirit as it is used now (just apply the distance one after the other), but it seems that speed cannot be traded for robustness in this case (otherwise a 0 or very low value in the normalized feature vector will yield big inacurracies). After that I explored way to process everything in "one pass", but it is not as trivial since we need to compute every pairwise distances between the database and the current batch. One function from scipy does this and provide a speed-up of about 20-30%, but this is not as good as hoped and does not justify a change in the current framework in my opinion. Trying to use pytorch to compute everything in one pass is not obvious. This could be investigated further but would need to be quite smart about the implementation. 
+
+On the results part, the same networks as SimCLR uses (basically big ResNets) but trained in a supervised fashion on ImageNet perform worse than the constrative approach used in SimCLR, as expected. Moreover, the neural models from SimCLR do not seem to have the same "weaknesses" (in the attack-wise performances sense) as classical algorithms like Dhash or Phash, suggesting that a smart ensemble of these methods could (I believe) provide quite an improvement to the robustness of the final algorithm. This is further motivated by the fact that classical algorithms (Phash or Dhash for exemple) have a fpr of 0 up to quite high recall, meaning that we could increase the overall performances without incurring any drawback to the final algorithm.

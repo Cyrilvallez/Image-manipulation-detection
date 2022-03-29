@@ -44,8 +44,13 @@ class FeatureAlgorithm(Algorithm):
     
     def __init__(self, algorithm, batch_size=512):
         
-        Algorithm.__init__(self, algorithm, batch_size)
+        Algorithm.__init__(self, algorithm, batch_size=batch_size)
         self.algorithm = FEATURE_MODEL_SWITCH[algorithm]
+        
+        
+    def __str__(self):
+        
+        return f'{self.name}'
         
     
     def process_batch(self, preprocessed_images):
