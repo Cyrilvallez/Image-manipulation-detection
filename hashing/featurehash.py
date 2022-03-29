@@ -154,16 +154,17 @@ def ORB(image, n_features=20, device='cuda'):
         orb = cv2.ORB_create(nfeatures=n_features)
         _, descriptors = orb.detectAndCompute(img, None)
     
-    hashes = []
-    for hash_ in descriptors:
-        #hashes.append(ImageHash(array_of_bytes_to_bits(hash_)))
-        hashes.append(ImageHash(hash_))
-    
-    return ImageMultiHash(hashes)
+    return descriptors
+
 
 # Mapping from string to actual algorithms
 FEATURE_MODEL_SWITCH = {
     'ORB': ORB,
+    }
+
+
+ALGORITHMS_MATCHER = {
+    'ORB': cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False)
     }
 
 
@@ -188,6 +189,7 @@ class FeatureAlgorithm(Algorithm):
             raise ValueError('device must be either `cuda` or `cpu`.')
             
         self.algorithm = FEATURE_MODEL_SWITCH[algorithm]
+        self.matcher = ALGORITHMS_MATCHER[algorithm]
         self.n_features = n_features
         self.device = device
         
@@ -207,14 +209,15 @@ class FeatureAlgorithm(Algorithm):
 
         Returns
         -------
-        hashes : List
+        fingerprints : List
             The fingerprints corresponding to the batch of images.
 
         """
         
-        hashes = []
+        fingerprints = []
         
         for image in preprocessed_images:
-            hashes.append(self.algorithm(image, self.n_features, self.device))
+            descriptors = self.algorithm(image, self.n_features, self.device)
+            fingerprints.append(ImageDescriptors(descriptors, self.matcher))
             
-        return hashes
+        return fingerprints
