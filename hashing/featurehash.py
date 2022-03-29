@@ -16,7 +16,7 @@ def array_of_bytes_to_bits(array):
     out = []
     
     for byte in array:
-        bits = [True if digit=='1' else False for digit in bin(byte)[2:]]
+        bits = [True if digit=='1' else False for digit in f'{byte:08b}']
         out.extend(bits)
         
     return np.array(out)
