@@ -24,7 +24,7 @@ algos = [
     hashing.FeatureAlgorithm('ORB', batch_size=100, n_features=20),
     ]
 
-thresholds = np.linspace(0, 0.4, 10)
+thresholds = np.linspace(0, 0.8, 10)
 
 pos_images = [path_experimental + file for file in os.listdir(path_experimental)[0:500] \
               if 'data' in file]
