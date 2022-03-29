@@ -13,18 +13,7 @@ import cv2
 import time
 import numpy as np
 
-image = Image.open('Datasets/BSDS500/Control/data221.jpg')
-image = image.convert('L')
 
-descs, descs_img = feature.daisy(image, step=180, radius=58, rings=2, histograms=6,
-                                 orientations=8, visualize=True)
-
-fig, ax = plt.subplots()
-ax.axis('off')
-ax.imshow(descs_img)
-descs_num = descs.shape[0] * descs.shape[1]
-ax.set_title('%i DAISY descriptors extracted:' % descs_num)
-plt.show()
 
 
 #%%
@@ -34,15 +23,44 @@ image = image.convert('L')
 t0 = time.time()
 
 for i in range(10):
-    sift = feature.ORB()
-    sift.detect_and_extract(image)
-    descriptors_sk = sift.descriptors
+    orb = feature.ORB()
+    orb.detect_and_extract(image)
+    descriptors_sk = orb.descriptors
 
 dt_sk = (time.time() - t0)/10
 
 t0 = time.time()
 for i in range(10):
-    sift = cv2.ORB_create()
-    keypoints, descriptors = sift.detectAndCompute(np.array(image), None)
+    orb = cv2.ORB_create()
+    _, descriptors_cv = orb.detectAndCompute(np.array(image), None)
     
 dt_cv = (time.time() - t0)/10
+
+
+#%%
+
+test = cv2.imread('Datasets/BSDS500/Control/data221.jpg')
+test = cv2.cvtColor(test, cv2.COLOR_BGR2GRAY)
+
+#%%
+import time
+from tqdm import tqdm
+
+def array_of_bytes_to_bits(array):
+    
+    out = []
+    
+    for byte in array:
+        bits = [True if digit=='1' else False for digit in bin(byte)[2:]]
+        out.extend(bits)
+        
+    return out
+        
+t0 = time.time()
+N = 100000
+for i in tqdm(range(N)):
+    foo = array_of_bytes_to_bits(array)
+    
+dt = (time.time() - t0)/N
+
+print(f'\n{dt:.3e} s')

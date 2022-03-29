@@ -11,6 +11,16 @@ from hashing.imagehash import ImageHash, ImageMultiHash
 import cv2
 import numpy as np
 
+def array_of_bytes_to_bits(array):
+    
+    out = []
+    
+    for byte in array:
+        bits = [True if digit=='1' else False for digit in bin(byte)[2:]]
+        out.extend(bits)
+        
+    return np.array(out)
+
 
 def ORB(image, n_features=20):
     
@@ -21,7 +31,7 @@ def ORB(image, n_features=20):
     
     hashes = []
     for hash_ in descriptors:
-        hashes.append(ImageHash(hash_))
+        hashes.append(ImageHash(array_of_bytes_to_bits(hash_)))
     
     return ImageMultiHash(hashes)
 
