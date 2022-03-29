@@ -156,7 +156,8 @@ def ORB(image, n_features=20, device='cuda'):
     
     hashes = []
     for hash_ in descriptors:
-        hashes.append(ImageHash(array_of_bytes_to_bits(hash_)))
+        #hashes.append(ImageHash(array_of_bytes_to_bits(hash_)))
+        hashes.append(ImageHash(hash_))
     
     return ImageMultiHash(hashes)
 

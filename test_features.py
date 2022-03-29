@@ -21,7 +21,7 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.FeatureAlgorithm('ORB', batch_size=100, n_features=20),
+    hashing.FeatureAlgorithm('ORB', batch_size=100, n_features=20, device='cpu'),
     ]
 
 thresholds = np.linspace(0, 0.8, 10)
