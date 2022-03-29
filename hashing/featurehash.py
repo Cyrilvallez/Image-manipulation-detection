@@ -22,6 +22,11 @@ def array_of_bytes_to_bits(array):
     return np.array(out)
 
 
+MATCHERS = {
+    'Hamming': cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False)
+    }
+
+
 class ImageDescriptors(object):
     """
     Image descriptors encapsulation. Can be used for easy comparisons with other 
@@ -72,8 +77,15 @@ class ImageDescriptors(object):
 
         """
         
-        matches = self.matcher.match(self.descriptors, other.descriptors)
+        matches = MATCHERS[self.matcher].match(self.descriptors, other.descriptors)
         matches = sorted(matches, key = lambda x: x.distance)
+        
+        # Normalize the hamming distance by the number of bits in the descriptor 
+        # to get the BER threshold
+        if (self.matcher == 'Hamming'):
+            # Each value in self.descriptors[0] is a byte, thus we multiply by 8 
+            # to get the total number of bits in the descriptor
+            threshold *= len(self.descriptors[0])*8
         
         return matches[cutoff-1].distance <= threshold
     
@@ -163,8 +175,9 @@ FEATURE_MODEL_SWITCH = {
     }
 
 
+
 ALGORITHMS_MATCHER = {
-    'ORB': cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    'ORB': 'Hamming',
     }
 
 

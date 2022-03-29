@@ -12,55 +12,26 @@ import matplotlib.pyplot as plt
 import cv2
 import time
 import numpy as np
+from hashing import featurehash as fh
 
 
 
 
 #%%
 
-image = Image.open('Datasets/BSDS500/Control/data221.jpg')
-image = image.convert('L')
-t0 = time.time()
+image1 = Image.open('Datasets/BSDS500/Control/data221.jpg')
+image1 = image1.convert('L')
 
-for i in range(10):
-    orb = feature.ORB()
-    orb.detect_and_extract(image)
-    descriptors_sk = orb.descriptors
+image2 = Image.open('Datasets/BSDS500/Control/data229.jpg')
+image2 = image2.convert('L')
 
-dt_sk = (time.time() - t0)/10
+des1 = fh.ORB(image1, device='cpu')
+des2 = fh.ORB(image2, device='cpu')
 
-t0 = time.time()
-for i in range(10):
-    orb = cv2.ORB_create()
-    _, descriptors_cv = orb.detectAndCompute(np.array(image), None)
-    
-dt_cv = (time.time() - t0)/10
+matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+
+des1 = fh.ImageDescriptors(des1, matcher)
+des2 = fh.ImageDescriptors(des2, matcher)
 
 
-#%%
-
-test = cv2.imread('Datasets/BSDS500/Control/data221.jpg')
-test = cv2.cvtColor(test, cv2.COLOR_BGR2GRAY)
-
-#%%
-import time
-from tqdm import tqdm
-
-def array_of_bytes_to_bits(array):
-    
-    out = []
-    
-    for byte in array:
-        bits = [True if digit=='1' else False for digit in f'{byte:08b}']
-        out.extend(bits)
-        
-    return out
-        
-t0 = time.time()
-N = 100000
-for i in tqdm(range(N)):
-    foo = array_of_bytes_to_bits(array)
-    
-dt = (time.time() - t0)/N
-
-print(f'\n{dt:.3e} s')
+res = des1.matches(des2, threshold=0.3)
