@@ -44,15 +44,16 @@ class FeatureAlgorithm(Algorithm):
          
     """
     
-    def __init__(self, algorithm, batch_size=512):
+    def __init__(self, algorithm, batch_size=512, n_features=20):
         
         Algorithm.__init__(self, algorithm, batch_size=batch_size)
         self.algorithm = FEATURE_MODEL_SWITCH[algorithm]
+        self.n_features = n_features
         
         
     def __str__(self):
         
-        return f'{self.name}'
+        return f'{self.name} {self.n_features} features'
         
     
     def process_batch(self, preprocessed_images):
@@ -74,6 +75,6 @@ class FeatureAlgorithm(Algorithm):
         hashes = []
         
         for image in preprocessed_images:
-            hashes.append(self.algorithm(image))
+            hashes.append(self.algorithm(image, self.n_features))
             
         return hashes
