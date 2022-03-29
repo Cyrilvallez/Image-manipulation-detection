@@ -35,24 +35,26 @@ algos = [
     #                        device='cuda', distance='Jensen-Shannon'),
     #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
     #                        device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda', distance='L2'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda', distance='L1'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda', distance='Jensen-Shannon'),
+    #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
+    #                        device='cuda', distance='cosine'),
+    #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
+    #                        device='cuda', distance='L2'),
+    #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
+    #                        device='cuda', distance='L1'),
+    #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
+    #                        device='cuda', distance='Jensen-Shannon'),
+    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=20, device='cpu'),
+    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=30, device='cpu'),
+    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=40, device='cpu')
     ]
 
-thresholds = [np.linspace(0, 0.4, 10), np.linspace(4, 12, 10), np.linspace(100, 250, 10), 
-              np.linspace(0, 0.8, 10)]
+thresholds = np.linspace(0, 0.4, 10)
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=512)
+                               negative_dataset, general_batch_size=500)
 
 utils.save_digest(digest, save_folder)
