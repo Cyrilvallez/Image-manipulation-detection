@@ -72,10 +72,10 @@ class ImageDescriptors(object):
 
         """
         
-        match = self.matcher(self.descriptors, other.descriptors)
-        match = sorted(match, key = lambda x: x.distance)
+        matches = self.matcher.match(self.descriptors, other.descriptors)
+        matches = sorted(matches, key = lambda x: x.distance)
         
-        return match[cutoff-1].distance <= threshold
+        return matches[cutoff-1].distance <= threshold
     
     
     def match_db(self, database, threshold, cutoff=1):
