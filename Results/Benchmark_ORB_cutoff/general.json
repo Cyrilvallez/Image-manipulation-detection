@@ -1,0 +1,188 @@
+{
+	"ORB 40 descriptors": {
+		"Threshold 0.000": {
+			"accuracy": 0.6596551724137931,
+			"precision": 1.0,
+			"recall": 0.3193103448275862,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.8641379310344828,
+			"precision": 1.0,
+			"recall": 0.7282758620689656,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.9263793103448276,
+			"precision": 0.9914546899841018,
+			"recall": 0.8601724137931035,
+			"fpr": 0.007413793103448276
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.8289655172413793,
+			"precision": 0.7805057336077624,
+			"recall": 0.9153448275862069,
+			"fpr": 0.25741379310344825
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.5389655172413793,
+			"precision": 0.5209104367135455,
+			"recall": 0.9706896551724138,
+			"fpr": 0.8927586206896552
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.5000862068965517,
+			"precision": 0.5000431592576607,
+			"recall": 0.9987931034482759,
+			"fpr": 0.9986206896551724
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	},
+	"ORB 40 descriptors, cutoff 5": {
+		"Threshold 0.000": {
+			"accuracy": 0.5448275862068965,
+			"precision": 1.0,
+			"recall": 0.0896551724137931,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.771551724137931,
+			"precision": 1.0,
+			"recall": 0.5431034482758621,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.8692241379310345,
+			"precision": 1.0,
+			"recall": 0.738448275862069,
+			"fpr": 0.0
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.9171551724137931,
+			"precision": 0.9981470043236566,
+			"recall": 0.8358620689655173,
+			"fpr": 0.0015517241379310344
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.9093965517241379,
+			"precision": 0.940129749768304,
+			"recall": 0.8744827586206897,
+			"fpr": 0.055689655172413796
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.7369827586206896,
+			"precision": 0.6768755629906061,
+			"recall": 0.906896551724138,
+			"fpr": 0.4329310344827586
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.5043965517241379,
+			"precision": 0.5022790240414693,
+			"recall": 0.9689655172413794,
+			"fpr": 0.9601724137931035
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.5000862068965517,
+			"precision": 0.5000431071644107,
+			"recall": 1.0,
+			"fpr": 0.9998275862068966
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	},
+	"ORB 40 descriptors, cutoff 10": {
+		"Threshold 0.000": {
+			"accuracy": 0.5064655172413793,
+			"precision": 1.0,
+			"recall": 0.01293103448275862,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.7145689655172414,
+			"precision": 1.0,
+			"recall": 0.4291379310344828,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.8042241379310345,
+			"precision": 1.0,
+			"recall": 0.608448275862069,
+			"fpr": 0.0
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.8760344827586207,
+			"precision": 1.0,
+			"recall": 0.7520689655172413,
+			"fpr": 0.0
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.9082758620689655,
+			"precision": 0.9983164983164983,
+			"recall": 0.8179310344827586,
+			"fpr": 0.001379310344827586
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.8942241379310345,
+			"precision": 0.9273033077929359,
+			"recall": 0.8555172413793104,
+			"fpr": 0.06706896551724138
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.63,
+			"precision": 0.5837591646300822,
+			"recall": 0.9060344827586206,
+			"fpr": 0.6460344827586207
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.4993103448275862,
+			"precision": 0.49965065502183403,
+			"recall": 0.9863793103448276,
+			"fpr": 0.9877586206896551
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.4999137931034483,
+			"precision": 0.49995689283558925,
+			"recall": 0.9998275862068966,
+			"fpr": 1.0
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.4999137931034483,
+			"precision": 0.49995689283558925,
+			"recall": 0.9998275862068966,
+			"fpr": 1.0
+		}
+	}
+}
