@@ -237,7 +237,7 @@ class FeatureAlgorithm(Algorithm):
         fingerprints = []
         
         for image in preprocessed_images:
-            descriptors = self.algorithm(image, self.n_features, self.device)
+            descriptors = self.algorithm(image, self.n_features)
             fingerprints.append(ImageDescriptors(descriptors, self.matcher, 
                                                  self.cutoff))
             
