@@ -179,6 +179,22 @@ class ImageHash(object):
                 names.append(key)
         
         return names
+    
+    
+    def compute_distance(self, other):
+        return self.BER(other)
+    
+    
+    def compute_distances(self, database):
+
+        distances = []
+        names = []
+            
+        for key in database.keys():
+            distances.append(self.compute_distance(database[key]))
+            names.append(key)
+        
+        return (np.array(distances), np.array(names))
         
 
 
@@ -563,7 +579,41 @@ class ImageMultiHash(object):
                 names.append(key)
         
         return names
+    
+    
+    def compute_distance(self, other):
+        
+        distances = []
+        
+        for segment_hash in self.segment_hashes:
+            lowest_distance = min(
+                segment_hash - other_segment_hash
+                for other_segment_hash in other.segment_hashes
+            )
+            distances.append(lowest_distance)
+            
+        distances = sorted(distances)
+        
+        try:
+            distance = distances[self.cutoff-1]
+        except IndexError:
+            # Assign inf if the distance does not exist for this cutoff
+            distance = float('inf')
 
+        return distance
+    
+    
+    def compute_distances(self, database):
+
+        distances = []
+        names = []
+            
+        for key in database.keys():
+            distances.append(self.compute_distance(database[key]))
+            names.append(key)
+        
+        return (np.array(distances), np.array(names))
+    
 
 def _find_region(remaining_pixels, segmented_pixels):
     """
