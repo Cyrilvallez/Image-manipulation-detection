@@ -365,9 +365,267 @@ def create_databases(algorithms, path_to_db):
         databases.append(algorithm.create_database(path_to_db, time_database))
         
     return databases, time_database
-                
-                
+
+
+def get_distances(fingerprints, database):
+    
+    distances = []
+    for fingerprint in fingerprints:
+        distances.append(fingerprint.compute_distances(database))
+        
+    return distances
+
+
+def is_detected(distances, threshold):
+    
+    distances_, names = distances
+            
+    return names[distances_ < threshold]
+
+
 def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
+    """
+    Performs the hashing and matching process for different algorithms and
+    thresholds.
+    
+    Parameters
+    ----------
+    algorithms : List
+        List of Algorithms (NeuralAlgorithm or ClassicalAlgorithm).
+    thresholds : Array 
+        List of floats corresponding to different thresholds. Or array of arrays
+        of the same size as algorithms, corresponding to different thresholds
+        for each algorithm
+    databases : List
+        List of dictionaries of ImageHash or ImageFeatures, corresponding to the
+        databases for each algorithm in `algorithms`.
+    dataset : IterableDataset
+        IterableDataset object with images to attack.
+    general_batch_size : int, optional
+        Batch size for the outer Dataloader, which all algorithms will use. The
+        default is 512.
+
+    Returns
+    -------
+    general_output : Dictionary
+        Results at the global level (number of matches/misses) for each algorith
+        and threshold.
+    attack_wise_output : Dictionary
+        Results at the attack level (number of matches/misses) for each algorith
+        and threshold.
+    image_wise_output : Dictionary
+        Results at the image level, for images in the database (number of 
+        correct/incorrect identification) for each algorith and threshold.
+    running_time : Dictionary
+        Total running time (creating fingerprints and mean matching time over thresholds)
+        for each algorithm.
+
+    """
+    
+    # Creates dataloader on which to iterate
+    dataloader = DataLoader(dataset, batch_size=general_batch_size, shuffle=False,
+                            collate_fn=collate)
+    
+    # Check whether the thresholds are different for each algo or not
+    if (type(thresholds[0]) == list or type(thresholds[0]) == np.ndarray):
+        assert(len(thresholds) == len(algorithms))
+        custom_thresholds = True
+    else:
+        custom_thresholds = False
+        
+    # Initialize the different output digests; they are dictionaries with
+    # meaningful names
+    
+    general_output = {}
+    attack_wise_output = {}
+    image_wise_output = {}
+    running_time = {}
+    
+    all_attack_names = generator.retrieve_ids(**generator.ATTACK_PARAMETERS)
+    
+    for i, algorithm in enumerate(algorithms):
+        
+        general_output[str(algorithm)] = {}
+        attack_wise_output[str(algorithm)] = {}
+        image_wise_output[str(algorithm)] = {}
+        running_time [str(algorithm)] = 0
+        
+        if custom_thresholds:
+            algo_thresholds = thresholds[i]
+        else:
+            algo_thresholds = thresholds
+        
+        for threshold in algo_thresholds:
+            
+            general_output[str(algorithm)][f'Threshold {threshold:.3f}'] = \
+                {'detection':0, 'no detection':0}
+            
+            attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] = {}
+            for name in all_attack_names:
+                attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
+                    {'detection':0, 'no detection':0}
+                    
+            image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] = {}
+            for name in databases[0].keys():
+                image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
+                    {'correct detection':0, 'incorrect detection':0}
+            
+            
+    # Matching logic : First create the images with modifications, then loop
+    # over each algorithm and thresholds. The creation of attacks on images is
+    # the biggest overhead and thus should be the outer loop. The second 
+    # important overhead is the loading of big networks, but with large
+    # batches, we actually don't load them that much
+    
+    for images, image_names, attack_names in tqdm(dataloader):
+        
+        for i, algorithm in enumerate(algorithms):
+            
+            # Load the model in memory
+            algorithm.load_model()
+            
+            # Select database corresponding to that algorithm
+            database = databases[i]
+            
+            # Select thresholds corresponding to that algorithm
+            if custom_thresholds:
+                algo_thresholds = thresholds[i]
+            else:
+                algo_thresholds = thresholds
+            
+            t0 = time.time()
+            
+            # Pre-process the images
+            imgs = algorithm.preprocess(images)
+            # Computes the hashes or features
+            fingerprints = algorithm.process_batch(imgs)
+            # Get distances for all fingerprints
+            distances = get_distances(fingerprints, database)
+            
+            # Time needed to create the fingerprints
+            running_time[str(algorithm)] += time.time() - t0
+            
+            t0 = time.time()
+            
+            for threshold in algo_thresholds:
+        
+                for distances_, img_name, attack_name in zip(distances, image_names,
+                                                              attack_names):
+                 
+                    detected = is_detected(distances_, threshold)
+                
+                    if len(detected) > 0:
+                        general_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                            ['detection'] += 1
+                        attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                            [attack_name]['detection'] += 1
+                    else:
+                        general_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                            ['no detection'] += 1
+                        attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                            [attack_name]['no detection'] += 1
+                
+                    for name in detected:
+
+                        if name == img_name:
+                            image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                                [name]['correct detection'] += 1
+                        else:
+                            image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                                [name]['incorrect detection'] += 1
+                                
+                            
+            # Mean time needed for the matching of batch of hashes
+            running_time[str(algorithm)] += (time.time() - t0)/len(algo_thresholds)
+                
+            # Removes the model from memory
+            algorithm.kill_model()
+    
+    
+    return (general_output, attack_wise_output, image_wise_output, running_time)
+
+                
+                
+
+
+
+
+def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
+                  negative_dataset, general_batch_size=512):
+    """
+    Perform the hashing and matchup of both a experimental and control group
+    of images, and outputs the (processed) metrics of the experiment.
+
+    Parameters
+    ----------
+    algorithms : List
+        List of Algorithms (NeuralAlgorithm or ClassicalAlgorithm).
+    thresholds : Array 
+        List of floats corresponding to different thresholds. Or array of arrays
+        of the same size as algorithms, corresponding to different thresholds
+        for each algorithm
+    path_to_db : str or list of str
+        The path to the folder containing the images for the database (or list
+        of paths corresponding to the database).
+    positive_dataset : ExistingAttacksDataset or PerformAttacksDataset
+        Dataset with attacked versions of images in the database.
+    negative_dataset : ExistingAttacksDataset or PerformAttacksDataset
+        Dataset with attacked versions of images not present in the database.
+    general_batch_size : int, optional
+        Batch size for the outer Dataloader, which all algorithms will use. The
+        default is 512.
+
+    Returns
+    -------
+    final_digest : Tuple of dictionaries
+        The metrics of the experiment for each algorithm and thresholds.
+
+    """
+    
+    databases, time_database = create_databases(algorithms, path_to_db)
+    
+    positive_digest = hashing(algorithms, thresholds, databases, positive_dataset,
+                              general_batch_size)
+    negative_digest = hashing(algorithms, thresholds, databases, negative_dataset,
+                              general_batch_size)
+    
+    attacked_image_names = find_attacked_images(positive_dataset)
+    
+    final_digest = utils.process_digests(positive_digest, negative_digest,
+                                         attacked_image_names)
+    final_digest = (*final_digest, time_database)
+    
+    return final_digest
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def hashing_(algorithms, thresholds, databases, dataset, general_batch_size=512):
     """
     Performs the hashing and matching process for different algorithms and
     thresholds.
@@ -525,53 +783,3 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
     
     
     return (general_output, attack_wise_output, image_wise_output, running_time)
-
-
-
-def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
-                  negative_dataset, general_batch_size=512):
-    """
-    Perform the hashing and matchup of both a experimental and control group
-    of images, and outputs the (processed) metrics of the experiment.
-
-    Parameters
-    ----------
-    algorithms : List
-        List of Algorithms (NeuralAlgorithm or ClassicalAlgorithm).
-    thresholds : Array 
-        List of floats corresponding to different thresholds. Or array of arrays
-        of the same size as algorithms, corresponding to different thresholds
-        for each algorithm
-    path_to_db : str or list of str
-        The path to the folder containing the images for the database (or list
-        of paths corresponding to the database).
-    positive_dataset : ExistingAttacksDataset or PerformAttacksDataset
-        Dataset with attacked versions of images in the database.
-    negative_dataset : ExistingAttacksDataset or PerformAttacksDataset
-        Dataset with attacked versions of images not present in the database.
-    general_batch_size : int, optional
-        Batch size for the outer Dataloader, which all algorithms will use. The
-        default is 512.
-
-    Returns
-    -------
-    final_digest : Tuple of dictionaries
-        The metrics of the experiment for each algorithm and thresholds.
-
-    """
-    
-    databases, time_database = create_databases(algorithms, path_to_db)
-    
-    positive_digest = hashing(algorithms, thresholds, databases, positive_dataset,
-                              general_batch_size)
-    negative_digest = hashing(algorithms, thresholds, databases, negative_dataset,
-                              general_batch_size)
-    
-    attacked_image_names = find_attacked_images(positive_dataset)
-    
-    final_digest = utils.process_digests(positive_digest, negative_digest,
-                                         attacked_image_names)
-    final_digest = (*final_digest, time_database)
-    
-    return final_digest
-

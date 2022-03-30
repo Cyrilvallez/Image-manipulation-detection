@@ -174,12 +174,14 @@ class ImageDescriptors(object):
     
     def compute_distances(self, database):
         
-        distances = {}
+        distances = []
+        names = []
             
         for key in database.keys():
-            distances[key] = self.compute_distance(database[key])
+            distances.append(self.compute_distance(database[key]))
+            names.append(key)
         
-        return distances
+        return (np.array(distances), np.array(names))
         
         
         

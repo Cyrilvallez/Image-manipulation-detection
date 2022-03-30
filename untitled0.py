@@ -13,6 +13,7 @@ import cv2
 import time
 import numpy as np
 from hashing import featurehash as fh
+from tqdm import tqdm
 
 image1 = Image.open('Datasets/BSDS500/Control/data221.jpg')
 image1 = image1.convert('L')
@@ -62,4 +63,12 @@ for img in tqdm(imgs):
 #kp, descriptors = extractor.compute(img1, kps)
 
 #kp, descriptors = tot.detectAndCompute(img, None)
+
+
+#%%
+
+a = [(i, i) for i in range(10000)]
+
+for i,j in a:
+    print(f'{i} {j}')
 
