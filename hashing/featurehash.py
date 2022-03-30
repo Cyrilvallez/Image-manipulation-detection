@@ -22,7 +22,7 @@ def array_of_bytes_to_bits(array):
 
 
 MATCHERS = {
-    'Hamming': cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True),
+    'Hamming': cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False),
     'L1': cv2.BFMatcher(cv2.NORM_L1, crossCheck=False),
     'L2': cv2.BFMatcher(cv2.NORM_L2, crossCheck=False),
     'test': cv2.BFMatcher(cv2.NORM_RELATIVE | cv2.NORM_L2, crossCheck=False),
@@ -154,7 +154,8 @@ def ORB(image, n_features=20):
     
     img = np.array(image.convert('L'))
     
-    orb = cv2.ORB_create(nfeatures=n_features)
+    #orb = cv2.ORB_create(nfeatures=n_features)
+    orb = cv2.ORB_create()
     _, descriptors = orb.detectAndCompute(img, None)
     
     return descriptors

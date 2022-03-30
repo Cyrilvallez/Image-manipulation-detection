@@ -28,8 +28,8 @@ image2 = image2.convert('L')
 des1 = fh.SIFT(image1)
 des2 = fh.SIFT(image2)
 
-des1 = fh.ImageDescriptors(des1, 'test')
-des2 = fh.ImageDescriptors(des2, 'test')
+des1 = fh.ImageDescriptors(des1, 'L2')
+des2 = fh.ImageDescriptors(des2, 'L2')
 
 
 res = des1.matches(des2, threshold=0.3)
@@ -40,3 +40,11 @@ distances = []
 
 for a in test:
     distances.append(a.distance)
+
+#%%
+
+detector = cv2.KAZE_create()
+
+img1 = np.array(image1)
+
+kp, descriptors = detector.detectAndCompute(img1, None)
