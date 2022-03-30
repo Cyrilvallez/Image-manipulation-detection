@@ -368,6 +368,23 @@ def create_databases(algorithms, path_to_db):
 
 
 def get_distances(fingerprints, database):
+    """
+    Get the distances of all fingerprints to all elements in the database
+
+    Parameters
+    ----------
+    fingerprints : List
+        The list of fingerprints.
+    database : Dictionary
+        The database to compare to.
+
+    Returns
+    -------
+    distances : List
+        A list containing the distances of each fingerprint to each element in
+        the database.
+
+    """
     
     distances = []
     for fingerprint in fingerprints:
@@ -376,7 +393,24 @@ def get_distances(fingerprints, database):
     return distances
 
 
-def is_detected(distances, threshold):
+def apply_threshold(distances, threshold):
+    """
+    Find the names of images triggering a match with respect to threshold.
+
+    Parameters
+    ----------
+    distances : Tuple
+        A tuple (distances, names) containing the distances of one fingerprint
+        to every element in a database.
+    threshold : float
+        The threshold for the distances matching.
+
+    Returns
+    -------
+    Array
+        The name of all elements in the database triggering a match.
+
+    """
     
     distances_, names = distances
             
@@ -512,7 +546,7 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
                 for distances_, img_name, attack_name in zip(distances, image_names,
                                                               attack_names):
                  
-                    detected = is_detected(distances_, threshold)
+                    detected = apply_threshold(distances_, threshold)
                 
                     if len(detected) > 0:
                         general_output[str(algorithm)][f'Threshold {threshold:.3f}'] \

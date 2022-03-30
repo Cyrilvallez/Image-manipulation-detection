@@ -236,24 +236,12 @@ def LATCH(image, n_features):
     return descriptors
 
 
-def LUCID(image, n_features):
-    
-    detector = cv2.ORB_create(nfeatures=20)
-    extractor = cv2.xfeatures2d.LUCID_create()
-    
-    kps = detector.detect(image)
-    _, descriptors = extractor.compute(image, kps)
-
-    return descriptors
-
-
 # Mapping from string to actual algorithms
 FEATURE_MODEL_SWITCH = {
     'ORB': ORB,
     'SIFT': SIFT,
     'FAST + DAISY': DAISY,
     'FAST + LATCH': LATCH,
-    'FAST + LUCID': LUCID,
     }
 
 
@@ -263,7 +251,6 @@ ALGORITHMS_MATCHER = {
     'SIFT': 'L2',
     'FAST + DAISY': 'L2',
     'FAST + LATCH': 'Hamming',
-    'FAST + LUCID': 'Hamming',
     }
 
 
