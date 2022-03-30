@@ -380,7 +380,7 @@ def is_detected(distances, threshold):
     
     distances_, names = distances
             
-    return names[distances_ < threshold]
+    return names[distances_ <= threshold]
 
 
 def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):

@@ -133,7 +133,7 @@ class ImageFeatures(object):
         self.features = np.array(features).squeeze()
         if (len(self.features.shape) > 1):
             raise TypeError('ImageFeature array must be 1D')
-        self.distance_function = DISTANCE_FUNCTIONS[distance]
+        self.distance_function = distance
 
     def __str__(self):
         return str(self.features)
@@ -172,7 +172,8 @@ class ImageFeatures(object):
 
         """
 
-        return self.distance_function(self.features, other.features) <= threshold
+        return DISTANCE_FUNCTIONS[self.distance_function](self.features, other.features) \
+            <= threshold
     
     
     def match_db(self, database, threshold=0.25):
@@ -226,6 +227,25 @@ class ImageFeatures(object):
                 names.append(key)
         
         return names
+    
+    
+    def compute_distance(self, other):
+
+        return DISTANCE_FUNCTIONS[self.distance_function](self.features, other.features) 
+    
+    
+    def compute_distances(self, database):
+
+        distances = []
+        names = []
+            
+        for key in database.keys():
+            distances.append(self.compute_distance(database[key]))
+            names.append(key)
+        
+        return (np.array(distances), np.array(names))
+    
+    
     
 
 def load_inception_v3(device='cuda'):
