@@ -264,8 +264,6 @@ def load_inception_v3(device='cuda'):
 
     """
     
-    assert (device=='cpu' or device=='cuda')
-    
     # Load the model 
     inception = models.inception_v3(pretrained=True, transform_input=False)
     # Overrides last Linear layer
@@ -309,8 +307,6 @@ def load_resnet(depth, width):
     
     def load(device='cuda'):
         
-        assert (device=='cpu' or device=='cuda')
-        
         # Load the model 
         resnet = loader(pretrained=True)
         # Overrides last Linear layer
@@ -338,8 +334,6 @@ def load_efficientnet_b7(device='cuda'):
         Efficient net b7.
 
     """
-    
-    assert (device=='cpu' or device=='cuda')
     
     # Load the model 
     efficientnet = models.efficientnet_b7(pretrained=True)
@@ -370,8 +364,6 @@ def load_simclr_v1(width):
     checkpoint_file = current_folder + f'/SimCLRv1/Pretrained/resnet50-{width}x.pth'
     
     def load(device='cuda'):
-        
-        assert (device=='cpu' or device=='cuda')
         
         # Load the model 
         simclr = SIMv1.get_resnet(width=width)
@@ -553,8 +545,8 @@ class NeuralAlgorithm(Algorithm):
         
         Algorithm.__init__(self, algorithm, hash_size, batch_size)
             
-        if (device not in ['cuda', 'cpu']):
-            raise ValueError('device must be either `cuda` or `cpu`.')
+        if ('cuda' not in device and device != 'cpu'):
+            raise ValueError('device must be either `cuda`, `cuda:X` or `cpu`.')
             
         if (distance not in DISTANCE_FUNCTIONS.keys()):
             raise ValueError(f'Distance function must be one of {DISTANCE_FUNCTIONS.keys()}.')
