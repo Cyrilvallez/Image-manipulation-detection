@@ -67,8 +67,8 @@ for img in tqdm(imgs):
 
 #%%
 
-a = [(i, i) for i in range(10000)]
+from helpers import utils
 
-for i,j in a:
-    print(f'{i} {j}')
+a = utils.load_dictionary('/Users/cyrilvallez/Desktop/Project/Results/test/general.json')
+b = utils.load_dictionary('/Users/cyrilvallez/Desktop/Project/Results/First_benchmark/general.json')
 

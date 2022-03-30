@@ -589,7 +589,7 @@ class NeuralAlgorithm(Algorithm):
         for img in img_list:
             tensors.append(self.transforms(img))
             
-        return torch.stack(tensors, dim=0).to(self.device)
+        return torch.stack(tensors, dim=0).to(torch.device(self.device))
     
     
     def load_model(self):

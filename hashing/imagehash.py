@@ -587,7 +587,7 @@ class ImageMultiHash(object):
         
         for segment_hash in self.segment_hashes:
             lowest_distance = min(
-                segment_hash - other_segment_hash
+                segment_hash.BER(other_segment_hash)
                 for other_segment_hash in other.segment_hashes
             )
             distances.append(lowest_distance)
