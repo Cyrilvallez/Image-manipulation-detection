@@ -1,0 +1,11 @@
+{
+	"Ahash 64 bits": 1.1820485591888428,
+	"Phash 64 bits": 0.932225227355957,
+	"Dhash 64 bits": 0.7923235893249512,
+	"Whash 64 bits": 1.989966630935669,
+	"Crop resistant hash 64 bits": 62.34457445144653,
+	"Inception v3 raw features cosine": 4.235810041427612,
+	"Inception v3 raw features Jensen-Shannon": 1.6709768772125244,
+	"SimCLR v1 ResNet50 2x raw features cosine": 1.7203218936920166,
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 1.7298922538757324
+}

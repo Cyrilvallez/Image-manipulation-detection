@@ -1,0 +1,560 @@
+{
+	"Ahash 64 bits": {
+		"Threshold 0.000": {
+			"accuracy": 0.7443965517241379,
+			"precision": 1.0,
+			"recall": 0.48879310344827587,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.8428448275862069,
+			"precision": 0.9795032553653243,
+			"recall": 0.7003448275862069,
+			"fpr": 0.014655172413793103
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.8518103448275862,
+			"precision": 0.9216780326513743,
+			"recall": 0.7689655172413793,
+			"fpr": 0.0653448275862069
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.8449137931034483,
+			"precision": 0.8702572644826948,
+			"recall": 0.8106896551724138,
+			"fpr": 0.12086206896551724
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.8234482758620689,
+			"precision": 0.7998721227621484,
+			"recall": 0.8627586206896551,
+			"fpr": 0.21586206896551724
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.6923275862068966,
+			"precision": 0.6287362954414311,
+			"recall": 0.9393103448275862,
+			"fpr": 0.5546551724137931
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.5560344827586207,
+			"precision": 0.530221312999814,
+			"recall": 0.983103448275862,
+			"fpr": 0.8710344827586207
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.5205172413793103,
+			"precision": 0.5105253847514594,
+			"recall": 0.9951724137931034,
+			"fpr": 0.9541379310344827
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.5028448275862069,
+			"precision": 0.5014264718596005,
+			"recall": 1.0,
+			"fpr": 0.9943103448275862
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	},
+	"Phash 64 bits": {
+		"Threshold 0.000": {
+			"accuracy": 0.7486206896551724,
+			"precision": 1.0,
+			"recall": 0.49724137931034484,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.8280172413793103,
+			"precision": 1.0,
+			"recall": 0.6560344827586206,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.8514655172413793,
+			"precision": 1.0,
+			"recall": 0.7029310344827586,
+			"fpr": 0.0
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.8824137931034483,
+			"precision": 1.0,
+			"recall": 0.7648275862068965,
+			"fpr": 0.0
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.894051724137931,
+			"precision": 1.0,
+			"recall": 0.7881034482758621,
+			"fpr": 0.0
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.9118103448275862,
+			"precision": 0.993186041709684,
+			"recall": 0.8293103448275863,
+			"fpr": 0.005689655172413793
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.9007758620689655,
+			"precision": 0.9464182830804686,
+			"recall": 0.8496551724137931,
+			"fpr": 0.04810344827586207
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.8164655172413793,
+			"precision": 0.7737509321401939,
+			"recall": 0.8944827586206896,
+			"fpr": 0.26155172413793104
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.5017241379310344,
+			"precision": 0.5008643042350908,
+			"recall": 0.9991379310344828,
+			"fpr": 0.9956896551724138
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	},
+	"Dhash 64 bits": {
+		"Threshold 0.000": {
+			"accuracy": 0.6829310344827586,
+			"precision": 1.0,
+			"recall": 0.36586206896551726,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.8336206896551724,
+			"precision": 1.0,
+			"recall": 0.6672413793103448,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.8797413793103448,
+			"precision": 1.0,
+			"recall": 0.7594827586206897,
+			"fpr": 0.0
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.8987068965517241,
+			"precision": 0.9995679412400087,
+			"recall": 0.7977586206896552,
+			"fpr": 0.0003448275862068965
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.904051724137931,
+			"precision": 0.9807179487179487,
+			"recall": 0.8243103448275862,
+			"fpr": 0.016206896551724137
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.9041379310344828,
+			"precision": 0.9481835564053537,
+			"recall": 0.855,
+			"fpr": 0.046724137931034485
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.8275862068965517,
+			"precision": 0.7790014684287812,
+			"recall": 0.9146551724137931,
+			"fpr": 0.25948275862068965
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.6897413793103448,
+			"precision": 0.6214813997129927,
+			"recall": 0.9706896551724138,
+			"fpr": 0.5912068965517241
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.5172413793103449,
+			"precision": 0.5087935279634189,
+			"recall": 0.9975862068965518,
+			"fpr": 0.963103448275862
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	},
+	"Whash 64 bits": {
+		"Threshold 0.000": {
+			"accuracy": 0.7933620689655172,
+			"precision": 1.0,
+			"recall": 0.5867241379310345,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.8525862068965517,
+			"precision": 0.9982943469785575,
+			"recall": 0.7063793103448276,
+			"fpr": 0.001206896551724138
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.8556034482758621,
+			"precision": 0.9500327296530657,
+			"recall": 0.7506896551724138,
+			"fpr": 0.03948275862068965
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.8334482758620689,
+			"precision": 0.8435168738898756,
+			"recall": 0.8187931034482758,
+			"fpr": 0.15189655172413793
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.805948275862069,
+			"precision": 0.7707920036624447,
+			"recall": 0.8708620689655172,
+			"fpr": 0.2589655172413793
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.6428448275862069,
+			"precision": 0.5871829948437336,
+			"recall": 0.9620689655172414,
+			"fpr": 0.6763793103448276
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.5755172413793104,
+			"precision": 0.5415717539863326,
+			"recall": 0.9837931034482759,
+			"fpr": 0.8327586206896552
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.5306896551724138,
+			"precision": 0.51590421729807,
+			"recall": 0.9955172413793103,
+			"fpr": 0.9341379310344827
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	},
+	"Crop resistant hash 64 bits": {
+		"Threshold 0.000": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.7787068965517241,
+			"precision": 1.0,
+			"recall": 0.5574137931034483,
+			"fpr": 0.0
+		}
+	},
+	"Inception v3 raw features cosine": {
+		"Threshold 0.000": {
+			"accuracy": 0.5,
+			"precision": 0,
+			"recall": 0.0,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.8086206896551724,
+			"precision": 0.9630108639420589,
+			"recall": 0.641896551724138,
+			"fpr": 0.024655172413793103
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.8725,
+			"precision": 0.9022528393222864,
+			"recall": 0.8355172413793104,
+			"fpr": 0.09051724137931035
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.8363793103448276,
+			"precision": 0.7804772857964347,
+			"recall": 0.9360344827586207,
+			"fpr": 0.2632758620689655
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.6095689655172414,
+			"precision": 0.5623834298615883,
+			"recall": 0.9877586206896551,
+			"fpr": 0.7686206896551724
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.5157758620689655,
+			"precision": 0.5080171733987559,
+			"recall": 0.9996551724137931,
+			"fpr": 0.968103448275862
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	},
+	"Inception v3 raw features Jensen-Shannon": {
+		"Threshold 0.000": {
+			"accuracy": 0.5,
+			"precision": 0,
+			"recall": 0.0,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.5602586206896552,
+			"precision": 1.0,
+			"recall": 0.12051724137931034,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.6371551724137932,
+			"precision": 1.0,
+			"recall": 0.2743103448275862,
+			"fpr": 0.0
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.6893965517241379,
+			"precision": 1.0,
+			"recall": 0.3787931034482759,
+			"fpr": 0.0
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.7451724137931034,
+			"precision": 1.0,
+			"recall": 0.4903448275862069,
+			"fpr": 0.0
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.7931896551724138,
+			"precision": 1.0,
+			"recall": 0.5863793103448276,
+			"fpr": 0.0
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.8385344827586206,
+			"precision": 0.9732465654374548,
+			"recall": 0.6962068965517242,
+			"fpr": 0.019137931034482757
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.875,
+			"precision": 0.9442401960784313,
+			"recall": 0.7970689655172414,
+			"fpr": 0.04706896551724138
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.8848275862068965,
+			"precision": 0.8900734009087732,
+			"recall": 0.8781034482758621,
+			"fpr": 0.10844827586206897
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.7887068965517241,
+			"precision": 0.7207646671061305,
+			"recall": 0.9425862068965517,
+			"fpr": 0.36517241379310345
+		}
+	},
+	"SimCLR v1 ResNet50 2x raw features cosine": {
+		"Threshold 0.000": {
+			"accuracy": 0.5009482758620689,
+			"precision": 1.0,
+			"recall": 0.001896551724137931,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.7843103448275862,
+			"precision": 0.9993943064809206,
+			"recall": 0.5689655172413793,
+			"fpr": 0.0003448275862068965
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.8394827586206897,
+			"precision": 0.9830716388616291,
+			"recall": 0.6908620689655173,
+			"fpr": 0.01189655172413793
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.8740517241379311,
+			"precision": 0.9483364331473445,
+			"recall": 0.7912068965517242,
+			"fpr": 0.04310344827586207
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.8847413793103448,
+			"precision": 0.897276126045932,
+			"recall": 0.8689655172413793,
+			"fpr": 0.09948275862068966
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.8298275862068966,
+			"precision": 0.7740687679083095,
+			"recall": 0.9315517241379311,
+			"fpr": 0.27189655172413796
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.6928448275862069,
+			"precision": 0.6242363656558925,
+			"recall": 0.9689655172413794,
+			"fpr": 0.5832758620689655
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.5672413793103448,
+			"precision": 0.5364622288706058,
+			"recall": 0.9893103448275862,
+			"fpr": 0.8548275862068966
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.5043103448275862,
+			"precision": 0.5021652520353369,
+			"recall": 0.9996551724137931,
+			"fpr": 0.9910344827586207
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.5,
+			"precision": 0.5,
+			"recall": 1.0,
+			"fpr": 1.0
+		}
+	},
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.000": {
+			"accuracy": 0.5,
+			"precision": 0,
+			"recall": 0.0,
+			"fpr": 0.0
+		},
+		"Threshold 0.044": {
+			"accuracy": 0.5253448275862069,
+			"precision": 1.0,
+			"recall": 0.05068965517241379,
+			"fpr": 0.0
+		},
+		"Threshold 0.089": {
+			"accuracy": 0.6222413793103448,
+			"precision": 1.0,
+			"recall": 0.24448275862068966,
+			"fpr": 0.0
+		},
+		"Threshold 0.133": {
+			"accuracy": 0.6696551724137931,
+			"precision": 1.0,
+			"recall": 0.3393103448275862,
+			"fpr": 0.0
+		},
+		"Threshold 0.178": {
+			"accuracy": 0.6974137931034483,
+			"precision": 1.0,
+			"recall": 0.39482758620689656,
+			"fpr": 0.0
+		},
+		"Threshold 0.222": {
+			"accuracy": 0.7288793103448276,
+			"precision": 1.0,
+			"recall": 0.45775862068965517,
+			"fpr": 0.0
+		},
+		"Threshold 0.267": {
+			"accuracy": 0.7595689655172414,
+			"precision": 1.0,
+			"recall": 0.5191379310344828,
+			"fpr": 0.0
+		},
+		"Threshold 0.311": {
+			"accuracy": 0.7886206896551724,
+			"precision": 1.0,
+			"recall": 0.5772413793103448,
+			"fpr": 0.0
+		},
+		"Threshold 0.356": {
+			"accuracy": 0.8231896551724138,
+			"precision": 1.0,
+			"recall": 0.6463793103448275,
+			"fpr": 0.0
+		},
+		"Threshold 0.400": {
+			"accuracy": 0.8568103448275862,
+			"precision": 0.9949772781631189,
+			"recall": 0.7172413793103448,
+			"fpr": 0.003620689655172414
+		}
+	}
+}
