@@ -27,8 +27,8 @@ des1 = fh.SIFT(image1)
 des2 = fh.SIFT(image2)
 
 
-des1 = fh.ImageDescriptors(des1, 'L1')
-des2 = fh.ImageDescriptors(des2, 'L1')
+des1 = fh.ImageDescriptors(des1, 'L2')
+des2 = fh.ImageDescriptors(des2, 'L2')
 
 
 res = des1.matches(des2, threshold=0.3)
@@ -41,4 +41,17 @@ for a in test:
     distances.append(a.distance)
 
 #%%
+
+img1 = np.array(image1)
+img2 = np.array(image2)
+
+detector = cv2.ORB_create(nfeatures=20)
+extractor = cv2.xfeatures2d.FREAK_create()
+
+mask = np.zeros(img1.shape, dtype=np.uint8)
+N = 20
+mask[N:-N, N:-N] = 255
+
+kps = detector.detect(img1)#, mask=mask)
+kp, descriptors = extractor.compute(img1, kps)
 

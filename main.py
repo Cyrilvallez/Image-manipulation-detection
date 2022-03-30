@@ -48,7 +48,7 @@ algos = [
     hashing.FeatureAlgorithm('SIFT', batch_size=500, n_features=40)
     ]
 
-thresholds = np.linspace(100, 500, 10)
+thresholds = np.linspace(0, 300, 10)
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
