@@ -14,22 +14,21 @@ import time
 import numpy as np
 from hashing import featurehash as fh
 
-
-
-
-#%%
-
 image1 = Image.open('Datasets/BSDS500/Control/data221.jpg')
 image1 = image1.convert('L')
 
 image2 = Image.open('Datasets/BSDS500/Control/data229.jpg')
 image2 = image2.convert('L')
 
+
+#%%
+
 des1 = fh.SIFT(image1)
 des2 = fh.SIFT(image2)
 
-des1 = fh.ImageDescriptors(des1, 'L2')
-des2 = fh.ImageDescriptors(des2, 'L2')
+
+des1 = fh.ImageDescriptors(des1, 'L1')
+des2 = fh.ImageDescriptors(des2, 'L1')
 
 
 res = des1.matches(des2, threshold=0.3)
@@ -43,8 +42,3 @@ for a in test:
 
 #%%
 
-detector = cv2.KAZE_create()
-
-img1 = np.array(image1)
-
-kp, descriptors = detector.detectAndCompute(img1, None)

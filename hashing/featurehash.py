@@ -154,8 +154,7 @@ def ORB(image, n_features=20):
     
     img = np.array(image.convert('L'))
     
-    #orb = cv2.ORB_create(nfeatures=n_features)
-    orb = cv2.ORB_create()
+    orb = cv2.ORB_create(nfeatures=n_features)
     _, descriptors = orb.detectAndCompute(img, None)
     
     return descriptors
