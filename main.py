@@ -43,9 +43,9 @@ algos = [
     #                        device='cuda', distance='L1'),
     #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
     #                        device='cuda', distance='Jensen-Shannon'),
-    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=500, cutoff=1),
-    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=30, cutoff=5),
-    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=30, cutoff=50),
+    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=40, cutoff=1),
+    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=40, cutoff=5),
+    hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=40, cutoff=10),
     ]
 
 thresholds = np.linspace(0, 0.4, 10)

@@ -1,22 +1,46 @@
 {
 	"SIFT 20 descriptors": {
+		"Threshold 0.000": {
+			"accuracy": 0.5037068965517242,
+			"precision": 1.0,
+			"recall": 0.007413793103448276,
+			"fpr": 0.0
+		},
+		"Threshold 33.333": {
+			"accuracy": 0.7819827586206897,
+			"precision": 1.0,
+			"recall": 0.5639655172413793,
+			"fpr": 0.0
+		},
+		"Threshold 66.667": {
+			"accuracy": 0.8607758620689655,
+			"precision": 0.9980956915020234,
+			"recall": 0.7229310344827586,
+			"fpr": 0.001379310344827586
+		},
 		"Threshold 100.000": {
 			"accuracy": 0.881551724137931,
 			"precision": 0.9507128309572301,
 			"recall": 0.8048275862068965,
 			"fpr": 0.04172413793103448
 		},
-		"Threshold 144.444": {
-			"accuracy": 0.8044827586206896,
-			"precision": 0.7716087357736081,
-			"recall": 0.865,
-			"fpr": 0.2560344827586207
+		"Threshold 133.333": {
+			"accuracy": 0.8356896551724138,
+			"precision": 0.8240679094540613,
+			"recall": 0.8536206896551725,
+			"fpr": 0.18224137931034481
 		},
-		"Threshold 188.889": {
-			"accuracy": 0.6393965517241379,
-			"precision": 0.5905476537126217,
-			"recall": 0.9091379310344827,
-			"fpr": 0.6303448275862069
+		"Threshold 166.667": {
+			"accuracy": 0.7301724137931035,
+			"precision": 0.6745098039215687,
+			"recall": 0.8896551724137931,
+			"fpr": 0.42931034482758623
+		},
+		"Threshold 200.000": {
+			"accuracy": 0.6002586206896552,
+			"precision": 0.5613202573025414,
+			"recall": 0.9177586206896552,
+			"fpr": 0.7172413793103448
 		},
 		"Threshold 233.333": {
 			"accuracy": 0.5160344827586207,
@@ -24,61 +48,61 @@
 			"recall": 0.9872413793103448,
 			"fpr": 0.9551724137931035
 		},
-		"Threshold 277.778": {
-			"accuracy": 0.4999137931034483,
-			"precision": 0.499956870525317,
-			"recall": 0.9993103448275862,
-			"fpr": 0.9994827586206897
+		"Threshold 266.667": {
+			"accuracy": 0.5002586206896552,
+			"precision": 0.5001295896328294,
+			"recall": 0.9981034482758621,
+			"fpr": 0.9975862068965518
 		},
-		"Threshold 322.222": {
-			"accuracy": 0.5,
-			"precision": 0.5,
+		"Threshold 300.000": {
+			"accuracy": 0.5000862068965517,
+			"precision": 0.5000431071644107,
 			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 366.667": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 411.111": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 455.556": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 500.000": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
+			"fpr": 0.9998275862068966
 		}
 	},
 	"SIFT 30 descriptors": {
+		"Threshold 0.000": {
+			"accuracy": 0.5047413793103448,
+			"precision": 1.0,
+			"recall": 0.009482758620689655,
+			"fpr": 0.0
+		},
+		"Threshold 33.333": {
+			"accuracy": 0.8022413793103448,
+			"precision": 1.0,
+			"recall": 0.6044827586206897,
+			"fpr": 0.0
+		},
+		"Threshold 66.667": {
+			"accuracy": 0.8756896551724138,
+			"precision": 0.9968080255357957,
+			"recall": 0.7537931034482759,
+			"fpr": 0.002413793103448276
+		},
 		"Threshold 100.000": {
 			"accuracy": 0.8848275862068965,
 			"precision": 0.9295612009237876,
 			"recall": 0.8327586206896552,
 			"fpr": 0.06310344827586208
 		},
-		"Threshold 144.444": {
-			"accuracy": 0.770603448275862,
-			"precision": 0.717291983940191,
-			"recall": 0.8932758620689655,
-			"fpr": 0.3520689655172414
+		"Threshold 133.333": {
+			"accuracy": 0.8100862068965518,
+			"precision": 0.771307889576105,
+			"recall": 0.881551724137931,
+			"fpr": 0.2613793103448276
 		},
-		"Threshold 188.889": {
-			"accuracy": 0.5864655172413793,
-			"precision": 0.5514834205933682,
-			"recall": 0.9262068965517242,
-			"fpr": 0.7532758620689655
+		"Threshold 166.667": {
+			"accuracy": 0.6742241379310345,
+			"precision": 0.6183116731061936,
+			"recall": 0.9105172413793103,
+			"fpr": 0.5620689655172414
+		},
+		"Threshold 200.000": {
+			"accuracy": 0.5569827586206897,
+			"precision": 0.5324624300166978,
+			"recall": 0.9346551724137931,
+			"fpr": 0.8206896551724138
 		},
 		"Threshold 233.333": {
 			"accuracy": 0.5055172413793103,
@@ -86,37 +110,13 @@
 			"recall": 0.9941379310344828,
 			"fpr": 0.983103448275862
 		},
-		"Threshold 277.778": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
+		"Threshold 266.667": {
+			"accuracy": 0.49982758620689655,
+			"precision": 0.4999137484905986,
+			"recall": 0.9993103448275862,
+			"fpr": 0.9996551724137931
 		},
-		"Threshold 322.222": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 366.667": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 411.111": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 455.556": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 500.000": {
+		"Threshold 300.000": {
 			"accuracy": 0.5,
 			"precision": 0.5,
 			"recall": 1.0,
@@ -124,23 +124,47 @@
 		}
 	},
 	"SIFT 40 descriptors": {
+		"Threshold 0.000": {
+			"accuracy": 0.5067241379310344,
+			"precision": 1.0,
+			"recall": 0.013448275862068966,
+			"fpr": 0.0
+		},
+		"Threshold 33.333": {
+			"accuracy": 0.8196551724137932,
+			"precision": 1.0,
+			"recall": 0.6393103448275862,
+			"fpr": 0.0
+		},
+		"Threshold 66.667": {
+			"accuracy": 0.8843103448275862,
+			"precision": 0.9866812227074235,
+			"recall": 0.7791379310344828,
+			"fpr": 0.010517241379310345
+		},
 		"Threshold 100.000": {
 			"accuracy": 0.8842241379310345,
 			"precision": 0.9032024606477294,
 			"recall": 0.8606896551724138,
 			"fpr": 0.09224137931034483
 		},
-		"Threshold 144.444": {
-			"accuracy": 0.7387931034482759,
-			"precision": 0.6774730907227063,
-			"recall": 0.9115517241379311,
-			"fpr": 0.43396551724137933
+		"Threshold 133.333": {
+			"accuracy": 0.783448275862069,
+			"precision": 0.7290969899665551,
+			"recall": 0.9020689655172414,
+			"fpr": 0.3351724137931035
 		},
-		"Threshold 188.889": {
-			"accuracy": 0.555,
-			"precision": 0.5310613437195716,
-			"recall": 0.9403448275862069,
-			"fpr": 0.8303448275862069
+		"Threshold 166.667": {
+			"accuracy": 0.6374137931034483,
+			"precision": 0.587237302977233,
+			"recall": 0.925,
+			"fpr": 0.6501724137931034
+		},
+		"Threshold 200.000": {
+			"accuracy": 0.5300862068965517,
+			"precision": 0.5163772876583763,
+			"recall": 0.9486206896551724,
+			"fpr": 0.888448275862069
 		},
 		"Threshold 233.333": {
 			"accuracy": 0.5013793103448276,
@@ -148,37 +172,13 @@
 			"recall": 0.9968965517241379,
 			"fpr": 0.9941379310344828
 		},
-		"Threshold 277.778": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
+		"Threshold 266.667": {
+			"accuracy": 0.49982758620689655,
+			"precision": 0.49991377823762717,
+			"recall": 0.9996551724137931,
 			"fpr": 1.0
 		},
-		"Threshold 322.222": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 366.667": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 411.111": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 455.556": {
-			"accuracy": 0.5,
-			"precision": 0.5,
-			"recall": 1.0,
-			"fpr": 1.0
-		},
-		"Threshold 500.000": {
+		"Threshold 300.000": {
 			"accuracy": 0.5,
 			"precision": 0.5,
 			"recall": 1.0,

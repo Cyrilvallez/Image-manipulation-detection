@@ -90,7 +90,10 @@ class ImageDescriptors(object):
             # to get the total number of bits in the descriptor
             threshold *= len(self.descriptors[0])*8
         
-        return matches[self.cutoff-1].distance <= threshold
+        try:
+            return matches[self.cutoff-1].distance <= threshold
+        except IndexError:
+            return False
     
     
     def match_db(self, database, threshold):
@@ -177,7 +180,20 @@ def DAISY(image, n_features=20):
     detector = cv2.ORB_create(nfeatures=20)
     extractor = cv2.xfeatures2d.DAISY_create()
     
-    kps = detector.detect(img)#
+    kps = detector.detect(img)
+    _, descriptors = extractor.compute(img, kps)
+
+    return descriptors
+
+
+def LATCH(image, n_features):
+    
+    img = np.array(image.convert('L'))
+    
+    detector = cv2.ORB_create(nfeatures=20)
+    extractor = cv2.xfeatures2d.LATCH_create()
+    
+    kps = detector.detect(img)
     _, descriptors = extractor.compute(img, kps)
 
     return descriptors
@@ -187,7 +203,8 @@ def DAISY(image, n_features=20):
 FEATURE_MODEL_SWITCH = {
     'ORB': ORB,
     'SIFT': SIFT,
-    'FAST + DAISY': DAISY
+    'FAST + DAISY': DAISY,
+    'FAST + LATCH': LATCH,
     }
 
 
@@ -196,6 +213,7 @@ ALGORITHMS_MATCHER = {
     'ORB': 'Hamming',
     'SIFT': 'L2',
     'FAST + DAISY': 'L2',
+    'FAST + LATCH': 'Hamming',
     }
 
 

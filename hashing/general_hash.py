@@ -150,6 +150,8 @@ ADMISSIBLE_ALGORITHMS = [
     'Crop resistant hash',
     'ORB',
     'SIFT',
+    'FAST + DAISY',
+    'FAST + LATCH',
     'Inception v3',
     'ResNet50 1x',
     'ResNet101 1x',
