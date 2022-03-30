@@ -47,17 +47,15 @@ import os
 img1 = np.array(image1)
 img2 = np.array(image2)
 
-detector = cv2.ORB_create(nfeatures=20000000)
-extractor = cv2.xfeatures2d.DAISY_create()
+detector = cv2.ORB_create(nfeatures=20)
+extractor = cv2.xfeatures2d.LUCID_create()
 path = 'Datasets/BSDS500/Control_attacks/'
 
 imgs = [path + file for file in os.listdir(path)]
 N = []
 
 for img in tqdm(imgs):
-    img = np.array(Image.open(img).convert('L'))
-    kps = detector.detect(img)
-    _, des = extractor.compute(img, kps)
+    des = fh.ORB(image1, n_features=30)
     if des is not None:
         N.append(len(des))
 

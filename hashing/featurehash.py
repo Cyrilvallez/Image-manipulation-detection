@@ -151,6 +151,41 @@ class ImageDescriptors(object):
         return names
     
     
+    def compute_distance(self, other):
+        
+        matches = MATCHERS[self.matcher].match(self.descriptors, other.descriptors)
+        matches = sorted(matches, key = lambda x: x.distance)
+        
+        try:
+            distance = matches[self.cutoff-1].distance 
+        except IndexError:
+            # Assign inf if the distance does not exist for this cutoff
+            distance = float('inf')
+        
+        # Normalize the hamming distance by the number of bits in the descriptor 
+        # to get the BER threshold
+        if (self.matcher == 'Hamming'):
+            # Each value in self.descriptors[0] is a byte, thus we multiply by 8 
+            # to get the total number of bits in the descriptor
+            distance /= len(self.descriptors[0])*8
+            
+        return distance
+    
+    
+    def compute_distances(self, database):
+        
+        distances = {}
+            
+        for key in database.keys():
+            distances[key] = self.compute_distance(database[key])
+        
+        return distances
+        
+        
+        
+        
+    
+    
 
 
 def ORB(image, n_features=20):
@@ -199,12 +234,24 @@ def LATCH(image, n_features):
     return descriptors
 
 
+def LUCID(image, n_features):
+    
+    detector = cv2.ORB_create(nfeatures=20)
+    extractor = cv2.xfeatures2d.LUCID_create()
+    
+    kps = detector.detect(image)
+    _, descriptors = extractor.compute(image, kps)
+
+    return descriptors
+
+
 # Mapping from string to actual algorithms
 FEATURE_MODEL_SWITCH = {
     'ORB': ORB,
     'SIFT': SIFT,
     'FAST + DAISY': DAISY,
     'FAST + LATCH': LATCH,
+    'FAST + LUCID': LUCID,
     }
 
 
@@ -214,6 +261,7 @@ ALGORITHMS_MATCHER = {
     'SIFT': 'L2',
     'FAST + DAISY': 'L2',
     'FAST + LATCH': 'Hamming',
+    'FAST + LUCID': 'Hamming',
     }
 
 

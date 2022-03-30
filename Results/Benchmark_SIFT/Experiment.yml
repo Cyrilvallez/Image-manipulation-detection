@@ -1,0 +1,17 @@
+---
+name : Benchmark_SIFT
+date generated: Wednesday 30/03/2022
+GPU(s): not used
+CPUs: 16
+dataset used: BSDS500, with attacks on disk
+thresholds: np.linspace(0, 300, 10)
+algorithms:  [
+    hashing.FeatureAlgorithm('SIFT', batch_size=500, n_features=20),
+    hashing.FeatureAlgorithm('SIFT', batch_size=500, n_features=30),
+    hashing.FeatureAlgorithm('SIFT', batch_size=500, n_features=40)
+    ]
+general batch size: 500
+
+---
+purpose: |
+Benchmark the SIFT algorithm for feature extraction.
