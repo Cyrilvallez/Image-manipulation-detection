@@ -149,6 +149,7 @@ ADMISSIBLE_ALGORITHMS = [
     'Whash',
     'Crop resistant hash',
     'ORB',
+    'SIFT',
     'Inception v3',
     'ResNet50 1x',
     'ResNet101 1x',
