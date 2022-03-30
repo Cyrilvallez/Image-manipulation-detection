@@ -25,13 +25,18 @@ image1 = image1.convert('L')
 image2 = Image.open('Datasets/BSDS500/Control/data229.jpg')
 image2 = image2.convert('L')
 
-des1 = fh.ORB(image1, device='cpu')
-des2 = fh.ORB(image2, device='cpu')
+des1 = fh.SIFT(image1)
+des2 = fh.SIFT(image2)
 
-matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-
-des1 = fh.ImageDescriptors(des1, matcher)
-des2 = fh.ImageDescriptors(des2, matcher)
+des1 = fh.ImageDescriptors(des1, 'test')
+des2 = fh.ImageDescriptors(des2, 'test')
 
 
 res = des1.matches(des2, threshold=0.3)
+
+test = fh.MATCHERS[des1.matcher].match(des1.descriptors, des2.descriptors)
+
+distances = []
+
+for a in test:
+    distances.append(a.distance)
