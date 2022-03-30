@@ -444,8 +444,9 @@ class ImageMultiHash(object):
     This is an image hash containing a list of individual hashes for segments of the image.
     The matching logic is implemented as described in Efficient Cropping-Resistant Robust Image Hashing
     """
-    def __init__(self, hashes):
+    def __init__(self, hashes, cutoff=1):
         self.segment_hashes = hashes
+        self.cutoff = cutoff
 
     def __eq__(self, other):
         if other is None:
@@ -501,7 +502,7 @@ class ImageMultiHash(object):
             distances.append(lowest_distance)
         return len(distances), sum(distances)
 
-    def matches(self, other_hash, region_cutoff=1, hamming_cutoff=None, bit_error_rate=None):
+    def matches(self, other_hash, hamming_cutoff=None, bit_error_rate=None):
         """
         Checks whether this hash matches another crop resistant hash, `other_hash`.
         :param other_hash: The image multi hash to compare against
@@ -511,7 +512,7 @@ class ImageMultiHash(object):
         default of 0.25 means that the segment hashes can be up to 25% different
         """
         matches, _ = self.hash_diff(other_hash, hamming_cutoff, bit_error_rate)
-        return matches >= region_cutoff
+        return matches >= self.cutoff
 
     def best_match(self, other_hashes, hamming_cutoff=None, bit_error_rate=None):
         """
@@ -660,6 +661,7 @@ def crop_resistant_hash(
         image,
         hash_func=None,
         hash_size=8,
+        cutoff=1,
         limit_segments=None,
         segment_threshold=128,
         min_segment_size=500,
@@ -723,7 +725,7 @@ def crop_resistant_hash(
         # im_segment.show()
         # bounding_box.show()
 
-    return ImageMultiHash(hashes)
+    return ImageMultiHash(hashes, cutoff=cutoff)
 
 
 
@@ -808,13 +810,17 @@ class ClassicalAlgorithm(Algorithm):
          The default is 8.
      batch_size : int, optional
          Batch size for the database creation. The default is 512.
+     cutoff : int, optional
+         Only used if algorithm is `Crop resistant hash`. The number of matching
+         hashes for deciding that 2 images are the same.
          
     """
     
-    def __init__(self, algorithm, hash_size=8, batch_size=512):
+    def __init__(self, algorithm, hash_size=8, batch_size=512, cutoff=1):
         
         Algorithm.__init__(self, algorithm, hash_size, batch_size)
         self.algorithm = CLASSICAL_MODEL_SWITCH[algorithm]
+        self.cutoff = cutoff
         
     
     def process_batch(self, preprocessed_images):
@@ -836,6 +842,10 @@ class ClassicalAlgorithm(Algorithm):
         hashes = []
         
         for image in preprocessed_images:
-            hashes.append(self.algorithm(image, hash_size=self.hash_size))
+            if self.name == 'Crop resistant hash':
+                hashes.append(self.algorithm(image, hash_size=self.hash_size,
+                                             cutoff=self.cutoff))
+            else:
+                hashes.append(self.algorithm(image, hash_size=self.hash_size))
             
         return hashes

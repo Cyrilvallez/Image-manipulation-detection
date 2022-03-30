@@ -170,17 +170,32 @@ def SIFT(image, n_features=20):
     return descriptors
 
 
+def DAISY(image, n_features=20):
+    
+    img = np.array(image.convert('L'))
+    
+    detector = cv2.ORB_create(nfeatures=20)
+    extractor = cv2.xfeatures2d.DAISY_create()
+    
+    kps = detector.detect(img)#
+    _, descriptors = extractor.compute(img, kps)
+
+    return descriptors
+
+
 # Mapping from string to actual algorithms
 FEATURE_MODEL_SWITCH = {
     'ORB': ORB,
     'SIFT': SIFT,
+    'FAST + DAISY': DAISY
     }
 
 
 # The name of the matcher we need for each algorithms
 ALGORITHMS_MATCHER = {
     'ORB': 'Hamming',
-    'SIFT': 'L2'
+    'SIFT': 'L2',
+    'FAST + DAISY': 'L2',
     }
 
 

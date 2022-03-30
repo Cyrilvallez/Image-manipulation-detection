@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Benchmark_SIFT/'
+EXPERIMENT_NAME = 'Benchmark_SIFT_2/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'

@@ -41,17 +41,26 @@ for a in test:
     distances.append(a.distance)
 
 #%%
+from tqdm import tqdm
+import os
 
 img1 = np.array(image1)
 img2 = np.array(image2)
 
 detector = cv2.ORB_create(nfeatures=20)
 extractor = cv2.xfeatures2d.FREAK_create()
+path = 'Datasets/BSDS500/Control_attacks/'
 
-mask = np.zeros(img1.shape, dtype=np.uint8)
-N = 20
-mask[N:-N, N:-N] = 255
+imgs = [path + file for file in os.listdir(path)]
+N = []
 
-kps = detector.detect(img1)#, mask=mask)
-kp, descriptors = extractor.compute(img1, kps)
+for img in tqdm(imgs):
+    img = np.array(Image.open(img).convert('L'))
+    kps = detector.detect(img)
+    _, des = extractor.compute(img, kps)
+    N.append(len(des))
+
+#kp, descriptors = extractor.compute(img1, kps)
+
+#kp, descriptors = tot.detectAndCompute(img, None)
 
