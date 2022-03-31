@@ -226,16 +226,169 @@ a = generator.text_attack(path)
 #%%
 import generator
 import time
+import string
+from PIL import Image, ImageFont, ImageDraw
+import numpy as np
+import os
+from tqdm import tqdm
 
-path = 'Datasets/ILSVRC2012_img_val/Control/'
-imgs = [path + file for file in os.listdir(path)[0:2000]]
+def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
+    """
+    Generates random text at random position in the original image.
 
-t0 = time.time()
+    Parameters
+    ----------
+    path : PIL image or str
+        PIL image or path to the image.
+    text_lengths : Tuple, optional
+        Length (number of character) of the added text. The default
+        is (10, 20, 30, 40, 50).
 
-for img in imgs:
-    attacks = generator.perform_all_attacks(img, **generator.ATTACK_PARAMETERS)
+    Returns
+    -------
+    out : Dictionary
+        Text added image (as PIL images).
 
-dt = (time.time() - t0)/60
+    """
+    
+    width, height = image.size
+    
+    # List of characters for random strings
+    characters = list(string.ascii_uppercase)
+    # Get a font. The size is calculated so that it is 40 for a 512 by 512
+    # image, and changes linearly from this reference, so it always
+    # takes the same relative space on different images
+    if min(width, height) >= 100:
+        size = round(40*width/512)
+    else:
+        size = round(6*width/100)
+        
+    if width/height <= 0.5 or  width/height >= 2:
+        
+        if min(width, height) >= 100:
+            size = round(40*(width+height)/2/512)
+        else:
+            size = round(6*(width+height)/2/100)
+            
+        size -= 2
+    
+    #if size < 7:
+    #    size = round(40*(width+height)/2/512)
+    #print(size)
+    #size = int(np.floor(40*(width/512)))
+    font = ImageFont.truetype('generator/Impact.ttf', size)
+    
+    out = {}
+
+    for length in text_lengths:
+        
+        img = image.copy()
+        # get a drawing context
+        context = ImageDraw.Draw(img)
+        
+        # Random string generation
+        sentence = ''.join(np.random.choice(characters, size=length,
+                                            replace=True))
+        
+        # insert a newline every 20 characters for a 512-
+        a = 20
+        if height >= 2*width:
+            a = int(np.floor(20*width/height))
+        sentence = '\n'.join(sentence[i:i+a] for i in range(0, len(sentence), a))
+        
+        # Get the width and height of the text box
+        dims = context.multiline_textbbox((0,0), sentence, font=font,
+                                          stroke_width=2)
+        width_text = dims[2] - dims[0]
+        height_text = dims[3] - dims[1]
+        
+        # Random text position making sure that all text fits
+        if (width-width_text-1 <= 1):
+            print(f'width {width-width_text-5} image {width}x{height}')
+            return
+        if (height-height_text-1 <= 1):
+            print(f'height {height-height_text-5} image {width}x{height}')
+            return
+        
+        x = np.random.randint(1, width-width_text-1)
+        y = np.random.randint(1, height-height_text-1)
+        
+        # Compute either white text black edegs or inverse based on mean
+        #mean = np.mean(np.array(im)[x:x+w+1, y:y+h+1, :])
+        #if mean <= 3*255/4:
+        #    color = 'white'
+        #    stroke = 'black'
+        #else:
+        #    color = 'black'
+        #    stroke = 'white'
+        
+        color = 'white'
+        stroke = 'black'
+
+        context.multiline_text((x, y), sentence, font=font, fill=color,
+                               stroke_fill=stroke, stroke_width=2, align='center')
+        id_text = 'text_length_' + str(length)
+        out[id_text] = img
+        
+    return out
 
 
+"""
+path = 'Datasets/ILSVRC2012_img_val/Experimental/'
+imgs = [path + file for file in os.listdir(path)]
+height = 50
+width = 200
+array = np.random.randint(0, 255, (height, width), dtype=np.uint8)
+image = Image.fromarray(array)
+res = text_attack(image)
+res['text_length_50'].save('test3.pdf')
+"""
+#ratios = []
 
+path = 'Datasets/ILSVRC2012_img_val/Experimental/'
+imgs = [path + file for file in os.listdir(path)]
+
+for img in tqdm(imgs):
+    image = Image.open(img)
+    foo = text_attack(image)
+    #ratios.append((image.width,image.height))
+
+      
+#%%
+
+height = 50
+width = 50
+
+size = 3
+
+array = np.random.randint(0, 255, (height, width), dtype=np.uint8)
+image = Image.fromarray(array)
+characters = list(string.ascii_uppercase)
+sentence = ''.join(np.random.choice(characters, size=50,
+                                    replace=True))
+# insert a newline every 20 characters for a 512-
+a = int(np.floor(20*width/height))
+if a > 25:
+    a = 25
+sentence = '\n'.join(sentence[i:i+a] for i in range(0, len(sentence), a))
+
+context = ImageDraw.Draw(image)
+
+font = ImageFont.truetype('generator/Impact.ttf', size)
+
+# Get the width and height of the text box
+dims = context.multiline_textbbox((0,0), sentence, font=font,
+                                  stroke_width=2)
+width_text = dims[2] - dims[0]
+height_text = dims[3] - dims[1]
+
+x = np.random.randint(1, width-width_text-1)
+y = np.random.randint(1, height-height_text-1)
+
+color = 'white'
+stroke = 'black'
+
+context.multiline_text((x, y), sentence, font=font, fill=color,
+                       stroke_fill=stroke, stroke_width=2, align='center')
+
+image.save('salope.png')

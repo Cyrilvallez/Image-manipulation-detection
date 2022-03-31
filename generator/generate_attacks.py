@@ -504,15 +504,26 @@ def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
     width, height = image.size
     
     # List of characters for random strings
-    characters = list(string.ascii_lowercase + string.ascii_uppercase \
-                      + string.digits + ' ')
-    # Get a font. The size is calculated so that it is 40 for a 512-width
+    characters = list(string.ascii_uppercase)
+    # Get a font. The size is calculated so that it is 40 for a 512 by 512
     # image, and changes linearly from this reference, so it always
-    # takes the same relative horizontal space on different images
-    font = ImageFont.truetype(current_folder + '/Impact.ttf', round(40*width/512))
+    # takes the same relative space on different images
+    if min(width, height) >= 100:
+        size = round(40*width/512)
+    else:
+        size = round(6*width/100)
+        
+    if width/height <= 0.5 or  width/height >= 2:
+        
+        if min(width, height) >= 100:
+            size = round(40*(width+height)/2/512) - 2
+        else:
+            size = round(6*(width+height)/2/100) - 2
+    
+    font = ImageFont.truetype('generator/Impact.ttf', size)
     
     out = {}
-        
+
     for length in text_lengths:
         
         img = image.copy()
@@ -522,10 +533,13 @@ def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
         # Random string generation
         sentence = ''.join(np.random.choice(characters, size=length,
                                             replace=True))
-        # insert a newline every 20 characters
-        for i in range(len(sentence)//20):
-            sentence = sentence[0:20*(i+1)+i] + '\n' + \
-                sentence[20*(i+1)+1:]
+        
+        # insert a newline every 20 characters for a 512-width image, and less
+        # if the image is really long and not wide
+        space = 20
+        if height >= 2*width:
+            space = int(np.floor(20*width/height))
+        sentence = '\n'.join(sentence[i:i+space] for i in range(0, len(sentence), space))
         
         # Get the width and height of the text box
         dims = context.multiline_textbbox((0,0), sentence, font=font,
@@ -534,10 +548,10 @@ def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
         height_text = dims[3] - dims[1]
         
         # Random text position making sure that all text fits
-        x = np.random.randint(3, width-width_text-3)
-        y = np.random.randint(3, height-height_text-3)
+        x = np.random.randint(1, width-width_text-1)
+        y = np.random.randint(1, height-height_text-1)
         
-        # Compute either white text back edegs or inverse based on mean
+        # Compute either white text black edegs or inverse based on mean
         #mean = np.mean(np.array(im)[x:x+w+1, y:y+h+1, :])
         #if mean <= 3*255/4:
         #    color = 'white'

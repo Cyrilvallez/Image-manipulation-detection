@@ -19,38 +19,51 @@ from helpers import utils
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/BSDS500/Experimental/'
-path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
-path_control = 'Datasets/BSDS500/Control_attacks/'
+path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
+path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
+path_control = 'Datasets/ILSVRC2012_img_val/Control/'
 
 algos = [
-    #hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=256),
-    #hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=256),
-    #hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=256),
-    #hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=256),
-    #hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=256),
-    #hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
-    #                        device='cuda', distance='cosine'),
-    #hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=256,
-    #                        device='cuda', distance='Jensen-Shannon'),
-    #hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=256,
-    #                        device='cuda', distance='cosine'),
-    #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-    #                        device='cuda', distance='cosine'),
-    #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-    #                        device='cuda', distance='L2'),
-    #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-    #                        device='cuda', distance='L1'),
-    #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-    #                        device='cuda', distance='Jensen-Shannon'),
-    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=500, n_features=40, cutoff=1),
-    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=500, n_features=40, cutoff=1),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=1028),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1028),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=1028),
+    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=1028),
+    hashing.FeatureAlgorithm('SIFT', batch_size=1028, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('ORB', batch_size=1028, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=1028, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1028, n_features=30, cutoff=1),
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=1028,
+                            device='cuda:1', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=1028,
+                            device='cuda:1', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=1028,
+                            device='cuda:1', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=1028,
+                            device='cuda:1', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, batch_size=1028,
+                            device='cuda:1', distance='Jensen-Shannon'),
     ]
 
-thresholds = np.linspace(0, 0.4, 20)
+thresholds = [
+    np.linspace(0, 0.4, 20),
+    np.linspace(0.1, 0.4, 20),
+    np.linspace(0.05, 0.4, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(0, 300, 20),
+    np.linspace(0, 0.3, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(0.1, 0.4, 20),
+    np.linspace(0.2, 0.6, 20),
+    np.linspace(0.2, 0.6, 20),
+    np.linspace(0.3, 0.8, 20),
+    np.linspace(0.3, 0.9, 20),
+    np.linspace(0.4, 0.9, 20),
+    ]
     
-positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
-negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
+positive_dataset = hashing.create_dataset(path_experimental, fraction=1000/25000,
+                                          existing_attacks=False)
+negative_dataset = hashing.create_dataset(path_control, fraction=1000/25000,
+                                          existing_attacks=False)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,

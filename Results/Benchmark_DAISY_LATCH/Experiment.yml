@@ -1,0 +1,16 @@
+---
+name : Benchmark_DAISY_LATCH
+date generated: Thursday 31/03/2022
+GPU(s): not used
+CPUs: 16
+dataset used: BSDS500, with attacks on disk
+thresholds: np.linspace(0, 0.4, 20)
+algorithms:  [
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=500, n_features=40, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=500, n_features=40, cutoff=1),
+    ]
+general batch size: 1028
+
+---
+purpose: |
+Benchmark the DAISY and LATCH extractors with FAST detector algorithms.
