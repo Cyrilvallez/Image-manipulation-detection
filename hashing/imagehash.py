@@ -200,7 +200,7 @@ class ImageHash(object):
     
     def to_bytes(self):
         
-        array = [str(i) for i in self.hash]
+        array = [str(int(i)) for i in self.hash]
         
         return [int(bytes(''.join(array[i:i+8]), 'utf-8'), 2) for i in range(0, len(array), 8)]
         
