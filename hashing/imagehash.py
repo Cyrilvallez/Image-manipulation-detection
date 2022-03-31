@@ -648,7 +648,7 @@ class ImageMultiHash(object):
         # to get the BER threshold
         # Each value in self.descriptors[0] is a byte, thus we multiply by 8 
         # to get the total number of bits in the descriptor
-        distance /= len(self.descriptors[0])*8
+        distance /= len(self.segment_hashes[0])*8
             
         return distance
     
