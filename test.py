@@ -215,3 +215,14 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 algo_names = ['1', '2', '3', '4']
 frame = plot.AUC_heatmap(attacks, algo_names=algo_names, save=True, filename='test')
 
+#%%
+
+import generator
+
+path = 'Datasets/ILSVRC2012_img_val/Experimental/ILSVRC2012_val_00006778.JPEG'
+
+a = generator.text_attack(path)
+
+
+
+

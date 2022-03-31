@@ -47,7 +47,7 @@ algos = [
     hashing.FeatureAlgorithm('FAST + LATCH', batch_size=500, n_features=40, cutoff=1),
     ]
 
-thresholds = [np.linspace(0, 0.8, 10), np.linspace(0, 0.4, 10)]
+thresholds = np.linspace(0, 0.4, 10)
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)

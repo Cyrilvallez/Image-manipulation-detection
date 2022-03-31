@@ -534,8 +534,8 @@ def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
         height_text = dims[3] - dims[1]
         
         # Random text position making sure that all text fits
-        x = np.random.randint(10, width-width_text-10)
-        y = np.random.randint(10, height-height_text-10)
+        x = np.random.randint(3, width-width_text-3)
+        y = np.random.randint(3, height-height_text-3)
         
         # Compute either white text back edegs or inverse based on mean
         #mean = np.mean(np.array(im)[x:x+w+1, y:y+h+1, :])

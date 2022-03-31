@@ -14,21 +14,21 @@ import os
 import generator
 import random
 # Set the seed
-random.seed(256)
+random.seed(254)
 
 
 
 params = generator.ATTACK_PARAMETERS
 
 # Number of images on which to perform the attacks in both groups
-N = 100
+N = 1000
 
 
-path1 = 'Datasets/BSDS500/Experimental/'
-path2 = 'Datasets/BSDS500/Control/'
+path1 = 'Datasets/ILSVRC2012_img_val/Experimental/'
+path2 = 'Datasets/ILSVRC2012_img_val/Control/'
 
-destination1 = 'Datasets/BSDS500/Experimental_attacks/'
-destination2 = 'Datasets/BSDS500/Control_attacks/'
+destination1 = 'Datasets/ILSVRC2012_img_val/Experimental_attacks/'
+destination2 = 'Datasets/ILSVRC2012_img_val/Control_attacks/'
 
 names_experimental = os.listdir(path1)
 names_control = os.listdir(path2)
@@ -47,3 +47,16 @@ generator.perform_all_and_save_list(images_experimental, save_name_list=save_exp
                              extension='PNG', **params)
 generator.perform_all_and_save_list(images_control, save_name_list=save_control,
                              extension='PNG', **params)
+#%%
+
+a = generator.text_attack(images_experimental[196], **params)
+
+
+#%%
+
+for i, img in enumerate(images_experimental):
+    try:
+        a = generator.text_attack(img, **params)
+    except ValueError:
+        print(i)
+        break
