@@ -65,15 +65,6 @@ for img in tqdm(imgs):
 #kp, descriptors = tot.detectAndCompute(img, None)
 
 
-#%%
-
-from helpers import utils
-
-a = utils.load_dictionary('/Users/cyrilvallez/Desktop/Project/Results/test/images_neg.json')
-b = utils.load_dictionary('/Users/cyrilvallez/Desktop/Project/Results/First_benchmark/images_neg.json')
-
-print(a==b)
-
 
 #%%
 

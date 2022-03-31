@@ -630,7 +630,6 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
         plt.savefig(filename + '.pdf', bbox_inches='tight')
     plt.show()
     
-    return frame
 
     
         
