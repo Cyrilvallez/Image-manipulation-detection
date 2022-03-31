@@ -223,6 +223,19 @@ path = 'Datasets/ILSVRC2012_img_val/Experimental/ILSVRC2012_val_00006778.JPEG'
 
 a = generator.text_attack(path)
 
+#%%
+import generator
+import time
+
+path = 'Datasets/ILSVRC2012_img_val/Control/'
+imgs = [path + file for file in os.listdir(path)[0:2000]]
+
+t0 = time.time()
+
+for img in imgs:
+    attacks = generator.perform_all_attacks(img, **generator.ATTACK_PARAMETERS)
+
+dt = (time.time() - t0)/60
 
 
 
