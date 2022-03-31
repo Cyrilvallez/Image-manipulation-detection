@@ -69,6 +69,26 @@ for img in tqdm(imgs):
 
 from helpers import utils
 
-a = utils.load_dictionary('/Users/cyrilvallez/Desktop/Project/Results/test/general.json')
-b = utils.load_dictionary('/Users/cyrilvallez/Desktop/Project/Results/First_benchmark/general.json')
+a = utils.load_dictionary('/Users/cyrilvallez/Desktop/Project/Results/test/images_neg.json')
+b = utils.load_dictionary('/Users/cyrilvallez/Desktop/Project/Results/First_benchmark/images_neg.json')
+
+print(a==b)
+
+
+#%%
+
+a = np.random.randint(0,2, 64)
+
+def to_bytes(array_):
+    
+    array = [str(i) for i in array_]
+    
+    return [int(bytes(''.join(array[i:i+8]), 'utf-8'), 2) for i in range(0, len(array), 8)]
+
+b = to_bytes(a)
+
+
+
+
+
 

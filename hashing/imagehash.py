@@ -35,6 +35,7 @@ from __future__ import (absolute_import, division, print_function)
 from PIL import Image, ImageFilter
 import numpy as np
 import os
+import cv2
 #import scipy.fftpack
 #import pywt
 __version__ = "4.2.1"
@@ -195,6 +196,13 @@ class ImageHash(object):
             names.append(key)
         
         return (np.array(distances), np.array(names))
+    
+    
+    def to_bytes(self):
+        
+        array = [str(i) for i in self.hash]
+        
+        return [int(bytes(''.join(array[i:i+8]), 'utf-8'), 2) for i in range(0, len(array), 8)]
         
 
 
@@ -455,14 +463,24 @@ def colorhash(image, binbits=3):
     return ImageHash(np.asarray(bitarray).reshape((-1, binbits)))
 
 
+MATCHER = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False)
+
+
 class ImageMultiHash(object):
     """
     This is an image hash containing a list of individual hashes for segments of the image.
     The matching logic is implemented as described in Efficient Cropping-Resistant Robust Image Hashing
     """
     def __init__(self, hashes, cutoff=1):
-        self.segment_hashes = hashes
+        #self.segment_hashes = hashes
         self.cutoff = cutoff
+        
+        self.segment_hashes = []
+        
+        for a in hashes:
+            self.segment_hashes.append(a.to_bytes())
+        self.segment_hashes = np.array(self.segment_hashes, dtype=np.uint8)
+        
 
     def __eq__(self, other):
         if other is None:
@@ -581,7 +599,7 @@ class ImageMultiHash(object):
         return names
     
     
-    def compute_distance(self, other):
+    def compute_distance_(self, other):
         
         distances = []
         
@@ -603,8 +621,39 @@ class ImageMultiHash(object):
         return distance
     
     
-    def compute_distances(self, database):
+    def compute_distances_(self, database):
 
+        distances = []
+        names = []
+            
+        for key in database.keys():
+            distances.append(self.compute_distance(database[key]))
+            names.append(key)
+        
+        return (np.array(distances), np.array(names))
+    
+    
+    def compute_distance(self, other):
+        
+        matches = MATCHER.match(self.segment_hashes, other.segment_hashes)
+        matches = sorted(matches, key = lambda x: x.distance)
+        
+        try:
+            distance = matches[self.cutoff-1].distance 
+        except IndexError:
+            # Assign inf if the distance does not exist for this cutoff
+            distance = float('inf')
+        
+        # Normalize the hamming distance by the number of bits in the descriptor 
+        # to get the BER threshold
+        # Each value in self.descriptors[0] is a byte, thus we multiply by 8 
+        # to get the total number of bits in the descriptor
+        distance /= len(self.descriptors[0])*8
+            
+        return distance
+    
+    def compute_distances(self, database):
+        
         distances = []
         names = []
             
