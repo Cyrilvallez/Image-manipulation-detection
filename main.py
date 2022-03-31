@@ -43,13 +43,11 @@ algos = [
     #                        device='cuda', distance='L1'),
     #hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
     #                        device='cuda', distance='Jensen-Shannon'),
-    #hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=40, cutoff=1),
-    #hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=40, cutoff=5),
-    #hashing.FeatureAlgorithm('ORB', batch_size=500, n_features=40, cutoff=10),
-    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=1028),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=500, n_features=40, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=500, n_features=40, cutoff=1),
     ]
 
-thresholds = np.linspace(0, 0.4, 10)
+thresholds = [np.linspace(0, 0.8, 10), np.linspace(0, 0.4, 10)]
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)

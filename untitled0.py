@@ -24,8 +24,8 @@ image2 = image2.convert('L')
 
 #%%
 
-des1 = fh.SIFT(image1)
-des2 = fh.SIFT(image2)
+des1 = fh.DAISY(image1)                  
+des2 = fh.DAISY(image2)
 
 
 des1 = fh.ImageDescriptors(des1, 'L2')
@@ -65,18 +65,6 @@ for img in tqdm(imgs):
 #kp, descriptors = tot.detectAndCompute(img, None)
 
 
-
-#%%
-
-a = np.random.randint(0,2, 64)
-
-def to_bytes(array_):
-    
-    array = [str(i) for i in array_]
-    
-    return [int(bytes(''.join(array[i:i+8]), 'utf-8'), 2) for i in range(0, len(array), 8)]
-
-b = to_bytes(a)
 
 
 
