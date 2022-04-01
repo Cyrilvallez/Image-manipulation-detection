@@ -1,0 +1,5888 @@
+{
+	"Phash 64 bits": {
+		"Threshold 0.000": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.91,
+				"precision": 1.0,
+				"recall": 0.82,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.58,
+				"precision": 1.0,
+				"recall": 0.16,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.515,
+				"precision": 1.0,
+				"recall": 0.03,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0,
+				"recall": 0.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.94,
+				"precision": 1.0,
+				"recall": 0.88,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.885,
+				"precision": 1.0,
+				"recall": 0.77,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.72,
+				"precision": 1.0,
+				"recall": 0.44,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.955,
+				"precision": 1.0,
+				"recall": 0.91,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.925,
+				"precision": 1.0,
+				"recall": 0.85,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.885,
+				"precision": 1.0,
+				"recall": 0.77,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.94,
+				"precision": 1.0,
+				"recall": 0.88,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.665,
+				"precision": 1.0,
+				"recall": 0.33,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.57,
+				"precision": 1.0,
+				"recall": 0.14,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 1.0,
+				"recall": 0.01,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.021": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.91,
+				"precision": 1.0,
+				"recall": 0.82,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.58,
+				"precision": 1.0,
+				"recall": 0.16,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.515,
+				"precision": 1.0,
+				"recall": 0.03,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0,
+				"recall": 0.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.94,
+				"precision": 1.0,
+				"recall": 0.88,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.885,
+				"precision": 1.0,
+				"recall": 0.77,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.72,
+				"precision": 1.0,
+				"recall": 0.44,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.955,
+				"precision": 1.0,
+				"recall": 0.91,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.925,
+				"precision": 1.0,
+				"recall": 0.85,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.885,
+				"precision": 1.0,
+				"recall": 0.77,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.94,
+				"precision": 1.0,
+				"recall": 0.88,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.665,
+				"precision": 1.0,
+				"recall": 0.33,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.57,
+				"precision": 1.0,
+				"recall": 0.14,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 1.0,
+				"recall": 0.01,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.042": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.7,
+				"precision": 1.0,
+				"recall": 0.4,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.54,
+				"precision": 1.0,
+				"recall": 0.08,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.51,
+				"precision": 1.0,
+				"recall": 0.02,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.955,
+				"precision": 1.0,
+				"recall": 0.91,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.87,
+				"precision": 1.0,
+				"recall": 0.74,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.725,
+				"precision": 1.0,
+				"recall": 0.45,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.61,
+				"precision": 1.0,
+				"recall": 0.22,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.063": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.835,
+				"precision": 1.0,
+				"recall": 0.67,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.63,
+				"precision": 1.0,
+				"recall": 0.26,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.51,
+				"precision": 1.0,
+				"recall": 0.02,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.985,
+				"precision": 1.0,
+				"recall": 0.97,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.97,
+				"precision": 1.0,
+				"recall": 0.94,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.88,
+				"precision": 1.0,
+				"recall": 0.76,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.76,
+				"precision": 1.0,
+				"recall": 0.52,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.084": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.835,
+				"precision": 1.0,
+				"recall": 0.67,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.63,
+				"precision": 1.0,
+				"recall": 0.26,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.51,
+				"precision": 1.0,
+				"recall": 0.02,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.985,
+				"precision": 1.0,
+				"recall": 0.97,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.97,
+				"precision": 1.0,
+				"recall": 0.94,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.88,
+				"precision": 1.0,
+				"recall": 0.76,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.76,
+				"precision": 1.0,
+				"recall": 0.52,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.105": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.935,
+				"precision": 1.0,
+				"recall": 0.87,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.71,
+				"precision": 1.0,
+				"recall": 0.42,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.52,
+				"precision": 1.0,
+				"recall": 0.04,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.895,
+				"precision": 1.0,
+				"recall": 0.79,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.126": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.985,
+				"precision": 1.0,
+				"recall": 0.97,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.765,
+				"precision": 1.0,
+				"recall": 0.53,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.575,
+				"precision": 1.0,
+				"recall": 0.15,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.99,
+				"precision": 1.0,
+				"recall": 0.98,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.945,
+				"precision": 1.0,
+				"recall": 0.89,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.147": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.985,
+				"precision": 1.0,
+				"recall": 0.97,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.765,
+				"precision": 1.0,
+				"recall": 0.53,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.575,
+				"precision": 1.0,
+				"recall": 0.15,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.99,
+				"precision": 1.0,
+				"recall": 0.98,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.945,
+				"precision": 1.0,
+				"recall": 0.89,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.168": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.89,
+				"precision": 1.0,
+				"recall": 0.78,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.65,
+				"precision": 1.0,
+				"recall": 0.3,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.975,
+				"precision": 1.0,
+				"recall": 0.95,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.189": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.94,
+				"precision": 1.0,
+				"recall": 0.88,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.73,
+				"precision": 1.0,
+				"recall": 0.46,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.211": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.94,
+				"precision": 1.0,
+				"recall": 0.88,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.73,
+				"precision": 1.0,
+				"recall": 0.46,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.232": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.975,
+				"precision": 0.9896907216494846,
+				"recall": 0.96,
+				"fpr": 0.01
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.81,
+				"precision": 0.984375,
+				"recall": 0.63,
+				"fpr": 0.01
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.253": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.975,
+				"precision": 0.9611650485436893,
+				"recall": 0.99,
+				"fpr": 0.04
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.865,
+				"precision": 0.8924731182795699,
+				"recall": 0.83,
+				"fpr": 0.1
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.98,
+				"precision": 0.9615384615384616,
+				"recall": 1.0,
+				"fpr": 0.04
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.97,
+				"precision": 0.9433962264150944,
+				"recall": 1.0,
+				"fpr": 0.06
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.98,
+				"precision": 0.9615384615384616,
+				"recall": 1.0,
+				"fpr": 0.04
+			}
+		},
+		"Threshold 0.274": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.975,
+				"precision": 0.9611650485436893,
+				"recall": 0.99,
+				"fpr": 0.04
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.865,
+				"precision": 0.8924731182795699,
+				"recall": 0.83,
+				"fpr": 0.1
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.98,
+				"precision": 0.9615384615384616,
+				"recall": 1.0,
+				"fpr": 0.04
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.97,
+				"precision": 0.9433962264150944,
+				"recall": 1.0,
+				"fpr": 0.06
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.98,
+				"precision": 0.9615384615384616,
+				"recall": 1.0,
+				"fpr": 0.04
+			}
+		},
+		"Threshold 0.295": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.87,
+				"precision": 0.7936507936507936,
+				"recall": 1.0,
+				"fpr": 0.26
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.87,
+				"precision": 0.7936507936507936,
+				"recall": 1.0,
+				"fpr": 0.26
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.86,
+				"precision": 0.7857142857142857,
+				"recall": 0.99,
+				"fpr": 0.27
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.795,
+				"precision": 0.7398373983739838,
+				"recall": 0.91,
+				"fpr": 0.32
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.875,
+				"precision": 0.8,
+				"recall": 1.0,
+				"fpr": 0.25
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.85,
+				"precision": 0.7692307692307693,
+				"recall": 1.0,
+				"fpr": 0.3
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.86,
+				"precision": 0.78125,
+				"recall": 1.0,
+				"fpr": 0.28
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.855,
+				"precision": 0.7751937984496124,
+				"recall": 1.0,
+				"fpr": 0.29
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.86,
+				"precision": 0.78125,
+				"recall": 1.0,
+				"fpr": 0.28
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.855,
+				"precision": 0.7751937984496124,
+				"recall": 1.0,
+				"fpr": 0.29
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.845,
+				"precision": 0.7633587786259542,
+				"recall": 1.0,
+				"fpr": 0.31
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.86,
+				"precision": 0.78125,
+				"recall": 1.0,
+				"fpr": 0.28
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.865,
+				"precision": 0.7874015748031497,
+				"recall": 1.0,
+				"fpr": 0.27
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.845,
+				"precision": 0.7633587786259542,
+				"recall": 1.0,
+				"fpr": 0.31
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.85,
+				"precision": 0.7692307692307693,
+				"recall": 1.0,
+				"fpr": 0.3
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.87,
+				"precision": 0.7936507936507936,
+				"recall": 1.0,
+				"fpr": 0.26
+			}
+		},
+		"Threshold 0.316": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.64,
+				"precision": 0.5813953488372093,
+				"recall": 1.0,
+				"fpr": 0.72
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.605,
+				"precision": 0.5586592178770949,
+				"recall": 1.0,
+				"fpr": 0.79
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.625,
+				"precision": 0.5739644970414202,
+				"recall": 0.97,
+				"fpr": 0.72
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.615,
+				"precision": 0.5649717514124294,
+				"recall": 1.0,
+				"fpr": 0.77
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.61,
+				"precision": 0.5617977528089888,
+				"recall": 1.0,
+				"fpr": 0.78
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.615,
+				"precision": 0.5649717514124294,
+				"recall": 1.0,
+				"fpr": 0.77
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.635,
+				"precision": 0.5780346820809249,
+				"recall": 1.0,
+				"fpr": 0.73
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.63,
+				"precision": 0.5747126436781609,
+				"recall": 1.0,
+				"fpr": 0.74
+			}
+		},
+		"Threshold 0.337": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.64,
+				"precision": 0.5813953488372093,
+				"recall": 1.0,
+				"fpr": 0.72
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.605,
+				"precision": 0.5586592178770949,
+				"recall": 1.0,
+				"fpr": 0.79
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.625,
+				"precision": 0.5739644970414202,
+				"recall": 0.97,
+				"fpr": 0.72
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.615,
+				"precision": 0.5649717514124294,
+				"recall": 1.0,
+				"fpr": 0.77
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.61,
+				"precision": 0.5617977528089888,
+				"recall": 1.0,
+				"fpr": 0.78
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.615,
+				"precision": 0.5649717514124294,
+				"recall": 1.0,
+				"fpr": 0.77
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.635,
+				"precision": 0.5780346820809249,
+				"recall": 1.0,
+				"fpr": 0.73
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.63,
+				"precision": 0.5747126436781609,
+				"recall": 1.0,
+				"fpr": 0.74
+			}
+		},
+		"Threshold 0.358": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.515,
+				"precision": 0.5076142131979695,
+				"recall": 1.0,
+				"fpr": 0.97
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.515,
+				"precision": 0.5076142131979695,
+				"recall": 1.0,
+				"fpr": 0.97
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.515,
+				"precision": 0.5076142131979695,
+				"recall": 1.0,
+				"fpr": 0.97
+			}
+		},
+		"Threshold 0.379": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.400": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		}
+	},
+	"ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.200": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.845,
+				"precision": 1.0,
+				"recall": 0.69,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.92,
+				"precision": 1.0,
+				"recall": 0.84,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.58,
+				"precision": 1.0,
+				"recall": 0.16,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0,
+				"recall": 0.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.985,
+				"precision": 1.0,
+				"recall": 0.97,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.615,
+				"precision": 1.0,
+				"recall": 0.23,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.835,
+				"precision": 1.0,
+				"recall": 0.67,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.99,
+				"precision": 1.0,
+				"recall": 0.98,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.675,
+				"precision": 1.0,
+				"recall": 0.35,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0,
+				"recall": 0.0,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.232": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.95,
+				"precision": 1.0,
+				"recall": 0.9,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.98,
+				"precision": 1.0,
+				"recall": 0.96,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.735,
+				"precision": 1.0,
+				"recall": 0.47,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.51,
+				"precision": 1.0,
+				"recall": 0.02,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.73,
+				"precision": 1.0,
+				"recall": 0.46,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.97,
+				"precision": 1.0,
+				"recall": 0.94,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.88,
+				"precision": 1.0,
+				"recall": 0.76,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.55,
+				"precision": 1.0,
+				"recall": 0.1,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.263": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.855,
+				"precision": 1.0,
+				"recall": 0.71,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.545,
+				"precision": 1.0,
+				"recall": 0.09,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.88,
+				"precision": 1.0,
+				"recall": 0.76,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.97,
+				"precision": 1.0,
+				"recall": 0.94,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.69,
+				"precision": 1.0,
+				"recall": 0.38,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.295": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.935,
+				"precision": 1.0,
+				"recall": 0.87,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.64,
+				"precision": 1.0,
+				"recall": 0.28,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.97,
+				"precision": 1.0,
+				"recall": 0.94,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.84,
+				"precision": 1.0,
+				"recall": 0.68,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.326": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.97,
+				"precision": 0.9433962264150944,
+				"recall": 1.0,
+				"fpr": 0.06
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.96,
+				"precision": 0.9693877551020408,
+				"recall": 0.95,
+				"fpr": 0.03
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.72,
+				"precision": 0.9782608695652174,
+				"recall": 0.45,
+				"fpr": 0.01
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.965,
+				"precision": 0.9345794392523364,
+				"recall": 1.0,
+				"fpr": 0.07
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.985,
+				"precision": 0.970873786407767,
+				"recall": 1.0,
+				"fpr": 0.03
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.98,
+				"precision": 0.98,
+				"recall": 0.98,
+				"fpr": 0.02
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.96,
+				"precision": 0.9259259259259259,
+				"recall": 1.0,
+				"fpr": 0.08
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.965,
+				"precision": 0.9345794392523364,
+				"recall": 1.0,
+				"fpr": 0.07
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.97,
+				"precision": 0.9433962264150944,
+				"recall": 1.0,
+				"fpr": 0.06
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.965,
+				"precision": 0.9345794392523364,
+				"recall": 1.0,
+				"fpr": 0.07
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.985,
+				"precision": 0.970873786407767,
+				"recall": 1.0,
+				"fpr": 0.03
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.96,
+				"precision": 0.9259259259259259,
+				"recall": 1.0,
+				"fpr": 0.08
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.955,
+				"precision": 1.0,
+				"recall": 0.91,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.358": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.915,
+				"precision": 0.8547008547008547,
+				"recall": 1.0,
+				"fpr": 0.17
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.905,
+				"precision": 0.8403361344537815,
+				"recall": 1.0,
+				"fpr": 0.19
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.91,
+				"precision": 0.8660714285714286,
+				"recall": 0.97,
+				"fpr": 0.15
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.77,
+				"precision": 0.8970588235294118,
+				"recall": 0.61,
+				"fpr": 0.07
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.905,
+				"precision": 0.8403361344537815,
+				"recall": 1.0,
+				"fpr": 0.19
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.89,
+				"precision": 0.819672131147541,
+				"recall": 1.0,
+				"fpr": 0.22
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.9,
+				"precision": 0.8333333333333334,
+				"recall": 1.0,
+				"fpr": 0.2
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.91,
+				"precision": 0.853448275862069,
+				"recall": 0.99,
+				"fpr": 0.17
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.92,
+				"precision": 0.8620689655172413,
+				"recall": 1.0,
+				"fpr": 0.16
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.9,
+				"precision": 0.8333333333333334,
+				"recall": 1.0,
+				"fpr": 0.2
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.9,
+				"precision": 0.8333333333333334,
+				"recall": 1.0,
+				"fpr": 0.2
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.9,
+				"precision": 0.8333333333333334,
+				"recall": 1.0,
+				"fpr": 0.2
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.93,
+				"precision": 0.8771929824561403,
+				"recall": 1.0,
+				"fpr": 0.14
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.905,
+				"precision": 0.8403361344537815,
+				"recall": 1.0,
+				"fpr": 0.19
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.905,
+				"precision": 0.8403361344537815,
+				"recall": 1.0,
+				"fpr": 0.19
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.935,
+				"precision": 0.8918918918918919,
+				"recall": 0.99,
+				"fpr": 0.12
+			}
+		},
+		"Threshold 0.389": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.77,
+				"precision": 0.684931506849315,
+				"recall": 1.0,
+				"fpr": 0.46
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.75,
+				"precision": 0.6666666666666666,
+				"recall": 1.0,
+				"fpr": 0.5
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.755,
+				"precision": 0.6758620689655173,
+				"recall": 0.98,
+				"fpr": 0.47
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.75,
+				"precision": 0.7314814814814815,
+				"recall": 0.79,
+				"fpr": 0.29
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.735,
+				"precision": 0.6535947712418301,
+				"recall": 1.0,
+				"fpr": 0.53
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.73,
+				"precision": 0.6493506493506493,
+				"recall": 1.0,
+				"fpr": 0.54
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.73,
+				"precision": 0.6493506493506493,
+				"recall": 1.0,
+				"fpr": 0.54
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.75,
+				"precision": 0.6666666666666666,
+				"recall": 1.0,
+				"fpr": 0.5
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.735,
+				"precision": 0.6535947712418301,
+				"recall": 1.0,
+				"fpr": 0.53
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.705,
+				"precision": 0.6289308176100629,
+				"recall": 1.0,
+				"fpr": 0.59
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.715,
+				"precision": 0.6369426751592356,
+				"recall": 1.0,
+				"fpr": 0.57
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.735,
+				"precision": 0.6535947712418301,
+				"recall": 1.0,
+				"fpr": 0.53
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.76,
+				"precision": 0.6756756756756757,
+				"recall": 1.0,
+				"fpr": 0.48
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.74,
+				"precision": 0.6578947368421053,
+				"recall": 1.0,
+				"fpr": 0.52
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.755,
+				"precision": 0.6711409395973155,
+				"recall": 1.0,
+				"fpr": 0.49
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.77,
+				"precision": 0.6875,
+				"recall": 0.99,
+				"fpr": 0.45
+			}
+		},
+		"Threshold 0.421": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.65,
+				"precision": 0.5882352941176471,
+				"recall": 1.0,
+				"fpr": 0.7
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.63,
+				"precision": 0.5747126436781609,
+				"recall": 1.0,
+				"fpr": 0.74
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.64,
+				"precision": 0.5823529411764706,
+				"recall": 0.99,
+				"fpr": 0.71
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.64,
+				"precision": 0.5972222222222222,
+				"recall": 0.86,
+				"fpr": 0.58
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.63,
+				"precision": 0.5747126436781609,
+				"recall": 1.0,
+				"fpr": 0.74
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.62,
+				"precision": 0.5681818181818182,
+				"recall": 1.0,
+				"fpr": 0.76
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.63,
+				"precision": 0.5747126436781609,
+				"recall": 1.0,
+				"fpr": 0.74
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.635,
+				"precision": 0.5780346820809249,
+				"recall": 1.0,
+				"fpr": 0.73
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.64,
+				"precision": 0.5813953488372093,
+				"recall": 1.0,
+				"fpr": 0.72
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.635,
+				"precision": 0.5780346820809249,
+				"recall": 1.0,
+				"fpr": 0.73
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.625,
+				"precision": 0.5714285714285714,
+				"recall": 1.0,
+				"fpr": 0.75
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.63,
+				"precision": 0.5747126436781609,
+				"recall": 1.0,
+				"fpr": 0.74
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.63,
+				"precision": 0.5755813953488372,
+				"recall": 0.99,
+				"fpr": 0.73
+			}
+		},
+		"Threshold 0.453": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.575,
+				"precision": 0.5405405405405406,
+				"recall": 1.0,
+				"fpr": 0.85
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.575,
+				"precision": 0.5405405405405406,
+				"recall": 1.0,
+				"fpr": 0.85
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.58,
+				"precision": 0.5465116279069767,
+				"recall": 0.94,
+				"fpr": 0.78
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.565,
+				"precision": 0.5347593582887701,
+				"recall": 1.0,
+				"fpr": 0.87
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.555,
+				"precision": 0.5291005291005291,
+				"recall": 1.0,
+				"fpr": 0.89
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.555,
+				"precision": 0.5291005291005291,
+				"recall": 1.0,
+				"fpr": 0.89
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.55,
+				"precision": 0.5263157894736842,
+				"recall": 1.0,
+				"fpr": 0.9
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.565,
+				"precision": 0.5347593582887701,
+				"recall": 1.0,
+				"fpr": 0.87
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.565,
+				"precision": 0.5347593582887701,
+				"recall": 1.0,
+				"fpr": 0.87
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			}
+		},
+		"Threshold 0.484": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.525,
+				"precision": 0.5128205128205128,
+				"recall": 1.0,
+				"fpr": 0.95
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.515,
+				"precision": 0.5076142131979695,
+				"recall": 1.0,
+				"fpr": 0.97
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.52,
+				"precision": 0.5104166666666666,
+				"recall": 0.98,
+				"fpr": 0.94
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.515,
+				"precision": 0.5076142131979695,
+				"recall": 1.0,
+				"fpr": 0.97
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.51,
+				"precision": 0.5050505050505051,
+				"recall": 1.0,
+				"fpr": 0.98
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.525,
+				"precision": 0.5128205128205128,
+				"recall": 1.0,
+				"fpr": 0.95
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.525,
+				"precision": 0.5128205128205128,
+				"recall": 1.0,
+				"fpr": 0.95
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.515,
+				"precision": 0.5076142131979695,
+				"recall": 1.0,
+				"fpr": 0.97
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.51,
+				"precision": 0.5050505050505051,
+				"recall": 1.0,
+				"fpr": 0.98
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			}
+		},
+		"Threshold 0.516": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.495,
+				"precision": 0.49746192893401014,
+				"recall": 0.98,
+				"fpr": 0.99
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.547": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.579": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.611": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.642": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.674": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.705": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.737": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.768": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.800": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		}
+	},
+	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.200": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.925,
+				"precision": 1.0,
+				"recall": 0.85,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.615,
+				"precision": 1.0,
+				"recall": 0.23,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0,
+				"recall": 0.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.99,
+				"precision": 1.0,
+				"recall": 0.98,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.805,
+				"precision": 1.0,
+				"recall": 0.61,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.79,
+				"precision": 1.0,
+				"recall": 0.58,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.985,
+				"precision": 1.0,
+				"recall": 0.97,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.74,
+				"precision": 1.0,
+				"recall": 0.48,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.51,
+				"precision": 1.0,
+				"recall": 0.02,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.232": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.97,
+				"precision": 1.0,
+				"recall": 0.94,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.72,
+				"precision": 1.0,
+				"recall": 0.44,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.51,
+				"precision": 1.0,
+				"recall": 0.02,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.895,
+				"precision": 1.0,
+				"recall": 0.79,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.99,
+				"precision": 1.0,
+				"recall": 0.98,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.92,
+				"precision": 1.0,
+				"recall": 0.84,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.58,
+				"precision": 1.0,
+				"recall": 0.16,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.263": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.815,
+				"precision": 1.0,
+				"recall": 0.63,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.545,
+				"precision": 1.0,
+				"recall": 0.09,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.96,
+				"precision": 1.0,
+				"recall": 0.92,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.68,
+				"precision": 1.0,
+				"recall": 0.36,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.295": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.885,
+				"precision": 1.0,
+				"recall": 0.77,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.585,
+				"precision": 1.0,
+				"recall": 0.17,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.99,
+				"precision": 1.0,
+				"recall": 0.98,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.825,
+				"precision": 1.0,
+				"recall": 0.65,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.326": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.95,
+				"precision": 1.0,
+				"recall": 0.9,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.65,
+				"precision": 1.0,
+				"recall": 0.3,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.91,
+				"precision": 1.0,
+				"recall": 0.82,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.358": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.98,
+				"precision": 1.0,
+				"recall": 0.96,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.735,
+				"precision": 1.0,
+				"recall": 0.47,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.97,
+				"precision": 1.0,
+				"recall": 0.94,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.389": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.8,
+				"precision": 1.0,
+				"recall": 0.6,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.99,
+				"precision": 1.0,
+				"recall": 0.98,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.421": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.875,
+				"precision": 1.0,
+				"recall": 0.75,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 1.0,
+				"recall": 0.99,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.453": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.905,
+				"precision": 1.0,
+				"recall": 0.81,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.484": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.955,
+				"precision": 1.0,
+				"recall": 0.91,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.516": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.975,
+				"precision": 1.0,
+				"recall": 0.95,
+				"fpr": 0.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.547": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.99,
+				"precision": 0.9803921568627451,
+				"recall": 1.0,
+				"fpr": 0.02
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.985,
+				"precision": 0.98989898989899,
+				"recall": 0.98,
+				"fpr": 0.01
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.99,
+				"precision": 0.9803921568627451,
+				"recall": 1.0,
+				"fpr": 0.02
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.99,
+				"precision": 0.9803921568627451,
+				"recall": 1.0,
+				"fpr": 0.02
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.99,
+				"precision": 0.9803921568627451,
+				"recall": 1.0,
+				"fpr": 0.02
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.99,
+				"precision": 0.9803921568627451,
+				"recall": 1.0,
+				"fpr": 0.02
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.99,
+				"precision": 0.9803921568627451,
+				"recall": 1.0,
+				"fpr": 0.02
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.995,
+				"precision": 0.9900990099009901,
+				"recall": 1.0,
+				"fpr": 0.01
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 1.0,
+				"precision": 1.0,
+				"recall": 1.0,
+				"fpr": 0.0
+			}
+		},
+		"Threshold 0.579": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.96,
+				"precision": 0.9259259259259259,
+				"recall": 1.0,
+				"fpr": 0.08
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.96,
+				"precision": 0.9259259259259259,
+				"recall": 1.0,
+				"fpr": 0.08
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.955,
+				"precision": 0.9174311926605505,
+				"recall": 1.0,
+				"fpr": 0.09
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.97,
+				"precision": 0.9519230769230769,
+				"recall": 0.99,
+				"fpr": 0.05
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.96,
+				"precision": 0.9259259259259259,
+				"recall": 1.0,
+				"fpr": 0.08
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.955,
+				"precision": 0.9174311926605505,
+				"recall": 1.0,
+				"fpr": 0.09
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.955,
+				"precision": 0.9174311926605505,
+				"recall": 1.0,
+				"fpr": 0.09
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.96,
+				"precision": 0.9259259259259259,
+				"recall": 1.0,
+				"fpr": 0.08
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.965,
+				"precision": 0.9345794392523364,
+				"recall": 1.0,
+				"fpr": 0.07
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.965,
+				"precision": 0.9345794392523364,
+				"recall": 1.0,
+				"fpr": 0.07
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.965,
+				"precision": 0.9345794392523364,
+				"recall": 1.0,
+				"fpr": 0.07
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.975,
+				"precision": 0.9523809523809523,
+				"recall": 1.0,
+				"fpr": 0.05
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.96,
+				"precision": 0.9259259259259259,
+				"recall": 1.0,
+				"fpr": 0.08
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.965,
+				"precision": 0.9345794392523364,
+				"recall": 1.0,
+				"fpr": 0.07
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.965,
+				"precision": 0.9345794392523364,
+				"recall": 1.0,
+				"fpr": 0.07
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.98,
+				"precision": 0.9615384615384616,
+				"recall": 1.0,
+				"fpr": 0.04
+			}
+		},
+		"Threshold 0.611": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.915,
+				"precision": 0.8547008547008547,
+				"recall": 1.0,
+				"fpr": 0.17
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.91,
+				"precision": 0.847457627118644,
+				"recall": 1.0,
+				"fpr": 0.18
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.92,
+				"precision": 0.8620689655172413,
+				"recall": 1.0,
+				"fpr": 0.16
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.93,
+				"precision": 0.8839285714285714,
+				"recall": 0.99,
+				"fpr": 0.13
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.91,
+				"precision": 0.847457627118644,
+				"recall": 1.0,
+				"fpr": 0.18
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.915,
+				"precision": 0.8547008547008547,
+				"recall": 1.0,
+				"fpr": 0.17
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.915,
+				"precision": 0.8547008547008547,
+				"recall": 1.0,
+				"fpr": 0.17
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.92,
+				"precision": 0.8620689655172413,
+				"recall": 1.0,
+				"fpr": 0.16
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.905,
+				"precision": 0.8403361344537815,
+				"recall": 1.0,
+				"fpr": 0.19
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.915,
+				"precision": 0.8547008547008547,
+				"recall": 1.0,
+				"fpr": 0.17
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.915,
+				"precision": 0.8547008547008547,
+				"recall": 1.0,
+				"fpr": 0.17
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.92,
+				"precision": 0.8620689655172413,
+				"recall": 1.0,
+				"fpr": 0.16
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.91,
+				"precision": 0.847457627118644,
+				"recall": 1.0,
+				"fpr": 0.18
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.91,
+				"precision": 0.847457627118644,
+				"recall": 1.0,
+				"fpr": 0.18
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.92,
+				"precision": 0.8620689655172413,
+				"recall": 1.0,
+				"fpr": 0.16
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.94,
+				"precision": 0.8928571428571429,
+				"recall": 1.0,
+				"fpr": 0.12
+			}
+		},
+		"Threshold 0.642": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.81,
+				"precision": 0.7246376811594203,
+				"recall": 1.0,
+				"fpr": 0.38
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.825,
+				"precision": 0.7407407407407407,
+				"recall": 1.0,
+				"fpr": 0.35
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.83,
+				"precision": 0.746268656716418,
+				"recall": 1.0,
+				"fpr": 0.34
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.835,
+				"precision": 0.7557251908396947,
+				"recall": 0.99,
+				"fpr": 0.32
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.82,
+				"precision": 0.7352941176470589,
+				"recall": 1.0,
+				"fpr": 0.36
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.82,
+				"precision": 0.7352941176470589,
+				"recall": 1.0,
+				"fpr": 0.36
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.825,
+				"precision": 0.7407407407407407,
+				"recall": 1.0,
+				"fpr": 0.35
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.845,
+				"precision": 0.7633587786259542,
+				"recall": 1.0,
+				"fpr": 0.31
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.815,
+				"precision": 0.7299270072992701,
+				"recall": 1.0,
+				"fpr": 0.37
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.825,
+				"precision": 0.7407407407407407,
+				"recall": 1.0,
+				"fpr": 0.35
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.825,
+				"precision": 0.7407407407407407,
+				"recall": 1.0,
+				"fpr": 0.35
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.835,
+				"precision": 0.7518796992481203,
+				"recall": 1.0,
+				"fpr": 0.33
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.81,
+				"precision": 0.7246376811594203,
+				"recall": 1.0,
+				"fpr": 0.38
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.82,
+				"precision": 0.7352941176470589,
+				"recall": 1.0,
+				"fpr": 0.36
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.835,
+				"precision": 0.7518796992481203,
+				"recall": 1.0,
+				"fpr": 0.33
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.855,
+				"precision": 0.7751937984496124,
+				"recall": 1.0,
+				"fpr": 0.29
+			}
+		},
+		"Threshold 0.674": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.68,
+				"precision": 0.6097560975609756,
+				"recall": 1.0,
+				"fpr": 0.64
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.71,
+				"precision": 0.6329113924050633,
+				"recall": 1.0,
+				"fpr": 0.58
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.715,
+				"precision": 0.6369426751592356,
+				"recall": 1.0,
+				"fpr": 0.57
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.765,
+				"precision": 0.6802721088435374,
+				"recall": 1.0,
+				"fpr": 0.47
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.68,
+				"precision": 0.6097560975609756,
+				"recall": 1.0,
+				"fpr": 0.64
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.7,
+				"precision": 0.625,
+				"recall": 1.0,
+				"fpr": 0.6
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.71,
+				"precision": 0.6329113924050633,
+				"recall": 1.0,
+				"fpr": 0.58
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.715,
+				"precision": 0.6369426751592356,
+				"recall": 1.0,
+				"fpr": 0.57
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.69,
+				"precision": 0.6172839506172839,
+				"recall": 1.0,
+				"fpr": 0.62
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.705,
+				"precision": 0.6289308176100629,
+				"recall": 1.0,
+				"fpr": 0.59
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.705,
+				"precision": 0.6289308176100629,
+				"recall": 1.0,
+				"fpr": 0.59
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.71,
+				"precision": 0.6329113924050633,
+				"recall": 1.0,
+				"fpr": 0.58
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.69,
+				"precision": 0.6172839506172839,
+				"recall": 1.0,
+				"fpr": 0.62
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.705,
+				"precision": 0.6289308176100629,
+				"recall": 1.0,
+				"fpr": 0.59
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.695,
+				"precision": 0.6211180124223602,
+				"recall": 1.0,
+				"fpr": 0.61
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.73,
+				"precision": 0.6493506493506493,
+				"recall": 1.0,
+				"fpr": 0.54
+			}
+		},
+		"Threshold 0.705": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.57,
+				"precision": 0.5376344086021505,
+				"recall": 1.0,
+				"fpr": 0.86
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.585,
+				"precision": 0.546448087431694,
+				"recall": 1.0,
+				"fpr": 0.83
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.61,
+				"precision": 0.5617977528089888,
+				"recall": 1.0,
+				"fpr": 0.78
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.565,
+				"precision": 0.5347593582887701,
+				"recall": 1.0,
+				"fpr": 0.87
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.565,
+				"precision": 0.5347593582887701,
+				"recall": 1.0,
+				"fpr": 0.87
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.57,
+				"precision": 0.5376344086021505,
+				"recall": 1.0,
+				"fpr": 0.86
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.57,
+				"precision": 0.5376344086021505,
+				"recall": 1.0,
+				"fpr": 0.86
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.57,
+				"precision": 0.5376344086021505,
+				"recall": 1.0,
+				"fpr": 0.86
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.575,
+				"precision": 0.5405405405405406,
+				"recall": 1.0,
+				"fpr": 0.85
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.585,
+				"precision": 0.546448087431694,
+				"recall": 1.0,
+				"fpr": 0.83
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.565,
+				"precision": 0.5347593582887701,
+				"recall": 1.0,
+				"fpr": 0.87
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.56,
+				"precision": 0.5319148936170213,
+				"recall": 1.0,
+				"fpr": 0.88
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.575,
+				"precision": 0.5405405405405406,
+				"recall": 1.0,
+				"fpr": 0.85
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.585,
+				"precision": 0.546448087431694,
+				"recall": 1.0,
+				"fpr": 0.83
+			}
+		},
+		"Threshold 0.737": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.525,
+				"precision": 0.5128205128205128,
+				"recall": 1.0,
+				"fpr": 0.95
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.525,
+				"precision": 0.5128205128205128,
+				"recall": 1.0,
+				"fpr": 0.95
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.53,
+				"precision": 0.5154639175257731,
+				"recall": 1.0,
+				"fpr": 0.94
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.525,
+				"precision": 0.5128205128205128,
+				"recall": 1.0,
+				"fpr": 0.95
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.535,
+				"precision": 0.5181347150259067,
+				"recall": 1.0,
+				"fpr": 0.93
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.52,
+				"precision": 0.5102040816326531,
+				"recall": 1.0,
+				"fpr": 0.96
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.53,
+				"precision": 0.5154639175257731,
+				"recall": 1.0,
+				"fpr": 0.94
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.535,
+				"precision": 0.5181347150259067,
+				"recall": 1.0,
+				"fpr": 0.93
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.54,
+				"precision": 0.5208333333333334,
+				"recall": 1.0,
+				"fpr": 0.92
+			}
+		},
+		"Threshold 0.768": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.505,
+				"precision": 0.5025125628140703,
+				"recall": 1.0,
+				"fpr": 0.99
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		},
+		"Threshold 0.800": {
+			"brightness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"brightness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"color_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"sharpness_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_0.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_1.5": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_2": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			},
+			"contrast_enhancement_3": {
+				"accuracy": 0.5,
+				"precision": 0.5,
+				"recall": 1.0,
+				"fpr": 1.0
+			}
+		}
+	}
+}
