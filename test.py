@@ -21,15 +21,15 @@ path_control = 'Datasets/ILSVRC2012_img_val/Control/'
 
 algos = [
     hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = [
