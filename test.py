@@ -392,4 +392,28 @@ stroke = 'black'
 context.multiline_text((x, y), sentence, font=font, fill=color,
                        stroke_fill=stroke, stroke_width=2, align='center')
 
-image.save('salope.png')
+image.save('test4.png')
+
+#%%
+
+import cv2
+from PIL import Image
+import numpy as np
+
+def DAISY(image, n_features=1):
+    
+    img = np.array(image.convert('L'))
+    
+    detector = cv2.ORB_create(nfeatures=n_features)
+    extractor = cv2.xfeatures2d.DAISY_create()
+    
+    kps = detector.detect(img)
+    _, descriptors = extractor.compute(img, kps)
+
+    return descriptors
+
+path = 'Datasets/ILSVRC2012_img_val/Experimental/ILSVRC2012_val_00006778.JPEG'
+image = Image.open(path)
+
+a = DAISY(image)
+

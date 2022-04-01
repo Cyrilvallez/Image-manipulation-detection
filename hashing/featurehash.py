@@ -25,7 +25,6 @@ MATCHERS = {
     'Hamming': cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False),
     'L1': cv2.BFMatcher(cv2.NORM_L1, crossCheck=False),
     'L2': cv2.BFMatcher(cv2.NORM_L2, crossCheck=False),
-    'test': cv2.BFMatcher(cv2.NORM_RELATIVE | cv2.NORM_L2, crossCheck=False),
     }
 
 
@@ -153,6 +152,9 @@ class ImageDescriptors(object):
     
     def compute_distance(self, other):
         
+        if self.descriptors is None or other.descriptors is None:
+            return float('inf')
+        
         matches = MATCHERS[self.matcher].match(self.descriptors, other.descriptors)
         matches = sorted(matches, key = lambda x: x.distance)
         
@@ -214,7 +216,7 @@ def DAISY(image, n_features=20):
     
     img = np.array(image.convert('L'))
     
-    detector = cv2.ORB_create(nfeatures=20)
+    detector = cv2.ORB_create(nfeatures=n_features)
     extractor = cv2.xfeatures2d.DAISY_create()
     
     kps = detector.detect(img)
@@ -227,7 +229,7 @@ def LATCH(image, n_features):
     
     img = np.array(image.convert('L'))
     
-    detector = cv2.ORB_create(nfeatures=20)
+    detector = cv2.ORB_create(nfeatures=n_features)
     extractor = cv2.xfeatures2d.LATCH_create()
     
     kps = detector.detect(img)

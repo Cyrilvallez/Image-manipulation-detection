@@ -636,12 +636,12 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
         's\\&p_noise_0.15',
         'gaussian_filter_7x7',
         'median_filter_7x7',
+        'jpg_compression_10',
         'cropping_60_and_rescaling',
         'rotation_60_and_rescaling',
         'shearing_20',
-        'text_length_50',
-        'jpg_compression_10',
         'scaling_1.6',
+        'text_length_50',
         'color_enhancement_1.4',
         'sharpness_enhancement_1.4',
         'contrast_enhancement_1.4',
@@ -655,7 +655,7 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
     sns.heatmap(frame[strong_attacks].T, annot=True, yticklabels=labels_attacks,
                      square=True) 
     
-    horizontal_divider = [0, 3, 5, 8, 11, 15]
+    horizontal_divider = [0, 6, 11, 15]
     vertical_divider = [0, len(frame)]
     
     for i in horizontal_divider:
