@@ -417,7 +417,8 @@ def apply_threshold(distances, threshold):
     return names[distances_ <= threshold]
 
 
-def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
+def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
+            all_attack_names=None):
     """
     Performs the hashing and matching process for different algorithms and
     thresholds.
@@ -475,7 +476,8 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
     image_wise_output = {}
     running_time = {}
     
-    all_attack_names = generator.retrieve_ids(**generator.ATTACK_PARAMETERS)
+    if all_attack_names is None:
+        all_attack_names = generator.retrieve_ids(**generator.ATTACK_PARAMETERS)
     
     for i, algorithm in enumerate(algorithms):
         
@@ -582,7 +584,8 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512):
                 
 
 def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
-                  negative_dataset, general_batch_size=512):
+                  negative_dataset, general_batch_size=512,
+                  all_attack_names=None):
     """
     Perform the hashing and matchup of both a experimental and control group
     of images, and outputs the (processed) metrics of the experiment.
@@ -616,9 +619,9 @@ def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
     databases, time_database = create_databases(algorithms, path_to_db)
     
     positive_digest = hashing(algorithms, thresholds, databases, positive_dataset,
-                              general_batch_size)
+                              general_batch_size, all_attack_names())
     negative_digest = hashing(algorithms, thresholds, databases, negative_dataset,
-                              general_batch_size)
+                              general_batch_size, all_attack_names())
     
     attacked_image_names = find_attacked_images(positive_dataset)
     
