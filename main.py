@@ -24,23 +24,23 @@ path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_control = 'Datasets/ILSVRC2012_img_val/Control/'
 
 algos = [
-    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=1028),
-    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1028),
-    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=1028),
-    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=1028),
-    hashing.FeatureAlgorithm('SIFT', batch_size=1028, n_features=30, cutoff=1),
-    hashing.FeatureAlgorithm('ORB', batch_size=1028, n_features=30, cutoff=1),
-    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=1028, n_features=30, cutoff=1),
-    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1028, n_features=30, cutoff=1),
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=1028,
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=512),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=512),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=512),
+    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=512),
+    hashing.FeatureAlgorithm('SIFT', batch_size=512, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('ORB', batch_size=512, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=512, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=512, n_features=30, cutoff=1),
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=512,
                             device='cuda:1', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=1028,
+    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=512,
                             device='cuda:1', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=1028,
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=512,
                             device='cuda:1', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=1028,
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
                             device='cuda:1', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, batch_size=1028,
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, batch_size=512,
                             device='cuda:1', distance='Jensen-Shannon'),
     ]
 
@@ -67,6 +67,6 @@ negative_dataset = hashing.create_dataset(path_control, fraction=1000/25000,
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=1028)
+                               negative_dataset, general_batch_size=512)
 
 utils.save_digest(digest, save_folder)

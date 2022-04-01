@@ -554,6 +554,30 @@ def similarity_heatmaps(image_wise_digest, kind, metrics, N=None, save=False,
         
         
 def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
+    """
+    Create a heatmap with Area Under ROC Curve (AUC) for attacks wise digest.
+
+    Parameters
+    ----------
+    attacks_digest : Dictionary
+        Attack-wise digest of an experiment.
+    algo_names : List, optional
+        A list of names to give to the algorithms. The default is None.
+    save : Boolean, optional
+        Whether to save the plots or not. The default is False.
+    filename : String, optional
+        Filename to save the plots. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
+
+    Returns
+    -------
+    None.
+
+    """
     
     if save and filename is None:
         raise ValueError('You must specify a filename to save the figure.')
@@ -604,7 +628,7 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
     # For latex rendering
     frame.rename(columns={'s&p_noise_0.15': 's\\&p_noise_0.15',
                           's&p_noise_0.05': 's\\&p_noise_0.05',
-                          's&p_noise_0.1': 's\\&p_noise_0.15'}, inplace=True)
+                          's&p_noise_0.1': 's\\&p_noise_0.1'}, inplace=True)
     
     strong_attacks = [
         'gaussian_noise_0.05',
@@ -623,12 +647,18 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
         'contrast_enhancement_1.4',
         'brightness_enhancement_1.4',
         ]
+    
+    labels_attacks = [' '.join(name.split('_')) for name in strong_attacks]
 
-    plt.figure()                
-    sns.heatmap(frame[strong_attacks], annot=True)  
+    plt.figure(figsize=[6.4*2.5, 4.8*1.5])          
+    sns.heatmap(frame[strong_attacks].T, annot=True, yticklabels=labels_attacks,
+                square=True, linewidths=2, linecolor='black') 
+    plt.xticks(rotation = 45)
     if save:
         plt.savefig(filename + '.pdf', bbox_inches='tight')
     plt.show()
+    
+    return frame[strong_attacks].T
     
 
     

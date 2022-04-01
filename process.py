@@ -29,7 +29,7 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 #%%
 
-save = True
+save = False
 
 if not os.path.exists(figure_folder + 'General/'):
     os.makedirs(figure_folder + 'General/')
@@ -44,3 +44,8 @@ plot.metrics_plot(general, save=save,
                   filename=figure_folder + 'General/Metrics')
 plot.time_comparison(global_time, db_time, save=save,
                      filename=figure_folder + 'General/time.pdf')
+
+
+#%%
+
+plot.AUC_heatmap(attacks, save=True, filename='test.pdf')

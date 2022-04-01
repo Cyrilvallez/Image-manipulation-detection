@@ -350,7 +350,8 @@ imgs = [path + file for file in os.listdir(path)]
 
 for img in tqdm(imgs):
     image = Image.open(img)
-    foo = text_attack(image)
+    foo = generator.perform_all_attacks(img, **generator.ATTACK_PARAMETERS)
+    #foo = text_attack(image)
     #ratios.append((image.width,image.height))
 
       
