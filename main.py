@@ -40,7 +40,7 @@ algos = [
                             device='cuda:1', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
                             device='cuda:1', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet152 3x', raw_features=True, batch_size=512,
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=512,
                             device='cuda:1', distance='Jensen-Shannon'),
     ]
 
