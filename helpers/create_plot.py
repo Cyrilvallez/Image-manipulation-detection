@@ -650,10 +650,21 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
     
     labels_attacks = [' '.join(name.split('_')) for name in strong_attacks]
 
-    plt.figure(figsize=[6.4*2.5, 4.8*1.5])          
+    plt.figure(figsize=[6.4*2.5, 4.8*1.5])    
+    
     sns.heatmap(frame[strong_attacks].T, annot=True, yticklabels=labels_attacks,
-                square=True, linewidths=2, linecolor='black') 
-    plt.xticks(rotation = 45)
+                     square=True) 
+    
+    horizontal_divider = [0, 3, 5, 8, 11, 15]
+    vertical_divider = [0, len(frame)]
+    
+    for i in horizontal_divider:
+        plt.axhline(i, color='black', linewidth=3)
+        
+    for i in vertical_divider:
+        plt.axvline(i, color='black', linewidth=3)
+    
+    #plt.xticks(rotation = 45)
     if save:
         plt.savefig(filename + '.pdf', bbox_inches='tight')
     plt.show()
