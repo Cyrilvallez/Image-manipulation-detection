@@ -15,35 +15,26 @@ from helpers import utils
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
-path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
-path_control = 'Datasets/ILSVRC2012_img_val/Control/'
+path_database = 'Datasets/BSDS500/Experimental/'
+path_experimental = 'Datasets/BSDS500/Experimental_test/'
+path_control = 'Datasets/BSDS500/Control_test/'
 
 algos = [
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=512),
     hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=512,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=512,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=512,
                             device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = [
-    np.linspace(0.2, 0.6, 20),
-    np.linspace(0.2, 0.6, 20),
-    np.linspace(0.3, 0.8, 20),
-    np.linspace(0.3, 0.9, 20),
-    np.linspace(0.4, 0.9, 20),
+    np.linspace(0., 0.4, 20),
+    np.linspace(0.2, 0.8, 20),
+    np.linspace(0.2, 0.8, 20),
     ]
     
-positive_dataset = hashing.create_dataset(path_experimental, fraction=1000/25000,
-                                          existing_attacks=False)
-negative_dataset = hashing.create_dataset(path_control, fraction=1000/25000,
-                                          existing_attacks=False)
+positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
+negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
