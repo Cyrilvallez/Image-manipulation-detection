@@ -619,9 +619,9 @@ def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
     databases, time_database = create_databases(algorithms, path_to_db)
     
     positive_digest = hashing(algorithms, thresholds, databases, positive_dataset,
-                              general_batch_size, all_attack_names())
+                              general_batch_size, all_attack_names)
     negative_digest = hashing(algorithms, thresholds, databases, negative_dataset,
-                              general_batch_size, all_attack_names())
+                              general_batch_size, all_attack_names)
     
     attacked_image_names = find_attacked_images(positive_dataset)
     
