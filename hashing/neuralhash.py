@@ -530,7 +530,7 @@ class NeuralAlgorithm(Algorithm):
         Whether to hash the features or not. The default is False.
     distance : str, optional
         The distance function to use if `raw_features` is set to True. Ignored otherwise.
-        The default is 'Cosine'.
+        The default is 'cosine'.
     batch_size : int, optional
         Batch size for the database creation. The default is 512.
     device : str, optional
