@@ -406,8 +406,6 @@ def load_simclr_v2(depth, width, selective_kernel=True):
     
     def load(device='cuda'):
         
-        assert (device=='cpu' or device=='cuda')
-        
         # Load the model 
         sk_ratio = 0.0625 if selective_kernel else 0
         simclr, _ = SIMv2.get_resnet(depth=depth, width_multiplier=width, sk_ratio=sk_ratio)
