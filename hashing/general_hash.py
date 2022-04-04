@@ -295,7 +295,8 @@ def find_attacked_images(dataset):
     
 def create_dataset(path_to_imgs, fraction=0.3, existing_attacks=False, seed=23):
     """
-    Randomly chooses a fraction `fraction` of images to attack in a dataset.
+    Creates a dataset. Randomly chooses a fraction `fraction` of images to
+    attack in a dataset if the attacks are not already on disk.
 
     Parameters
     ----------
