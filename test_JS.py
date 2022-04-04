@@ -45,7 +45,7 @@ def jensen_cu(a, b, base=2):
     
     A = a/a.sum()
     B = b/b.sum(axis=1)[:, None]
-    A = cp.tile(A, B.shape)
+    A = cp.tile(A, (B.shape[0], 1))
     
     M = (A+B)/2
     
