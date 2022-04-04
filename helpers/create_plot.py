@@ -642,10 +642,10 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
         'shearing_20',
         'scaling_1.6',
         'text_length_50',
-        'color_enhancement_1.4',
-        'sharpness_enhancement_1.4',
-        'contrast_enhancement_1.4',
-        'brightness_enhancement_1.4',
+        'color_enhancement_2',
+        'sharpness_enhancement_2',
+        'contrast_enhancement_2',
+        'brightness_enhancement_2',
         ]
     
     labels_attacks = [' '.join(name.split('_')) for name in strong_attacks]

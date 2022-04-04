@@ -25,4 +25,4 @@ eval "$(conda shell.bash hook)"
 # Activate (local) env
 conda activate base
 
-python3 test.py $1
+python3 test_JS.py

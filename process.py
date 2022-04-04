@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'test/'
+EXPERIMENT_NAME = 'Benchmark_BSDS500/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -29,7 +29,7 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 #%%
 
-save = True
+save = False
 
 if not os.path.exists(figure_folder + 'General/'):
     os.makedirs(figure_folder + 'General/')
@@ -44,8 +44,11 @@ plot.metrics_plot(general, save=save,
                   filename=figure_folder + 'General/Metrics')
 plot.time_comparison(global_time, db_time, save=save,
                      filename=figure_folder + 'General/time.pdf')
+plot.AUC_heatmap(attacks, save=True, filename=figure_folder + 'General/AUC')
 
 
 #%%
+selected = ['Ahash 64 bits', 'Phash 64 bits', 'Dhash 64 bits', 'Whash 64 bits']
+subset = {key: value for key, value in general.items() if key in selected}
 
-#plot.AUC_heatmap(attacks, save=True, filename='test.pdf')
+plot.ROC_curves(general[])
