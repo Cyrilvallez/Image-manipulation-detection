@@ -89,5 +89,5 @@ dt_cupy = (time.time() - t0)/N
 print(f'Scipy res : {scipy_res}')
 print(f'Cupy res : {cupyx_res}')
 print('\n')
-print(f'Scipy time : {dt_scipy:.2f}')
-print(f'Cupy time : {dt_cupy:.2f}')
+print(f'Scipy time : {dt_scipy:.2e}')
+print(f'Cupy time : {dt_cupy:.2e}')
