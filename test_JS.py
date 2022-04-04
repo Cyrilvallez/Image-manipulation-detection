@@ -44,7 +44,8 @@ def jensen(a, b, base=2):
 def jensen_cu(a, b, base=2):
     
     A = a/a.sum()
-    B = b/b.sum()
+    B = b/b.sum(axis=1)[:, None]
+    A = cp.tile(A, B.shape)
     
     M = (A+B)/2
     
@@ -63,14 +64,17 @@ def jensen_cu(a, b, base=2):
 #%%
 
 a = np.random.rand(4000)
-b = np.random.rand(4000)
+b = np.random.rand(10000, 4000)
 N = 10000
 
 t0 = time.time()
 
 for i in range(N):
 
-    scipy_res = jensenshannon(a, b, base=2)
+    scipy_res = []
+    for vec in b:
+        scipy_res.append(jensenshannon(a, vec, base=2))
+    scipy_res = np.array(scipy_res)
     
 dt_scipy = (time.time() - t0)/N
 
@@ -86,8 +90,7 @@ for i in range(N):
 
 dt_cupy = (time.time() - t0)/N
 
-print(f'Scipy res : {scipy_res}')
-print(f'Cupy res : {cupyx_res}')
+print(f'Same : {(scipy_res == cupyx_res).all()}')
 print('\n')
 print(f'Scipy time : {dt_scipy:.2e}')
 print(f'Cupy time : {dt_cupy:.2e}')
