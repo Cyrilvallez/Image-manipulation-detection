@@ -80,8 +80,8 @@ t0 = time.time()
 
 for i in range(N):
 
-    c = cupy.asarray(a)
-    d = cupy.asarray(b)
+    c = cp.asarray(a)
+    d = cp.asarray(b)
     cupyx_res = jensen_cu(c,d, base=2)
 
 dt_cupy = (time.time() - t0)/N
