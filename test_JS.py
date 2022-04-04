@@ -65,7 +65,7 @@ def jensen_cu(a, b, base=2):
 
 a = np.random.rand(4000)
 b = np.random.rand(10000, 4000)
-N = 10000
+N = 100
 
 t0 = time.time()
 
