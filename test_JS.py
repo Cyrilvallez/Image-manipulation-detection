@@ -19,7 +19,7 @@ import hashing.neuralhash as nh
 from scipy.spatial.distance import jensenshannon
 from scipy.stats import entropy
 import cupyx.scipy.special as special
-import cupy
+import cupy as cp
 
 #A = np.random.rand(4000)
 #B = np.random.rand(4000)
@@ -43,17 +43,14 @@ def jensen(a, b, base=2):
 
 def jensen_cu(a, b, base=2):
     
-    A = np.array(a)
-    B = np.array(b)
-    
-    A = A/A.sum()
-    B = B/B.sum()
+    A = a/a.sum()
+    B = b/b.sum()
     
     M = (A+B)/2
     
     div = 1/2*(special.rel_entr(A, M).sum() + special.rel_entr(B, M).sum())
         
-    return np.sqrt(div/np.log(base))
+    return cp.sqrt(div/cp.log(base))
 
 #torch_res = jensen(A,B, base=2)
 #scipy_res = jensenshannon(A, B, base=2)
