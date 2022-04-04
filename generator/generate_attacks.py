@@ -353,7 +353,7 @@ def shearing_attack(path, shearing_angles=(1, 2, 5, 10, 20), **kwargs):
     return out
 
 
-def contrast_attack(path, contrast_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
+def contrast_attack(path, contrast_factors=(0.5, 0.66, 1.5, 2), **kwargs):
     """
     Generates contrast changed versions of the original image
 
@@ -385,7 +385,7 @@ def contrast_attack(path, contrast_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     return out
 
 
-def color_attack(path, color_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
+def color_attack(path, color_factors=(0.5, 0.66, 1.5, 2), **kwargs):
     """
     Generates color changed versions of the original image
 
@@ -417,7 +417,7 @@ def color_attack(path, color_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     return out
 
 
-def brightness_attack(path, brightness_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
+def brightness_attack(path, brightness_factors=(0.5, 0.66, 1.5, 2), **kwargs):
     """
     Generates brightness changed versions of the original image
 
@@ -449,7 +449,7 @@ def brightness_attack(path, brightness_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
     return out
 
 
-def sharpness_attack(path, sharpness_factors=(0.6, 0.8, 1.2, 1.4), **kwargs):
+def sharpness_attack(path, sharpness_factors=(0.5, 0.66, 1.5, 2), **kwargs):
     """
     Generates sharpness changed versions of the original image.
 
@@ -504,7 +504,8 @@ def text_attack(path, text_lengths=(10, 20, 30, 40, 50), **kwargs):
     width, height = image.size
     
     # List of characters for random strings
-    characters = list(string.ascii_uppercase)
+    characters = list(string.ascii_uppercase) + list(string.ascii_lowercase) + \
+        list(string.digits)
     # Get a font. The size is calculated so that it is 40 for a 512 by 512
     # image, and changes linearly from this reference, so it always
     # takes the same relative space on different images

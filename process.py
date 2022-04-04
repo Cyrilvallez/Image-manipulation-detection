@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'SimCLR_JS/'
+EXPERIMENT_NAME = 'test/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -29,7 +29,7 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 #%%
 
-save = False
+save = True
 
 if not os.path.exists(figure_folder + 'General/'):
     os.makedirs(figure_folder + 'General/')
@@ -48,4 +48,4 @@ plot.time_comparison(global_time, db_time, save=save,
 
 #%%
 
-plot.AUC_heatmap(attacks, save=True, filename='test.pdf')
+#plot.AUC_heatmap(attacks, save=True, filename='test.pdf')

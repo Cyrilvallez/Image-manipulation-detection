@@ -21,14 +21,16 @@ random.seed(254)
 params = generator.ATTACK_PARAMETERS
 
 # Number of images on which to perform the attacks in both groups
-N = 1000
+N = 100
+
+dataset = 'BSDS500'
 
 
-path1 = 'Datasets/ILSVRC2012_img_val/Experimental/'
-path2 = 'Datasets/ILSVRC2012_img_val/Control/'
+path1 = f'Datasets/{dataset}/Experimental/'
+path2 = f'Datasets/{dataset}/Control/'
 
-destination1 = 'Datasets/ILSVRC2012_img_val/Experimental_attacks/'
-destination2 = 'Datasets/ILSVRC2012_img_val/Control_attacks/'
+destination1 = f'Datasets/{dataset}/Experimental_attacks/'
+destination2 = f'Datasets/{dataset}/Control_attacks/'
 
 names_experimental = os.listdir(path1)
 names_control = os.listdir(path2)
@@ -47,49 +49,3 @@ generator.perform_all_and_save_list(images_experimental, save_name_list=save_exp
                              extension='PNG', **params)
 generator.perform_all_and_save_list(images_control, save_name_list=save_control,
                              extension='PNG', **params)
-
-#%%
-
-import os
-import generator
-import random
-from tqdm import tqdm
-# Set the seed
-random.seed(254)
-
-N = 100
-params = (0.5, 1.5, 2, 3)
-
-path1 = 'Datasets/BSDS500/Experimental/'
-path2 = 'Datasets/BSDS500/Control/'
-
-destination1 = 'Datasets/BSDS500/Experimental_test/'
-destination2 = 'Datasets/BSDS500/Control_test/'
-
-names_experimental = os.listdir(path1)
-names_control = os.listdir(path2)
-
-names_experimental = [file for file in names_experimental if 'data' in file]
-names_control = [file for file in names_control if 'data' in file]
-
-random.shuffle(names_experimental)
-random.shuffle(names_control)
-
-images_experimental = [path1 + name for name in names_experimental[0:N]]
-images_control = [path2 + name for name in names_control[0:N]]
-
-for image in tqdm(images_experimental):
-    attacks = generator.color_attack(image, params)
-    attacks = {**attacks, **generator.contrast_attack(image, params)}
-    attacks = {**attacks, **generator.sharpness_attack(image, params)}
-    attacks = {**attacks, **generator.brightness_attack(image, params)}
-    
-    generator.save_attack(attacks, save_name=destination1 + image.rsplit('/', 1)[1].rsplit('.')[0])
-    
-for image in tqdm(images_control):
-    attacks = generator.color_attack(image, params)
-    attacks = {**attacks, **generator.contrast_attack(image, params)}
-    attacks = {**attacks, **generator.sharpness_attack(image, params)}
-    attacks = {**attacks, **generator.brightness_attack(image, params)}
-    
-    generator.save_attack(attacks, save_name=destination2 + image.rsplit('/', 1)[1].rsplit('.')[0])

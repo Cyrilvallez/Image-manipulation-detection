@@ -197,3 +197,11 @@ print(f'custom : {dt_custom:.3e} s')
 print(f'\nscipy : {res_scipy:.3e}')
 print(f'torch : {res_torch:.3e}')
 print(f'custom : {res_custom:.3e}')
+
+#%%
+
+import generator 
+
+path = '/Users/cyrilvallez/Desktop/Project/Datasets/BSDS500/Control/data224.jpg'
+
+generator.perform_all_and_save(path, 'test')
