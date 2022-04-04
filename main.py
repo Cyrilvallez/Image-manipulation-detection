@@ -33,17 +33,17 @@ algos = [
     hashing.FeatureAlgorithm('FAST + DAISY', batch_size=512, n_features=30, cutoff=1),
     hashing.FeatureAlgorithm('FAST + LATCH', batch_size=512, n_features=30, cutoff=1),
     hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=512,
-                            device='cuda:1', distance='Jensen-Shannon'),
+                            device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = [
