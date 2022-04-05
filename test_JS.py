@@ -33,7 +33,9 @@ database_original = super(type(algo), algo).create_database(path_database, {})
 
 
 img = algo.preprocess(path_experimental)
+algo.load_model()
 fingerprint = algo.process_batch(img)
+algo.kill_model()
 
 t0 = time.time()
 distances = fingerprint.compute_distances_torch(database_test)
