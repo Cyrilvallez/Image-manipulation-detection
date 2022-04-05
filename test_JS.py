@@ -57,9 +57,6 @@ def jensen_cu(a, b, base=2):
 
 def jensen_array(a, B, base=2):
     
-    a = torch.tensor(a).to('cuda')
-    B = torch.tensor(B).to('cuda')
-    
     a = a/torch.sum(a)
     B = B/torch.sum(B, axis=1)[:,None]
     
@@ -69,7 +66,7 @@ def jensen_array(a, B, base=2):
     
     div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
         
-    return np.array(torch.sqrt(div/np.log(base)).cpu())
+    return torch.sqrt(div/np.log(base)).cpu()
 
 
 def jensen_array2(a, B, base=2):
@@ -83,7 +80,7 @@ def jensen_array2(a, B, base=2):
     
     div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
         
-    return np.array(torch.sqrt(div/np.log(base)).cpu())
+    return torch.sqrt(div/np.log(base)).cpu().numpy()
 
 
 
@@ -93,7 +90,7 @@ from tqdm import tqdm
 
 a = torch.rand(4000)
 b = torch.rand(10000, 4000)
-N = 1000
+N = 10000
 
 t0 = time.time()
 
@@ -101,7 +98,7 @@ for i in tqdm(range(N)):
 
     torch_res = jensen_array(a,b, base=2)
     
-dt_alloc = (time.time() - t0)/N
+dt_torch = (time.time() - t0)/N
 
 
 a = a.to('cuda')
@@ -113,9 +110,9 @@ for i in tqdm(range(N)):
 
     torch_res_without = jensen_array2(a,b, base=2)
 
-dt_without = (time.time() - t0)/N
+dt_numpy = (time.time() - t0)/N
 
 print(f'Same : {np.allclose(torch_res_without, torch_res)}')
 print('\n')
-print(f'With alloc time : {dt_alloc:.2e}')
-print(f'Without alloc time : {dt_without:.2e}')
+print(f'Without conversion time : {dt_torch:.2e}')
+print(f'With conversion time : {dt_numpy:.2e}')
