@@ -19,9 +19,9 @@ import hashing.neuralhash as nh
 from torch.utils.data import Dataset, IterableDataset, DataLoader
 
 algo_ori = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cuda', distance='Jensen-Shannon')
+                        device='cuda', distance='Jensen-Shannon', numpy=True)
 algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cuda', distance='Test_torch')
+                        device='cuda', distance='Test_torch', numpy=False)
 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'

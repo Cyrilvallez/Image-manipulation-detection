@@ -76,6 +76,8 @@ def jensen_shannon_distance(vector, other_vector):
         The Jensen-Shannon distance between both vectors (between 0 and 1).
 
     """
+    
+    vector = vector.cpu()
    
     if len(vector) != len(other_vector):
         raise TypeError('Vectors must be of the same length.')
@@ -147,8 +149,11 @@ class ImageFeatures(object):
     ImageFeatures or databases of ImageFeatures.
     """
     
-    def __init__(self, features, distance='cosine'):
-        self.features = features.squeeze()
+    def __init__(self, features, distance='cosine', numpy=False):
+        if numpy:
+            self.features = features.cpu().numpy().squeeze()
+        else:
+            self.features = features.squeeze()
         if (len(self.features.shape) > 1):
             raise TypeError('ImageFeature array must be 1D')
         self.distance_function = distance
@@ -566,7 +571,7 @@ class NeuralAlgorithm(Algorithm):
     """
     
     def __init__(self, algorithm, hash_size=8, raw_features=False, distance='cosine',
-                 batch_size=512, device='cuda'):
+                 batch_size=512, device='cuda', numpy=True):
         
         super().__init__(algorithm, hash_size, batch_size)
             
@@ -582,6 +587,7 @@ class NeuralAlgorithm(Algorithm):
         self.raw_features = raw_features
         self.distance = distance
         self.device = device
+        self.numpy = numpy
         
         if (not self.raw_features):
             rng = np.random.default_rng(seed=135)
@@ -683,7 +689,7 @@ class NeuralAlgorithm(Algorithm):
         else:
              
             for feature in features:
-                fingerprints.append(ImageFeatures(feature, self.distance))
+                fingerprints.append(ImageFeatures(feature, self.distance, self.numpy))
                 
         return fingerprints  
     
