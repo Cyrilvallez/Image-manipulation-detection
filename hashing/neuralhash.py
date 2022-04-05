@@ -568,7 +568,7 @@ class NeuralAlgorithm(Algorithm):
     def __init__(self, algorithm, hash_size=8, raw_features=False, distance='cosine',
                  batch_size=512, device='cuda'):
         
-        super().__init__(self, algorithm, hash_size, batch_size)
+        super().__init__(algorithm, hash_size, batch_size)
             
         if ('cuda' not in device and device != 'cpu'):
             raise ValueError('device must be either `cuda`, `cuda:X` or `cpu`.')
@@ -693,7 +693,7 @@ class NeuralAlgorithm(Algorithm):
         """
         
         if not self.raw_features:
-            super().create_database(self, path_to_db, time_database={})
+            super().create_database(path_to_db, time_database={})
             
         else:
             
