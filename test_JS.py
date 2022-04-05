@@ -102,7 +102,7 @@ for i in tqdm(range(N)):
 
 dt_torch = (time.time() - t0)/N
 
-print(f'Same : {(scipy_res == torch_res).all()}')
+print(f'Same : {np.allclose(scipy_res, torch_res)}')
 print('\n')
 print(f'Scipy time : {dt_scipy:.2e}')
 print(f'torch time : {dt_torch:.2e}')
