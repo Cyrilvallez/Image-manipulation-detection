@@ -54,12 +54,23 @@ def jensen_cu(a, b, base=2):
         
     return cp.sqrt(div/cp.log(base))
 
-#torch_res = jensen(A,B, base=2)
-#scipy_res = jensenshannon(A, B, base=2)
-#scipy_res = jensen_sc(A, B, base=2)
 
-#print(f'Torch : {torch_res:.3f}')
-#print(f'Scipy : {scipy_res:.3f}')
+def jensen_array(a, B, base=2):
+    
+    a = torch.tensor(a).to('cuda')
+    B = torch.tensor(B).to('cuda')
+    
+    a = a/torch.sum(a)
+    B = B/torch.sum(B, axis=1)[:,None]
+    A = torch.tile(a, (B.shape[0], 1))
+    
+    M = (a+B)/2
+    
+    M = M.log()
+    
+    div = 1/2*(F.kl_div(M, A, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
+        
+    return torch.sqrt(div/np.log(base))
 
 
 #%%
@@ -82,16 +93,14 @@ dt_scipy = (time.time() - t0)/N
 
 
 t0 = time.time()
-c = cp.asarray(a)
-d = cp.asarray(b)
 
 for i in range(N):
 
-    cupyx_res = jensen_cu(c,d, base=2)
+    torch_res = jensen_array(a,b, base=2)
 
-dt_cupy = (time.time() - t0)/N
+dt_torch = (time.time() - t0)/N
 
-print(f'Same : {(scipy_res == cupyx_res).all()}')
+print(f'Same : {(scipy_res == torch_res).all()}')
 print('\n')
 print(f'Scipy time : {dt_scipy:.2e}')
-print(f'Cupy time : {dt_cupy:.2e}')
+print(f'torch time : {dt_torch:.2e}')
