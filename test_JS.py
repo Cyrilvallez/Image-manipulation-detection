@@ -25,7 +25,7 @@ path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 
 path_database = [path_database + file for file in os.listdir(path_database)][0:10000]
-path_experimental = [path_experimental + file for file in os.listdir(path_experimental)][0:10]
+path_experimental = [Image.open(path_experimental + file) for file in os.listdir(path_experimental)[0:1]]
 
 
 database_test = algo.create_database(path_database, {})
