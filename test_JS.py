@@ -45,11 +45,12 @@ def jensen_cu(a, b, base=2):
     
     A = a/a.sum()
     B = b/b.sum(axis=1)[:, None]
+    print(B.shape[0])
     A = cp.tile(A, (B.shape[0], 1))
     
     M = (A+B)/2
     
-    div = 1/2*(special.rel_entr(A, M).sum() + special.rel_entr(B, M).sum())
+    div = 1/2*(special.rel_entr(A, M).sum(axis=1) + special.rel_entr(B, M).sum(axis=1))
         
     return cp.sqrt(div/cp.log(base))
 
