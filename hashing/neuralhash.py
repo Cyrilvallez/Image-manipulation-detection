@@ -76,8 +76,6 @@ def jensen_shannon_distance(vector, other_vector):
         The Jensen-Shannon distance between both vectors (between 0 and 1).
 
     """
-    
-    vector = vector.cpu()
    
     if len(vector) != len(other_vector):
         raise TypeError('Vectors must be of the same length.')
