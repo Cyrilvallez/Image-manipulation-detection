@@ -38,11 +38,11 @@ fingerprint = algo.process_batch(img)
 algo.kill_model()
 
 t0 = time.time()
-distances = fingerprint.compute_distances_torch(database_test)
+distances = fingerprint[0].compute_distances_torch(database_test)
 dt_new = time.time() - t0
 
 t0 = time.time()
-distances2 = fingerprint.compute_distances(database_original)
+distances2 = fingerprint[0].compute_distances(database_original)
 dt_old = time.time() - t0
 
 print(f'Same : {np.allclose(distances, distances2)}')
