@@ -99,9 +99,7 @@ t0 = time.time()
 
 for i in tqdm(range(N)):
 
-    for i in tqdm(range(N)):
-
-        torch_res = jensen_array(a,b, base=2)
+    torch_res = jensen_array(a,b, base=2)
     
 dt_alloc = (time.time() - t0)/N
 
