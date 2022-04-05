@@ -75,13 +75,15 @@ def jensen_array(a, B, base=2):
 
 #%%
 
+from tqdm import tqdm 
+
 a = np.random.rand(4000)
 b = np.random.rand(10000, 4000)
 N = 100
 
 t0 = time.time()
 
-for i in range(N):
+for i in tqdm(range(N)):
 
     scipy_res = []
     for vec in b:
@@ -94,7 +96,7 @@ dt_scipy = (time.time() - t0)/N
 
 t0 = time.time()
 
-for i in range(N):
+for i in tqdm(range(N)):
 
     torch_res = jensen_array(a,b, base=2)
 
