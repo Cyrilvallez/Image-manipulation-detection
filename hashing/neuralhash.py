@@ -85,10 +85,8 @@ def jensen_shannon_distance(vector, other_vector):
 
 def jensen_distance_torch(a, B, base=2):
     
-    #a = a/torch.sum(a)
-    #B = B/torch.sum(B, axis=1)[:,None]
-    a = F.softmax(a)
-    B = F.softmax(B, dim=1)
+    a = a/torch.sum(a)
+    B = B/torch.sum(B, axis=1)[:,None]
     
     M = (a+B)/2
     
@@ -98,6 +96,8 @@ def jensen_distance_torch(a, B, base=2):
                F.kl_div(M, B, reduction='none').sum(dim=1))
         
     return torch.sqrt(div/np.log(base)).cpu().numpy()
+    
+    #X = torch.where(())
 
 
 def norm(ord):

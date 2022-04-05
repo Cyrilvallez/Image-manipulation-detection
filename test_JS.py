@@ -17,6 +17,7 @@ import os
 import hashing
 import hashing.neuralhash as nh
 from torch.utils.data import Dataset, IterableDataset, DataLoader
+import scipy.spatial.distance as distance
 
 algo_ori = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
                         device='cpu', distance='Jensen-Shannon', numpy=True)
@@ -26,7 +27,7 @@ algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 
-path_database = [path_database + file for file in os.listdir(path_database)][0:10000]
+path_database = [path_database + file for file in os.listdir(path_database)][0:500]
 path_experimental = [Image.open(path_experimental + file) for file in os.listdir(path_experimental)[10001:10002]]
 
 
@@ -73,7 +74,6 @@ for images, image_names, attack_names in dataloader:
 
 #%%
 
-"""
 index = 0
 
 a = fingerprint_ori[0].features
@@ -81,5 +81,23 @@ b = database_test[0][index].numpy()
 
 m = (a+b)/2
 
-res = a*(np.log(a/m))
-"""
+out1 = np.empty(len(a))
+out2 = np.empty(len(a))
+
+for i in range(len(a)):
+    
+    if a[i] > 0 and m[i] > 0:
+        out1[i] = a[i]*np.log(a[i]/m[i])
+    elif a[i] == 0 and m[i] >= 0:
+        out1[i] = 0
+    else:
+        out1[i] = float('inf')
+        
+    if b[i] > 0 and m[i] > 0:
+        out2[i] = b[i]*np.log(b[i]/m[i])
+    elif b[i] == 0 and m[i] >= 0:
+        out2[i] = 0
+    else:
+        out2[i] = float('inf')
+
+
