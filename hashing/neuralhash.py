@@ -265,6 +265,8 @@ class ImageFeatures(object):
     
     def compute_distances_torch(self, database):
         
+        print(self.features.device)
+        print(database[0].device)
         assert(self.features.device == database[0].device)
         print(self.features.device)
         
