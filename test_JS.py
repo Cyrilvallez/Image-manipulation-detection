@@ -95,6 +95,8 @@ N = 10000
 a = a.to('cuda')
 b = b.to('cuda')
 
+print(f'{(b.element_size() * b.nelement())/1e9} Gb')
+
 t0 = time.time()
 
 for i in tqdm(range(N)):
