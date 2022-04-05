@@ -706,8 +706,8 @@ class NeuralAlgorithm(Algorithm):
         
             t0 = time.time()
         
-            features = torch.zeros(len(dataset), self.features_size, device=self.device)
-            names = []
+            features = torch.empty((len(dataset), self.features_size), device=self.device)
+            names = np.empty(len(dataset), dtype=object)
             start = 0
         
             for images, image_names in dataloader:
@@ -717,14 +717,14 @@ class NeuralAlgorithm(Algorithm):
                     feature = self.model(imgs)  
                     
                 features[start:start+len(image_names), :] = feature
-                names.append(image_names)
+                names[start:start+len(image_names)] = image_names
                 start += len(image_names)
                 
             time_database[str(self)] = time.time() - t0
         
             self.kill_model()
         
-            return (features, np.array(names))
+            return (features, names)
         
         
         
