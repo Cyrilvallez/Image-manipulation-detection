@@ -18,8 +18,8 @@ import hashing
 import hashing.neuralhash as nh
 from scipy.spatial.distance import jensenshannon
 from scipy.stats import entropy
-import cupyx.scipy.special as special
-import cupy as cp
+#import cupyx.scipy.special as special
+#import cupy as cp
 
 #A = np.random.rand(4000)
 #B = np.random.rand(4000)
@@ -62,47 +62,62 @@ def jensen_array(a, B, base=2):
     
     a = a/torch.sum(a)
     B = B/torch.sum(B, axis=1)[:,None]
-    A = torch.tile(a, (B.shape[0], 1))
     
     M = (a+B)/2
     
     M = M.log()
     
-    div = 1/2*(F.kl_div(M, A, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
+    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
         
     return np.array(torch.sqrt(div/np.log(base)).cpu())
+
+
+def jensen_array2(a, B, base=2):
+    
+    a = a/torch.sum(a)
+    B = B/torch.sum(B, axis=1)[:,None]
+    
+    M = (a+B)/2
+    
+    M = M.log()
+    
+    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
+        
+    return np.array(torch.sqrt(div/np.log(base)).cpu())
+
 
 
 #%%
 
 from tqdm import tqdm 
 
-a = np.random.rand(4000)
-b = np.random.rand(10000, 4000)
-N = 100
+a = torch.rand(4000)
+b = torch.rand(10000, 4000)
+N = 1000
 
 t0 = time.time()
 
 for i in tqdm(range(N)):
 
-    scipy_res = []
-    for vec in b:
-        scipy_res.append(jensenshannon(a, vec, base=2))
-    scipy_res = np.array(scipy_res)
+    for i in tqdm(range(N)):
+
+        torch_res = jensen_array(a,b, base=2)
     
-dt_scipy = (time.time() - t0)/N
+dt_alloc = (time.time() - t0)/N
 
 
+a = a.to('cuda')
+b = b.to('cuda')
 
 t0 = time.time()
 
 for i in tqdm(range(N)):
 
-    torch_res = jensen_array(a,b, base=2)
+    torch_res_without = jensen_array2(a,b, base=2)
 
-dt_torch = (time.time() - t0)/N
+dt_without = (time.time() - t0)/N
 
-print(f'Same : {np.allclose(scipy_res, torch_res)}')
+print(f'Same : {np.allclose(torch_res_without, torch_res)}')
 print('\n')
-print(f'Scipy time : {dt_scipy:.2e}')
-print(f'torch time : {dt_torch:.2e}')
+print(f'With alloc time : {dt_alloc:.2e}')
+print(f'Without alloc time : {dt_without:.2e}')
