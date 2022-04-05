@@ -26,8 +26,8 @@ algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 
-path_database = [path_database + file for file in os.listdir(path_database)][0:10]
-path_experimental = [Image.open(path_experimental + file) for file in os.listdir(path_experimental)[0:1]]
+path_database = [path_database + file for file in os.listdir(path_database)][0:10000]
+path_experimental = [Image.open(path_experimental + file) for file in os.listdir(path_experimental)[10001:10002]]
 
 
 database_test = algo_test.create_database(path_database, {})
@@ -53,7 +53,7 @@ distances2 = fingerprint_ori[0].compute_distances(database_original)[0]
 dt_ori = time.time() - t0
 
 print(f'Same : {np.allclose(distances, distances2)}')
-print(f'N > 1e-10 : {(abs(distances - distances2) > 1e-10).sum()}')
+print(f'N > 1e-10 : {(abs(distances - distances2) > 1e-8).sum()}')
 print(f'time test: {dt_test:.2e}')
 print(f'time original : {dt_ori:.2e}')
 
@@ -72,6 +72,7 @@ for images, image_names, attack_names in dataloader:
 """
 
 #%%
+
 """
 index = 0
 
