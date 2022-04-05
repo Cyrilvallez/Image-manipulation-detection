@@ -112,7 +112,7 @@ for i in tqdm(range(N)):
 
 dt_numpy = (time.time() - t0)/N
 
-print(f'Same : {np.allclose(torch_res_without, torch_res)}')
+print(f'Same : {np.allclose(torch_res_without, torch_res.cpu().numpy())}')
 print('\n')
 print(f'Without conversion time : {dt_torch:.2e}')
 print(f'With conversion time : {dt_numpy:.2e}')

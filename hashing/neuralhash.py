@@ -133,6 +133,7 @@ def norm(ord):
 DISTANCE_FUNCTIONS = {
     'cosine': cosine_distance,
     'Jensen-Shannon': jensen_shannon_distance,
+    'Test_torch': jensen_distance_torch,
     'L2': norm(2),
     'L1': norm(1),
 }
