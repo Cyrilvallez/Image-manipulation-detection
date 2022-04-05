@@ -66,7 +66,7 @@ def jensen_array(a, B, base=2):
     
     div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
         
-    return torch.sqrt(div/np.log(base)).cpu()
+    return torch.sqrt(div/np.log(base))
 
 
 def jensen_array2(a, B, base=2):

@@ -14,6 +14,7 @@ import numpy as np
 import os
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import torchvision.transforms as T
 import torchvision.models as models
 import scipy.spatial.distance as distance
@@ -78,6 +79,20 @@ def jensen_shannon_distance(vector, other_vector):
         raise TypeError('Vectors must be of the same length.')
         
     return distance.jensenshannon(vector, other_vector, base=2)
+
+
+def jensen_distance_torch(a, B, base=2):
+    
+    a = a/torch.sum(a)
+    B = B/torch.sum(B, axis=1)[:,None]
+    
+    M = (a+B)/2
+    
+    M = M.log()
+    
+    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
+        
+    return torch.sqrt(div/np.log(base)).cpu().numpy()
 
 
 def norm(ord):
