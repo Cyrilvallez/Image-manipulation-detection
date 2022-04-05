@@ -88,14 +88,23 @@ def jensen_distance_torch(a, B, base=2):
     a = a/torch.sum(a)
     B = B/torch.sum(B, axis=1)[:,None]
     
-    M = (a+B)/2
+    A = torch.tile(a, (B.shape[0], 1))
+    M = (A+B)/2
     
-    M = torch.log(M)
+    X = torch.where((A>0) & (M>0), A*torch.log(A/M), torch.tensor([0.]))
+    #X[(A==0) & (M>=0)] = float('inf')
     
-    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + \
-               F.kl_div(M, B, reduction='none').sum(dim=1))
+    Y = torch.where((B>0) & (M>0), B*torch.log(B/M), torch.tensor([0.]))
+    #Y[(B==0) & (M>=0)] = float('inf')
+    
+    return torch.sqrt(1/2*(X + Y).sum(dim=1)/np.log(base)).cpu().numpy()
+    
+    #M = torch.log(M)
+    
+    #div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + \
+    #           F.kl_div(M, B, reduction='none').sum(dim=1))
         
-    return torch.sqrt(div/np.log(base)).cpu().numpy()
+    #return torch.sqrt(div/np.log(base)).cpu().numpy()
     
     #X = torch.where(())
 

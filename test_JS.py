@@ -20,15 +20,15 @@ from torch.utils.data import Dataset, IterableDataset, DataLoader
 import scipy.spatial.distance as distance
 
 algo_ori = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cpu', distance='Jensen-Shannon', numpy=True)
+                        device='cuda', distance='Jensen-Shannon', numpy=True)
 algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cpu', distance='Test_torch', numpy=False)
+                        device='cuda', distance='Test_torch', numpy=False)
 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 
-path_database = [path_database + file for file in os.listdir(path_database)][0:500]
-path_experimental = [Image.open(path_experimental + file) for file in os.listdir(path_experimental)[10001:10002]]
+path_database = [path_database + file for file in os.listdir(path_database)][0:1000]
+path_experimental = [Image.open(path_experimental + file) for file in os.listdir(path_experimental)[0:1]]
 
 
 database_test = algo_test.create_database(path_database, {})
@@ -73,7 +73,7 @@ for images, image_names, attack_names in dataloader:
 """
 
 #%%
-
+"""
 index = 0
 
 a = fingerprint_ori[0].features
@@ -100,4 +100,4 @@ for i in range(len(a)):
     else:
         out2[i] = float('inf')
 
-
+"""
