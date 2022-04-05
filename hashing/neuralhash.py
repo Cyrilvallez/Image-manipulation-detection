@@ -91,10 +91,10 @@ def jensen_distance_torch(a, B, base=2):
     A = torch.tile(a, (B.shape[0], 1))
     M = (A+B)/2
     
-    X = torch.where((A>0) & (M>0), A*torch.log(A/M), torch.tensor([0.]))
+    X = torch.where((A>0) & (M>0), A*torch.log(A/M), torch.tensor([0.], device=a.device))
     #X[(A==0) & (M>=0)] = float('inf')
     
-    Y = torch.where((B>0) & (M>0), B*torch.log(B/M), torch.tensor([0.]))
+    Y = torch.where((B>0) & (M>0), B*torch.log(B/M), torch.tensor([0.], device=a.device))
     #Y[(B==0) & (M>=0)] = float('inf')
     
     return torch.sqrt(1/2*(X + Y).sum(dim=1)/np.log(base)).cpu().numpy()
