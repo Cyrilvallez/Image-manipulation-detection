@@ -92,6 +92,9 @@ a = torch.rand(4000)
 b = torch.rand(10000, 4000)
 N = 10000
 
+a = a.to('cuda')
+b = b.to('cuda')
+
 t0 = time.time()
 
 for i in tqdm(range(N)):
@@ -100,9 +103,6 @@ for i in tqdm(range(N)):
     
 dt_torch = (time.time() - t0)/N
 
-
-a = a.to('cuda')
-b = b.to('cuda')
 
 t0 = time.time()
 
