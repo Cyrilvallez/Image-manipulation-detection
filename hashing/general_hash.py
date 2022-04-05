@@ -503,10 +503,15 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
                     {'detection':0, 'no detection':0}
                     
             image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] = {}
-            for name in databases[0].keys():
-                image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
-                    {'correct detection':0, 'incorrect detection':0}
-            
+            if type(databases[0]) == dict:
+                for name in databases[0].keys():
+                    image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
+                        {'correct detection':0, 'incorrect detection':0}
+                        
+            elif type(databases[0]) == tuple:
+                for name in databases[0][1]:
+                    image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
+                        {'correct detection':0, 'incorrect detection':0}
             
     # Matching logic : First create the images with modifications, then loop
     # over each algorithm and thresholds. The creation of attacks on images is

@@ -16,105 +16,33 @@ import torch.nn.functional as F
 import os
 import hashing
 import hashing.neuralhash as nh
-from scipy.spatial.distance import jensenshannon
-from scipy.stats import entropy
-#import cupyx.scipy.special as special
-#import cupy as cp
 
-#A = np.random.rand(4000)
-#B = np.random.rand(4000)
+algo = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
+                        device='cuda', distance='Jensen-Shannon')
 
+path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
+path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 
-def jensen(a, b, base=2):
-    
-    A = torch.tensor(a)
-    B = torch.tensor(b)
-    
-    A = A/torch.sum(A)
-    B = B/torch.sum(B)
-    
-    M = (A+B)/2
-    
-    M = M.log()
-    
-    div = 1/2*(F.kl_div(M, A, reduction='sum') + F.kl_div(M, B, reduction='sum'))
-        
-    return torch.sqrt(div/np.log(base))
-
-def jensen_cu(a, b, base=2):
-    
-    A = a/a.sum()
-    B = b/b.sum(axis=1)[:, None]
-    print(B.shape[0])
-    A = cp.tile(A, (B.shape[0], 1))
-    
-    M = (A+B)/2
-    
-    div = 1/2*(special.rel_entr(A, M).sum(axis=1) + special.rel_entr(B, M).sum(axis=1))
-        
-    return cp.sqrt(div/cp.log(base))
+path_database = [path_database + file for file in os.listdir(path_database)][0:10000]
+path_experimental = [path_experimental + file for file in os.listdir(path_experimental)][0:1]
 
 
-def jensen_array(a, B, base=2):
-    
-    a = a/torch.sum(a)
-    B = B/torch.sum(B, axis=1)[:,None]
-    
-    M = (a+B)/2
-    
-    M = M.log()
-    
-    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
-        
-    return torch.sqrt(div/np.log(base))
+database_test = algo.create_database(path_database, {})
+database_original = super(type(algo), algo).create_database(path_database, {})
 
 
-def jensen_array2(a, B, base=2):
-    
-    a = a/torch.sum(a)
-    B = B/torch.sum(B, axis=1)[:,None]
-    
-    M = (a+B)/2
-    
-    M = M.log()
-    
-    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
-        
-    return torch.sqrt(div/np.log(base)).cpu().numpy()
-
-
-
-#%%
-
-from tqdm import tqdm 
-
-a = torch.rand(4000)
-b = torch.rand(10000, 4000)
-N = 10000
-
-a = a.to('cuda')
-b = b.to('cuda')
-
-print(f'{(b.element_size() * b.nelement())/1e9} Gb')
+img = algo.preprocess(path_experimental)
+fingerprint = algo.process_batch(img)
 
 t0 = time.time()
-
-for i in tqdm(range(N)):
-
-    torch_res = jensen_array(a,b, base=2)
-    
-dt_torch = (time.time() - t0)/N
-
+distances = fingerprint.compute_distances_torch(database_test)
+dt_new = time.time() - t0
 
 t0 = time.time()
+distances2 = fingerprint.compute_distances(database_original)
+dt_old = time.time() - t0
 
-for i in tqdm(range(N)):
-
-    torch_res_without = jensen_array2(a,b, base=2)
-
-dt_numpy = (time.time() - t0)/N
-
-print(f'Same : {np.allclose(torch_res_without, torch_res.cpu().numpy())}')
-print('\n')
-print(f'Without conversion time : {dt_torch:.2e}')
-print(f'With conversion time : {dt_numpy:.2e}')
+print(f'Same : {np.allclose(distances, distances2)}')
+print(f'N > 1e-10 : {(abs(distances - distances2) > 1e-10).sum()}')
+print(f'time new : {dt_new:.2e}')
+print(f'time old : {dt_old:.2e}')

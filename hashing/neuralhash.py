@@ -17,11 +17,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as T
 import torchvision.models as models
+from torch.utils.data import DataLoader
 import scipy.spatial.distance as distance
 from hashing.imagehash import ImageHash
-from hashing.general_hash import Algorithm
+from hashing.general_hash import Algorithm, DatabaseDataset, collate
 from hashing.SimCLRv1 import resnet_wider as SIMv1
 from hashing.SimCLRv2 import resnet as SIMv2
+import time
 
 path = os.path.abspath(__file__)
 current_folder = os.path.dirname(path)
@@ -260,6 +262,15 @@ class ImageFeatures(object):
             names.append(key)
         
         return (np.array(distances), np.array(names))
+    
+    def compute_distances_torch(self, database):
+        
+        assert(self.features.device == database[0].device)
+        print(self.features.device)
+        
+        distances = DISTANCE_FUNCTIONS[self.distance_function](self.features, database[0])
+        
+        return (distances, database[1])
     
     
     
@@ -557,7 +568,7 @@ class NeuralAlgorithm(Algorithm):
     def __init__(self, algorithm, hash_size=8, raw_features=False, distance='cosine',
                  batch_size=512, device='cuda'):
         
-        Algorithm.__init__(self, algorithm, hash_size, batch_size)
+        super().__init__(self, algorithm, hash_size, batch_size)
             
         if ('cuda' not in device and device != 'cpu'):
             raise ValueError('device must be either `cuda`, `cuda:X` or `cpu`.')
@@ -674,6 +685,46 @@ class NeuralAlgorithm(Algorithm):
                 fingerprints.append(ImageFeatures(feature, self.distance))
                 
         return fingerprints  
+    
+    
+    def create_database(self, path_to_db, time_database={}):
+        """
+        Overload database creation for efficient distance computation on GPU.
+        """
+        
+        if not self.raw_features:
+            super().create_database(self, path_to_db, time_database={})
+            
+        else:
+            
+            self.load_model()
+        
+            # Creates the dataloader to easily iterate on images
+            dataset = DatabaseDataset(path_to_db)
+            dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=False,
+                                collate_fn=collate)
+        
+            t0 = time.time()
+        
+            features = torch.zeros(len(dataset), self.features_size, device=self.device)
+            names = []
+            start = 0
+        
+            for images, image_names in dataloader:
+            
+                imgs = self.preprocess(images)
+                with torch.no_grad():
+                    feature = self.model(imgs)  
+                    
+                features[start:start+len(image_names), :] = feature
+                names.append(image_names)
+                start += len(image_names)
+                
+            time_database[str(self)] = time.time() - t0
+        
+            self.kill_model()
+        
+            return (features, np.array(names))
         
         
         
