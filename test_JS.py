@@ -19,9 +19,9 @@ import hashing.neuralhash as nh
 from torch.utils.data import Dataset, IterableDataset, DataLoader
 
 algo_ori = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cuda', distance='Jensen-Shannon', numpy=True)
+                        device='cpu', distance='Jensen-Shannon', numpy=True)
 algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cuda', distance='Test_torch', numpy=False)
+                        device='cpu', distance='Test_torch', numpy=False)
 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
@@ -45,17 +45,17 @@ fingerprint_ori = algo_ori.process_batch(img_ori)
 algo_ori.kill_model()
 
 t0 = time.time()
-distances = fingerprint_test[0].compute_distances_torch(database_test)
-dt_new = time.time() - t0
+distances = fingerprint_test[0].compute_distances_torch(database_test)[0]
+dt_test = time.time() - t0
 
 t0 = time.time()
-distances2 = fingerprint_ori[0].compute_distances(database_original)
-dt_old = time.time() - t0
+distances2 = fingerprint_ori[0].compute_distances(database_original)[0]
+dt_ori = time.time() - t0
 
-print(f'Same : {np.allclose(distances[0], distances2[0])}')
-print(f'N > 1e-10 : {(abs(distances[0] - distances2[0]) > 1e-10).sum()}')
-print(f'time new : {dt_new:.2e}')
-print(f'time old : {dt_old:.2e}')
+print(f'Same : {np.allclose(distances, distances2)}')
+print(f'N > 1e-10 : {(abs(distances - distances2) > 1e-10).sum()}')
+print(f'time test: {dt_test:.2e}')
+print(f'time original : {dt_ori:.2e}')
 
 #%%
 """
@@ -69,4 +69,16 @@ dataloader = DataLoader(dataset, batch_size=100, shuffle=False,
 
 for images, image_names, attack_names in dataloader:
     pass
+"""
+
+#%%
+"""
+index = 0
+
+a = fingerprint_ori[0].features
+b = database_test[0][index].numpy()
+
+m = (a+b)/2
+
+res = a*(np.log(a/m))
 """

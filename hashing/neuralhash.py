@@ -91,8 +91,11 @@ def jensen_distance_torch(a, B, base=2):
     M = (a+B)/2
     
     M = M.log()
+    a = a.log()
+    B = B.log()
     
-    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + F.kl_div(M, B, reduction='none').sum(dim=1))
+    div = 1/2*(F.kl_div(M, a, reduction='none', log_target=True).sum(dim=1) + \
+               F.kl_div(M, B, reduction='none', log_target=True).sum(dim=1))
         
     return torch.sqrt(div/np.log(base)).cpu().numpy()
 
