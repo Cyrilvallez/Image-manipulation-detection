@@ -265,8 +265,6 @@ class ImageFeatures(object):
     
     def compute_distances_torch(self, database):
         
-        print(self.features.device)
-        print(database[0].device)
         assert(self.features.device == database[0].device)
         print(self.features.device)
         
@@ -667,7 +665,7 @@ class NeuralAlgorithm(Algorithm):
         
         with torch.no_grad():
             try:
-                features = self.model(preprocessed_images).cpu().numpy()
+                features = self.model(preprocessed_images)
             except AttributeError:
                 raise AttributeError('The model has not been loaded before processing batch !')
                 
@@ -676,6 +674,7 @@ class NeuralAlgorithm(Algorithm):
         if (not self.raw_features):
             # Computes the dot products between each image and the hyperplanes and
             # Select the bits depending on orientation 
+            features = features.cpu().numpy()
             img_hashes = features @ self.hyperplanes > 0
             
             for img_hash in img_hashes:
