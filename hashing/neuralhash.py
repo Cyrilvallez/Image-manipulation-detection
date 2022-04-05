@@ -148,7 +148,7 @@ class ImageFeatures(object):
     """
     
     def __init__(self, features, distance='cosine'):
-        self.features = np.array(features).squeeze()
+        self.features = features.squeeze()
         if (len(self.features.shape) > 1):
             raise TypeError('ImageFeature array must be 1D')
         self.distance_function = distance
