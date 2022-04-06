@@ -116,8 +116,8 @@ func = nh.norm(1)
 a = (torch.rand(4000) - 0.5).to(device)
 b = (torch.rand(10000, 4000) - 0.5).to(device)
 
-a_np = a.numpy()
-b_np = b.numpy()
+a_np = a.cpu().numpy()
+b_np = b.cpu().numpy()
 
 t0 = time.time()
 res1 = func(a,b)
