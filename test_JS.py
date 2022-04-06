@@ -54,7 +54,7 @@ distances2 = fingerprint_ori[0].compute_distances(database_original)[0]
 dt_ori = time.time() - t0
 
 print(f'Same : {np.allclose(distances, distances2)}')
-print(f'N > 1e-6 : {(abs(distances - distances2) > 1e-6).sum()} out of {len(distances)}')
+print(f'N > 1e-4 : {(abs(distances - distances2) > 1e-4).sum()} out of {len(distances)}')
 print(f'time test: {dt_test:.2e}')
 print(f'time original : {dt_ori:.2e}')
 print(distances[0])
