@@ -112,6 +112,7 @@ from hashing import neuralhash as nh
 
 device = torch.device('cuda')
 func = nh.norm(1)
+N = 100
 
 a = (torch.rand(4000) - 0.5).to(device)
 b = (torch.rand(10000, 4000) - 0.5).to(device)
@@ -120,18 +121,20 @@ a_np = a.cpu().numpy()
 b_np = b.cpu().numpy()
 
 t0 = time.time()
-res1 = func(a,b)
-dt_new = time.time() - t0
+for i in range(N):
+    res1 = func(a,b)
+dt_new = (time.time() - t0)/N
 
 t0 = time.time()
 res2 = []
-for vec in b_np:
-    res = np.linalg.norm(a_np - vec, ord=1)
-    res2.append(res)
+for i in range(N):
+    for vec in b_np:
+        res = np.linalg.norm(a_np - vec, ord=1)
+        res2.append(res)
     
 res2 = np.array(res2)
 
-dt_old = time.time() - t0
+dt_old = (time.time() - t0)/N
 
 print(np.allclose(res1, res2))
 print(f'New way : {dt_new:.2e}')
