@@ -126,8 +126,8 @@ for i in range(N):
 dt_new = (time.time() - t0)/N
 
 t0 = time.time()
-res2 = []
 for i in range(N):
+    res2 = []
     for vec in b_np:
         res = np.linalg.norm(a_np - vec, ord=1)
         res2.append(res)
