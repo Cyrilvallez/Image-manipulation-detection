@@ -83,7 +83,7 @@ def jensen_shannon_distance(vector, other_vector):
         
     return distance.jensenshannon(vector, other_vector, base=2)
 
-
+"""
 def jensen_distance_torch(a, B, base=2):
     
     a = a/torch.sum(a)
@@ -107,8 +107,22 @@ def jensen_distance_torch(a, B, base=2):
         
     #return torch.sqrt(div/np.log(base)).cpu().numpy()
     
-    #X = torch.where(())
+"""
 
+def jensen_distance_torch(a, B, base=2):
+    
+    a = a/torch.sum(a)
+    B = B/torch.sum(B, axis=1)[:,None]
+    
+    M = (a+B)/2
+    
+    M = torch.log(M)
+    
+    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + \
+               F.kl_div(M, B, reduction='none').sum(dim=1))
+        
+    return torch.sqrt(div/np.log(base)).cpu().numpy()
+    
 
 def norm(ord):
     """
