@@ -115,7 +115,7 @@ func = nh.norm(1)
 N = 100
 
 a = (torch.rand(4000) - 0.5).to(device)
-b = (torch.rand(10000, 4000) - 0.5).to(device)
+b = (torch.rand(250, 4000) - 0.5).to(device)
 
 a_np = a.cpu().numpy()
 b_np = b.cpu().numpy()
