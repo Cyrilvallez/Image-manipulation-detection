@@ -31,11 +31,11 @@ algos = [
     # hashing.FeatureAlgorithm('SIFT', batch_size=1000, n_features=30, cutoff=1),
     #hashing.FeatureAlgorithm('ORB', batch_size=1000, n_features=30, cutoff=1),
     # hashing.FeatureAlgorithm('FAST + DAISY', batch_size=1000, n_features=30, cutoff=1),
-    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1000, n_features=30, cutoff=1),
-    #hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=64,
-    #                        device='cuda', distance='Jensen-Shannon'),
-    # hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=64,
-                            # device='cuda', distance='Jensen-Shannon'),
+    # hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1000, n_features=30, cutoff=1),
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=64,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=64,
+                            device='cuda', distance='Jensen-Shannon'),
     # hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=64,
                             # device='cuda', distance='Jensen-Shannon'),
     # hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=64,
@@ -56,9 +56,9 @@ thresholds = [
     # np.linspace(0, 300, 20),
     # np.linspace(0, 0.3, 20),
     # np.linspace(0, 0.4, 20),
-    np.linspace(0.1, 0.4, 20),
-    # np.linspace(0.15, 0.65, 20),
-    # np.linspace(0.3, 0.9, 20),
+    # np.linspace(0.1, 0.4, 20),
+    np.linspace(0.15, 0.65, 20),
+    np.linspace(0.3, 0.9, 20),
     # np.linspace(0.2, 0.6, 20),
     # np.linspace(0.2, 0.6, 20),
     # np.linspace(0.3, 0.8, 20),
@@ -73,6 +73,6 @@ negative_dataset = hashing.create_dataset(path_control, fraction=1000/25000,
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=1000)
+                               negative_dataset, general_batch_size=64)
 
 utils.save_digest(digest, save_folder)
