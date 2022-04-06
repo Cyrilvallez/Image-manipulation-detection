@@ -53,7 +53,7 @@ for name in names:
 
 #%%
 
-name = 'ResNet50 2x'
+name = 'ResNet101 2x'
 model = nh.NEURAL_MODEL_LOADER[name]('cpu')
 img = nh.NEURAL_MODEL_TRANSFORMS[name](image).unsqueeze(dim=0)
 with torch.no_grad():
