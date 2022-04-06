@@ -1,0 +1,21 @@
+---
+name : Benchmark_neural1_ImageNet
+date generated: Wednesday 06/04/2022
+GPU(s): 1 a100
+CPUs: 6
+dataset used: ImageNet with full database and fraction 1000/25000 
+thresholds: thresholds = [
+    np.linspace(0.15, 0.65, 20),
+    np.linspace(0.3, 0.9, 20),
+    ]
+algorithms:  [
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=64,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=64,
+                            device='cuda', distance='Jensen-Shannon'),
+    ]
+general batch size: 64
+
+---
+purpose: |
+Perform experiments with Inception and EfficientNet on ImageNet and benchmark it for paper.
