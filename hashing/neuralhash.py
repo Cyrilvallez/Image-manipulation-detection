@@ -350,8 +350,8 @@ def load_efficientnet_b7(device='cuda'):
     
     # Load the model 
     efficientnet = models.efficientnet_b7(pretrained=True)
-    # Overrides last Linear layer
-    efficientnet.classifier = nn.Identity()
+    # Overrides last Linear layer and adds a relu instead 
+    efficientnet.classifier = nn.ReLU()
     efficientnet.eval()
     efficientnet.to(torch.device(device))
     
