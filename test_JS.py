@@ -111,7 +111,7 @@ for i in range(len(a)):
 from hashing import neuralhash as nh
 
 device = torch.device('cuda')
-func = nh.norm(1)
+func = nh.cosine_distance
 N = 100
 
 a = (torch.rand(4000) - 0.5).to(device)
@@ -129,8 +129,8 @@ t0 = time.time()
 for i in range(N):
     res2 = []
     for vec in b_np:
-        res = np.linalg.norm(a_np - vec, ord=1)
-        res2.append(res)
+        res = np.dot(a_np, vec)/np.linalg.norm(a_np, ord=2)/np.linalg.norm(vec, ord=2)
+        res2.append(1/2-1/2*res)
     
 res2 = np.array(res2)
 
