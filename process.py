@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'TestEfficientNet/'
+EXPERIMENT_NAME = 'Benchmark_general_BSDS500/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -44,7 +44,7 @@ plot.metrics_plot(general, save=save,
                   filename=figure_folder + 'General/Metrics')
 plot.time_comparison(global_time, db_time, save=save,
                      filename=figure_folder + 'General/time.pdf')
-plot.AUC_heatmap(attacks, save=True, filename=figure_folder + 'General/AUC')
+plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
 
 
 #%%
