@@ -129,4 +129,25 @@ res = jensen_distance_torch(a, b)
 a = a.numpy()
 b = b.numpy()
 
+#%%
 
+from hashing import neuralhash as nh
+
+func = nh.norm(1)
+
+a = torch.rand(2000) - 0.5
+b = torch.rand(10, 2000) - 0.5
+
+a_np = a.numpy()
+b_np = b.numpy()
+
+res1 = func(a,b)
+res2 = []
+for vec in b_np:
+    res = np.linalg.norm(a_np - vec, ord=1)
+    res2.append(res)
+    
+
+res2 = np.array(res2)
+
+print(np.allclose(res1, res2))

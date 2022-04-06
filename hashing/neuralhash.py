@@ -18,123 +18,89 @@ import torch.nn.functional as F
 import torchvision.transforms as T
 import torchvision.models as models
 from torch.utils.data import DataLoader
-import scipy.spatial.distance as distance
 from hashing.imagehash import ImageHash
 from hashing.general_hash import Algorithm, DatabaseDataset, collate
 from hashing.SimCLRv1 import resnet_wider as SIMv1
 from hashing.SimCLRv2 import resnet as SIMv2
 import time
-from tqdm import tqdm
 
 path = os.path.abspath(__file__)
 current_folder = os.path.dirname(path)
+        
 
-def cosine_distance(vector, other_vector):
+def cosine_distance(vector, database):
     """
-    Cosine distance between two vectors.
+    Cosine distance between a vector and a database of vectors. 
+    This can be computed on GPU and it thus way faster than on CPU.
 
     Parameters
     ----------
-    vector, other_vector : arrays
-        Vectors to compare.
-
-    Raises
-    ------
-    TypeError
-        If both vectors are not the same length.
+    vector : array
+        Vectors to compare to database.
+    database : array
+        The database.
 
     Returns
     -------
     Float
-        The cosine distance between both vectors (between 0 and 1).
+        The cosine distance between vector and each vector of the 
+        database (between 0 and 1).
 
     """
     
-    if len(vector) != len(other_vector):
-        raise TypeError('Vectors must be of the same length.')
+    dot_product = (vector*database).sum(dim=1)
+    distance = dot_product/torch.linalg.vector_norm(vector, ord=2)/ \
+        torch.linalg.vector_norm(database, ord=2, dim=1)
     
-    return 1 - 1/2 - 1/2*np.dot(vector, other_vector)/ \
-        np.linalg.norm(vector)/np.linalg.norm(other_vector)
-        
-        
-def jensen_shannon_distance(vector, other_vector):
+    return (1 - 1/2 - 1/2*distance).cpu().numpy()
+
+
+def jensen_shannon_distance(vector, database, base=2):
     """
-    Jensen Shannon distance between two vectors.
+    Jensen Shannon distance between a vector and a database of vectors. 
+    This can be computed on GPU and it thus way faster than on CPU.
 
     Parameters
     ----------
-    vector, other_vector : arrays
-        Vectors to compare.
+    vector : array
+        Vectors to compare to database.
+    database : array
+        The database.
 
-    Raises
-    ------
-    TypeError
-        If both vectors are not the same length.
 
     Returns
     -------
     Float
-        The Jensen-Shannon distance between both vectors (between 0 and 1).
+        The Jensen-Shannon distance between vector and each vector of the 
+        database (between 0 and 1).
 
     """
-   
-    if len(vector) != len(other_vector):
-        raise TypeError('Vectors must be of the same length.')
-        
-    return distance.jensenshannon(vector, other_vector, base=2)
-
-"""
-def jensen_distance_torch(a, B, base=2):
     
-    a = a/torch.sum(a)
-    B = B/torch.sum(B, axis=1)[:,None]
+    p = vector/torch.sum(vector)
+    Q = database/torch.sum(database, dim=1)[:,None]
     
-    A = torch.tile(a, (B.shape[0], 1))
-    M = (A+B)/2
-    
-    X = torch.where((A>0) & (M>0), A*(torch.log2(A) - torch.log2(M)), torch.tensor([0.], device=a.device))
-    #X[(A==0) & (M>=0)] = float('inf')
-    
-    Y = torch.where((B>0) & (M>0), B*(torch.log2(B) - torch.log2(M)), torch.tensor([0.], device=a.device))
-    #Y[(B==0) & (M>=0)] = float('inf')
-    
-    return torch.sqrt(1/2*(X + Y).sum(dim=1)).cpu().numpy()
-    
-    #M = torch.log(M)
-    
-    #div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + \
-    #           F.kl_div(M, B, reduction='none').sum(dim=1))
-        
-    #return torch.sqrt(div/np.log(base)).cpu().numpy()
-    
-"""
-
-def jensen_distance_torch(a, B, base=2):
-    
-    a = a/torch.sum(a)
-    B = B/torch.sum(B, axis=1)[:,None]
-    
-    M = (a+B)/2
+    M = (p+Q)/2
     
     M = torch.log(M)
     
-    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + \
-               F.kl_div(M, B, reduction='none').sum(dim=1))
+    div = 1/2*(F.kl_div(M, p, reduction='none').sum(dim=1) + \
+               F.kl_div(M, Q, reduction='none').sum(dim=1))
         
-    # Clip very small negative values coming from underflow to 0
+    # Clip very small negative values coming from underflow to 0 (so that sqrt 
+    # does not return nan)
     div[(-1e-4 < div) & (div < 0)] = 0
     
     return torch.sqrt(div/np.log(base)).cpu().numpy()
     
 
-def norm(ord):
+def norm(order):
     """
-    Returns a function computing the `ord` norm of two vectors, by first applying a 
-    softmax to them and then normalizing so that the result is between 0 and 1.
+    Returns a function computing the `order` norm of a vector and a database of
+    vectors.
 
     Parameters
     ----------
-    ord : int
+    order : int
         The order of the norm.
 
     Returns
@@ -144,19 +110,10 @@ def norm(ord):
 
     """
     
-    def distance(vector, other_vector):
-    
-        if len(vector) != len(other_vector):
-            raise TypeError('Vectors must be of the same length.')
-    
-        # The double conversion is still faster than e.g scipy softmax implementation
-        #vector = nn.functional.softmax(torch.from_numpy(vector), dim=0).numpy()
-        #other_vector = nn.functional.softmax(torch.from_numpy(other_vector), dim=0).numpy()
-        #vector = vector/vector.sum()
-        #other_vector = other_vector/other_vector.sum()
-    
-        #return np.linalg.norm(vector - other_vector, ord=ord, axis=0)/len(vector)**(1/ord)
-        return np.linalg.norm(vector - other_vector, ord=ord, axis=0)
+    def distance(vector, database):
+        
+        norm = torch.linalg.vector_norm(database - vector, ord=order, dim=1)
+        return norm.cpu().numpy()
     
     return distance
 
@@ -165,7 +122,6 @@ def norm(ord):
 DISTANCE_FUNCTIONS = {
     'cosine': cosine_distance,
     'Jensen-Shannon': jensen_shannon_distance,
-    'Test_torch': jensen_distance_torch,
     'L2': norm(2),
     'L1': norm(1),
 }
@@ -178,10 +134,7 @@ class ImageFeatures(object):
     """
     
     def __init__(self, features, distance='cosine', numpy=False):
-        if numpy:
-            self.features = features.cpu().numpy().squeeze()
-        else:
-            self.features = features.squeeze()
+        self.features = features.squeeze()
         if (len(self.features.shape) > 1):
             raise TypeError('ImageFeature array must be 1D')
         self.distance_function = distance
@@ -194,112 +147,112 @@ class ImageFeatures(object):
 
     def __eq__(self, other):
         assert(self.features.shape == other.features.shape)
-        return np.allclose(self.features, other.features)
+        return torch.allclose(self.features, other.features)
 
     def __ne__(self, other):
         assert(self.features.shape == other.features.shape)
-        return not np.allclose(self.features, other.features)
+        return not torch.allclose(self.features, other.features)
 
     def __len__(self):
         return self.features.size
     
-
-    def matches(self, other, threshold=0.25):
-        """
-        Check if the distance between current ImageFeatures and another
-        ImageFeatures is less than a threshold.
-
-        Parameters
-        ----------
-        other : ImageFeatures
-            The other ImageFeatures.
-        threshold : Float, optional
-            Threshold for distance identification. The default is 0.25.
-
-        Returns
-        -------
-        Boolean
-            Whether or not there is a match.
-
-        """
-
-        return DISTANCE_FUNCTIONS[self.distance_function](self.features, other.features) \
-            <= threshold
     
-    
-    def match_db(self, database, threshold=0.25):
-        """
-        Check if there is a ImageFeatures in the database for which the distance
-        with current ImageFeatures is less than a threshold.
-
-        Parameters
-        ----------
-        database : Dictionary
-            Dictionary of type {'img_name':ImageFeatures}. Represents the database.
-        threshold : Float, optional
-            Threshold for distance identification. The default is 0.25.
-
-        Returns
-        -------
-        bool
-            Whether or not there is a match in the database.
-
-        """
-        
-        for feature in database.values():
-            if self.matches(feature, threshold=threshold):
-                return True
-        return False
-    
-    
-    def match_db_image(self, database, threshold=0.25):
-        
-        """
-        Check if the current features match other features in the database.
-
-        Parameters
-        ----------
-        database : Dictionary
-            Dictionary of type {'img_name':ImageFeatures}. Represents the database.
-        threshold : Float, optional
-            Threshold for distance identification. The default is 0.25.
-
-        Returns
-        -------
-        names : List of str
-            Name of all images in the database which trigger a similarity with
-            current ImageFeatures.
-
-        """
-        
-        names = []
-        for key in database.keys():
-            if self.matches(database[key], threshold=threshold):
-                names.append(key)
-        
-        return names
-    
-    
-    def compute_distance(self, other):
-
-        return DISTANCE_FUNCTIONS[self.distance_function](self.features, other.features) 
+#    def matches(self, other, threshold=0.25):
+#        """
+#        Check if the distance between current ImageFeatures and another
+#        ImageFeatures is less than a threshold.
+#
+#        Parameters
+#        ----------
+#        other : ImageFeatures
+#            The other ImageFeatures.
+#        threshold : Float, optional
+#            Threshold for distance identification. The default is 0.25.
+#
+#       Returns
+#        -------
+#        Boolean
+#            Whether or not there is a match.
+#
+#        """
+#
+#        return DISTANCE_FUNCTIONS[self.distance_function](self.features, other.features) \
+#            <= threshold
+#    
+#    
+#    def match_db(self, database, threshold=0.25):
+#        """
+#        Check if there is a ImageFeatures in the database for which the distance
+#        with current ImageFeatures is less than a threshold.
+#
+#        Parameters
+#        ----------
+#        database : Dictionary
+#            Dictionary of type {'img_name':ImageFeatures}. Represents the database.
+#        threshold : Float, optional
+#            Threshold for distance identification. The default is 0.25.
+#
+#        Returns
+#        -------
+#        bool
+#            Whether or not there is a match in the database.
+#
+#        """
+#        
+#        for feature in database.values():
+#            if self.matches(feature, threshold=threshold):
+#                return True
+#        return False
+#    
+#    
+#    def match_db_image(self, database, threshold=0.25):
+#        
+#        """
+#        Check if the current features match other features in the database.
+#
+#        Parameters
+#        ----------
+#        database : Dictionary
+#            Dictionary of type {'img_name':ImageFeatures}. Represents the database.
+#        threshold : Float, optional
+#            Threshold for distance identification. The default is 0.25.
+#
+#        Returns
+#        -------
+#        names : List of str
+#            Name of all images in the database which trigger a similarity with
+#            current ImageFeatures.
+#
+#        """
+#        
+#        names = []
+#        for key in database.keys():
+#            if self.matches(database[key], threshold=threshold):
+#                names.append(key)
+#        
+#        return names
     
     
     def compute_distances(self, database):
+        """
+        Compute distances between an ImageFeatures and a database of the
+        shape database = (features, names).
 
-        distances = []
-        names = []
-            
-        for key in tqdm(database.keys()):
-            distances.append(self.compute_distance(database[key]))
-            names.append(key)
-        
-        return (np.array(distances), np.array(names))
-    
-    def compute_distances_torch(self, database):
-        
+        Parameters
+        ----------
+        database : Tuple
+            The database containing in first dim an array of all ImageFeatures,
+            and second dim the names of corresponding inages (as created by the overloaded
+            create_database in ImageFeatures).
+
+        Returns
+        -------
+        Tuple
+            Distance from this ImageFeatures to all other in the database, and 
+            corresponding names.
+
+        """
         assert(self.features.device == database[0].device)
-        print(self.features.device)
         
         distances = DISTANCE_FUNCTIONS[self.distance_function](self.features, database[0])
         
@@ -599,7 +552,7 @@ class NeuralAlgorithm(Algorithm):
     """
     
     def __init__(self, algorithm, hash_size=8, raw_features=False, distance='cosine',
-                 batch_size=512, device='cuda', numpy=True):
+                 batch_size=512, device='cuda'):
         
         super().__init__(algorithm, hash_size, batch_size)
             
@@ -615,7 +568,6 @@ class NeuralAlgorithm(Algorithm):
         self.raw_features = raw_features
         self.distance = distance
         self.device = device
-        self.numpy = numpy
         
         if (not self.raw_features):
             rng = np.random.default_rng(seed=135)
@@ -717,7 +669,7 @@ class NeuralAlgorithm(Algorithm):
         else:
              
             for feature in features:
-                fingerprints.append(ImageFeatures(feature, self.distance, self.numpy))
+                fingerprints.append(ImageFeatures(feature, self.distance))
                 
         return fingerprints  
     
