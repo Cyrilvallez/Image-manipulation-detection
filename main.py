@@ -13,7 +13,6 @@ Created on Thu Mar 17 17:08:12 2022
 import numpy as np
 import hashing 
 from helpers import utils
-import os
 
 # Force the use of a user input at run-time to specify the path 
 # so that we do not mistakenly reuse the path from previous experiments
