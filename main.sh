@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=daisy
+#SBATCH --job-name=latch
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
