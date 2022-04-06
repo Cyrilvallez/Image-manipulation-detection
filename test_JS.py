@@ -27,7 +27,7 @@ algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 
-path_database = [path_database + file for file in os.listdir(path_database)][0:10000]
+path_database = [path_database + file for file in os.listdir(path_database)][0:250]
 path_experimental = [Image.open(path_experimental + file) for file in os.listdir(path_experimental)[0:1]]
 
 
@@ -105,32 +105,28 @@ for i in range(len(a)):
 """
 
 #%%
-"""
 def jensen_distance_torch(a, B, base=2):
     
     a = a/torch.sum(a)
     B = B/torch.sum(B, axis=1)[:,None]
     
-    A = torch.tile(a, (B.shape[0], 1))
-    M = (A+B)/2
+    M = (a+B)/2
     
-    X = torch.where((A>0) & (M>0), A*(torch.log2(A/M)), torch.tensor([0.], device=a.device))
-    #X[(A==0) & (M>=0)] = float('inf')
+    M = torch.log(M)
     
-    Y = torch.where((B>0) & (M>0), B*(torch.log2(B/M)), torch.tensor([0.], device=a.device))
-    #Y[(B==0) & (M>=0)] = float('inf')
+    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + \
+               F.kl_div(M, B, reduction='none').sum(dim=1))
+        
+    div[(-1e-4 < div) & (div < 0)] = 0
     
-    out = torch.sqrt(1/2*(X + Y).sum(dim=1)).cpu().numpy()
-    
-    return out, X, Y, A, M
+    return torch.sqrt(div/np.log(base)).cpu().numpy()
 
-a = fingerprint_test[0].features
-b = database_test[0]
+a = torch.rand(2000) - 0.5
+b = torch.rand(2, 2000) - 0.5
 
-res, X, Y, A, M = jensen_distance_torch(a, b)
+res = jensen_distance_torch(a, b)
 
-X = X.numpy()
-Y = Y.numpy()
-"""
+a = a.numpy()
+b = b.numpy()
 
 
