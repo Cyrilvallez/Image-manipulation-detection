@@ -1,0 +1,27 @@
+---
+name : Benchmark_norms_ImageNet
+date generated: Wednesday 06/04/2022
+GPU(s): 1 a100
+CPUs: 16
+dataset used: ImageNet with full database and fraction 1000/25000 
+thresholds: thresholds = [
+    np.linspace(0, 0.45, 20),
+    np.linspace(80, 250, 20),
+    np.linspace(3, 12, 20),
+    np.linspace(0.4, 0.9, 20),
+    ]
+algorithms:  [
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=512,
+                            device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=512,
+                            device='cuda', distance='L1'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=512,
+                            device='cuda', distance='L2'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=512,
+                            device='cuda', distance='Jensen-Shannon'),
+    ]
+general batch size: 512
+
+---
+purpose: |
+Perform experiments with best neural model and all norms on ImageNet and benchmark it for paper.
