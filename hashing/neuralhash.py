@@ -121,6 +121,8 @@ def jensen_distance_torch(a, B, base=2):
     div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + \
                F.kl_div(M, B, reduction='none').sum(dim=1))
         
+    div[(-1e-5 < div) & (div < 0)] = 0
+        
     return torch.sqrt(div/np.log(base)).cpu().numpy()
     
 
