@@ -18,7 +18,7 @@ import hashing
 import hashing.neuralhash as nh
 from torch.utils.data import Dataset, IterableDataset, DataLoader
 import scipy.spatial.distance as distance
-
+"""
 algo_ori = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
                         device='cuda', distance='Jensen-Shannon', numpy=True)
 algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
@@ -59,7 +59,7 @@ print(f'time test: {dt_test:.2e}')
 print(f'time original : {dt_ori:.2e}')
 print(distances[0])
 print(distances2[0])
-
+"""
 #%%
 """
 from torch.utils.data import Dataset, IterableDataset, DataLoader
@@ -104,50 +104,35 @@ for i in range(len(a)):
 
 """
 
-#%%
-def jensen_distance_torch(a, B, base=2):
-    
-    a = a/torch.sum(a)
-    B = B/torch.sum(B, axis=1)[:,None]
-    
-    M = (a+B)/2
-    
-    M = torch.log(M)
-    
-    div = 1/2*(F.kl_div(M, a, reduction='none').sum(dim=1) + \
-               F.kl_div(M, B, reduction='none').sum(dim=1))
-        
-    div[(-1e-4 < div) & (div < 0)] = 0
-    
-    return torch.sqrt(div/np.log(base)).cpu().numpy()
 
-a = torch.rand(2000) - 0.5
-b = torch.rand(2, 2000) - 0.5
-
-res = jensen_distance_torch(a, b)
-
-a = a.numpy()
-b = b.numpy()
 
 #%%
 
 from hashing import neuralhash as nh
 
+device = torch.device('cuda')
 func = nh.norm(1)
 
-a = torch.rand(2000) - 0.5
-b = torch.rand(10, 2000) - 0.5
+a = (torch.rand(4000) - 0.5).to(device)
+b = (torch.rand(10000, 4000) - 0.5).to(device)
 
 a_np = a.numpy()
 b_np = b.numpy()
 
+t0 = time.time()
 res1 = func(a,b)
+dt_new = time.time() - t0
+
+t0 = time.time()
 res2 = []
 for vec in b_np:
     res = np.linalg.norm(a_np - vec, ord=1)
     res2.append(res)
     
-
 res2 = np.array(res2)
 
+dt_old = time.time() - t0
+
 print(np.allclose(res1, res2))
+print(f'New way : {dt_new:.2e}')
+print(f'Old way : {dt_old:.2e}')
