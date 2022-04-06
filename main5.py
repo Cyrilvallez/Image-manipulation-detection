@@ -33,7 +33,7 @@ path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
     
-    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=512,
+    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=400,
                             device='cuda', distance='Jensen-Shannon'),
     ]
 
@@ -45,6 +45,6 @@ negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=512)
+                               negative_dataset, general_batch_size=400)
 
 utils.save_digest(digest, save_folder)
