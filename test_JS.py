@@ -20,9 +20,9 @@ from torch.utils.data import Dataset, IterableDataset, DataLoader
 import scipy.spatial.distance as distance
 
 algo_ori = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cuda', distance='Jensen-Shannon', numpy=True)
+                        device='cpu', distance='Jensen-Shannon', numpy=True)
 algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cuda', distance='Test_torch', numpy=False)
+                        device='cpu', distance='Test_torch', numpy=False)
 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
@@ -54,7 +54,7 @@ distances2 = fingerprint_ori[0].compute_distances(database_original)[0]
 dt_ori = time.time() - t0
 
 print(f'Same : {np.allclose(distances, distances2)}')
-print(f'N > 1e-10 : {(abs(distances - distances2) > 1e-8).sum()}')
+print(f'N > 1e-6 : {(abs(distances - distances2) > 1e-6).sum()} out of {len(distances)}')
 print(f'time test: {dt_test:.2e}')
 print(f'time original : {dt_ori:.2e}')
 
@@ -101,3 +101,34 @@ for i in range(len(a)):
         out2[i] = float('inf')
 
 """
+
+#%%
+"""
+def jensen_distance_torch(a, B, base=2):
+    
+    a = a/torch.sum(a)
+    B = B/torch.sum(B, axis=1)[:,None]
+    
+    A = torch.tile(a, (B.shape[0], 1))
+    M = (A+B)/2
+    
+    X = torch.where((A>0) & (M>0), A*(torch.log2(A/M)), torch.tensor([0.], device=a.device))
+    #X[(A==0) & (M>=0)] = float('inf')
+    
+    Y = torch.where((B>0) & (M>0), B*(torch.log2(B/M)), torch.tensor([0.], device=a.device))
+    #Y[(B==0) & (M>=0)] = float('inf')
+    
+    out = torch.sqrt(1/2*(X + Y).sum(dim=1)).cpu().numpy()
+    
+    return out, X, Y, A, M
+
+a = fingerprint_test[0].features
+b = database_test[0]
+
+res, X, Y, A, M = jensen_distance_torch(a, b)
+
+X = X.numpy()
+Y = Y.numpy()
+"""
+
+

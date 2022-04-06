@@ -24,6 +24,7 @@ from hashing.general_hash import Algorithm, DatabaseDataset, collate
 from hashing.SimCLRv1 import resnet_wider as SIMv1
 from hashing.SimCLRv2 import resnet as SIMv2
 import time
+from tqdm import tqdm
 
 path = os.path.abspath(__file__)
 current_folder = os.path.dirname(path)
@@ -91,13 +92,13 @@ def jensen_distance_torch(a, B, base=2):
     A = torch.tile(a, (B.shape[0], 1))
     M = (A+B)/2
     
-    X = torch.where((A>0) & (M>0), A*torch.log(A/M), torch.tensor([0.], device=a.device))
+    X = torch.where((A>0) & (M>0), A*(torch.log2(A) - torch.log2(M)), torch.tensor([0.], device=a.device))
     #X[(A==0) & (M>=0)] = float('inf')
     
-    Y = torch.where((B>0) & (M>0), B*torch.log(B/M), torch.tensor([0.], device=a.device))
+    Y = torch.where((B>0) & (M>0), B*(torch.log2(B) - torch.log2(M)), torch.tensor([0.], device=a.device))
     #Y[(B==0) & (M>=0)] = float('inf')
     
-    return torch.sqrt(1/2*(X + Y).sum(dim=1)/np.log(base)).cpu().numpy()
+    return torch.sqrt(1/2*(X + Y).sum(dim=1)).cpu().numpy()
     
     #M = torch.log(M)
     
@@ -272,7 +273,7 @@ class ImageFeatures(object):
         distances = []
         names = []
             
-        for key in database.keys():
+        for key in tqdm(database.keys()):
             distances.append(self.compute_distance(database[key]))
             names.append(key)
         
