@@ -19,8 +19,6 @@ import hashing.neuralhash as nh
 from torch.utils.data import Dataset, IterableDataset, DataLoader
 import scipy.spatial.distance as distance
 
-algo = hashing.FeatureAlgorithm('SIFT', batch_size=512)
-
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 file = os.listdir(path_database)
 
@@ -53,4 +51,10 @@ for name in names:
 
 
 
+#%%
 
+name = 'ResNet50 2x'
+model = nh.NEURAL_MODEL_LOADER[name]('cpu')
+img = nh.NEURAL_MODEL_TRANSFORMS[name](image).unsqueeze(dim=0)
+with torch.no_grad():
+    out = model(img).squeeze().numpy()
