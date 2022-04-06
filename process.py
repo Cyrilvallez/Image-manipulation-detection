@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Benchmark_BSDS500/'
+EXPERIMENT_NAME = 'TestEfficientNet/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -29,7 +29,7 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 #%%
 
-save = False
+save = True
 
 if not os.path.exists(figure_folder + 'General/'):
     os.makedirs(figure_folder + 'General/')
@@ -48,7 +48,7 @@ plot.AUC_heatmap(attacks, save=True, filename=figure_folder + 'General/AUC')
 
 
 #%%
-selected = ['Ahash 64 bits', 'Phash 64 bits', 'Dhash 64 bits', 'Whash 64 bits']
-subset = {key: value for key, value in general.items() if key in selected}
+#selected = ['Ahash 64 bits', 'Phash 64 bits', 'Dhash 64 bits', 'Whash 64 bits']
+#subset = {key: value for key, value in general.items() if key in selected}
 
-plot.ROC_curves(general[])
+#plot.ROC_curves(subset)
