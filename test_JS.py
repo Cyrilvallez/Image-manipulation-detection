@@ -20,9 +20,9 @@ from torch.utils.data import Dataset, IterableDataset, DataLoader
 import scipy.spatial.distance as distance
 
 algo_ori = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cuda', distance='Jensen-Shannon', numpy=True)
+                        device='cpu', distance='Jensen-Shannon', numpy=True)
 algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cuda', distance='Test_torch', numpy=False)
+                        device='cpu', distance='Test_torch', numpy=False)
 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
