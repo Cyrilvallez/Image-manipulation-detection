@@ -20,9 +20,9 @@ from torch.utils.data import Dataset, IterableDataset, DataLoader
 import scipy.spatial.distance as distance
 
 algo_ori = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cpu', distance='Jensen-Shannon', numpy=True)
+                        device='cuda', distance='Jensen-Shannon', numpy=True)
 algo_test = hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
-                        device='cpu', distance='Test_torch', numpy=False)
+                        device='cuda', distance='Test_torch', numpy=False)
 
 path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
@@ -57,6 +57,8 @@ print(f'Same : {np.allclose(distances, distances2)}')
 print(f'N > 1e-6 : {(abs(distances - distances2) > 1e-6).sum()} out of {len(distances)}')
 print(f'time test: {dt_test:.2e}')
 print(f'time original : {dt_ori:.2e}')
+print(distances[0])
+print(distances2[0])
 
 #%%
 """
