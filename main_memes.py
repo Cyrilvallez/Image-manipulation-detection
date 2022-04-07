@@ -69,7 +69,7 @@ thresholds = [
     
 dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 
-databases = hashing.create_databases(algos, path_database)
+databases, time = hashing.create_databases(algos, path_database)
 
 digest = hashing.hashing(algos, thresholds, databases, dataset,
                          general_batch_size=16)
@@ -78,3 +78,5 @@ names = ['general', 'image_wise', 'time']
 
 for i in range(len(digest)):
     utils.save_dictionary(digest[i], save_folder + names[i] + '.json')
+    
+utils.save_dictionary(time, save_folder + 'time_db.json')
