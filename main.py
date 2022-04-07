@@ -24,11 +24,11 @@ path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_control = 'Datasets/ILSVRC2012_img_val/Control/'
 
 algos = [
-    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=1000, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1000, n_features=30, cutoff=1),
     ]
 
 thresholds = [
-    np.linspace(0, 0.4, 20),
+    np.linspace(0.1, 0.4, 20),
     ]
     
 positive_dataset = hashing.create_dataset(path_experimental, fraction=1000/25000,
