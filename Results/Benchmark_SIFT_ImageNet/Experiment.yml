@@ -1,8 +1,8 @@
 ---
 name : Benchmark_SIFT_ImageNet
-date generated: Wednesday 06/04/2022
+date generated: Thursday 07/04/2022
 GPU(s): None
-CPUs: 6
+CPUs: 8
 dataset used: ImageNet with full database and fraction 1000/25000 
 thresholds: thresholds = [
     np.linspace(0, 300, 20),

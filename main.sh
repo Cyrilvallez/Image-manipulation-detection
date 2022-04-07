@@ -1,14 +1,15 @@
 #!/bin/bash
 
-#SBATCH --job-name=neural3
+#SBATCH --job-name=neural1
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
-#SBATCH --cpus-per-task=6
-#SBATCH --mem-per-cpu=10240
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32000
 #SBATCH --partition=nodes
 #SBATCH --gres=gpu:a100:1
 #SBATCH --chdir=/cluster/raid/home/cyril.vallez/Project
+#SBATCH --mail-type=FAIL,END
 
 # Verify working directory
 echo $(pwd)

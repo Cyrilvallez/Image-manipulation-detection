@@ -13,15 +13,18 @@ Created on Thu Apr  7 09:14:27 2022
 import numpy as np
 import hashing 
 from helpers import utils
+import os
 
 # Force the use of a user input at run-time to specify the path 
 # so that we do not mistakenly reuse the path from previous experiments
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/BSDS500/Experimental/'
-path_experimental = 'Datasets/BSDS500/Experimental/'
-path_control = 'Datasets/BSDS500/Control/'
+path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
+path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
+path_control = 'Datasets/ILSVRC2012_img_val/Control/'
+
+
 
 algos = [
     hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
