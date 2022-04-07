@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=neural1
+#SBATCH --job-name=neural2
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
