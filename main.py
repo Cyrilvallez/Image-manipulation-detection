@@ -24,11 +24,15 @@ path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_control = 'Datasets/ILSVRC2012_img_val/Control/'
 
 algos = [
-    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1000, n_features=30, cutoff=1),
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=64,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=64,
+                            device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = [
-    np.linspace(0.1, 0.4, 20),
+    np.linspace(0.15, 0.65, 20),
+    np.linspace(0.3, 0.9, 20),
     ]
     
 positive_dataset = hashing.create_dataset(path_experimental, fraction=1000/25000,
@@ -38,6 +42,6 @@ negative_dataset = hashing.create_dataset(path_control, fraction=1000/25000,
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=1000)
+                               negative_dataset, general_batch_size=64)
 
 utils.save_digest(digest, save_folder)
