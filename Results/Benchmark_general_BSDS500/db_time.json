@@ -1,0 +1,18 @@
+{
+	"Ahash 64 bits": 0.6330366134643555,
+	"Phash 64 bits": 0.6977624893188477,
+	"Dhash 64 bits": 0.6275568008422852,
+	"Whash 64 bits": 1.5637657642364502,
+	"Crop resistant hash 64 bits": 43.776073932647705,
+	"SIFT 30 descriptors": 5.33054518699646,
+	"ORB 30 descriptors": 1.2312710285186768,
+	"FAST + DAISY 30 descriptors": 5.529589414596558,
+	"FAST + LATCH 30 descriptors": 1.3833556175231934,
+	"Inception v3 raw features Jensen-Shannon": 1.8382675647735596,
+	"EfficientNet B7 raw features Jensen-Shannon": 4.794800758361816,
+	"ResNet50 2x raw features Jensen-Shannon": 1.232065200805664,
+	"ResNet101 2x raw features Jensen-Shannon": 1.312537670135498,
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 1.2779767513275146,
+	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": 1.3595860004425049,
+	"SimCLR v2 ResNet101 2x raw features Jensen-Shannon": 1.6237390041351318
+}

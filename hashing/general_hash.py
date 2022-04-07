@@ -419,7 +419,7 @@ def apply_threshold(distances, threshold):
 
 
 def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
-            all_attack_names=None):
+            artificial_attacks=True):
     """
     Performs the hashing and matching process for different algorithms and
     thresholds.
@@ -440,6 +440,9 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
     general_batch_size : int, optional
         Batch size for the outer Dataloader, which all algorithms will use. The
         default is 512.
+    artificial_attacks : Bool, optional
+        Whether the attacks are artificial and we need to record the attack-wise 
+        digest or not. The default is True.
 
     Returns
     -------
@@ -477,13 +480,14 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
     image_wise_output = {}
     running_time = {}
     
-    if all_attack_names is None:
+    if artificial_attacks:
         all_attack_names = generator.retrieve_ids(**generator.ATTACK_PARAMETERS)
     
     for i, algorithm in enumerate(algorithms):
         
         general_output[str(algorithm)] = {}
-        attack_wise_output[str(algorithm)] = {}
+        if artificial_attacks:
+            attack_wise_output[str(algorithm)] = {}
         image_wise_output[str(algorithm)] = {}
         running_time [str(algorithm)] = 0
         
@@ -497,10 +501,11 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
             general_output[str(algorithm)][f'Threshold {threshold:.3f}'] = \
                 {'detection':0, 'no detection':0}
             
-            attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] = {}
-            for name in all_attack_names:
-                attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
-                    {'detection':0, 'no detection':0}
+            if artificial_attacks:
+                attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] = {}
+                for name in all_attack_names:
+                    attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
+                        {'detection':0, 'no detection':0}
                     
             image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] = {}
             if type(databases[0]) == dict:
@@ -559,13 +564,15 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
                     if len(detected) > 0:
                         general_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
                             ['detection'] += 1
-                        attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
-                            [attack_name]['detection'] += 1
+                        if artificial_attacks:
+                            attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                                [attack_name]['detection'] += 1
                     else:
                         general_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
                             ['no detection'] += 1
-                        attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
-                            [attack_name]['no detection'] += 1
+                        if artificial_attacks:
+                            attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                                [attack_name]['no detection'] += 1
                 
                     for name in detected:
 
@@ -583,15 +590,16 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
             # Removes the model from memory
             algorithm.kill_model()
     
-    
-    return (general_output, attack_wise_output, image_wise_output, running_time)
+    if artificial_attacks:
+        return (general_output, attack_wise_output, image_wise_output, running_time)
+    else:
+        return (general_output, image_wise_output, running_time)
 
                 
                 
 
 def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
-                  negative_dataset, general_batch_size=512,
-                  all_attack_names=None):
+                  negative_dataset, general_batch_size=512):
     """
     Perform the hashing and matchup of both a experimental and control group
     of images, and outputs the (processed) metrics of the experiment.
@@ -625,9 +633,9 @@ def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
     databases, time_database = create_databases(algorithms, path_to_db)
     
     positive_digest = hashing(algorithms, thresholds, databases, positive_dataset,
-                              general_batch_size, all_attack_names)
+                              general_batch_size, True)
     negative_digest = hashing(algorithms, thresholds, databases, negative_dataset,
-                              general_batch_size, all_attack_names)
+                              general_batch_size, True)
     
     attacked_image_names = find_attacked_images(positive_dataset)
     

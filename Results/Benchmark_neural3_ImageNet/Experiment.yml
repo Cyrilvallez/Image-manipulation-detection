@@ -1,7 +1,7 @@
 ---
 name : Benchmark_neural3_ImageNet
 date generated: Wednesday 06/04/2022
-GPU(s): 1 a100
+GPU(s): 1 v100
 CPUs: 6
 dataset used: ImageNet with full database and fraction 1000/25000 
 thresholds: thresholds = [
