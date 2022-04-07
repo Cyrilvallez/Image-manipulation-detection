@@ -24,9 +24,7 @@ path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
 path_control = 'Datasets/ILSVRC2012_img_val/Control/'
 
-path_database = [path_database + file for file in os.listdir(path_database)[0:250]]
-path_experimental = [path_experimental + file for file in os.listdir(path_experimental)[0:250]]
-path_control = [path_control + file for file in os.listdir(path_control)[0:250]]
+
 
 algos = [
     hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=512,
