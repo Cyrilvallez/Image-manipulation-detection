@@ -72,7 +72,7 @@ dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 databases, time = hashing.create_databases(algos, path_database)
 
 digest = hashing.hashing(algos, thresholds, databases, dataset,
-                         general_batch_size=16)
+                         general_batch_size=16, artificial_attacks=False)
 
 names = ['general', 'image_wise', 'time']
 
