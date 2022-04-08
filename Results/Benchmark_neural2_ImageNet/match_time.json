@@ -1,0 +1,5 @@
+{
+	"ResNet50 2x raw features Jensen-Shannon": 1530.7555680274963,
+	"ResNet101 2x raw features Jensen-Shannon": 1558.036254751682,
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 1817.1319753885273
+}
