@@ -1,0 +1,6 @@
+{
+	"EfficientNet B7 raw features cosine": 233.03939106464384,
+	"EfficientNet B7 raw features L2": 234.7502090930939,
+	"EfficientNet B7 raw features L1": 234.14234219789503,
+	"EfficientNet B7 raw features Jensen-Shannon": 235.46314519643784
+}
