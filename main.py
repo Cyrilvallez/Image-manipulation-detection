@@ -62,7 +62,7 @@ thresholds = [
     np.linspace(0, 0.4, 20),
     np.linspace(6, 30, 20),
     np.linspace(200, 800, 20),
-    np.linspace(0.2, 0.6, 20),
+    np.linspace(0.3, 0.9, 20),
     # np.linspace(0, 0.4, 20),
     # np.linspace(6, 30, 20),
     # np.linspace(200, 800, 20),
