@@ -1,6 +1,0 @@
-{
-	"ResNet50 2x raw features cosine": 1.5927329063415527,
-	"ResNet50 2x raw features L2": 1.1294374465942383,
-	"ResNet50 2x raw features L1": 1.131171703338623,
-	"ResNet50 2x raw features Jensen-Shannon": 1.1332905292510986
-}
