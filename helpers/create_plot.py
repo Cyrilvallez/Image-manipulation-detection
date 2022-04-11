@@ -20,7 +20,7 @@ import matplotlib.ticker
 
 
 def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None,
-               size_multiplier=1.2):
+               size_multiplier=1.3):
     """
     Plot ROC curves for each algorithm.
 

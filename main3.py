@@ -24,13 +24,42 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
+    hashing.FeatureAlgorithm('SIFT', batch_size=1000, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('SIFT', batch_size=1000, n_features=100, cutoff=1),
+    hashing.FeatureAlgorithm('SIFT', batch_size=1000, n_features=200, cutoff=1),
+    hashing.FeatureAlgorithm('SIFT', batch_size=1000, n_features=300, cutoff=1),
     hashing.FeatureAlgorithm('ORB', batch_size=1000, n_features=30, cutoff=1),
-    hashing.FeatureAlgorithm('ORB', batch_size=1000, n_features=40, cutoff=1),
-    hashing.FeatureAlgorithm('ORB', batch_size=1000, n_features=50, cutoff=1),
     hashing.FeatureAlgorithm('ORB', batch_size=1000, n_features=100, cutoff=1),
+    hashing.FeatureAlgorithm('ORB', batch_size=1000, n_features=200, cutoff=1),
+    hashing.FeatureAlgorithm('ORB', batch_size=1000, n_features=300, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=1000, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=1000, n_features=100, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=1000, n_features=200, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=1000, n_features=300, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1000, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1000, n_features=100, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1000, n_features=200, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=1000, n_features=300, cutoff=1),
     ]
 
-thresholds = np.linspace(0, 0.3, 20)
+thresholds = [
+    np.linspace(0, 300, 20),
+    np.linspace(0, 300, 20),
+    np.linspace(0, 300, 20),
+    np.linspace(0, 300, 20),
+    np.linspace(0, 0.3, 20),
+    np.linspace(0, 0.3, 20),
+    np.linspace(0, 0.3, 20),
+    np.linspace(0, 0.3, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(0.1, 0.4, 20),
+    np.linspace(0.1, 0.4, 20),
+    np.linspace(0.1, 0.4, 20),
+    np.linspace(0.1, 0.4, 20),
+    ]
     
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)

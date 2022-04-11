@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Benchmark_features_ImageNet/'
+EXPERIMENT_NAME = 'N_features_BSDS500/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -29,22 +29,22 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 #%%
 
-save = False
+save = True
 
 if not os.path.exists(figure_folder + 'General/'):
     os.makedirs(figure_folder + 'General/')
 if not os.path.exists(figure_folder + 'Attack_wise/'):
     os.makedirs(figure_folder + 'Attack_wise/')
 
-a = plot.ROC_curves(general, save=save,
-                filename=figure_folder + 'General/ROC_curves.pdf')
-plot.ROC_curves(attacks, save=save,
-                filename=figure_folder + 'Attack_wise/ROC')
+# a = plot.ROC_curves(general, save=save,
+                # filename=figure_folder + 'General/ROC_curves.pdf')
+# plot.ROC_curves(attacks, save=save,
+                # filename=figure_folder + 'Attack_wise/ROC')
 plot.metrics_plot(general, save=save,
                   filename=figure_folder + 'General/Metrics')
-plot.time_comparison(global_time, db_time, save=save,
-                     filename=figure_folder + 'General/time.pdf')
-plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
+# plot.time_comparison(global_time, db_time, save=save,
+                     # filename=figure_folder + 'General/time.pdf')
+# plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
 
 
 #%%
@@ -61,13 +61,20 @@ plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
             # 'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
             # ]
 
-# legend = [name.split(' raw', 1)[0] for name in selected]
+# legend = [name.split(' ', 1)[1] for name in selected]
+legend = [name.split(' ', 1)[1] for name in general.keys()]
+# for i in range(len(legend)):
+    # if '+' in legend[i]:
+        # legend[i] = legend[i].split('+ ', 1)[1]
 # legend[-1] = 'Crop res'
+# legend[0] = '*ResNet50 2x'
+# legend[1] = '**ResNet50 2x'
+# legend[2] = '**ResNet101 2x'
 
-subset = {key: value for key, value in general.items() if key in selected}
+# subset = {key: value for key, value in general.items() if key in selected}
 
-plot.ROC_curves(subset, save=True, filename=figure_folder + 'General/ROC_neural2', legend=legend,
-                size_multiplier=0.9)
+plot.ROC_curves(general, save=True, filename=figure_folder + 'General/ROC', legend=legend,
+                size_multiplier=0.9, common_ticks=False)
 
 #%%
 
@@ -97,6 +104,7 @@ plot.time_comparison_log(global_time, db_time, save=save,
                      filename=figure_folder + 'General/time.pdf', labels=names)
 
 #%%
+"""
 from helpers import utils
 
 name1 = 'Results/Benchmark_neural1_ImageNet'
@@ -113,7 +121,7 @@ big_digest = utils.merge_digests(digests)
 
 utils.save_digest(big_digest, 'Results/Benchmark_neural_ImageNet')
 
-
+"""
 
 
 

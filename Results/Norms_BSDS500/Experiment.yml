@@ -1,0 +1,27 @@
+---
+name : Norms_BSDS500
+date generated: Monday 11/04/2022
+GPU(s): dev machine
+CPUs: dev machine
+dataset used: BSDS500, with attacks on disk
+thresholds: thresholds = [
+    np.linspace(0, 0.4, 20),
+    np.linspace(3, 12, 20),
+    np.linspace(80, 250, 20),
+    np.linspace(0.3, 0.9, 20),
+    ]
+algorithms:  [
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='L2'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='L1'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='Jensen-Shannon')
+    ]
+general batch size: 256
+
+---
+purpose: |
+Compare the different metrics for neural algorithms.
