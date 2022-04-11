@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Norms_BSDS500/'
+EXPERIMENT_NAME = 'Test/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -40,11 +40,11 @@ a = plot.ROC_curves(general, save=save,
                 filename=figure_folder + 'General/ROC_curves.pdf')
 # plot.ROC_curves(attacks, save=save,
                 # filename=figure_folder + 'Attack_wise/ROC')
-# plot.metrics_plot(general, save=save,
-                  # filename=figure_folder + 'General/Metrics')
+plot.metrics_plot(general, save=save,
+                   filename=figure_folder + 'General/Metrics')
 plot.time_comparison(global_time, db_time, save=save,
                        filename=figure_folder + 'General/time.pdf')
-# plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
+plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
 
 
 #%%

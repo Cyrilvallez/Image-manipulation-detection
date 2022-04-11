@@ -24,14 +24,14 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
-                            device='cuda', distance='cosine'),
+    # hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
+                            # device='cuda', distance='cosine'),
     hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
                             device='cuda', distance='L2'),
     hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
                             device='cuda', distance='L1'),
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
-                            device='cuda', distance='Jensen-Shannon'),
+    # hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
+                            # device='cuda', distance='Jensen-Shannon'),
     # hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
                             # device='cuda', distance='cosine'),
     # hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
@@ -43,10 +43,10 @@ algos = [
     ]
 
 thresholds = [
-    np.linspace(0, 0.4, 20),
-    np.linspace(3, 12, 20),
-    np.linspace(80, 250, 20),
-    np.linspace(0.3, 0.9, 20),
+    # np.linspace(0, 0.4, 20),
+    np.linspace(10, 20, 20),
+    np.linspace(250, 1000, 20),
+    # np.linspace(0.3, 0.9, 20),
     # np.linspace(0, 0.4, 20),
     # np.linspace(3, 12, 20),
     # np.linspace(80, 250, 20),
