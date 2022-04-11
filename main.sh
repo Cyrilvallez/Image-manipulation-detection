@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=test_efficient
+#SBATCH --job-name=memes
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
@@ -25,4 +25,4 @@ eval "$(conda shell.bash hook)"
 # Activate (local) env
 conda activate base
 
-python3 main.py $1
+python3 main_memes.py $1
