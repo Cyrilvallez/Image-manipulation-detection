@@ -24,13 +24,29 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=1000),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=11, batch_size=1000),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=13, batch_size=1000),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=16, batch_size=1000),
     hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=1000),
     hashing.ClassicalAlgorithm('Dhash', hash_size=11, batch_size=1000),
     hashing.ClassicalAlgorithm('Dhash', hash_size=13, batch_size=1000),
     hashing.ClassicalAlgorithm('Dhash', hash_size=16, batch_size=1000),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1000),
+    hashing.ClassicalAlgorithm('Phash', hash_size=11, batch_size=1000),
+    hashing.ClassicalAlgorithm('Phash', hash_size=13, batch_size=1000),
+    hashing.ClassicalAlgorithm('Phash', hash_size=16, batch_size=1000),
+    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=1000),
+    hashing.ClassicalAlgorithm('Whash', hash_size=11, batch_size=1000),
+    hashing.ClassicalAlgorithm('Whash', hash_size=13, batch_size=1000),
+    hashing.ClassicalAlgorithm('Whash', hash_size=16, batch_size=1000),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=1000),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=11, batch_size=1000),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=13, batch_size=1000),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=16, batch_size=1000),
     ]
 
-thresholds = np.linspace(0, 0.4, 20)
+thresholds = np.linspace(0, 0.8, 30)
     
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)

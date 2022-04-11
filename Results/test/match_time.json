@@ -1,6 +1,0 @@
-{
-	"SimCLR v1 ResNet50 2x raw features cosine": 55.884832692146304,
-	"SimCLR v1 ResNet50 2x raw features L2": 55.073173594474795,
-	"SimCLR v1 ResNet50 2x raw features L1": 54.96574618816375,
-	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 57.77455966472625
-}

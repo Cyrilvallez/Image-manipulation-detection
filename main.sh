@@ -1,20 +1,20 @@
 #!/bin/bash
 
-#SBATCH --job-name=neural1
+#SBATCH --job-name=hash_length
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32000
 #SBATCH --partition=nodes
-#SBATCH --gres=gpu:a100:1
+#SBATCH --gres=gpu:a100:0
 #SBATCH --chdir=/cluster/raid/home/cyril.vallez/Project
 
 # Verify working directory
 echo $(pwd)
 
 # Print gpu configuration for this job
-nvidia-smi
+#nvidia-smi
 
 # Verify gpu allocation (should be 1 GPU)
 echo "Indices of visible GPU(s) before job : $CUDA_VISIBLE_DEVICES"
@@ -25,4 +25,4 @@ eval "$(conda shell.bash hook)"
 # Activate (local) env
 conda activate base
 
-python3 main.py $1
+python3 main2.py $1
