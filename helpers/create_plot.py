@@ -20,7 +20,7 @@ import matplotlib.ticker
 
 
 def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None,
-               size_multiplier=1.3):
+               size_multiplier=1.5):
     """
     Plot ROC curves for each algorithm.
 
@@ -768,6 +768,94 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None,
         plt.savefig(filename + '.pdf', bbox_inches='tight')
     plt.show()
     
+    
+def heatmap_comparison_feature(general, time_general, time_db, algo_names=None, save=False, filename=None):
+    
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+            
+    # Initialize stuff   
+    legend = []
+    fpr = []
+    recall = []
+    time_tot = []
+        
+    # Retrive the values as lists
+    for i, algorithm in enumerate(general.keys()):
+        
+        legend.append(algorithm)
+            
+        time_tot.append(time_general[algorithm] + time_db[algorithm])
+        
+        # Sort according to thresholds value (for consistency)
+        thresholds = np.array(list(general[algorithm].keys()))
+        thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
+        sorting = np.argsort(thresholds_values)
+        thresholds = thresholds[sorting]
+        
+        fpr_list = []
+        recall_list = []
+        
+        for threshold in thresholds:
+                    
+            fpr_list.append(general[algorithm][threshold]['fpr'])
+            recall_list.append(general[algorithm][threshold]['recall'])
+            
+        fpr.append(fpr_list)
+        recall.append(recall_list)
+     
+    AUC = []
+        
+    # Compute area under the curve (AUC)
+    for i in range(len(fpr)):
+        
+        auc = np.trapz(recall[i], x=fpr[i])
+        AUC.append(auc)
+        
+    
+    AUC_per_algo = {'SIFT': np.zeros(4), 'ORB': np.zeros(4), 'DAISY': np.zeros(4),
+             'LATCH': np.zeros(4)}
+    time_per_algo = {'SIFT': np.zeros(4), 'ORB': np.zeros(4), 'DAISY': np.zeros(4),
+             'LATCH': np.zeros(4)}
+    descriptors = ['30', '100', '200', '300']
+    
+    for i, name in enumerate(legend):
+        algo, N, _ = name.rsplit(' ', 2)
+        try:
+            algo = algo.rsplit(' ', 1)[1]
+        except:
+            pass
+        index = descriptors.index(N)
+        AUC_per_algo[algo][index] = AUC[i]
+        time_per_algo[algo][index] = time_tot[i]
+    
+    
+    frame_AUC = pd.DataFrame(AUC_per_algo, index=descriptors)
+    frame_time = pd.DataFrame(time_per_algo, index=descriptors)
+
+    plt.figure()    
+    sns.heatmap(frame_AUC, annot=True, square=True, fmt='.3f', cmap='Blues',
+                cbar=False) 
+    plt.xlabel('Algorithm')
+    plt.ylabel('Number of keypoints')
+    if save:
+        plt.savefig(filename + '_AUC.pdf', bbox_inches='tight')
+    plt.show()
+    
+    plt.figure()    
+    sns.heatmap(frame_time, annot=True, square=True, fmt='.3f', cmap='Reds',
+                cbar=False) 
+    plt.xlabel('Algorithm')
+    plt.ylabel('Number of keypoints')
+
+    for t in plt.gca().texts: 
+        t.set_text(time.strftime('%M:%S', time.gmtime(float(t.get_text()))))
+    
+    if save:
+        plt.savefig(filename + '_time.pdf', bbox_inches='tight')
+    plt.show()
+    
+    return frame_AUC, frame_time
     
 
     

@@ -24,14 +24,22 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
                             device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
                             device='cuda', distance='L2'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
                             device='cuda', distance='L1'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
-                            device='cuda', distance='Jensen-Shannon')
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='Jensen-Shannon'),
+    # hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            # device='cuda', distance='cosine'),
+    # hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            # device='cuda', distance='L2'),
+    # hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            # device='cuda', distance='L1'),
+    # hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            # device='cuda', distance='Jensen-Shannon')
     ]
 
 thresholds = [
@@ -39,6 +47,10 @@ thresholds = [
     np.linspace(3, 12, 20),
     np.linspace(80, 250, 20),
     np.linspace(0.3, 0.9, 20),
+    # np.linspace(0, 0.4, 20),
+    # np.linspace(3, 12, 20),
+    # np.linspace(80, 250, 20),
+    # np.linspace(0.3, 0.9, 20),
     ]
     
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
