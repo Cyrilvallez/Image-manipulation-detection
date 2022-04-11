@@ -44,8 +44,8 @@ algos = [
 
 thresholds = [
     # np.linspace(0, 0.4, 20),
-    np.linspace(10, 20, 20),
-    np.linspace(250, 1000, 20),
+    np.linspace(8, 25, 20),
+    np.linspace(200, 800, 20),
     # np.linspace(0.3, 0.9, 20),
     # np.linspace(0, 0.4, 20),
     # np.linspace(3, 12, 20),
