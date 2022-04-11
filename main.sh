@@ -1,13 +1,13 @@
 #!/bin/bash
 
-#SBATCH --job-name=test_inception
+#SBATCH --job-name=test_efficient
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32000
 #SBATCH --partition=nodes
-#SBATCH --gres=gpu:v100:1
+#SBATCH --gres=gpu:a100:1
 #SBATCH --chdir=/cluster/raid/home/cyril.vallez/Project
 
 # Verify working directory
@@ -25,4 +25,4 @@ eval "$(conda shell.bash hook)"
 # Activate (local) env
 conda activate base
 
-python3 main3.py $1
+python3 main.py $1

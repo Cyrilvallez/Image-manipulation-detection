@@ -24,8 +24,16 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
-                            device='cuda', distance='cosine'),
+    # hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=512,
+                            # device='cuda', distance='cosine'),
+    # hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=512,
+                            # device='cuda', distance='L2'),
+    # hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=512,
+                            # device='cuda', distance='L1'),
+    # hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=512,
+                            # device='cuda', distance='Jensen-Shannon'),
+    # hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
+                            # device='cuda', distance='cosine'),
     hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
                             device='cuda', distance='L2'),
     hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
@@ -59,9 +67,13 @@ algos = [
     ]
 
 thresholds = [
-    np.linspace(0, 0.4, 20),
-    np.linspace(6, 30, 20),
-    np.linspace(200, 800, 20),
+    # np.linspace(0, 0.4, 20),
+    # np.linspace(4, 30, 20),
+    # np.linspace(180, 820, 20),
+    # np.linspace(0.15, 0.65, 20),
+    # np.linspace(0, 0.5, 20),
+    np.linspace(0, 15, 20),
+    np.linspace(0, 500, 20),
     np.linspace(0.3, 0.9, 20),
     # np.linspace(0, 0.4, 20),
     # np.linspace(6, 30, 20),
