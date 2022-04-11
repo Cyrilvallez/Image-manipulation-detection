@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'test_bug2/'
+EXPERIMENT_NAME = 'Benchmark_features_ImageNet/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -29,7 +29,7 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 #%%
 
-save = True
+save = False
 
 if not os.path.exists(figure_folder + 'General/'):
     os.makedirs(figure_folder + 'General/')
@@ -48,7 +48,73 @@ plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
 
 
 #%%
-#selected = ['Ahash 64 bits', 'Phash 64 bits', 'Dhash 64 bits', 'Whash 64 bits']
-#subset = {key: value for key, value in general.items() if key in selected}
+# selected = ['Ahash 64 bits', 'Phash 64 bits', 'Dhash 64 bits', 'Whash 64 bits', 
+            # 'Crop resistant hash 64 bits']
+# selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descriptors',
+            # 'FAST + LATCH 30 descriptors']
+# selected = ['Inception v3 raw features Jensen-Shannon',
+            # 'EfficientNet B7 raw features Jensen-Shannon',
+            # 'ResNet50 2x raw features Jensen-Shannon',
+            # 'ResNet101 2x raw features Jensen-Shannon',
+            # 'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
+            # 'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
+            # 'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
+            # ]
 
-#plot.ROC_curves(subset)
+# legend = [name.split(' raw', 1)[0] for name in selected]
+# legend[-1] = 'Crop res'
+
+subset = {key: value for key, value in general.items() if key in selected}
+
+plot.ROC_curves(subset, save=True, filename=figure_folder + 'General/ROC_neural2', legend=legend,
+                size_multiplier=0.9)
+
+#%%
+
+names = []
+
+for key in global_time.keys():
+    if '64' in key:
+        names.append(key.split(' 64', 1)[0])
+    if '30' in key:
+        names.append(key.split(' 30', 1)[0])
+    if 'raw' in key:
+        names.append(key.split(' raw', 1)[0])
+        
+for i in range(len(names)):
+    if 'resistant' in names[i]:
+        names[i] = 'Crop res'
+    if 'LATCH' in names[i]:
+        names[i] = 'LATCH'
+    if 'DAISY' in names[i]:
+        names[i] = 'DAISY'
+    if 'SimCLR v1' in names[i]:
+        names[i] = '*' + names[i].split('SimCLR v1 ', 1)[1]
+    if 'SimCLR v2' in names[i]:
+        names[i] = '**' + names[i].split('SimCLR v2 ', 1)[1]
+
+plot.time_comparison_log(global_time, db_time, save=save,
+                     filename=figure_folder + 'General/time.pdf', labels=names)
+
+#%%
+from helpers import utils
+
+name1 = 'Results/Benchmark_neural1_ImageNet'
+name2 = 'Results/Benchmark_neural2_ImageNet'
+name3 = 'Results/Benchmark_neural3_ImageNet'
+
+digest1 = utils.load_digest(name1)
+digest2 = utils.load_digest(name2)
+digest3 = utils.load_digest(name3)
+
+digests = [digest1, digest2, digest3]
+
+big_digest = utils.merge_digests(digests)
+
+utils.save_digest(big_digest, 'Results/Benchmark_neural_ImageNet')
+
+
+
+
+
+

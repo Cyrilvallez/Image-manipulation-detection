@@ -1,0 +1,9 @@
+{
+	"Inception v3 raw features Jensen-Shannon": 220.89397883415222,
+	"EfficientNet B7 raw features Jensen-Shannon": 472.6174120903015,
+	"ResNet50 2x raw features Jensen-Shannon": 208.83339548110962,
+	"ResNet101 2x raw features Jensen-Shannon": 215.10768842697144,
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 212.75873017311096,
+	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": 208.58457946777344,
+	"SimCLR v2 ResNet101 2x raw features Jensen-Shannon": 215.23868560791016
+}

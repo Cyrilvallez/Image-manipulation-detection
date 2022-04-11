@@ -19,29 +19,33 @@ from helpers import utils
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
-path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
-path_control = 'Datasets/ILSVRC2012_img_val/Control/'
+path_database = 'Datasets/BSDS500/Experimental/'
+path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
+path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=64,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=64,
-                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='L2'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='L1'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='Jensen-Shannon')
     ]
 
 thresholds = [
-    np.linspace(0.15, 0.65, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(3, 12, 20),
+    np.linspace(80, 250, 20),
     np.linspace(0.3, 0.9, 20),
     ]
     
-positive_dataset = hashing.create_dataset(path_experimental, fraction=1000/25000,
-                                          existing_attacks=False)
-negative_dataset = hashing.create_dataset(path_control, fraction=1000/25000,
-                                          existing_attacks=False)
+positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
+negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=64)
+                               negative_dataset, general_batch_size=256)
 
 utils.save_digest(digest, save_folder)

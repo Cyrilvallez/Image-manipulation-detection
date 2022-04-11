@@ -16,9 +16,11 @@ import numpy as np
 import time
 import pandas as pd
 import seaborn as sns
+import matplotlib.ticker
 
 
-def ROC_curves(digest, large_ticks=True, save=False, filename=None):
+def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None,
+               size_multiplier=1.2):
     """
     Plot ROC curves for each algorithm.
 
@@ -26,13 +28,15 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
     ----------
     result_dic : Dictionary
         General or attack-wise digest of an experiment.
-    large_ticks : Boolean, optional.
+    common_ticks : Boolean, optional.
         Whether or not to set ticks from 0 to 1 with step 0.1 in both directions.
         The default is True.
     save : Boolean, optional
         Whether to save the figure or not. The default is False.
     filename : str, optional
         The filename used to save the file. The default is None.
+    legend : list, optional
+        An optional legend to override algorithm names.
 
     Raises
     ------
@@ -55,7 +59,11 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
         attack_wise = True
             
     # Initialize stuff
-    legend = []
+    if legend is None:
+        infer_legend = True
+        legend = []
+    else:
+        infer_legend = False
     
     if not attack_wise:
         fpr = [[] for i in digest.keys()]
@@ -70,7 +78,8 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
     # Retrive the values as lists
     for i, algorithm in enumerate(digest.keys()):
         
-        legend.append(algorithm)
+        if infer_legend:
+            legend.append(algorithm)
         
         # Sort according to thresholds value (for consistency)
         thresholds = np.array(list(digest[algorithm].keys()))
@@ -96,15 +105,17 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
     
     if not attack_wise:
     
-        plt.figure(figsize=[6.4*1.5, 4.8*1.5])
+        plt.figure(figsize=[6.4*size_multiplier, 4.8*size_multiplier])
         for i in range(len(fpr)):
             plt.plot(fpr[i], recall[i], '-+')
         plt.xlabel('False positive rate (FPR)')
         plt.ylabel('True positive rate (Recall)')
         plt.legend(legend)
-        if large_ticks:
-            plt.xticks(0.1*np.arange(11))
-            plt.yticks(0.1*np.arange(11))
+        if common_ticks:
+            plt.xlim([-0.03, 1.03])
+            plt.ylim([0.37, 1.03])
+            plt.xticks(0.2*np.arange(6))
+            plt.yticks(0.1*np.arange(4, 11))
         plt.grid()
         if save:
             plt.savefig(filename, bbox_inches='tight')
@@ -114,7 +125,7 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
         
         for attack in fpr.keys():
             
-            plt.figure(figsize=[6.4*1.5, 4.8*1.5])
+            plt.figure(figsize=[6.4*size_multiplier, 4.8*size_multiplier])
             for i in range(len(fpr[attack])):
                 plt.plot(fpr[attack][i], recall[attack][i], '-+')
             plt.xlabel('False positive rate (FPR)')
@@ -128,9 +139,11 @@ def ROC_curves(digest, large_ticks=True, save=False, filename=None):
                 title = title.replace('&', '\\&')
             plt.title(title.replace('_', ' '))
                 
-            if large_ticks:
-                plt.xticks(0.1*np.arange(11))
-                plt.yticks(0.1*np.arange(11))
+            if common_ticks:
+                plt.xlim([-0.01, 1.01])
+                plt.ylim([0.39, 1.01])
+                plt.xticks(0.2*np.arange(6))
+                plt.yticks(0.1*np.arange(4, 11))
             plt.grid()
             if save:
                 plt.savefig(filename + '_' + attack + '.pdf', bbox_inches='tight')
@@ -279,6 +292,77 @@ def time_comparison(match_time_digest, db_time_digest, save=False, filename=None
     
     plt.xticks(xlocs, xlabels)
     plt.xlim(right=1.08*np.max(time_identification)) # to fit labels
+    plt.yticks(y, names)
+    if save:
+        plt.savefig(filename, bbox_inches='tight')
+    plt.show()
+    
+    
+def time_comparison_log(match_time_digest, db_time_digest, save=False, filename=None,
+                         labels=None):
+    """
+    Creates a bar plot comparing the time needed for different algorithms.
+
+    Parameters
+    ----------
+    match_time_digest : Dictionary
+        Matching time digest of an experiment.
+    db_time_digest : Dictionary
+        Database creation time digest of an experiment.
+    save : Boolean, optional
+        Whether or not to save the plot. The default is False.
+    filename : str, optional
+        The filename used to save the file. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
+
+    Returns
+    -------
+    None.
+
+    """
+    
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+        
+    time_identification = []
+    time_db = []
+    
+    assert(match_time_digest.keys() == db_time_digest.keys())
+    
+    for algorithm in match_time_digest.keys():
+        time_identification.append(match_time_digest[algorithm])
+        time_db.append(db_time_digest[algorithm])
+        
+    time_identification = np.array(time_identification)
+    time_db = np.array(time_db)
+        
+    sorting = np.argsort(-time_identification) # sort in decreasing order
+    time_identification = time_identification[sorting]
+    time_db = time_db[sorting]
+    names = np.array(labels)[sorting]
+    time_identification_str = [time.strftime('%M:%S', time.gmtime(a)) for a in time_identification]
+
+    y = np.arange(0, len(names), 1)
+    height = 0.8  
+
+    plt.figure(figsize=[6.4*1.1, 4.8*1.2])
+    rects1 = plt.barh(y, time_identification + time_db)
+    plt.bar_label(rects1, labels=time_identification_str, padding=3)
+    plt.xlabel('Time [min:sec]')
+    
+    plt.xscale('log')
+    
+    xticks = np.array([10, 1*60, 2*60, 5*60, 15*60, 30*60])
+    
+    ax = plt.gca()
+    ax.xaxis.set_major_locator(matplotlib.ticker.FixedLocator(xticks))
+    ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda x, pos: time.strftime('%M:%S', time.gmtime(x))))
+    
+    plt.xlim(left=5, right=1.6*np.max(time_identification)) # to fit labels
     plt.yticks(y, names)
     if save:
         plt.savefig(filename, bbox_inches='tight')
@@ -553,7 +637,8 @@ def similarity_heatmaps(image_wise_digest, kind, metrics, N=None, save=False,
         
         
         
-def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
+def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None,
+                legend=None):
     """
     Create a heatmap with Area Under ROC Curve (AUC) for attacks wise digest.
 
@@ -583,7 +668,12 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
         raise ValueError('You must specify a filename to save the figure.')
             
     # Initialize stuff
-    legend = []
+    if legend is None:
+        infer_legend = True
+        legend = []
+    else:
+        infer_legend = False
+        
     fpr = {}
     recall = {}
     for attack_name in list(list(attacks_digest.values())[0].values())[0].keys():
@@ -593,7 +683,8 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
     # Retrive the values as lists
     for i, algorithm in enumerate(attacks_digest.keys()):
         
-        legend.append(algorithm)
+        if infer_legend:
+            legend.append(algorithm)
         
         # Sort according to thresholds value (for consistency)
         thresholds = np.array(list(attacks_digest[algorithm].keys()))
@@ -628,7 +719,14 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
     # For latex rendering
     frame.rename(columns={'s&p_noise_0.15': 's\\&p_noise_0.15',
                           's&p_noise_0.05': 's\\&p_noise_0.05',
-                          's&p_noise_0.1': 's\\&p_noise_0.1'}, inplace=True)
+                          's&p_noise_0.1': 's\\&p_noise_0.1',
+                          'cropping_60_and_rescaling': 'cropping_60',
+                          'rotation_60_and_rescaling': 'rotation_60',
+                          'color_enhancement_2': 'color_2',
+                          'sharpness_enhancement_2': 'sharpness_2',
+                          'contrast_enhancement_2': 'contrast_2',
+                          'brightness_enhancement_2': 'brightness_2'
+                          }, inplace=True)
     
     strong_attacks = [
         'gaussian_noise_0.05',
@@ -637,16 +735,18 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
         'gaussian_filter_7x7',
         'median_filter_7x7',
         'jpg_compression_10',
-        'cropping_60_and_rescaling',
-        'rotation_60_and_rescaling',
+        'cropping_60',
+        'rotation_60',
         'shearing_20',
         'scaling_1.6',
         'text_length_50',
-        'color_enhancement_2',
-        'sharpness_enhancement_2',
-        'contrast_enhancement_2',
-        'brightness_enhancement_2',
+        'color_2',
+        'sharpness_2',
+        'contrast_2',
+        'brightness_2',
         ]
+    
+    frame = frame[strong_attacks]
     
     labels_attacks = [' '.join(name.split('_')) for name in strong_attacks]
 
@@ -656,7 +756,7 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
                      square=True) 
     
     horizontal_divider = [0, 6, 11, 15]
-    vertical_divider = [0, len(frame)]
+    vertical_divider = [0, 5, 9, len(frame)]
     
     for i in horizontal_divider:
         plt.axhline(i, color='black', linewidth=3)
@@ -664,12 +764,10 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None):
     for i in vertical_divider:
         plt.axvline(i, color='black', linewidth=3)
     
-    #plt.xticks(rotation = 45)
     if save:
         plt.savefig(filename + '.pdf', bbox_inches='tight')
     plt.show()
     
-    return frame[strong_attacks].T
     
 
     

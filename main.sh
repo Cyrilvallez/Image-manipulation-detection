@@ -9,7 +9,6 @@
 #SBATCH --partition=nodes
 #SBATCH --gres=gpu:a100:1
 #SBATCH --chdir=/cluster/raid/home/cyril.vallez/Project
-#SBATCH --mail-type=FAIL,END
 
 # Verify working directory
 echo $(pwd)

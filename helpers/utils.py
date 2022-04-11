@@ -137,6 +137,38 @@ def load_digest(experiment_folder):
         
     return tuple(digest)
 
+
+def merge_digests(digests):
+    """
+    Merge different similar digest into one.
+
+    Parameters
+    ----------
+    digests : List
+        List of tuples corresponding to the digests.
+
+    Returns
+    -------
+    Tuple
+        The digest corresponding to the merge of all others.
+
+    """
+
+    big_digest = []
+
+    for i in range(len(digests[0])):
+        
+        dic = {}
+        
+        for j in range(len(digests)):
+
+            dic = {**dic, **digests[j][i]}
+            
+        big_digest.append(dic)
+        
+
+    return tuple(big_digest)
+
                 
 def process_digests(positive_digest, negative_digest, attacked_image_names):
     """

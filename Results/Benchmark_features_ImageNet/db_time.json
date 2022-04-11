@@ -1,0 +1,6 @@
+{
+	"SIFT 30 descriptors": 1568.7937920093536,
+	"ORB 30 descriptors": 260.3933982849121,
+	"FAST + DAISY 30 descriptors": 906.6213161945343,
+	"FAST + LATCH 30 descriptors": 221.9296190738678
+}
