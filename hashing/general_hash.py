@@ -695,28 +695,23 @@ def hashing_ensemble(algorithms, thresholds, databases, dataset, general_batch_s
     general_output = {}
     image_wise_output = {}
     
-    
-    for i, algorithm in enumerate(algorithms):
         
-        general_output[str(algorithm)] = {}
-        image_wise_output[str(algorithm)] = {}
-        
-        for threshold in zip(*thresholds):
+    for threshold in zip(*thresholds):
             
-            general_output[str(algorithm)][f'Threshold {threshold}'] = \
-                {'detection':0, 'no detection':0}
+        general_output[f'Threshold {threshold}'] = \
+            {'detection':0, 'no detection':0}
             
                     
-            image_wise_output[str(algorithm)][f'Threshold {threshold}'] = {}
-            if type(databases[0]) == dict:
-                for name in databases[0].keys():
-                    image_wise_output[str(algorithm)][f'Threshold {threshold}'][name] = \
-                        {'correct detection':[], 'incorrect detection':[]}
+        image_wise_output[f'Threshold {threshold}'] = {}
+        if type(databases[0]) == dict:
+            for name in databases[0].keys():
+                image_wise_output[f'Threshold {threshold}'][name] = \
+                    {'correct detection':[], 'incorrect detection':[]}
                         
-            elif type(databases[0]) == tuple:
-                for name in databases[0][1]:
-                    image_wise_output[str(algorithm)][f'Threshold {threshold}'][name] = \
-                        {'correct detection':[], 'incorrect detection':[]}
+        elif type(databases[0]) == tuple:
+            for name in databases[0][1]:
+                image_wise_output[f'Threshold {threshold}'][name] = \
+                    {'correct detection':[], 'incorrect detection':[]}
             
     # Matching logic : First create the images with modifications, then loop
     # over each algorithm and thresholds. The creation of attacks on images is
@@ -756,21 +751,21 @@ def hashing_ensemble(algorithms, thresholds, databases, dataset, general_batch_s
                 detected = np.union1d(detected1, detected2)
                 
                 if len(detected) > 0:
-                    general_output[str(algorithm)][f'Threshold {threshold}'] \
+                    general_output[f'Threshold {threshold}'] \
                         ['detection'] += 1
                     
                 else:
-                    general_output[str(algorithm)][f'Threshold {threshold}'] \
+                    general_output[f'Threshold {threshold}'] \
                         ['no detection'] += 1
                     
                 
                 for name in detected:
 
                     if name == img_name:
-                        image_wise_output[str(algorithm)][f'Threshold {threshold}'] \
+                        image_wise_output[f'Threshold {threshold}'] \
                             [name]['correct detection'].append(attack_name)
                     else:
-                        image_wise_output[str(algorithm)][f'Threshold {threshold}'] \
+                        image_wise_output[f'Threshold {threshold}'] \
                             [name]['incorrect detection'].append(attack_name)
                                 
                 
