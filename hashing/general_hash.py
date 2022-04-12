@@ -745,7 +745,7 @@ def hashing_ensemble(algorithms, thresholds, databases, dataset, general_batch_s
             for distance, img_name, attack_name in zip(distances[0],
                                                          image_names, attack_names):
                  
-                detected = apply_threshold(distances, threshold)
+                detected = apply_threshold(distance, threshold)
                 
                 if len(detected) > 0:
                     general_output[f'Threshold {threshold}'] \
