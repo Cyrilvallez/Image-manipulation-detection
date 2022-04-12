@@ -1,6 +1,22 @@
 {
-	"SimCLR v2 ResNet50 2x raw features cosine": 2.1062886714935303,
-	"SimCLR v2 ResNet50 2x raw features L2": 1.1806073188781738,
-	"SimCLR v2 ResNet50 2x raw features L1": 1.1775176525115967,
-	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": 1.1815037727355957
+	"Inception v3 raw features cosine": 1.767904281616211,
+	"Inception v3 raw features L2": 1.2851381301879883,
+	"Inception v3 raw features L1": 1.2866809368133545,
+	"Inception v3 raw features Jensen-Shannon": 1.287245750427246,
+	"EfficientNet B7 raw features cosine": 4.631354570388794,
+	"EfficientNet B7 raw features L2": 4.633382081985474,
+	"EfficientNet B7 raw features L1": 4.668147563934326,
+	"EfficientNet B7 raw features Jensen-Shannon": 4.668232202529907,
+	"ResNet50 2x raw features cosine": 1.1797511577606201,
+	"ResNet50 2x raw features L2": 1.1752068996429443,
+	"ResNet50 2x raw features L1": 1.198465347290039,
+	"ResNet50 2x raw features Jensen-Shannon": 1.199230670928955,
+	"SimCLR v1 ResNet50 2x raw features cosine": 1.2374756336212158,
+	"SimCLR v1 ResNet50 2x raw features L2": 1.2364215850830078,
+	"SimCLR v1 ResNet50 2x raw features L1": 1.2382781505584717,
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 1.2397732734680176,
+	"SimCLR v2 ResNet50 2x raw features cosine": 1.2817094326019287,
+	"SimCLR v2 ResNet50 2x raw features L2": 1.277513027191162,
+	"SimCLR v2 ResNet50 2x raw features L1": 1.2802934646606445,
+	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": 1.2824809551239014
 }
