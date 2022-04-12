@@ -21,9 +21,9 @@ templates = [file.split('.', 1)[0] for file in os.listdir(templates)]
 
 unique, counts = np.unique(memes, return_counts=True)
 
-dic = utils.load_dictionary('Results/Test_ensemble2/image_wise.json')
+dic = utils.load_dictionary('Results/Benchmark_memes_2/image_wise.json')
 
-dic2 = dic['Threshold (0.211, 0.458)']
+dic2 = dic[list(dic.keys())[0]]
 
 count_algo = []
 
@@ -35,13 +35,13 @@ tot_incorrect = sum([len(a['incorrect detection']) for a in list(dic2.values())]
 
 x = np.arange(len(unique))
 
-"""
+
 plt.figure()
 plt.bar(x-0.2, counts, 0.4, color='b', label='True')
 plt.bar(x+0.2, count_algo, 0.4, color='r', label='Detection')
 plt.legend()
-plt.yscale('log')
-"""
+# plt.yscale('log')
+
 
 print(f'{tot_correct} / {np.sum(counts)} correct detections')
 print(f'{tot_incorrect} incorrect detections')

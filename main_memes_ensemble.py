@@ -30,17 +30,17 @@ algos = [
     # hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=16,
                             # device='cuda', distance='Jensen-Shannon'),
     # hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=256),
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
-                            device='cuda', distance='Jensen-Shannon'),
+    # hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=256,
+                            # device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = [
     # [0.211],
-    [0.458],
+    [0.48],
     # [0.453],
     # [0.363],
     # [0.1236842105263158]
-    [0.30526315789473685]
+    # [0.30526315789473685]
     ]
     
 dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
