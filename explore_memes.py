@@ -35,12 +35,13 @@ tot_incorrect = sum([len(a['incorrect detection']) for a in list(dic2.values())]
 
 x = np.arange(len(unique))
 
+"""
 plt.figure()
 plt.bar(x-0.2, counts, 0.4, color='b', label='True')
 plt.bar(x+0.2, count_algo, 0.4, color='r', label='Detection')
 plt.legend()
 plt.yscale('log')
-
+"""
 
 print(f'{tot_correct} / {np.sum(counts)} correct detections')
 print(f'{tot_incorrect} incorrect detections')
