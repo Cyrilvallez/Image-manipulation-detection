@@ -21,7 +21,7 @@ templates = [file.split('.', 1)[0] for file in os.listdir(templates)]
 
 unique, counts = np.unique(memes, return_counts=True)
 
-dic = utils.load_dictionary('Results/Benchmark_memes_2/image_wise.json')
+dic = utils.load_dictionary('Results/Test_ensemble/image_wise.json')
 
 dic2 = dic[list(dic.keys())[0]]
 
