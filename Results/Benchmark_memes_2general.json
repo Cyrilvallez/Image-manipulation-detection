@@ -1,0 +1,1314 @@
+{
+	"Ahash 64 bits": {
+		"Threshold 0.000": {
+			"detection": 36,
+			"no detection": 2086
+		},
+		"Threshold 0.021": {
+			"detection": 77,
+			"no detection": 2045
+		},
+		"Threshold 0.042": {
+			"detection": 130,
+			"no detection": 1992
+		},
+		"Threshold 0.063": {
+			"detection": 363,
+			"no detection": 1759
+		},
+		"Threshold 0.084": {
+			"detection": 498,
+			"no detection": 1624
+		},
+		"Threshold 0.105": {
+			"detection": 658,
+			"no detection": 1464
+		},
+		"Threshold 0.126": {
+			"detection": 953,
+			"no detection": 1169
+		},
+		"Threshold 0.147": {
+			"detection": 1124,
+			"no detection": 998
+		},
+		"Threshold 0.168": {
+			"detection": 1285,
+			"no detection": 837
+		},
+		"Threshold 0.189": {
+			"detection": 1524,
+			"no detection": 598
+		},
+		"Threshold 0.211": {
+			"detection": 1673,
+			"no detection": 449
+		},
+		"Threshold 0.232": {
+			"detection": 1782,
+			"no detection": 340
+		},
+		"Threshold 0.253": {
+			"detection": 1950,
+			"no detection": 172
+		},
+		"Threshold 0.274": {
+			"detection": 2010,
+			"no detection": 112
+		},
+		"Threshold 0.295": {
+			"detection": 2043,
+			"no detection": 79
+		},
+		"Threshold 0.316": {
+			"detection": 2107,
+			"no detection": 15
+		},
+		"Threshold 0.337": {
+			"detection": 2117,
+			"no detection": 5
+		},
+		"Threshold 0.358": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.379": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.400": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"Phash 64 bits": {
+		"Threshold 0.100": {
+			"detection": 290,
+			"no detection": 1832
+		},
+		"Threshold 0.116": {
+			"detection": 290,
+			"no detection": 1832
+		},
+		"Threshold 0.132": {
+			"detection": 521,
+			"no detection": 1601
+		},
+		"Threshold 0.147": {
+			"detection": 521,
+			"no detection": 1601
+		},
+		"Threshold 0.163": {
+			"detection": 730,
+			"no detection": 1392
+		},
+		"Threshold 0.179": {
+			"detection": 730,
+			"no detection": 1392
+		},
+		"Threshold 0.195": {
+			"detection": 946,
+			"no detection": 1176
+		},
+		"Threshold 0.211": {
+			"detection": 946,
+			"no detection": 1176
+		},
+		"Threshold 0.226": {
+			"detection": 1150,
+			"no detection": 972
+		},
+		"Threshold 0.242": {
+			"detection": 1150,
+			"no detection": 972
+		},
+		"Threshold 0.258": {
+			"detection": 1405,
+			"no detection": 717
+		},
+		"Threshold 0.274": {
+			"detection": 1405,
+			"no detection": 717
+		},
+		"Threshold 0.289": {
+			"detection": 1691,
+			"no detection": 431
+		},
+		"Threshold 0.305": {
+			"detection": 1691,
+			"no detection": 431
+		},
+		"Threshold 0.321": {
+			"detection": 1978,
+			"no detection": 144
+		},
+		"Threshold 0.337": {
+			"detection": 1978,
+			"no detection": 144
+		},
+		"Threshold 0.353": {
+			"detection": 2110,
+			"no detection": 12
+		},
+		"Threshold 0.368": {
+			"detection": 2110,
+			"no detection": 12
+		},
+		"Threshold 0.384": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.400": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"Dhash 64 bits": {
+		"Threshold 0.050": {
+			"detection": 65,
+			"no detection": 2057
+		},
+		"Threshold 0.068": {
+			"detection": 104,
+			"no detection": 2018
+		},
+		"Threshold 0.087": {
+			"detection": 180,
+			"no detection": 1942
+		},
+		"Threshold 0.105": {
+			"detection": 297,
+			"no detection": 1825
+		},
+		"Threshold 0.124": {
+			"detection": 435,
+			"no detection": 1687
+		},
+		"Threshold 0.142": {
+			"detection": 717,
+			"no detection": 1405
+		},
+		"Threshold 0.161": {
+			"detection": 850,
+			"no detection": 1272
+		},
+		"Threshold 0.179": {
+			"detection": 978,
+			"no detection": 1144
+		},
+		"Threshold 0.197": {
+			"detection": 1073,
+			"no detection": 1049
+		},
+		"Threshold 0.216": {
+			"detection": 1174,
+			"no detection": 948
+		},
+		"Threshold 0.234": {
+			"detection": 1294,
+			"no detection": 828
+		},
+		"Threshold 0.253": {
+			"detection": 1520,
+			"no detection": 602
+		},
+		"Threshold 0.271": {
+			"detection": 1638,
+			"no detection": 484
+		},
+		"Threshold 0.289": {
+			"detection": 1780,
+			"no detection": 342
+		},
+		"Threshold 0.308": {
+			"detection": 1894,
+			"no detection": 228
+		},
+		"Threshold 0.326": {
+			"detection": 2005,
+			"no detection": 117
+		},
+		"Threshold 0.345": {
+			"detection": 2115,
+			"no detection": 7
+		},
+		"Threshold 0.363": {
+			"detection": 2121,
+			"no detection": 1
+		},
+		"Threshold 0.382": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.400": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"Whash 64 bits": {
+		"Threshold 0.000": {
+			"detection": 42,
+			"no detection": 2080
+		},
+		"Threshold 0.021": {
+			"detection": 42,
+			"no detection": 2080
+		},
+		"Threshold 0.042": {
+			"detection": 79,
+			"no detection": 2043
+		},
+		"Threshold 0.063": {
+			"detection": 289,
+			"no detection": 1833
+		},
+		"Threshold 0.084": {
+			"detection": 289,
+			"no detection": 1833
+		},
+		"Threshold 0.105": {
+			"detection": 636,
+			"no detection": 1486
+		},
+		"Threshold 0.126": {
+			"detection": 960,
+			"no detection": 1162
+		},
+		"Threshold 0.147": {
+			"detection": 960,
+			"no detection": 1162
+		},
+		"Threshold 0.168": {
+			"detection": 1281,
+			"no detection": 841
+		},
+		"Threshold 0.189": {
+			"detection": 1549,
+			"no detection": 573
+		},
+		"Threshold 0.211": {
+			"detection": 1550,
+			"no detection": 572
+		},
+		"Threshold 0.232": {
+			"detection": 1784,
+			"no detection": 338
+		},
+		"Threshold 0.253": {
+			"detection": 1957,
+			"no detection": 165
+		},
+		"Threshold 0.274": {
+			"detection": 1958,
+			"no detection": 164
+		},
+		"Threshold 0.295": {
+			"detection": 2050,
+			"no detection": 72
+		},
+		"Threshold 0.316": {
+			"detection": 2116,
+			"no detection": 6
+		},
+		"Threshold 0.337": {
+			"detection": 2116,
+			"no detection": 6
+		},
+		"Threshold 0.358": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.379": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.400": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"Crop resistant hash 64 bits": {
+		"Threshold 0.000": {
+			"detection": 264,
+			"no detection": 1858
+		},
+		"Threshold 0.021": {
+			"detection": 461,
+			"no detection": 1661
+		},
+		"Threshold 0.042": {
+			"detection": 667,
+			"no detection": 1455
+		},
+		"Threshold 0.063": {
+			"detection": 1201,
+			"no detection": 921
+		},
+		"Threshold 0.084": {
+			"detection": 1337,
+			"no detection": 785
+		},
+		"Threshold 0.105": {
+			"detection": 1505,
+			"no detection": 617
+		},
+		"Threshold 0.126": {
+			"detection": 1709,
+			"no detection": 413
+		},
+		"Threshold 0.147": {
+			"detection": 1811,
+			"no detection": 311
+		},
+		"Threshold 0.168": {
+			"detection": 1889,
+			"no detection": 233
+		},
+		"Threshold 0.189": {
+			"detection": 1994,
+			"no detection": 128
+		},
+		"Threshold 0.211": {
+			"detection": 2028,
+			"no detection": 94
+		},
+		"Threshold 0.232": {
+			"detection": 2074,
+			"no detection": 48
+		},
+		"Threshold 0.253": {
+			"detection": 2113,
+			"no detection": 9
+		},
+		"Threshold 0.274": {
+			"detection": 2119,
+			"no detection": 3
+		},
+		"Threshold 0.295": {
+			"detection": 2120,
+			"no detection": 2
+		},
+		"Threshold 0.316": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.337": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.358": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.379": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.400": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"SIFT 30 descriptors": {
+		"Threshold 0.000": {
+			"detection": 15,
+			"no detection": 2107
+		},
+		"Threshold 15.789": {
+			"detection": 364,
+			"no detection": 1758
+		},
+		"Threshold 31.579": {
+			"detection": 954,
+			"no detection": 1168
+		},
+		"Threshold 47.368": {
+			"detection": 1388,
+			"no detection": 734
+		},
+		"Threshold 63.158": {
+			"detection": 1642,
+			"no detection": 480
+		},
+		"Threshold 78.947": {
+			"detection": 1777,
+			"no detection": 345
+		},
+		"Threshold 94.737": {
+			"detection": 1886,
+			"no detection": 236
+		},
+		"Threshold 110.526": {
+			"detection": 1955,
+			"no detection": 167
+		},
+		"Threshold 126.316": {
+			"detection": 1995,
+			"no detection": 127
+		},
+		"Threshold 142.105": {
+			"detection": 2026,
+			"no detection": 96
+		},
+		"Threshold 157.895": {
+			"detection": 2059,
+			"no detection": 63
+		},
+		"Threshold 173.684": {
+			"detection": 2081,
+			"no detection": 41
+		},
+		"Threshold 189.474": {
+			"detection": 2092,
+			"no detection": 30
+		},
+		"Threshold 205.263": {
+			"detection": 2104,
+			"no detection": 18
+		},
+		"Threshold 221.053": {
+			"detection": 2108,
+			"no detection": 14
+		},
+		"Threshold 236.842": {
+			"detection": 2113,
+			"no detection": 9
+		},
+		"Threshold 252.632": {
+			"detection": 2114,
+			"no detection": 8
+		},
+		"Threshold 268.421": {
+			"detection": 2114,
+			"no detection": 8
+		},
+		"Threshold 284.211": {
+			"detection": 2117,
+			"no detection": 5
+		},
+		"Threshold 300.000": {
+			"detection": 2117,
+			"no detection": 5
+		}
+	},
+	"ORB 30 descriptors": {
+		"Threshold 0.000": {
+			"detection": 188,
+			"no detection": 1934
+		},
+		"Threshold 0.016": {
+			"detection": 231,
+			"no detection": 1891
+		},
+		"Threshold 0.032": {
+			"detection": 275,
+			"no detection": 1847
+		},
+		"Threshold 0.047": {
+			"detection": 398,
+			"no detection": 1724
+		},
+		"Threshold 0.063": {
+			"detection": 510,
+			"no detection": 1612
+		},
+		"Threshold 0.079": {
+			"detection": 665,
+			"no detection": 1457
+		},
+		"Threshold 0.095": {
+			"detection": 947,
+			"no detection": 1175
+		},
+		"Threshold 0.111": {
+			"detection": 1222,
+			"no detection": 900
+		},
+		"Threshold 0.126": {
+			"detection": 1516,
+			"no detection": 606
+		},
+		"Threshold 0.142": {
+			"detection": 1756,
+			"no detection": 366
+		},
+		"Threshold 0.158": {
+			"detection": 1909,
+			"no detection": 213
+		},
+		"Threshold 0.174": {
+			"detection": 2046,
+			"no detection": 76
+		},
+		"Threshold 0.189": {
+			"detection": 2096,
+			"no detection": 26
+		},
+		"Threshold 0.205": {
+			"detection": 2116,
+			"no detection": 6
+		},
+		"Threshold 0.221": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.237": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.253": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.268": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.284": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.300": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"FAST + DAISY 30 descriptors": {
+		"Threshold 0.000": {
+			"detection": 19,
+			"no detection": 2103
+		},
+		"Threshold 0.021": {
+			"detection": 318,
+			"no detection": 1804
+		},
+		"Threshold 0.042": {
+			"detection": 510,
+			"no detection": 1612
+		},
+		"Threshold 0.063": {
+			"detection": 837,
+			"no detection": 1285
+		},
+		"Threshold 0.084": {
+			"detection": 1381,
+			"no detection": 741
+		},
+		"Threshold 0.105": {
+			"detection": 1831,
+			"no detection": 291
+		},
+		"Threshold 0.126": {
+			"detection": 2026,
+			"no detection": 96
+		},
+		"Threshold 0.147": {
+			"detection": 2097,
+			"no detection": 25
+		},
+		"Threshold 0.168": {
+			"detection": 2118,
+			"no detection": 4
+		},
+		"Threshold 0.189": {
+			"detection": 2121,
+			"no detection": 1
+		},
+		"Threshold 0.211": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.232": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.253": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.274": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.295": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.316": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.337": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.358": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.379": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.400": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"FAST + LATCH 30 descriptors": {
+		"Threshold 0.100": {
+			"detection": 290,
+			"no detection": 1832
+		},
+		"Threshold 0.116": {
+			"detection": 324,
+			"no detection": 1798
+		},
+		"Threshold 0.132": {
+			"detection": 366,
+			"no detection": 1756
+		},
+		"Threshold 0.147": {
+			"detection": 455,
+			"no detection": 1667
+		},
+		"Threshold 0.163": {
+			"detection": 560,
+			"no detection": 1562
+		},
+		"Threshold 0.179": {
+			"detection": 652,
+			"no detection": 1470
+		},
+		"Threshold 0.195": {
+			"detection": 814,
+			"no detection": 1308
+		},
+		"Threshold 0.211": {
+			"detection": 950,
+			"no detection": 1172
+		},
+		"Threshold 0.226": {
+			"detection": 1144,
+			"no detection": 978
+		},
+		"Threshold 0.242": {
+			"detection": 1377,
+			"no detection": 745
+		},
+		"Threshold 0.258": {
+			"detection": 1693,
+			"no detection": 429
+		},
+		"Threshold 0.274": {
+			"detection": 1900,
+			"no detection": 222
+		},
+		"Threshold 0.289": {
+			"detection": 2043,
+			"no detection": 79
+		},
+		"Threshold 0.305": {
+			"detection": 2104,
+			"no detection": 18
+		},
+		"Threshold 0.321": {
+			"detection": 2120,
+			"no detection": 2
+		},
+		"Threshold 0.337": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.353": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.368": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.384": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.400": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"Inception v3 raw features Jensen-Shannon": {
+		"Threshold 0.150": {
+			"detection": 219,
+			"no detection": 1903
+		},
+		"Threshold 0.176": {
+			"detection": 459,
+			"no detection": 1663
+		},
+		"Threshold 0.203": {
+			"detection": 622,
+			"no detection": 1500
+		},
+		"Threshold 0.229": {
+			"detection": 795,
+			"no detection": 1327
+		},
+		"Threshold 0.255": {
+			"detection": 1086,
+			"no detection": 1036
+		},
+		"Threshold 0.282": {
+			"detection": 1294,
+			"no detection": 828
+		},
+		"Threshold 0.308": {
+			"detection": 1478,
+			"no detection": 644
+		},
+		"Threshold 0.334": {
+			"detection": 1667,
+			"no detection": 455
+		},
+		"Threshold 0.361": {
+			"detection": 1869,
+			"no detection": 253
+		},
+		"Threshold 0.387": {
+			"detection": 1998,
+			"no detection": 124
+		},
+		"Threshold 0.413": {
+			"detection": 2063,
+			"no detection": 59
+		},
+		"Threshold 0.439": {
+			"detection": 2098,
+			"no detection": 24
+		},
+		"Threshold 0.466": {
+			"detection": 2107,
+			"no detection": 15
+		},
+		"Threshold 0.492": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.518": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.545": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.571": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.597": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.624": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.650": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"EfficientNet B7 raw features Jensen-Shannon": {
+		"Threshold 0.300": {
+			"detection": 989,
+			"no detection": 1133
+		},
+		"Threshold 0.332": {
+			"detection": 1181,
+			"no detection": 941
+		},
+		"Threshold 0.363": {
+			"detection": 1334,
+			"no detection": 788
+		},
+		"Threshold 0.395": {
+			"detection": 1457,
+			"no detection": 665
+		},
+		"Threshold 0.426": {
+			"detection": 1595,
+			"no detection": 527
+		},
+		"Threshold 0.458": {
+			"detection": 1710,
+			"no detection": 412
+		},
+		"Threshold 0.489": {
+			"detection": 1833,
+			"no detection": 289
+		},
+		"Threshold 0.521": {
+			"detection": 1927,
+			"no detection": 195
+		},
+		"Threshold 0.553": {
+			"detection": 2003,
+			"no detection": 119
+		},
+		"Threshold 0.584": {
+			"detection": 2051,
+			"no detection": 71
+		},
+		"Threshold 0.616": {
+			"detection": 2073,
+			"no detection": 49
+		},
+		"Threshold 0.647": {
+			"detection": 2083,
+			"no detection": 39
+		},
+		"Threshold 0.679": {
+			"detection": 2088,
+			"no detection": 34
+		},
+		"Threshold 0.711": {
+			"detection": 2109,
+			"no detection": 13
+		},
+		"Threshold 0.742": {
+			"detection": 2116,
+			"no detection": 6
+		},
+		"Threshold 0.774": {
+			"detection": 2121,
+			"no detection": 1
+		},
+		"Threshold 0.805": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.837": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.868": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.900": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.200": {
+			"detection": 772,
+			"no detection": 1350
+		},
+		"Threshold 0.221": {
+			"detection": 986,
+			"no detection": 1136
+		},
+		"Threshold 0.242": {
+			"detection": 1193,
+			"no detection": 929
+		},
+		"Threshold 0.263": {
+			"detection": 1437,
+			"no detection": 685
+		},
+		"Threshold 0.284": {
+			"detection": 1606,
+			"no detection": 516
+		},
+		"Threshold 0.305": {
+			"detection": 1769,
+			"no detection": 353
+		},
+		"Threshold 0.326": {
+			"detection": 1898,
+			"no detection": 224
+		},
+		"Threshold 0.347": {
+			"detection": 2012,
+			"no detection": 110
+		},
+		"Threshold 0.368": {
+			"detection": 2082,
+			"no detection": 40
+		},
+		"Threshold 0.389": {
+			"detection": 2114,
+			"no detection": 8
+		},
+		"Threshold 0.411": {
+			"detection": 2119,
+			"no detection": 3
+		},
+		"Threshold 0.432": {
+			"detection": 2121,
+			"no detection": 1
+		},
+		"Threshold 0.453": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.474": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.495": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.516": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.537": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.558": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.579": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.600": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"ResNet101 2x raw features Jensen-Shannon": {
+		"Threshold 0.200": {
+			"detection": 863,
+			"no detection": 1259
+		},
+		"Threshold 0.221": {
+			"detection": 1128,
+			"no detection": 994
+		},
+		"Threshold 0.242": {
+			"detection": 1352,
+			"no detection": 770
+		},
+		"Threshold 0.263": {
+			"detection": 1522,
+			"no detection": 600
+		},
+		"Threshold 0.284": {
+			"detection": 1642,
+			"no detection": 480
+		},
+		"Threshold 0.305": {
+			"detection": 1722,
+			"no detection": 400
+		},
+		"Threshold 0.326": {
+			"detection": 1827,
+			"no detection": 295
+		},
+		"Threshold 0.347": {
+			"detection": 1916,
+			"no detection": 206
+		},
+		"Threshold 0.368": {
+			"detection": 2006,
+			"no detection": 116
+		},
+		"Threshold 0.389": {
+			"detection": 2059,
+			"no detection": 63
+		},
+		"Threshold 0.411": {
+			"detection": 2097,
+			"no detection": 25
+		},
+		"Threshold 0.432": {
+			"detection": 2120,
+			"no detection": 2
+		},
+		"Threshold 0.453": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.474": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.495": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.516": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.537": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.558": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.579": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.600": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.300": {
+			"detection": 1111,
+			"no detection": 1011
+		},
+		"Threshold 0.326": {
+			"detection": 1251,
+			"no detection": 871
+		},
+		"Threshold 0.353": {
+			"detection": 1310,
+			"no detection": 812
+		},
+		"Threshold 0.379": {
+			"detection": 1388,
+			"no detection": 734
+		},
+		"Threshold 0.405": {
+			"detection": 1465,
+			"no detection": 657
+		},
+		"Threshold 0.432": {
+			"detection": 1584,
+			"no detection": 538
+		},
+		"Threshold 0.458": {
+			"detection": 1662,
+			"no detection": 460
+		},
+		"Threshold 0.484": {
+			"detection": 1755,
+			"no detection": 367
+		},
+		"Threshold 0.511": {
+			"detection": 1878,
+			"no detection": 244
+		},
+		"Threshold 0.537": {
+			"detection": 1950,
+			"no detection": 172
+		},
+		"Threshold 0.563": {
+			"detection": 2006,
+			"no detection": 116
+		},
+		"Threshold 0.589": {
+			"detection": 2040,
+			"no detection": 82
+		},
+		"Threshold 0.616": {
+			"detection": 2055,
+			"no detection": 67
+		},
+		"Threshold 0.642": {
+			"detection": 2063,
+			"no detection": 59
+		},
+		"Threshold 0.668": {
+			"detection": 2075,
+			"no detection": 47
+		},
+		"Threshold 0.695": {
+			"detection": 2095,
+			"no detection": 27
+		},
+		"Threshold 0.721": {
+			"detection": 2107,
+			"no detection": 15
+		},
+		"Threshold 0.747": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.774": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.800": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.300": {
+			"detection": 1023,
+			"no detection": 1099
+		},
+		"Threshold 0.332": {
+			"detection": 1158,
+			"no detection": 964
+		},
+		"Threshold 0.363": {
+			"detection": 1289,
+			"no detection": 833
+		},
+		"Threshold 0.395": {
+			"detection": 1431,
+			"no detection": 691
+		},
+		"Threshold 0.426": {
+			"detection": 1514,
+			"no detection": 608
+		},
+		"Threshold 0.458": {
+			"detection": 1588,
+			"no detection": 534
+		},
+		"Threshold 0.489": {
+			"detection": 1728,
+			"no detection": 394
+		},
+		"Threshold 0.521": {
+			"detection": 1783,
+			"no detection": 339
+		},
+		"Threshold 0.553": {
+			"detection": 1880,
+			"no detection": 242
+		},
+		"Threshold 0.584": {
+			"detection": 1944,
+			"no detection": 178
+		},
+		"Threshold 0.616": {
+			"detection": 2019,
+			"no detection": 103
+		},
+		"Threshold 0.647": {
+			"detection": 2050,
+			"no detection": 72
+		},
+		"Threshold 0.679": {
+			"detection": 2059,
+			"no detection": 63
+		},
+		"Threshold 0.711": {
+			"detection": 2069,
+			"no detection": 53
+		},
+		"Threshold 0.742": {
+			"detection": 2088,
+			"no detection": 34
+		},
+		"Threshold 0.774": {
+			"detection": 2117,
+			"no detection": 5
+		},
+		"Threshold 0.805": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.837": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.868": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.900": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	},
+	"SimCLR v2 ResNet101 2x raw features Jensen-Shannon": {
+		"Threshold 0.400": {
+			"detection": 1439,
+			"no detection": 683
+		},
+		"Threshold 0.426": {
+			"detection": 1501,
+			"no detection": 621
+		},
+		"Threshold 0.453": {
+			"detection": 1564,
+			"no detection": 558
+		},
+		"Threshold 0.479": {
+			"detection": 1665,
+			"no detection": 457
+		},
+		"Threshold 0.505": {
+			"detection": 1766,
+			"no detection": 356
+		},
+		"Threshold 0.532": {
+			"detection": 1826,
+			"no detection": 296
+		},
+		"Threshold 0.558": {
+			"detection": 1902,
+			"no detection": 220
+		},
+		"Threshold 0.584": {
+			"detection": 1947,
+			"no detection": 175
+		},
+		"Threshold 0.611": {
+			"detection": 1993,
+			"no detection": 129
+		},
+		"Threshold 0.637": {
+			"detection": 2040,
+			"no detection": 82
+		},
+		"Threshold 0.663": {
+			"detection": 2051,
+			"no detection": 71
+		},
+		"Threshold 0.689": {
+			"detection": 2064,
+			"no detection": 58
+		},
+		"Threshold 0.716": {
+			"detection": 2076,
+			"no detection": 46
+		},
+		"Threshold 0.742": {
+			"detection": 2093,
+			"no detection": 29
+		},
+		"Threshold 0.768": {
+			"detection": 2105,
+			"no detection": 17
+		},
+		"Threshold 0.795": {
+			"detection": 2120,
+			"no detection": 2
+		},
+		"Threshold 0.821": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.847": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.874": {
+			"detection": 2122,
+			"no detection": 0
+		},
+		"Threshold 0.900": {
+			"detection": 2122,
+			"no detection": 0
+		}
+	}
+}
