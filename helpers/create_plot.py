@@ -20,7 +20,7 @@ import matplotlib.ticker
 
 
 def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None,
-               size_multiplier=1.5):
+               size_multiplier=1.5, log=False):
     """
     Plot ROC curves for each algorithm.
 
@@ -117,6 +117,9 @@ def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None
             plt.xticks(0.2*np.arange(6))
             plt.yticks(0.1*np.arange(4, 11))
         plt.grid()
+        if log:
+            plt.xscale('log')
+            # plt.yscale('log')
         if save:
             plt.savefig(filename, bbox_inches='tight')
         plt.show()
@@ -144,6 +147,9 @@ def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None
                 plt.ylim([0.39, 1.01])
                 plt.xticks(0.2*np.arange(6))
                 plt.yticks(0.1*np.arange(4, 11))
+            if log:
+                plt.xscale('log')
+                plt.yscale('log')
             plt.grid()
             if save:
                 plt.savefig(filename + '_' + attack + '.pdf', bbox_inches='tight')
@@ -847,6 +853,191 @@ def heatmap_comparison_feature(general, time_general, time_db, algo_names=None, 
                 cbar=False) 
     plt.xlabel('Algorithm')
     plt.ylabel('Number of keypoints')
+
+    for t in plt.gca().texts: 
+        t.set_text(time.strftime('%M:%S', time.gmtime(float(t.get_text()))))
+    
+    if save:
+        plt.savefig(filename + '_time.pdf', bbox_inches='tight')
+    plt.show()
+    
+    return frame_AUC, frame_time
+
+
+
+def heatmap_comparison_classical(general, time_general, time_db, algo_names=None,
+                                 save=False, filename=None):
+    
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+            
+    # Initialize stuff   
+    legend = []
+    fpr = []
+    recall = []
+    time_tot = []
+        
+    # Retrive the values as lists
+    for i, algorithm in enumerate(general.keys()):
+        
+        legend.append(algorithm)
+            
+        time_tot.append(time_general[algorithm] + time_db[algorithm])
+        
+        # Sort according to thresholds value (for consistency)
+        thresholds = np.array(list(general[algorithm].keys()))
+        thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
+        sorting = np.argsort(thresholds_values)
+        thresholds = thresholds[sorting]
+        
+        fpr_list = []
+        recall_list = []
+        
+        for threshold in thresholds:
+                    
+            fpr_list.append(general[algorithm][threshold]['fpr'])
+            recall_list.append(general[algorithm][threshold]['recall'])
+            
+        fpr.append(fpr_list)
+        recall.append(recall_list)
+     
+    AUC = []
+        
+    # Compute area under the curve (AUC)
+    for i in range(len(fpr)):
+        
+        auc = np.trapz(recall[i], x=fpr[i])
+        AUC.append(auc)
+        
+    
+    AUC_per_algo = {'Ahash': np.zeros(4), 'Phash': np.zeros(4), 'Dhash': np.zeros(4),
+             'Crop res': np.zeros(4)}
+    time_per_algo = {'Ahash': np.zeros(4), 'Phash': np.zeros(4), 'Dhash': np.zeros(4),
+             'Crop res': np.zeros(4)}
+    descriptors = ['64', '121', '169', '256']
+    
+    for i, name in enumerate(legend):
+        algo, N, _ = name.rsplit(' ', 2)
+        if algo == 'Crop resistant hash':
+            algo = 'Crop res'
+        index = descriptors.index(N)
+        AUC_per_algo[algo][index] = AUC[i]
+        time_per_algo[algo][index] = time_tot[i]
+    
+    
+    frame_AUC = pd.DataFrame(AUC_per_algo, index=descriptors)
+    frame_time = pd.DataFrame(time_per_algo, index=descriptors)
+
+    plt.figure()    
+    sns.heatmap(frame_AUC, annot=True, square=True, fmt='.3f', cmap='Blues') 
+    plt.xlabel('Algorithm')
+    plt.ylabel('Hash length [bits]')
+    if save:
+        plt.savefig(filename + '_AUC.pdf', bbox_inches='tight')
+    plt.show()
+    
+    plt.figure()    
+    sns.heatmap(frame_time, annot=True, square=True, fmt='.3f', cmap='Reds') 
+    plt.xlabel('Algorithm')
+    plt.ylabel('Hash length [bits]')
+
+    for t in plt.gca().texts: 
+        t.set_text(time.strftime('%M:%S', time.gmtime(float(t.get_text()))))
+    
+    if save:
+        plt.savefig(filename + '_time.pdf', bbox_inches='tight')
+    plt.show()
+    
+    return frame_AUC, frame_time
+
+
+
+
+def heatmap_comparison_neural(general, time_general, time_db, algo_names=None,
+                                 save=False, filename=None):
+    
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+            
+    # Initialize stuff   
+    legend = []
+    fpr = []
+    recall = []
+    time_tot = []
+        
+    # Retrive the values as lists
+    for i, algorithm in enumerate(general.keys()):
+        
+        legend.append(algorithm)
+            
+        time_tot.append(time_general[algorithm] + time_db[algorithm])
+        
+        # Sort according to thresholds value (for consistency)
+        thresholds = np.array(list(general[algorithm].keys()))
+        thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
+        sorting = np.argsort(thresholds_values)
+        thresholds = thresholds[sorting]
+        
+        fpr_list = []
+        recall_list = []
+        
+        for threshold in thresholds:
+                    
+            fpr_list.append(general[algorithm][threshold]['fpr'])
+            recall_list.append(general[algorithm][threshold]['recall'])
+            
+        fpr.append(fpr_list)
+        recall.append(recall_list)
+     
+    AUC = []
+        
+    # Compute area under the curve (AUC)
+    for i in range(len(fpr)):
+        
+        auc = np.trapz(recall[i], x=fpr[i])
+        AUC.append(auc)
+        
+    
+    AUC_per_algo = {'Inception v3': np.zeros(4), 'EfficientNet B7': np.zeros(4),
+                    'ResNet50 2x': np.zeros(4), '*ResNet50 2x': np.zeros(4),
+                    '**ResNet50 2x': np.zeros(4)}
+    time_per_algo = {'Inception v3': np.zeros(4), 'EfficientNet B7': np.zeros(4),
+                    'ResNet50 2x': np.zeros(4), '*ResNet50 2x': np.zeros(4),
+                    '**ResNet50 2x': np.zeros(4)}
+    descriptors = ['L1', 'L2', 'cosine', 'J-S']
+    
+    for i, name in enumerate(legend):
+        algo, norm = name.split(' raw features ', 1)
+        if 'SimCLR v1' in algo:
+            algo = '*' + algo.split('SimCLR v1 ', 1)[1]
+        if 'SimCLR v2' in algo:
+            algo = '**' + algo.split('SimCLR v2 ', 1)[1]
+        if norm == 'Jensen-Shannon':
+            norm = 'J-S'
+        index = descriptors.index(norm)
+        AUC_per_algo[algo][index] = AUC[i]
+        time_per_algo[algo][index] = time_tot[i]
+    
+    
+    frame_AUC = pd.DataFrame(AUC_per_algo, index=descriptors)
+    frame_time = pd.DataFrame(time_per_algo, index=descriptors)
+
+    plt.figure()    
+    sns.heatmap(frame_AUC, annot=True, square=True, fmt='.3f', cmap='Blues',
+                cbar=False) 
+    plt.xticks(rotation=30)
+    plt.xlabel('Algorithm')
+    plt.ylabel('Distance metric')
+    if save:
+        plt.savefig(filename + '_AUC.pdf', bbox_inches='tight')
+    plt.show()
+    
+    plt.figure()    
+    sns.heatmap(frame_time, annot=True, square=True, fmt='.3f', cmap='Reds',
+                cbar=False) 
+    plt.xticks(rotation=30)
+    plt.xlabel('Algorithm')
+    plt.ylabel('Distance metric')
 
     for t in plt.gca().texts: 
         t.set_text(time.strftime('%M:%S', time.gmtime(float(t.get_text()))))

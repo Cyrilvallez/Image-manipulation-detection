@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'test/'
+EXPERIMENT_NAME = 'Benchmark_neural_ImageNet/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -28,23 +28,24 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 #%%
 
-a,b = plot.heatmap_comparison(general, global_time, db_time, save=True,
-                              filename=figure_folder + 'General/comparison')
+# a,b = plot.heatmap_comparison_neural(general, global_time, db_time, save=True,
+                              # filename=figure_folder + 'General/comparison')
 
 
 #%%
 
-save = True
+save = False
 
 a = plot.ROC_curves(general, save=save,
-                filename=figure_folder + 'General/ROC_curves.pdf')
+                filename=figure_folder + 'General/ROC_curves.pdf', common_ticks=False,
+                legend=[])
 # plot.ROC_curves(attacks, save=save,
                 # filename=figure_folder + 'Attack_wise/ROC')
-plot.metrics_plot(general, save=save,
-                   filename=figure_folder + 'General/Metrics')
-plot.time_comparison(global_time, db_time, save=save,
-                       filename=figure_folder + 'General/time.pdf')
-plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
+# plot.metrics_plot(general, save=save,
+                   # filename=figure_folder + 'General/Metrics')
+# plot.time_comparison(global_time, db_time, save=save,
+                       # filename=figure_folder + 'General/time.pdf')
+# plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
 
 
 #%%
@@ -52,17 +53,17 @@ plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
             # 'Crop resistant hash 64 bits']
 # selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descriptors',
             # 'FAST + LATCH 30 descriptors']
-# selected = ['Inception v3 raw features Jensen-Shannon',
+selected = [#'Inception v3 raw features Jensen-Shannon',
             # 'EfficientNet B7 raw features Jensen-Shannon',
             # 'ResNet50 2x raw features Jensen-Shannon',
             # 'ResNet101 2x raw features Jensen-Shannon',
-            # 'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
-            # 'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
-            # 'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
-            # ]
+            'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
+            'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
+            'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
+            ]
 
 # legend = [name.split(' ', 1)[1] for name in selected]
-legend = [name.split(' ', 1)[1] for name in general.keys()]
+# legend = [name.split(' ', 1)[1] for name in general.keys()]
 # for i in range(len(legend)):
     # if '+' in legend[i]:
         # legend[i] = legend[i].split('+ ', 1)[1]
@@ -71,10 +72,10 @@ legend = [name.split(' ', 1)[1] for name in general.keys()]
 # legend[1] = '**ResNet50 2x'
 # legend[2] = '**ResNet101 2x'
 
-# subset = {key: value for key, value in general.items() if key in selected}
+subset = {key: value for key, value in general.items() if key in selected}
 
-plot.ROC_curves(general, save=True, filename=figure_folder + 'General/ROC', legend=legend,
-                size_multiplier=0.9, common_ticks=False)
+plot.ROC_curves(subset, save=False, filename=figure_folder + 'General/ROC',
+                size_multiplier=0.9, common_ticks=False, log=True, legend=[])
 
 #%%
 

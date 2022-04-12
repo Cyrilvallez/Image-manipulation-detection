@@ -646,3 +646,135 @@ def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
     return final_digest
 
 
+
+
+
+
+
+
+def hashing_ensemble(algorithms, thresholds, databases, dataset, general_batch_size=512):
+    """
+    Performs the hashing and matching process for different algorithms and
+    thresholds.
+    
+    Parameters
+    ----------
+    algorithms : List
+        List of Algorithms (NeuralAlgorithm or ClassicalAlgorithm).
+    thresholds : Array 
+        List of floats corresponding to different thresholds. Or array of arrays
+        of the same size as algorithms, corresponding to different thresholds
+        for each algorithm
+    databases : List
+        List of dictionaries of ImageHash or ImageFeatures, corresponding to the
+        databases for each algorithm in `algorithms`.
+    dataset : IterableDataset
+        IterableDataset object with images to attack.
+    general_batch_size : int, optional
+        Batch size for the outer Dataloader, which all algorithms will use. The
+        default is 512.
+
+    Returns
+    -------
+    general_output : Dictionary
+        Results at the global level (number of matches/misses) for each algorith
+        and threshold.
+    image_wise_output : Dictionary
+        Results at the image level, for images in the database (number of 
+        correct/incorrect identification) for each algorith and threshold.
+
+    """
+    
+    # Creates dataloader on which to iterate
+    dataloader = DataLoader(dataset, batch_size=general_batch_size, shuffle=False,
+                            collate_fn=collate)
+        
+    # Initialize the different output digests; they are dictionaries with
+    # meaningful names
+    
+    general_output = {}
+    image_wise_output = {}
+    
+    
+    for i, algorithm in enumerate(algorithms):
+        
+        general_output[str(algorithm)] = {}
+        image_wise_output[str(algorithm)] = {}
+        
+        for threshold in zip(*thresholds):
+            
+            general_output[str(algorithm)][f'Threshold {threshold}'] = \
+                {'detection':0, 'no detection':0}
+            
+                    
+            image_wise_output[str(algorithm)][f'Threshold {threshold}'] = {}
+            if type(databases[0]) == dict:
+                for name in databases[0].keys():
+                    image_wise_output[str(algorithm)][f'Threshold {threshold}'][name] = \
+                        {'correct detection':[], 'incorrect detection':[]}
+                        
+            elif type(databases[0]) == tuple:
+                for name in databases[0][1]:
+                    image_wise_output[str(algorithm)][f'Threshold {threshold}'][name] = \
+                        {'correct detection':[], 'incorrect detection':[]}
+            
+    # Matching logic : First create the images with modifications, then loop
+    # over each algorithm and thresholds. The creation of attacks on images is
+    # the biggest overhead and thus should be the outer loop. The second 
+    # important overhead is the loading of big networks, but with large
+    # batches, we actually don't load them that much
+    
+    for images, image_names, attack_names in tqdm(dataloader):
+        
+        distances = []
+        
+        for i, algorithm in enumerate(algorithms):
+            
+            # Load the model in memory
+            algorithm.load_model()
+            
+            # Select database corresponding to that algorithm
+            database = databases[i]
+            
+            # Pre-process the images
+            imgs = algorithm.preprocess(images)
+            # Computes the hashes or features
+            fingerprints = algorithm.process_batch(imgs)
+            # Get distances for all fingerprints
+            distances.append(get_distances(fingerprints, database))
+            
+            algorithm.kill_model()
+            
+        for thresholds_1, thresholds_2 in zip(*thresholds):
+        
+            for distances_1, distances_2, img_name, attack_name in zip(distances[0], distances[1],
+                                                         image_names, attack_names):
+                 
+                detected1 = apply_threshold(distances_1, thresholds_1)
+                detected2 = apply_threshold(distances_2, thresholds_2)
+                
+                detected = np.union1d(detected1, detected2)
+                
+                if len(detected) > 0:
+                    general_output[str(algorithm)][f'Threshold {threshold}'] \
+                        ['detection'] += 1
+                    
+                else:
+                    general_output[str(algorithm)][f'Threshold {threshold}'] \
+                        ['no detection'] += 1
+                    
+                
+                for name in detected:
+
+                    if name == img_name:
+                        image_wise_output[str(algorithm)][f'Threshold {threshold}'] \
+                            [name]['correct detection'].append(attack_name)
+                    else:
+                        image_wise_output[str(algorithm)][f'Threshold {threshold}'] \
+                            [name]['incorrect detection'].append(attack_name)
+                                
+                
+    
+    return (general_output, image_wise_output)
+    
+    
