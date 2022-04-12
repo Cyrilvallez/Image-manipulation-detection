@@ -742,7 +742,7 @@ def hashing_ensemble(algorithms, thresholds, databases, dataset, general_batch_s
             
         for threshold in zip(*thresholds):
         
-            for distance, img_name, attack_name in zip(distances,
+            for distance, img_name, attack_name in zip(distances[0],
                                                          image_names, attack_names):
                  
                 detected = apply_threshold(distances, threshold)
