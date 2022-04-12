@@ -25,16 +25,17 @@ path_experimental = 'Datasets/Kaggle_memes/Memes/'
 
 algos = [
     # hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=256),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=256,
+    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = [
     # [0.211],
     [0.458],
-    [0.453],
+    # [0.453],
+    [0.363],
     ]
     
 dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
@@ -42,7 +43,7 @@ dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 databases, time = hashing.create_databases(algos, path_database)
 
 digest = hashing.hashing_ensemble(algos, thresholds, databases, dataset,
-                         general_batch_size=256)
+                         general_batch_size=16)
 
 names = ['general', 'image_wise']
 
