@@ -23,15 +23,15 @@ unique, counts = np.unique(memes, return_counts=True)
 
 dic = utils.load_dictionary('Results/Test_ensemble/image_wise.json')
 
-dic2 = dic['SimCLR v2 ResNet101 2x raw features Jensen-Shannon']['Threshold 0.505']
+dic2 = dic['Threshold (0.211, 0.458)']
 
 count_algo = []
 
 for img in unique:
     count_algo.append(dic2[img]['correct detection'])
     
-tot_correct = sum([a['correct detection'] for a in list(dic2.values())])
-tot_incorrect = sum([a['incorrect detection'] for a in list(dic2.values())])
+tot_correct = sum([len(a['correct detection']) for a in list(dic2.values())])
+tot_incorrect = sum([len(a['incorrect detection']) for a in list(dic2.values())])
 
 x = np.arange(len(unique))
 
