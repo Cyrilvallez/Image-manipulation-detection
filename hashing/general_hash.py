@@ -740,15 +740,12 @@ def hashing_ensemble(algorithms, thresholds, databases, dataset, general_batch_s
             
             algorithm.kill_model()
             
-        for thresholds_1, thresholds_2 in zip(*thresholds):
+        for threshold in zip(*thresholds):
         
-            for distances_1, distances_2, img_name, attack_name in zip(distances[0], distances[1],
+            for distance, img_name, attack_name in zip(distances[0], distances[1],
                                                          image_names, attack_names):
                  
-                detected1 = apply_threshold(distances_1, thresholds_1)
-                detected2 = apply_threshold(distances_2, thresholds_2)
-                
-                detected = np.union1d(detected1, detected2)
+                detected = apply_threshold(distances, threshold)
                 
                 if len(detected) > 0:
                     general_output[f'Threshold {threshold}'] \
