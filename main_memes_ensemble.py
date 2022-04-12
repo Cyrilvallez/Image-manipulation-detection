@@ -13,6 +13,7 @@ Created on Tue Apr 12 14:41:34 2022
 import numpy as np
 import hashing 
 from helpers import utils
+import os
 
 # Force the use of a user input at run-time to specify the path 
 # so that we do not mistakenly reuse the path from previous experiments
@@ -41,6 +42,11 @@ digest = hashing.hashing_ensemble(algos, thresholds, databases, dataset,
                          general_batch_size=256)
 
 names = ['general', 'image_wise']
+
+# Make sure the path exists, and creates it if this is not the case
+exist = os.path.exists(save_folder)
+if not exist:
+    os.makedirs(save_folder)
 
 for i in range(len(digest)):
     utils.save_dictionary(digest[i], save_folder + '/' + names[i] + '.json')
