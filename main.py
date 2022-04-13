@@ -20,9 +20,9 @@ import os
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/ILSVRC2012_img_val/Experimental'
-path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental'
-path_control = 'Datasets/ILSVRC2012_img_val/Control'
+path_database = 'Datasets/ILSVRC2012_img_val/Experimental/'
+path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental/'
+path_control = 'Datasets/ILSVRC2012_img_val/Control/'
 
 algos = [
     hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=32),
