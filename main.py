@@ -13,87 +13,79 @@ Created on Thu Mar 17 17:08:12 2022
 import numpy as np
 import hashing 
 from helpers import utils
+import os
 
 # Force the use of a user input at run-time to specify the path 
 # so that we do not mistakenly reuse the path from previous experiments
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/BSDS500/Experimental/'
-path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
-path_control = 'Datasets/BSDS500/Control_attacks/'
+path_database = 'Datasets/ILSVRC2012_img_val/Experimental'
+path_experimental = 'Datasets/ILSVRC2012_img_val/Experimental'
+path_control = 'Datasets/ILSVRC2012_img_val/Control'
 
 algos = [
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=32,
-                            device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=32,
-                            device='cuda', distance='L2'),
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=32,
-                            device='cuda', distance='L1'),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=32),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=32),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=32),
+    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=32),
+    hashing.FeatureAlgorithm('SIFT', batch_size=32, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('ORB', batch_size=32, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=32, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=32, n_features=30, cutoff=1),
     hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=32,
                             device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
-                            device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
-                            device='cuda', distance='L2'),
-    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
-                            device='cuda', distance='L1'),
-    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
                             device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='L2'),
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='L1'),
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=32,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='L2'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='L1'),                        
+    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=32,
                             device='cuda', distance='Jensen-Shannon'),
     hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='cosine'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='L2'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='L1'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=32,
-                            device='cuda', distance='Jensen-Shannon')
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = [
     np.linspace(0, 0.4, 20),
-    np.linspace(4, 30, 20),
-    np.linspace(180, 820, 20),
+    np.linspace(0.1, 0.4, 20),
+    np.linspace(0.05, 0.4, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(0, 300, 20),
+    np.linspace(0, 0.3, 20),
+    np.linspace(0, 0.4, 20),
+    np.linspace(0.1, 0.4, 20),
     np.linspace(0.15, 0.65, 20),
-    np.linspace(0, 0.5, 20),
-    np.linspace(0, 15, 20),
-    np.linspace(0, 500, 20),
-    np.linspace(0.3, 0.9, 20),
-    np.linspace(0, 0.4, 20),
-    np.linspace(6, 30, 20),
-    np.linspace(200, 800, 20),
+    np.linspace(0.2, 0.9, 20),
     np.linspace(0.2, 0.6, 20),
-    np.linspace(0.05, 0.45, 20),
-    np.linspace(3, 20, 20),
-    np.linspace(100, 350, 20),
-    np.linspace(0.4, 0.85, 20),
-    np.linspace(0, 0.4, 20),
-    np.linspace(3, 12, 20),
-    np.linspace(80, 250, 20),
+    np.linspace(0.2, 0.6, 20),
+    np.linspace(0.3, 0.8, 20),
     np.linspace(0.3, 0.9, 20),
+    np.linspace(0.4, 0.9, 20),
     ]
-    
-positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
-negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
+
+experimental_images = [path_experimental + file for file in os.listdir(path_experimental)]
+control_images = [path_control + file for file in os.listdir(path_control)]
+
+rng = np.random.default_rng(seed=32)
+positive_images = rng.choice(experimental_images, size=100, replace=False)
+negative_images = rng.choice(control_images, size=100, replace=False)
+database_remaining = rng.choice(np.setdiff1d(experimental_images, positive_images),
+                                size=150, replace=False)
+database = np.concatenate((positive_images, database_remaining))
+
+positive_images = list(positive_images)
+negative_images = list(negative_images)
+database = list(database)
+
+positive_dataset = hashing.PerformAttacksDataset(positive_images)
+negative_dataset = hashing.PerformAttacksDataset(negative_images)
 
 
-digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
+digest = hashing.total_hashing(algos, thresholds, database, positive_dataset,
                                negative_dataset, general_batch_size=32)
 
 utils.save_digest(digest, save_folder)
