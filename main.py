@@ -73,19 +73,15 @@ control_images = [path_control + file for file in os.listdir(path_control)]
 rng = np.random.default_rng(seed=32)
 positive_images = rng.choice(experimental_images, size=100, replace=False)
 negative_images = rng.choice(control_images, size=100, replace=False)
-database_remaining = rng.choice(np.setdiff1d(experimental_images, positive_images),
-                                size=2400, replace=False)
-database = np.concatenate((positive_images, database_remaining))
 
 positive_images = list(positive_images)
 negative_images = list(negative_images)
-database = list(database)
 
 positive_dataset = hashing.PerformAttacksDataset(positive_images)
 negative_dataset = hashing.PerformAttacksDataset(negative_images)
 
 
-digest = hashing.total_hashing(algos, thresholds, database, positive_dataset,
+digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
                                negative_dataset, general_batch_size=32)
 
 utils.save_digest(digest, save_folder)

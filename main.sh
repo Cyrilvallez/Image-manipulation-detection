@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=database_2500
+#SBATCH --job-name=database_25000
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
