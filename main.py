@@ -74,7 +74,7 @@ rng = np.random.default_rng(seed=32)
 positive_images = rng.choice(experimental_images, size=100, replace=False)
 negative_images = rng.choice(control_images, size=100, replace=False)
 database_remaining = rng.choice(np.setdiff1d(experimental_images, positive_images),
-                                size=150, replace=False)
+                                size=2400, replace=False)
 database = np.concatenate((positive_images, database_remaining))
 
 positive_images = list(positive_images)
