@@ -1047,6 +1047,82 @@ def heatmap_comparison_neural(general, time_general, time_db, algo_names=None,
     plt.show()
     
     return frame_AUC, frame_time
+
+
+
+def heatmap_comparison_database(generals, algo_names=None, save=False, filename=None):
+    
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+    
+    legend = [[], [], []]
+    
+    AUC = np.zeros((3, len(generals[0].keys())))
+    
+    for i, general in enumerate(generals):
+        
+        # Retrive the values as lists
+        for j, algorithm in enumerate(general.keys()):
+        
+            legend[i].append(algorithm)
+        
+            # Sort according to thresholds value (for consistency)
+            thresholds = np.array(list(general[algorithm].keys()))
+            thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
+            sorting = np.argsort(thresholds_values)
+            thresholds = thresholds[sorting]
+        
+            fpr = []
+            recall = []
+        
+            for threshold in thresholds:
+                    
+                fpr.append(general[algorithm][threshold]['fpr'])
+                recall.append(general[algorithm][threshold]['recall'])
+            
+            auc = np.trapz(recall, x=fpr)
+            AUC[i,j] = auc
+            
+    assert((legend[0] == legend[1]) & (legend[1] == legend[2]))
+    
+    for i, name in enumerate(legend[0]):
+        
+        if 'bits' in name:
+            if 'Crop' in name:
+                new = 'Crop res'
+            else:
+                new = name.split(' 64', 1)[0]
+                
+        elif 'descriptors' in name:
+            new = name.rsplit(' ', 2)[0]
+            try:
+                new = new.rsplit(' ', 1)[1]
+            except: 
+                pass
+            
+        else:
+            new = name.split(' raw ')[0]
+            if 'SimCLR v1' in new:
+                new = '*' + new.split('SimCLR v1 ')[1]
+            elif 'SimCLR v2' in new:
+                new = '**' + new.split('SimCLR v2 ')[1]
+                
+        legend[0][i] = new
+    
+    index = ['250', '2500', '25000']
+    
+    frame = pd.DataFrame(AUC, index=index, columns=legend[0])
+
+    plt.figure(figsize=(10,10))    
+    sns.heatmap(frame, annot=True, square=True, fmt='.3f')
+    # plt.xticks(rotation=30)
+    plt.xlabel('Algorithm')
+    plt.ylabel('Database size')
+    if save:
+        plt.savefig(filename, bbox_inches='tight')
+    plt.show()
+    
+
     
 
     

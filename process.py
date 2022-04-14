@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Benchmark_neural_ImageNet/'
+EXPERIMENT_NAME = 'Database_25000_ImageNet/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -34,17 +34,17 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 
 #%%
 
-save = False
+save = True
 
 a = plot.ROC_curves(general, save=save,
                 filename=figure_folder + 'General/ROC_curves.pdf', common_ticks=False,
                 legend=[])
 # plot.ROC_curves(attacks, save=save,
                 # filename=figure_folder + 'Attack_wise/ROC')
-# plot.metrics_plot(general, save=save,
-                   # filename=figure_folder + 'General/Metrics')
+plot.metrics_plot(general, save=save,
+                    filename=figure_folder + 'General/Metrics')
 # plot.time_comparison(global_time, db_time, save=save,
-                       # filename=figure_folder + 'General/time.pdf')
+                        # filename=figure_folder + 'General/time.pdf')
 # plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
 
 
@@ -124,4 +124,18 @@ utils.save_digest(big_digest, 'Results/Benchmark_neural_ImageNet')
 
 """
 
+#%%
+import os
+from helpers import utils
+from helpers import create_plot as plot
+
+generals = []
+experiments = ['Database_250_ImageNet', 'Database_2500_ImageNet', 'Database_25000_ImageNet']
+experiments = ['Results/' + name for name in experiments]
+
+for name in experiments:
+    general, _, _, _, _, _ = utils.load_digest(name)
+    generals.append(general)
+    
+plot.heatmap_comparison_database(generals, save=True, filename='test_db.pdf')
 
