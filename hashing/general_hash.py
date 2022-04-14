@@ -498,24 +498,24 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
         
         for threshold in algo_thresholds:
             
-            general_output[str(algorithm)][f'Threshold {threshold:.3f}'] = \
+            general_output[str(algorithm)][f'Threshold {threshold:.4f}'] = \
                 {'detection':0, 'no detection':0}
             
             if artificial_attacks:
-                attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] = {}
+                attack_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'] = {}
                 for name in all_attack_names:
-                    attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
+                    attack_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'][name] = \
                         {'detection':0, 'no detection':0}
                     
-            image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] = {}
+            image_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'] = {}
             if type(databases[0]) == dict:
                 for name in databases[0].keys():
-                    image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
+                    image_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'][name] = \
                         {'correct detection':0, 'incorrect detection':0}
                         
             elif type(databases[0]) == tuple:
                 for name in databases[0][1]:
-                    image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'][name] = \
+                    image_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'][name] = \
                         {'correct detection':0, 'incorrect detection':0}
             
     # Matching logic : First create the images with modifications, then loop
@@ -562,25 +562,25 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
                     detected = apply_threshold(distances_, threshold)
                 
                     if len(detected) > 0:
-                        general_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                        general_output[str(algorithm)][f'Threshold {threshold:.4f}'] \
                             ['detection'] += 1
                         if artificial_attacks:
-                            attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                            attack_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'] \
                                 [attack_name]['detection'] += 1
                     else:
-                        general_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                        general_output[str(algorithm)][f'Threshold {threshold:.4f}'] \
                             ['no detection'] += 1
                         if artificial_attacks:
-                            attack_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                            attack_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'] \
                                 [attack_name]['no detection'] += 1
                 
                     for name in detected:
 
                         if name == img_name:
-                            image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                            image_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'] \
                                 [name]['correct detection'] += 1
                         else:
-                            image_wise_output[str(algorithm)][f'Threshold {threshold:.3f}'] \
+                            image_wise_output[str(algorithm)][f'Threshold {threshold:.4f}'] \
                                 [name]['incorrect detection'] += 1
                                 
                             

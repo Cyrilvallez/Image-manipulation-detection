@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Database_25000_ImageNet/'
+EXPERIMENT_NAME = 'Sweep_low_fpr/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -139,3 +139,28 @@ for name in experiments:
     
 plot.heatmap_comparison_database(generals, save=True, filename='test_db.pdf')
 
+#%%
+
+import numpy as np
+
+objective = 0.005
+res = {}
+
+for algo in general.keys():
+    
+    fpr = []
+    thresholds = []
+    
+    for threshold in general[algo].keys():
+        
+        fpr.append(general[algo][threshold]['fpr'])
+        thresholds.append(float(threshold.split(' ')[1]))
+        
+    test = np.array(fpr) - objective
+    # index = np.argmin(test[test >= 0])
+    index = next(i for i in range(len(test)) if test[i] >= 0)
+    
+    res[algo] = {'fpr': fpr[index], 'threshold': thresholds[index]}
+        
+        
+    
