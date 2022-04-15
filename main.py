@@ -20,8 +20,8 @@ import os
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/BSDS500/Experimental/'
-path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
+path_database = 'Datasets/Kaggle_memes/Templates/'
+path_experimental = 'Datasets/Kaggle_memes/Memes/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
@@ -83,10 +83,18 @@ thresholds = [
 # negative_dataset = hashing.PerformAttacksDataset(negative_images)
 
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
-negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
+# negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
-digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=16)
+# digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
+                               # negative_dataset, general_batch_size=16)
+                               
+digest = hashing.hashing(algos, thresholds, path_database, positive_dataset,
+                         general_batch_size=16, artificial_attacks=False)
 
-utils.save_digest(digest, save_folder)
+# utils.save_digest(digest, save_folder)
+
+names = ['general.json', 'image_wise.json', 'time.json']
+
+for dic, name in zip(digest, names):
+    utils.save_dictionary(dic, save_folder + '/' + name)
