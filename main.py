@@ -82,6 +82,8 @@ thresholds = [
 # positive_dataset = hashing.PerformAttacksDataset(positive_images)
 # negative_dataset = hashing.PerformAttacksDataset(negative_images)
 
+databases, _ = hashing.create_databases(algos, path_database)
+
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 # negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
@@ -89,7 +91,7 @@ positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=Tr
 # digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
                                # negative_dataset, general_batch_size=16)
                                
-digest = hashing.hashing(algos, thresholds, path_database, positive_dataset,
+digest = hashing.hashing(algos, thresholds, databases, positive_dataset,
                          general_batch_size=16, artificial_attacks=False)
 
 # utils.save_digest(digest, save_folder)
