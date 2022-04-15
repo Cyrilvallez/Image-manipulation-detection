@@ -98,5 +98,10 @@ digest = hashing.hashing(algos, thresholds, databases, positive_dataset,
 
 names = ['general.json', 'image_wise.json', 'time.json']
 
+exist = os.path.exists(save_folder)
+
+if not exist:
+    os.makedirs(save_folder)
+
 for dic, name in zip(digest, names):
     utils.save_dictionary(dic, save_folder + '/' + name)
