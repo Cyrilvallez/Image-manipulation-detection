@@ -1,0 +1,13 @@
+{
+	"SIFT 30 descriptors": 241.95417263746256,
+	"ORB 30 descriptors": 74.51224976062772,
+	"FAST + DAISY 30 descriptors": 236.5260039305687,
+	"FAST + LATCH 30 descriptors": 79.89450301885601,
+	"Inception v3 raw features Jensen-Shannon": 47.520959231853496,
+	"EfficientNet B7 raw features Jensen-Shannon": 305.13094950914365,
+	"ResNet50 2x raw features Jensen-Shannon": 49.57940018892289,
+	"ResNet101 2x raw features Jensen-Shannon": 64.29988406181336,
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 63.92179147481921,
+	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": 79.76041695117951,
+	"SimCLR v2 ResNet101 2x raw features Jensen-Shannon": 110.16172916650777
+}
