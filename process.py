@@ -51,16 +51,16 @@ plot.metrics_plot(general, save=save,
 #%%
 # selected = ['Ahash 64 bits', 'Phash 64 bits', 'Dhash 64 bits', 'Whash 64 bits', 
             # 'Crop resistant hash 64 bits']
-# selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descriptors',
-            # 'FAST + LATCH 30 descriptors']
-selected = [#'Inception v3 raw features Jensen-Shannon',
+selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descriptors',
+            'FAST + LATCH 30 descriptors']
+# selected = ['Inception v3 raw features Jensen-Shannon',
             # 'EfficientNet B7 raw features Jensen-Shannon',
             # 'ResNet50 2x raw features Jensen-Shannon',
             # 'ResNet101 2x raw features Jensen-Shannon',
-            'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
-            'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
-            'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
-            ]
+            # 'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
+            # 'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
+            # 'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
+            # ]
 
 # legend = [name.split(' ', 1)[1] for name in selected]
 # legend = [name.split(' ', 1)[1] for name in general.keys()]
@@ -156,9 +156,8 @@ for algo in general.keys():
         fpr.append(general[algo][threshold]['fpr'])
         thresholds.append(float(threshold.split(' ')[1]))
         
-    test = np.array(fpr) - objective
-    # index = np.argmin(test[test >= 0])
-    index = next(i for i in range(len(test)) if test[i] >= 0)
+    test = np.abs(np.array(fpr) - objective)
+    index = np.argmin(test)
     
     res[algo] = {'fpr': fpr[index], 'threshold': thresholds[index]}
         

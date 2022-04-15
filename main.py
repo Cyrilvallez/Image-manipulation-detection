@@ -25,11 +25,11 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    # hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=16),
-    # hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=16),
-    # hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=16),
-    # hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=16),
-    # hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=16, cutoff=1),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=16),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=16),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=16),
+    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=16),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=16, cutoff=1),
     hashing.FeatureAlgorithm('SIFT', batch_size=16, n_features=30, cutoff=1),
     hashing.FeatureAlgorithm('ORB', batch_size=16, n_features=30, cutoff=1),
     hashing.FeatureAlgorithm('FAST + DAISY', batch_size=16, n_features=30, cutoff=1),
@@ -51,22 +51,22 @@ algos = [
     ]
 
 thresholds = [
-    # np.linspace(0, 0.15, 30),
-    # np.linspace(0.1, 0.3, 30),
-    # np.linspace(0.05, 0.26, 30),
-    # np.linspace(0, 0.15, 30),
-    # np.linspace(0, 0.2, 30),
-    np.linspace(0, 110, 100),
-    np.linspace(0, 0.13, 100),
-    np.linspace(0, 0.1, 100),
-    np.linspace(0.1, 0.22, 100),
-    np.linspace(0.15, 0.4, 100),
-    np.linspace(0.3, 0.56, 100),
-    np.linspace(0.2, 0.37, 100),
-    np.linspace(0.2, 0.37, 100),
-    np.linspace(0.3, 0.59, 100),
-    np.linspace(0.3, 0.62, 100),
-    np.linspace(0.4, 0.63, 100),
+    [0.052],
+    [0.224],
+    [0.159],
+    [0.072],
+    [0.069],
+    [67.7778],
+    [0.0906],
+    [0.0414],
+    [0.1606],
+    [0.2611],
+    [0.3683]
+    [0.2996],
+    [0.3168],
+    [0.5197],
+    [0.5133],
+    [0.5208],
     ]
 
 # experimental_images = [path_experimental + file for file in os.listdir(path_experimental)]
