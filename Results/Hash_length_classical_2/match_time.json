@@ -1,0 +1,18 @@
+{
+	"Ahash 64 bits": 14.142305461565652,
+	"Ahash 121 bits": 14.641910600662232,
+	"Ahash 169 bits": 14.881143617630006,
+	"Ahash 256 bits": 15.239661622047425,
+	"Dhash 64 bits": 14.011154150962831,
+	"Dhash 121 bits": 14.520993161201478,
+	"Dhash 169 bits": 14.772212719917297,
+	"Dhash 256 bits": 15.103268361091615,
+	"Phash 64 bits": 16.028975256284077,
+	"Phash 121 bits": 16.734651923179626,
+	"Phash 169 bits": 17.010299062728883,
+	"Phash 256 bits": 17.846653811136882,
+	"Crop resistant hash 64 bits": 2246.1671825170515,
+	"Crop resistant hash 121 bits": 2255.6534955024717,
+	"Crop resistant hash 169 bits": 2260.8794229269024,
+	"Crop resistant hash 256 bits": 2265.327972817421
+}
