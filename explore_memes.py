@@ -21,25 +21,25 @@ templates = [file.split('.', 1)[0] for file in os.listdir(templates_path)]
 
 unique, counts = np.unique(memes, return_counts=True)
 
-dic = utils.load_dictionary('Results/Test_ensemble/image_wise.json')
+dic = utils.load_dictionary('Results/Benchmark_memes_constant_fpr/image_wise.json')
 
-dic2 = dic[list(dic.keys())[0]]
+tot_correct = {}
+tot_incorrect = {}
 
-count_algo = []
-
-for img in unique:
-    count_algo.append(dic2[img]['correct detection'])
+for key in dic.keys():
     
-tot_correct = sum([len(a['correct detection']) for a in list(dic2.values())])
-tot_incorrect = sum([len(a['incorrect detection']) for a in list(dic2.values())])
+    thresh = list(dic[key].keys())[0]
+    tot_correct[key] = sum([a['correct detection'] for a in list(dic[key][thresh].values())])
+    tot_incorrect[key] = sum([a['incorrect detection'] for a in list(dic[key][thresh].values())])
 
+"""
 all_detected = []
 for key in dic2.keys():
     for name in dic2[key]['correct detection']:
         all_detected.append(key + '_' + name + '.jpg')
         
 all_non_detected = np.setdiff1d(os.listdir(memes_path), all_detected)
-
+"""
 """
 plt.figure()
 plt.bar(x-0.2, counts, 0.4, color='b', label='True')
@@ -48,8 +48,8 @@ plt.legend()
 # plt.yscale('log')
 """
 
-print(f'{tot_correct} / {np.sum(counts)} correct detections')
-print(f'{tot_incorrect} incorrect detections')
+# print(f'{tot_correct} / {np.sum(counts)} correct detections')
+# print(f'{tot_incorrect} incorrect detections')
 
 #%%
 

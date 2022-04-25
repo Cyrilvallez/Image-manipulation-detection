@@ -929,7 +929,8 @@ def heatmap_comparison_classical(general, time_general, time_db, algo_names=None
     frame_time = pd.DataFrame(time_per_algo, index=descriptors)
 
     plt.figure()    
-    sns.heatmap(frame_AUC, annot=True, square=True, fmt='.3f', cmap='Blues') 
+    sns.heatmap(frame_AUC, annot=True, square=True, fmt='.3f', cmap='Blues',
+                cbar=False) 
     plt.xlabel('Algorithm')
     plt.ylabel('Hash length [bits]')
     if save:
@@ -937,7 +938,8 @@ def heatmap_comparison_classical(general, time_general, time_db, algo_names=None
     plt.show()
     
     plt.figure()    
-    sns.heatmap(frame_time, annot=True, square=True, fmt='.3f', cmap='Reds') 
+    sns.heatmap(frame_time, annot=True, square=True, fmt='.3f', cmap='Reds',
+                cbar=False) 
     plt.xlabel('Algorithm')
     plt.ylabel('Hash length [bits]')
 
@@ -1121,6 +1123,84 @@ def heatmap_comparison_database(generals, algo_names=None, save=False, filename=
     if save:
         plt.savefig(filename, bbox_inches='tight')
     plt.show()
+    
+    
+
+def roc_comparison_database(generals, algo_names=None, save=False, filename=None):
+    
+    if save and filename is None:
+        raise ValueError('You must specify a filename to save the figure.')
+    
+    legend = [[], [], []]
+    fpr = [[], [], []]
+    recall = [[], [], []]
+    
+    for i, general in enumerate(generals):
+        
+        # Retrive the values as lists
+        for j, algorithm in enumerate(general.keys()):
+        
+            legend[i].append(algorithm)
+        
+            # Sort according to thresholds value (for consistency)
+            thresholds = np.array(list(general[algorithm].keys()))
+            thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
+            sorting = np.argsort(thresholds_values)
+            thresholds = thresholds[sorting]
+        
+            fpr_ = []
+            recall_ = []
+        
+            for threshold in thresholds:
+                    
+                fpr_.append(general[algorithm][threshold]['fpr'])
+                recall_.append(general[algorithm][threshold]['recall'])
+            
+            fpr[i].append(fpr_)
+            recall[i].append(recall_)
+            
+    assert((legend[0] == legend[1]) & (legend[1] == legend[2]))
+    
+    for i, name in enumerate(legend[0]):
+        
+        if 'bits' in name:
+            if 'Crop' in name:
+                new = 'Crop res'
+            else:
+                new = name.split(' 64', 1)[0]
+                
+        elif 'descriptors' in name:
+            new = name.rsplit(' ', 2)[0]
+            try:
+                new = new.rsplit(' ', 1)[1]
+            except: 
+                pass
+            
+        else:
+            new = name.split(' raw ')[0]
+            if 'SimCLR v1' in new:
+                new = '*' + new.split('SimCLR v1 ')[1]
+            elif 'SimCLR v2' in new:
+                new = '**' + new.split('SimCLR v2 ')[1]
+                
+        legend[0][i] = new
+    
+    index = ['250', '2500', '25000']
+    
+    for j in range(len(recall[0])):
+
+        plt.figure()
+        for i in range(3):
+            plt.plot(fpr[i][j], recall[i][j])
+        plt.xlabel('FPR')
+        plt.ylabel('Recall')
+        plt.legend(index)
+        plt.xscale('log')
+        plt.title(legend[0][j])
+        plt.grid()
+        if save:
+            plt.savefig(filename, bbox_inches='tight')
+        plt.show()
     
 
     

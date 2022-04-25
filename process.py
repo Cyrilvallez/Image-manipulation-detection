@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Sweep_low_fpr/'
+EXPERIMENT_NAME = 'Hash_length_classical/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -162,4 +162,19 @@ for algo in general.keys():
     res[algo] = {'fpr': fpr[index], 'threshold': thresholds[index]}
         
         
+#%%
+import os
+from helpers import utils
+from helpers import create_plot as plot
+
+experiment_names = [f'Database_{i}_ImageNet' for i in [250, 2500, 25000]]
+experiment_folders = ['Results/' + a for a in experiment_names]
+
+res = []
+
+for a in experiment_folders:
+
+    general, _, _, _, _,_ = utils.load_digest(a)
+    res.append(general)
     
+plot.roc_comparison_database(res)

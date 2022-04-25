@@ -9,7 +9,11 @@ These are logs that I will update every week in order to keep track of my work (
 4. [Week 4 : 28/02](#week4)
 5. [Week 5 : 07/03](#week5)
 6. [Week 6 : 14/03](#week6)
-7. [Week 7 : 21/03](#week6)
+7. [Week 7 : 21/03](#week7)
+8. [Week 8 : 28/03](#week8)
+9. [Week 9 : 04/04](#week9)
+10. [Week 10 : 11/04](#week10)
+11. [Week 11 : 18/04](#week11)
 
    
 
@@ -222,3 +226,23 @@ I also added support for L1 and L2 (basically any norm) distances. At first, I c
 I then tried to improve the J-S computation across batches to remove the overhead, but did not succeed. I first tested different implementations that would be used in the same spirit as it is used now (just apply the distance one after the other), but it seems that speed cannot be traded for robustness in this case (otherwise a 0 or very low value in the normalized feature vector will yield big inacurracies). After that I explored way to process everything in "one pass", but it is not as trivial since we need to compute every pairwise distances between the database and the current batch. One function from scipy does this and provide a speed-up of about 20-30%, but this is not as good as hoped and does not justify a change in the current framework in my opinion. Trying to use pytorch to compute everything in one pass is not obvious. This could be investigated further but would need to be quite smart about the implementation. 
 
 On the results part, the same networks as SimCLR uses (basically big ResNets) but trained in a supervised fashion on ImageNet perform worse than the constrative approach used in SimCLR, as expected. Moreover, the neural models from SimCLR do not seem to have the same "weaknesses" (in the attack-wise performances sense) as classical algorithms like Dhash or Phash, suggesting that a smart ensemble of these methods could (I believe) provide quite an improvement to the robustness of the final algorithm. This is further motivated by the fact that classical algorithms (Phash or Dhash for exemple) have a fpr of 0 up to quite high recall, meaning that we could increase the overall performances without incurring any drawback to the final algorithm.
+
+## Week 8 : 28/03 <a name="week8"></a>
+
+This week, I first tried to get the same results as before on a bigger dataset, namely ImageNet validation set, containing 50 000 images. However, I first got some bugs on the generation of text attacks. Indeed, some images on ImageNet have strange sizes, on which the currently calculated text size would result on a textbox too big. For this reason, I first add to modify the generation of text attacks. This took me quite some time to manage to obtain a coherent text size for different image sizes (in the sense that the text should occupy the same amount of space in two images of different sizes), especially since font size are not exactly linear. Going from text size 12 to 13 is not the same as going from 23 to 24 for example. Finally I managed to get robust and coherent text generation. 
+
+After this was solved, the problem of efficient distance computation became the biggest problem : indeed in the actual state the time needed for the experiment was way too large. Indeed, we are looking at 116 000 thousand variations of images, and we need to compute the distance to 50 000 images for each of the 116 000. And this without taking into account the time needed to get the hash, nor the fact that we need to perform this for several algorithms. For this reason, I had to find a way to compute the distances on GPU as investigated before. In the end, I used pytorch for this while changing some data structures, which allowed to compute the distances between batches and the whole database in one go on GPU. After this was done, the time needed for the experiment was still large, but acceptable (about 10 to 100 faster than before). 
+
+Finally I got some results with ImageNet dataset. Everything seems to be similar as what I got before on the BSDS500 dataset, except with slightly worse performances, which was expected as we process and compare to more images.
+
+## Week 9 : 04/04 <a name="week9"></a>
+
+This week was mostly used to advance on the benchmarking paper. I wrote all the method and started working on the results. After some reflexion I also adjusted some parameters on the attacks, in order to make more sense overall. I thought about the most appropriate representations of the results and performed different experiments to compare different ways.
+
+## Week 10 : 11/04 <a name="week10"></a>
+
+Once again, this week was devoted to the paper. I performed different comparisons of hash length, number of features, distance metric... It took quite some time to choose between different representations of things, adjust size for the figures, decide what to show or not,... I performed a study on the performances depending on the database size, showing that performances degrade when the database increases (more false positive). I also studied the behavior on the memes dataset to check performances on "real" data.
+
+## Week 11 : 18/04 <a name="week11"></a>
+
+Week of holydays !
