@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#SBATCH --job-name=database_25000
+#SBATCH --job-name=memes
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=32
 #SBATCH --mem=32000
 #SBATCH --partition=nodes
 #SBATCH --gres=gpu:a100:1
