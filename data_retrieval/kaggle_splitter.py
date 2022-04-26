@@ -5,14 +5,11 @@ import os
 import shutil
 
 
-reddit_posts_csv_location = "C:\\Users\\Andrei\\PycharmProjects\\Detection-of-image-usage" \
-                            "\\data_retrieval\\Kaggle 2018 reddit image dataset\\reddit_posts.csv"
+reddit_posts_csv_location = "/Users/cyrilvallez/Desktop/archive/reddit_posts.csv"
 
-image_store = "C:\\Users\\Andrei\\PycharmProjects\\Detection-of-image-usage\\data_retrieval" \
-              "\\Kaggle 2018 reddit image dataset\\images\\kaggle_images"
+image_store = "/Users/cyrilvallez/Desktop/archive/images/kaggle_images"
 
-reference_store = "C:\\Users\\Andrei\\PycharmProjects\\Detection-of-image-usage\\data_retrieval" \
-              "\\Kaggle 2018 reddit image dataset\\meme_templates"
+reference_store = "/Users/cyrilvallez/Desktop/Templates"
 
 
 def get_ref_memes():

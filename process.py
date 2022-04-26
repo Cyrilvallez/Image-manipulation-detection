@@ -31,6 +31,7 @@ general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_fold
 # a,b = plot.heatmap_comparison_neural(general, global_time, db_time, save=True,
                               # filename=figure_folder + 'General/comparison')
 
+plot.heatmap_comparison_classical(general, global_time, db_time, save=True, filename= figure_folder + 'Comparison_length')
 
 #%%
 

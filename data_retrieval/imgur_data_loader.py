@@ -8,8 +8,8 @@ import csv
 import os
 from pathlib import Path
 from pprint import pprint
-from local_secrets import client_id
-import json
+# from local_secrets import client_id
+# import json
 import datetime
 import time
 from tqdm import tqdm
@@ -175,10 +175,8 @@ def load_images_from_a_crawl(album_crawl_dataset: Path):
 
 
 if __name__ == "__main__":
-    # load_metadata_and_url("2019-12-15", "2020-01-03", False)
-    active_crawl_dataset = Path("C:\\Users\\Andrei\\PycharmProjects\\Detection-of-image-usage\\"
-                                "data_retrieval\\metadata_buffer\\"
-                                "2019-12-15_to_2020-01-03_imgur_data.csv")
+    load_metadata_and_url("2019-12-15", "2020-01-03", False)
+    active_crawl_dataset = Path("/Users/cyrilvallez/Desktop/Project/data_retrieval/metadata_buffer/2019-12-15_to_2020-01-03_imgur_data.csv")
     load_images_from_a_crawl(active_crawl_dataset)
     # load_images_from_gallery()
 
