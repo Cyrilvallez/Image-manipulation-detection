@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Hash_length_classical/'
+EXPERIMENT_NAME = 'Sweep_low_fpr2/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -178,4 +178,4 @@ for a in experiment_folders:
     general, _, _, _, _,_ = utils.load_digest(a)
     res.append(general)
     
-plot.roc_comparison_database(res)
+plot.roc_comparison_database(res, save=False, filename='Comparison_db_size.pdf')

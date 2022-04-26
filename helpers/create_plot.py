@@ -1111,14 +1111,14 @@ def heatmap_comparison_database(generals, algo_names=None, save=False, filename=
                 
         legend[0][i] = new
     
-    index = ['250', '2500', '25000']
+    index = ['250', '2k5', '25k']
     
     frame = pd.DataFrame(AUC, index=index, columns=legend[0])
 
-    plt.figure(figsize=(10,10))    
-    sns.heatmap(frame, annot=True, square=True, fmt='.3f')
+    plt.figure(figsize=(10,4))    
+    sns.heatmap(frame, annot=True, square=True, fmt='.3f', cbar=False)
     # plt.xticks(rotation=30)
-    plt.xlabel('Algorithm')
+    # plt.xlabel('Algorithm')
     plt.ylabel('Database size')
     if save:
         plt.savefig(filename, bbox_inches='tight')
@@ -1195,7 +1195,7 @@ def roc_comparison_database(generals, algo_names=None, save=False, filename=None
         plt.xlabel('FPR')
         plt.ylabel('Recall')
         plt.legend(index)
-        plt.xscale('log')
+        # plt.xscale('log')
         plt.title(legend[0][j])
         plt.grid()
         if save:
