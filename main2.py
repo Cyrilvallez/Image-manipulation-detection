@@ -19,7 +19,7 @@ from helpers import utils
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/Kaggle_memes/Templates'
+path_database = 'Datasets/Kaggle_memes/Templates/'
 path_experimental = 'Datasets/Kaggle_memes/Experimental/'
 path_control = 'Datasets/Kaggle_memes/Control/'
 
