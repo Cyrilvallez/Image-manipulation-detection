@@ -72,7 +72,22 @@ positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=Tr
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
-digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               negative_dataset, general_batch_size=64)
+# digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
+                               # negative_dataset, general_batch_size=64)
+                               
+databases, time_database = hashing.create_databases(algos, path_database)
 
-utils.save_digest(digest, save_folder)
+positive_digest = hashing.hashing(algos, thresholds, databases, positive_dataset,
+                          general_batch_size=64, artificial_attacks=False)
+negative_digest = hashing.hashing(algos, thresholds, databases, negative_dataset,
+                          general_batch_size=64, artificial_attacks=False)
+
+# utils.save_digest(digest, save_folder)
+
+names = ['general.json', 'image_wise.json', 'time.json']
+
+for dic, name in zip(positive_digest, names):
+    utils.save_dictionary(dic, save_folder + '/pos' + name)
+    
+for dic, name in zip(negative_digest, names):
+    utils.save_dictionary(dic, save_folder + '/neg' + name)
