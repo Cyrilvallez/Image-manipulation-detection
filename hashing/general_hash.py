@@ -599,7 +599,7 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
                 
 
 def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
-                  negative_dataset, general_batch_size=512):
+                  negative_dataset, general_batch_size=512, artificial_attacks=True):
     """
     Perform the hashing and matchup of both a experimental and control group
     of images, and outputs the (processed) metrics of the experiment.
@@ -622,6 +622,9 @@ def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
     general_batch_size : int, optional
         Batch size for the outer Dataloader, which all algorithms will use. The
         default is 512.
+    artificial_attacks : Bool, optional
+        Whether the attacks are artificial and we need to record the attack-wise 
+        digest or not. The default is True.
 
     Returns
     -------
@@ -633,9 +636,9 @@ def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
     databases, time_database = create_databases(algorithms, path_to_db)
     
     positive_digest = hashing(algorithms, thresholds, databases, positive_dataset,
-                              general_batch_size, True)
+                              general_batch_size, artificial_attacks)
     negative_digest = hashing(algorithms, thresholds, databases, negative_dataset,
-                              general_batch_size, True)
+                              general_batch_size, artificial_attacks)
     
     attacked_image_names = find_attacked_images(positive_dataset)
     

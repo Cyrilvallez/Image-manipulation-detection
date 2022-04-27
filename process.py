@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Sweep_low_fpr2/'
+EXPERIMENT_NAME = 'Memes_roc/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -35,7 +35,7 @@ plot.heatmap_comparison_classical(general, global_time, db_time, save=True, file
 
 #%%
 
-save = True
+save = False
 
 a = plot.ROC_curves(general, save=save,
                 filename=figure_folder + 'General/ROC_curves.pdf', common_ticks=False,
@@ -179,3 +179,7 @@ for a in experiment_folders:
     res.append(general)
     
 plot.roc_comparison_database(res, save=False, filename='Comparison_db_size.pdf')
+
+#%%
+
+general = utils.load_dictionary(experiment_folder + 'general.json')

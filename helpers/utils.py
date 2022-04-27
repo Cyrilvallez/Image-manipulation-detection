@@ -77,8 +77,11 @@ def load_dictionary(filename):
     return data
     
 
-DIGEST_FILE_NAMES = ('general.json', 'attacks.json', 'images_pos.json',
+DIGEST_FILE_NAMES_ARTIFICIAL_ATTACKS = ('general.json', 'attacks.json', 'images_pos.json',
               'images_neg.json', 'match_time.json', 'db_time.json')
+
+DIGEST_FILE_NAMES = ('general.json', 'images_pos.json', 'images_neg.json',
+                     'match_time.json', 'db_time.json')
 
 
 def save_digest(digest, experiment_folder):
@@ -98,6 +101,13 @@ def save_digest(digest, experiment_folder):
 
     """
     
+    if len(digest) == 5:
+        artificial_attacks = False
+    elif len(digest) == 6:
+        artificial_attacks = True
+    else:
+        raise ValueError('Format of digest unknown.')
+    
     # Make sure the path exists, and creates it if this is not the case
     exist = os.path.exists(experiment_folder)
     
@@ -107,11 +117,16 @@ def save_digest(digest, experiment_folder):
     if experiment_folder[-1] != '/':
         experiment_folder = experiment_folder + '/' 
     
-    for dictionary, name in zip(digest, DIGEST_FILE_NAMES):
-        save_dictionary(dictionary, experiment_folder + name)
+    if artificial_attacks:
+        for dictionary, name in zip(digest, DIGEST_FILE_NAMES_ARTIFICIAL_ATTACKS):
+            save_dictionary(dictionary, experiment_folder + name)
+            
+    else:
+        for dictionary, name in zip(digest, DIGEST_FILE_NAMES):
+            save_dictionary(dictionary, experiment_folder + name)
         
         
-def load_digest(experiment_folder):
+def load_digest(experiment_folder, artificial_attacks=True):
     """
     Load the files corresponding to an experiment digest, as returned by the
     `total_hashing` function.
@@ -120,6 +135,9 @@ def load_digest(experiment_folder):
     ----------
     experiment_folder : str
         The name of the experiment.
+    artificial_attacks : Bool, optional
+        Whether the attacks are artificial and we need to record the attack-wise 
+        digest or not. The default is True.
 
     Returns
     -------
@@ -132,8 +150,14 @@ def load_digest(experiment_folder):
         experiment_folder = experiment_folder + '/' 
         
     digest = []
-    for name in DIGEST_FILE_NAMES:
-        digest.append(load_dictionary(experiment_folder + name))
+    
+    if artificial_attacks:
+        for name in DIGEST_FILE_NAMES_ARTIFICIAL_ATTACKS:
+            digest.append(load_dictionary(experiment_folder + name))
+            
+    else:
+        for name in DIGEST_FILE_NAMES:
+            digest.append(load_dictionary(experiment_folder + name))
         
     return tuple(digest)
 
@@ -204,8 +228,22 @@ def process_digests(positive_digest, negative_digest, attacked_image_names):
 
     """
     
-    general_pos, attack_wise_pos, image_wise_pos, running_time_pos = positive_digest
-    general_neg, attack_wise_neg, image_wise_neg, running_time_neg = negative_digest
+    assert(len(positive_digest) == len(negative_digest))
+    
+    if len(positive_digest) == 3:
+        artificial_attacks = False
+    elif len(positive_digest) == 4:
+        artificial_attacks = True
+    else:
+        raise ValueError('Format of digest unknown.')
+        
+    
+    if artificial_attacks:
+        general_pos, attack_wise_pos, image_wise_pos, running_time_pos = positive_digest
+        general_neg, attack_wise_neg, image_wise_neg, running_time_neg = negative_digest
+    else:
+        general_pos, image_wise_pos, running_time_pos = positive_digest
+        general_neg, image_wise_neg, running_time_neg = negative_digest
     
     general_output = {}
     attack_wise_output = {}
@@ -240,20 +278,21 @@ def process_digests(positive_digest, negative_digest, attacked_image_names):
                 'fpr': fpr(TP, FN, FP, TN)
                 }
             
+            if artificial_attacks:
     
-            for attack_name in attack_wise_pos[algorithm][threshold].keys():
+                for attack_name in attack_wise_pos[algorithm][threshold].keys():
                 
-                TP = attack_wise_pos[algorithm][threshold][attack_name]['detection']
-                FN = attack_wise_pos[algorithm][threshold][attack_name]['no detection']
-                FP = attack_wise_neg[algorithm][threshold][attack_name]['detection']
-                TN = attack_wise_neg[algorithm][threshold][attack_name]['no detection']
+                    TP = attack_wise_pos[algorithm][threshold][attack_name]['detection']
+                    FN = attack_wise_pos[algorithm][threshold][attack_name]['no detection']
+                    FP = attack_wise_neg[algorithm][threshold][attack_name]['detection']
+                    TN = attack_wise_neg[algorithm][threshold][attack_name]['no detection']
                 
-                attack_wise_output[algorithm][threshold][attack_name] = {
-                    'accuracy': accuracy(TP, FN, FP, TN),
-                    'precision': precision(TP, FN, FP, TN),
-                    'recall': recall(TP, FN, FP, TN),
-                    'fpr': fpr(TP, FN, FP, TN)
-                    }
+                    attack_wise_output[algorithm][threshold][attack_name] = {
+                        'accuracy': accuracy(TP, FN, FP, TN),
+                        'precision': precision(TP, FN, FP, TN),
+                        'recall': recall(TP, FN, FP, TN),
+                        'fpr': fpr(TP, FN, FP, TN)
+                        }
                 
             for image_name in image_wise_pos[algorithm][threshold].keys():
                 
@@ -266,8 +305,12 @@ def process_digests(positive_digest, negative_digest, attacked_image_names):
                     image_wise_pos_output[algorithm][threshold][image_name] = \
                         image_wise_pos[algorithm][threshold][image_name]['correct detection']
                         
-    return (general_output, attack_wise_output, image_wise_pos_output, 
-            image_wise_neg_output, running_time_output)
+    if artificial_attacks:     
+        return (general_output, attack_wise_output, image_wise_pos_output, 
+                image_wise_neg_output, running_time_output)
+    else:
+        return (general_output, image_wise_pos_output, image_wise_neg_output,
+                running_time_output)
 
 
 def parse_input():
