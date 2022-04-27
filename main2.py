@@ -13,6 +13,7 @@ Created on Mon Apr 11 09:52:23 2022
 import numpy as np
 import hashing 
 from helpers import utils
+import os
 
 # Force the use of a user input at run-time to specify the path 
 # so that we do not mistakenly reuse the path from previous experiments
@@ -67,27 +68,18 @@ thresholds = [
     np.linspace(0.3, 0.9, 20),
     np.linspace(0.4, 0.9, 20),
     ]
-    
+
+path_experimental = [path_experimental + file for file in os.listdir(path_experimental) \
+                     if file.split('_', 1)[0] == '10-guy']
+path_control = [path_control + file for file in os.listdir(path_control)[0:1000]]
+
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
-# digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                               # negative_dataset, general_batch_size=64)
-                               
-databases, time_database = hashing.create_databases(algos, path_database)
+digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
+                                negative_dataset, general_batch_size=64,
+                                artificial_attacks=False)
 
-positive_digest = hashing.hashing(algos, thresholds, databases, positive_dataset,
-                          general_batch_size=64, artificial_attacks=False)
-negative_digest = hashing.hashing(algos, thresholds, databases, negative_dataset,
-                          general_batch_size=64, artificial_attacks=False)
+utils.save_digest(digest, save_folder)
 
-# utils.save_digest(digest, save_folder)
-
-names = ['general.json', 'image_wise.json', 'time.json']
-
-for dic, name in zip(positive_digest, names):
-    utils.save_dictionary(dic, save_folder + '/pos' + name)
-    
-for dic, name in zip(negative_digest, names):
-    utils.save_dictionary(dic, save_folder + '/neg' + name)
