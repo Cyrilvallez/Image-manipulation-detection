@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=memes_roc
+#SBATCH --job-name=memes
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00
