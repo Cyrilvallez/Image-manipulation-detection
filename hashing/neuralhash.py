@@ -433,6 +433,30 @@ def load_simclr_v2(depth, width, selective_kernel=True):
     return load
 
 
+def load_dino_vit(device='cuda'):
+    """
+    Load Vision Transformer (ViT) trained with DINO.
+
+    Parameters
+    ----------
+    device : str, optional
+        Device on which to load the model. The default is 'cuda'.
+
+    Returns
+    -------
+    dino : PyTorch model
+        The model.
+
+    """
+    
+    # Load the model 
+    dino = torch.hub.load('facebookresearch/dino:main', 'dino_vitb8')
+    dino.eval()
+    dino.to(torch.device(device))
+    
+    return dino
+
+
 
 
 # Mapping from string to actual algorithms
@@ -450,6 +474,7 @@ NEURAL_MODEL_LOADER = {
     'SimCLR v2 ResNet50 2x': load_simclr_v2(depth=50, width=2, selective_kernel=True),
     'SimCLR v2 ResNet101 2x': load_simclr_v2(depth=101, width=2, selective_kernel=True),
     'SimCLR v2 ResNet152 3x': load_simclr_v2(depth=152, width=3, selective_kernel=True),
+    'DINO ViT B8': load_dino_vit,
     }
 
 
@@ -468,6 +493,7 @@ NEURAL_MODEL_FEATURES_SIZE = {
     'SimCLR v2 ResNet50 2x': 4096,
     'SimCLR v2 ResNet101 2x': 4096,
     'SimCLR v2 ResNet152 3x': 6144,
+    'DINO ViT B8': 768,
     }
 
 
@@ -523,6 +549,12 @@ NEURAL_MODEL_TRANSFORMS = {
     'SimCLR v2 ResNet101 2x': SIMCLR_TRANSFORMS,
     
     'SimCLR v2 ResNet152 3x': SIMCLR_TRANSFORMS,
+    
+    'DINO ViT B8': T.Compose([
+        T.Resize((224, 224), interpolation=T.InterpolationMode.LANCZOS),
+        T.ToTensor(),
+        T.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+        ]),
     }
 
                 
