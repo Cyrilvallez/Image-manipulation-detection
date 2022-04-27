@@ -20,7 +20,7 @@ import os
 save_folder = utils.parse_input()
 
 
-path_database = 'Datasets/Kaggle_memes/Templates/'
+path_database = 'Datasets/Kaggle_memes/Templates_experimental/'
 path_experimental = 'Datasets/Kaggle_memes/Experimental/'
 path_control = 'Datasets/Kaggle_memes/Control/'
 
@@ -68,10 +68,6 @@ thresholds = [
     np.linspace(0.3, 0.9, 20),
     np.linspace(0.4, 0.9, 20),
     ]
-
-path_experimental = [path_experimental + file for file in os.listdir(path_experimental) \
-                     if file.split('_', 1)[0] == '10-guy']
-path_control = [path_control + file for file in os.listdir(path_control)[0:1000]]
 
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
 negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)

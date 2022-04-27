@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Memes_roc/'
+EXPERIMENT_NAME = 'Test_memes1/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -24,7 +24,7 @@ if not os.path.exists(figure_folder + 'General/'):
 if not os.path.exists(figure_folder + 'Attack_wise/'):
     os.makedirs(figure_folder + 'Attack_wise/')
 
-general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_folder)
+general, _, _, global_time, db_time = utils.load_digest(experiment_folder, False)
 
 #%%
 
@@ -35,11 +35,10 @@ plot.heatmap_comparison_classical(general, global_time, db_time, save=True, file
 
 #%%
 
-save = False
+save = True
 
 a = plot.ROC_curves(general, save=save,
-                filename=figure_folder + 'General/ROC_curves.pdf', common_ticks=False,
-                legend=[])
+                filename=figure_folder + 'General/ROC_curves.pdf', common_ticks=False)
 # plot.ROC_curves(attacks, save=save,
                 # filename=figure_folder + 'Attack_wise/ROC')
 plot.metrics_plot(general, save=save,
@@ -52,16 +51,16 @@ plot.metrics_plot(general, save=save,
 #%%
 # selected = ['Ahash 64 bits', 'Phash 64 bits', 'Dhash 64 bits', 'Whash 64 bits', 
             # 'Crop resistant hash 64 bits']
-selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descriptors',
-            'FAST + LATCH 30 descriptors']
-# selected = ['Inception v3 raw features Jensen-Shannon',
-            # 'EfficientNet B7 raw features Jensen-Shannon',
-            # 'ResNet50 2x raw features Jensen-Shannon',
-            # 'ResNet101 2x raw features Jensen-Shannon',
-            # 'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
-            # 'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
-            # 'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
-            # ]
+# selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descriptors',
+            # 'FAST + LATCH 30 descriptors']
+selected = ['Inception v3 raw features Jensen-Shannon',
+            'EfficientNet B7 raw features Jensen-Shannon',
+            'ResNet50 2x raw features Jensen-Shannon',
+            'ResNet101 2x raw features Jensen-Shannon',
+            'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
+            'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
+            'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
+            ]
 
 # legend = [name.split(' ', 1)[1] for name in selected]
 # legend = [name.split(' ', 1)[1] for name in general.keys()]
@@ -75,8 +74,7 @@ selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descri
 
 subset = {key: value for key, value in general.items() if key in selected}
 
-plot.ROC_curves(subset, save=False, filename=figure_folder + 'General/ROC',
-                size_multiplier=0.9, common_ticks=False, log=True, legend=[])
+plot.ROC_curves(subset, save=True, filename=figure_folder + 'General/ROC_neural')
 
 #%%
 
@@ -181,5 +179,8 @@ for a in experiment_folders:
 plot.roc_comparison_database(res, save=False, filename='Comparison_db_size.pdf')
 
 #%%
+from helpers import utils
 
-general = utils.load_dictionary(experiment_folder + 'general.json')
+experiment_folder = 'Results/Test_memes1/'
+
+general, image_pos, image_neg, _, _ = utils.load_digest(experiment_folder, False)
