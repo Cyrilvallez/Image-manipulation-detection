@@ -113,9 +113,9 @@ def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None
         plt.legend(legend)
         if common_ticks:
             plt.xlim([-0.03, 1.03])
-            plt.ylim([0.37, 1.03])
+            plt.ylim([0., 1.03])
             plt.xticks(0.2*np.arange(6))
-            plt.yticks(0.1*np.arange(4, 11))
+            plt.yticks(0.1*np.arange(11))
         plt.grid()
         if log:
             plt.xscale('log')

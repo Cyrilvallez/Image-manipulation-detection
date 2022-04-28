@@ -27,6 +27,8 @@ path_control = 'Datasets/BSDS500/Control_attacks/'
 algos = [
     hashing.NeuralAlgorithm('DINO ViT B8', raw_features=True, batch_size=256,
                             device='cuda', distance='cosine'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+                            device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = np.linspace(0, 1, 50)

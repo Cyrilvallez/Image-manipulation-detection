@@ -12,17 +12,18 @@ Created on Fri Mar  4 09:13:39 2022
 
 import numpy as np
 import os
+import time
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as T
 import torchvision.models as models
 from torch.utils.data import DataLoader
+
 from hashing.imagehash import ImageHash
 from hashing.general_hash import Algorithm, DatabaseDataset, collate
 from hashing.SimCLRv1 import resnet_wider as SIMv1
 from hashing.SimCLRv2 import resnet as SIMv2
-import time
 
 path = os.path.abspath(__file__)
 current_folder = os.path.dirname(path)
@@ -450,7 +451,7 @@ def load_dino_vit(device='cuda'):
     """
     
     # Load the model 
-    dino = torch.hub.load('facebookresearch/dino:main', 'dino_vitb8')
+    dino = torch.hub.load('facebookresearch/dino:main', 'dino_vitb8', verbose=False)   
     dino.eval()
     dino.to(torch.device(device))
     
