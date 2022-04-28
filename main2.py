@@ -25,47 +25,72 @@ path_experimental = 'Datasets/Kaggle_memes/Experimental/'
 path_control = 'Datasets/Kaggle_memes/Control/'
 
 algos = [
-    hashing.FeatureAlgorithm('SIFT', batch_size=64, n_features=30, cutoff=1),
-    hashing.FeatureAlgorithm('ORB', batch_size=64, n_features=30, cutoff=1),
-    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=64, n_features=30, cutoff=1),
-    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=64, n_features=30, cutoff=1),
-    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=64,
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=16),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=16),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=16),
+    hashing.FeatureAlgorithm('SIFT', batch_size=16, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('ORB', batch_size=16, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=16, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=16, n_features=30, cutoff=1),
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=64,
+    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=64,
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=64,
+    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=64,
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=64,
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=64,
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=16,
                             device='cuda', distance='Jensen-Shannon'),
     ]
 
 thresholds = [
-    np.linspace(0, 16, 100),
-    np.linspace(0, 0.04, 100),
-    np.linspace(0, 0.05, 100),
-    np.linspace(0, 0.1, 100),
-    np.linspace(0.25, 0.31, 100),
-    np.linspace(0.33, 0.46, 100),
-    np.linspace(0.26, 0.29, 100),
-    np.linspace(0.24, 0.29, 100),
-    np.linspace(0.32, 0.38, 100),
-    np.linspace(0.42, 0.49, 100),
-    np.linspace(0.42, 0.48, 100),
+    [0.0],
+    [0.1947],
+    [0.1789],
+    [4.6869],
+    [0.0198],
+    [0.0237],
+    [0.0596],
+    [0.287],
+    [0.4377],
+    [0.2688],
+    [0.2713],
+    [0.3448],
+    [0.4511],
+    [0.4442],
     ]
 
-positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
-negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
+experimental = [path_experimental + file for file in os.listdir(path_experimental)]
+experimental += [path_control + file for file in os.listdir(path_control)]
+
+database = [path_database + file for file in os.listdir(path_database)]
+path_db_ct = 'Datasets/Kaggle_memes/Templates_control/'
+database += [path_db_ct + file for file in os.listdir(path_db_ct)]
+
+# positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
+# negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
+
+dataset = hashing.create_dataset(path_experimental, existing_attacks=True)
+
+databases, time_db = hashing.create_databases(algos, database)
 
 
-digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                                negative_dataset, general_batch_size=64,
+# digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
+                                # negative_dataset, general_batch_size=64,
+                                # artificial_attacks=False)
+                                
+digest = hashing.hashing(algos, thresholds, path_database, dataset, general_batch_size=16,
                                 artificial_attacks=False)
 
-utils.save_digest(digest, save_folder)
+digest = (*digest, time_db)
 
+names = ['general.json', 'image_wise.json', 'time.json', 'time_db.json']
+# utils.save_digest(digest, save_folder)
+
+for dic, name in zip(digest, names):
+    utils.save_dictionary(dic, save_folder + '/' + name)

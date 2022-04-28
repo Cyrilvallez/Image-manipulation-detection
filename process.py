@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'test_dino/'
+EXPERIMENT_NAME = 'Sweep_low_fpr/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -24,7 +24,7 @@ if not os.path.exists(figure_folder + 'General/'):
 if not os.path.exists(figure_folder + 'Attack_wise/'):
     os.makedirs(figure_folder + 'Attack_wise/')
 
-general, attacks, _, global_time, db_time = utils.load_digest(experiment_folder, False)
+general, _, _, global_time, db_time = utils.load_digest(experiment_folder, False)
 
 #%%
 
@@ -145,7 +145,7 @@ plot.heatmap_comparison_database(generals, save=True, filename='test_db.pdf')
 
 import numpy as np
 
-objective = 0.005
+objective = 0.001
 res = {}
 
 for algo in general.keys():
