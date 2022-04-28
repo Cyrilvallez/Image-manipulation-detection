@@ -165,6 +165,7 @@ ADMISSIBLE_ALGORITHMS = [
     'SimCLR v2 ResNet50 2x',
     'SimCLR v2 ResNet101 2x',
     'SimCLR v2 ResNet152 3x',
+    'DINO ViT B8'
     ]
                 
                 
