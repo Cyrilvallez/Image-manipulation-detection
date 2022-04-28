@@ -451,7 +451,29 @@ def load_dino_vit(device='cuda'):
     """
     
     # Load the model 
-    dino = torch.hub.load('facebookresearch/dino:main', 'dino_vitb8', verbose=False)   
+    dino = torch.hub.load('facebookresearch/dino:main', 'dino_vitb8', verbose=False)
+    
+    def hack(model):
+        @torch.no_grad()
+        def extract_features(images):       
+
+            feats = model.get_intermediate_layers(images, n=1)[0].clone()
+
+            cls_output_token = feats[:, 0, :]  #  [CLS] token
+            # GeM with exponent 4 for output patch tokens
+            b, h, w, d = len(images), int(images.shape[-2] / model.patch_embed.patch_size), int(images.shape[-1] / model.patch_embed.patch_size), feats.shape[-1]
+            feats = feats[:, 1:, :].reshape(b, h, w, d)
+            feats = feats.clamp(min=1e-6).permute(0, 3, 1, 2)
+            feats = nn.functional.avg_pool2d(feats.pow(4), (h, w)).pow(1. / 4).reshape(b, -1)
+            # concatenate [CLS] token and GeM pooled patch tokens
+            feats = torch.cat((cls_output_token, feats), dim=1)
+
+            return feats  
+        
+        return extract_features
+    
+    dino.forward = hack(dino)
+    
     dino.eval()
     dino.to(torch.device(device))
     

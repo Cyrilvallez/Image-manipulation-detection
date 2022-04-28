@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'Memes_roc/'
+EXPERIMENT_NAME = 'test_dino/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -51,33 +51,33 @@ plot.AUC_heatmap(attacks, save=save, filename=figure_folder + 'General/AUC')
 #%%
 # selected = ['Ahash 64 bits', 'Phash 64 bits', 'Dhash 64 bits', 'Whash 64 bits', 
             # 'Crop resistant hash 64 bits']
-# selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descriptors',
-            # 'FAST + LATCH 30 descriptors']
-selected = [#'Inception v3 raw features Jensen-Shannon',
+selected = ['SIFT 30 descriptors', 'ORB 30 descriptors', 'FAST + DAISY 30 descriptors',
+            'FAST + LATCH 30 descriptors']
+# selected = ['Inception v3 raw features Jensen-Shannon',
             # 'EfficientNet B7 raw features Jensen-Shannon',
             # 'ResNet50 2x raw features Jensen-Shannon',
             # 'ResNet101 2x raw features Jensen-Shannon',
-            'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
-            'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
-            'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
-            ]
+            # 'SimCLR v1 ResNet50 2x raw features Jensen-Shannon',
+            # 'SimCLR v2 ResNet50 2x raw features Jensen-Shannon',
+            # 'SimCLR v2 ResNet101 2x raw features Jensen-Shannon',
+            # ]
 
-legend = [name.split(' raw', 1)[0] for name in selected]
-# legend[-1] = 'LATCH'
-# legend[-2] = 'DAISY'
+legend = [name.split(' 30', 1)[0] for name in selected]
+legend[-1] = 'LATCH'
+legend[-2] = 'DAISY'
 # legend = [name.split(' ', 1)[1] for name in general.keys()]
 # for i in range(len(legend)):
     # if '+' in legend[i]:
         # legend[i] = legend[i].split('+ ', 1)[1]
 # legend[-1] = 'Crop res'
-legend[0] = '*ResNet50 2x'
-legend[1] = '**ResNet50 2x'
-legend[2] = '**ResNet101 2x'
+# legend[0] = '*ResNet50 2x'
+# legend[1] = '**ResNet50 2x'
+# legend[2] = '**ResNet101 2x'
 
 subset = {key: value for key, value in general.items() if key in selected}
 
-plot.ROC_curves(subset, save=True, filename=figure_folder + 'General/ROC_neural2',
-                common_ticks=True, legend=legend, size_multiplier=1.1)
+plot.ROC_curves(subset, save=True, filename=figure_folder + 'General/ROC_features',
+                common_ticks=True, legend=legend, size_multiplier=0.9)
 
 #%%
 
