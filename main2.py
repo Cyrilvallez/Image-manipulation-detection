@@ -25,11 +25,6 @@ path_experimental = 'Datasets/Kaggle_memes/Experimental/'
 path_control = 'Datasets/Kaggle_memes/Control/'
 
 algos = [
-    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=64),
-    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=64),
-    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=64),
-    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=64),
-    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=64, cutoff=1),
     hashing.FeatureAlgorithm('SIFT', batch_size=64, n_features=30, cutoff=1),
     hashing.FeatureAlgorithm('ORB', batch_size=64, n_features=30, cutoff=1),
     hashing.FeatureAlgorithm('FAST + DAISY', batch_size=64, n_features=30, cutoff=1),
@@ -51,22 +46,17 @@ algos = [
     ]
 
 thresholds = [
-    np.linspace(0, 0.4, 20),
-    np.linspace(0.1, 0.4, 20),
-    np.linspace(0.05, 0.4, 20),
-    np.linspace(0, 0.4, 20),
-    np.linspace(0, 0.4, 20),
-    np.linspace(0, 300, 20),
-    np.linspace(0, 0.3, 20),
-    np.linspace(0, 0.4, 20),
-    np.linspace(0.1, 0.4, 20),
-    np.linspace(0.15, 0.65, 20),
-    np.linspace(0.3, 0.9, 20),
-    np.linspace(0.2, 0.6, 20),
-    np.linspace(0.2, 0.6, 20),
-    np.linspace(0.3, 0.8, 20),
-    np.linspace(0.3, 0.9, 20),
-    np.linspace(0.4, 0.9, 20),
+    np.linspace(0, 16, 100),
+    np.linspace(0, 0.04, 100),
+    np.linspace(0, 0.05, 100),
+    np.linspace(0, 0.1, 100),
+    np.linspace(0.25, 0.31, 100),
+    np.linspace(0.33, 0.46, 100),
+    np.linspace(0.26, 0.29, 100),
+    np.linspace(0.24, 0.29, 100),
+    np.linspace(0.32, 0.38, 100),
+    np.linspace(0.42, 0.49, 100),
+    np.linspace(0.42, 0.48, 100),
     ]
 
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)

@@ -14,7 +14,7 @@ import os
 from helpers import utils
 from helpers import create_plot as plot
 
-EXPERIMENT_NAME = 'test_dino/'
+EXPERIMENT_NAME = 'Memes_roc/'
 
 experiment_folder = 'Results/' + EXPERIMENT_NAME 
 figure_folder = experiment_folder + 'Figures/'
@@ -24,7 +24,7 @@ if not os.path.exists(figure_folder + 'General/'):
 if not os.path.exists(figure_folder + 'Attack_wise/'):
     os.makedirs(figure_folder + 'Attack_wise/')
 
-general, attacks, _, _, global_time, db_time = utils.load_digest(experiment_folder, True)
+general, attacks, _, global_time, db_time = utils.load_digest(experiment_folder, False)
 
 #%%
 
@@ -38,7 +38,7 @@ plot.heatmap_comparison_classical(general, global_time, db_time, save=True, file
 save = True
 
 a = plot.ROC_curves(general, save=save,
-                filename=figure_folder + 'General/ROC_curves.pdf', common_ticks=False, log=True)
+                filename=figure_folder + 'General/ROC_curves.pdf', common_ticks=False, log=False)
 # plot.ROC_curves(attacks, save=save,
                 # filename=figure_folder + 'Attack_wise/ROC')
 plot.metrics_plot(general, save=save,
