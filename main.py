@@ -37,7 +37,7 @@ negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                                negative_dataset, general_batch_size=16)
+                                negative_dataset, general_batch_size=256)
                                
 
 utils.save_digest(digest, save_folder)
