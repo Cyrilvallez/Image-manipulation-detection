@@ -516,7 +516,7 @@ NEURAL_MODEL_FEATURES_SIZE = {
     'SimCLR v2 ResNet50 2x': 4096,
     'SimCLR v2 ResNet101 2x': 4096,
     'SimCLR v2 ResNet152 3x': 6144,
-    'DINO ViT B8': 768,
+    'DINO ViT B8': 1536,
     }
 
 
