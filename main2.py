@@ -84,7 +84,7 @@ databases, time_db = hashing.create_databases(algos, database)
                                 # negative_dataset, general_batch_size=64,
                                 # artificial_attacks=False)
                                 
-digest = hashing.hashing(algos, thresholds, path_database, dataset, general_batch_size=16,
+digest = hashing.hashing(algos, thresholds, databases, dataset, general_batch_size=16,
                                 artificial_attacks=False)
 
 digest = (*digest, time_db)
