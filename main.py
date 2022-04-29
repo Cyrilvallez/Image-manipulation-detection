@@ -25,9 +25,9 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.NeuralAlgorithm('DINO ViT B8', raw_features=True, batch_size=256,
+    hashing.NeuralAlgorithm('DINO ViT B8', raw_features=True, batch_size=64,
                             device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=256,
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=64,
                             device='cuda', distance='Jensen-Shannon'),
     ]
 
@@ -39,7 +39,7 @@ negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
-                                negative_dataset, general_batch_size=256)
+                                negative_dataset, general_batch_size=64)
                                
 
 utils.save_digest(digest, save_folder)
