@@ -72,4 +72,11 @@ model.forward = hack(model)
 
 test = model(images)     
         
-        
+#%%
+import torch
+a = torch.nn.ReLU()
+
+b = torch.Tensor([-1,2,-3,-4])
+
+test = a(b) 
+print(test)

@@ -467,6 +467,9 @@ def load_dino_vit(device='cuda'):
             feats = nn.functional.avg_pool2d(feats.pow(4), (h, w)).pow(1. / 4).reshape(b, -1)
             # concatenate [CLS] token and GeM pooled patch tokens
             feats = torch.cat((cls_output_token, feats), dim=1)
+            
+            # To test J-S distance
+            feats = nn.functional.relu(feats)
 
             return feats  
         
