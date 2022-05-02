@@ -14,6 +14,7 @@ These are logs that I will update every week in order to keep track of my work (
 9. [Week 9 : 04/04](#week9)
 10. [Week 10 : 11/04](#week10)
 11. [Week 11 : 18/04](#week11)
+11. [Week 12 : 25/04](#week12)
 
    
 
@@ -246,3 +247,20 @@ Once again, this week was devoted to the paper. I performed different comparison
 ## Week 11 : 18/04 <a name="week11"></a>
 
 Week of holydays !
+
+## Week 12 : 25/04 <a name="week12"></a>
+
+This week was mostly used for advancing the paper as well as reading litterature related to image retrieval using deep learning. Particularly, I inspected everything related to the memes dataset since we had some issue and I did not have all the images (about 2000 out of 46 000). Some manual data exploration highlited that the dataset is quite dirty. Some memes are absolutely not the same as the template they are supposed to be a variation of. This is notably the case for the "zuckerberg" memes which are all very different from one another and to the corresponding template. Moreover, some templates correspond to a version of a meme that is already quite changed from the original, which is a problem to find the other corresponding memes. Finally, some memes are an "aggregation of different templates" in the sense that they are memes used in other memes. But they are supposed to be mapped to only 1 template, which is an issue if a meme in the control group (thus its template is not in the database) is an aggregation of its own template and a template in the experimental group. Indeed, it is likely to be detected in this case, but will be counted as false positive while the matching was correct in a sense. 
+
+Moreover, it appears that thresholds in the distance metric obtained with the BSDS500 dataset do not extend at all to the memes dataset in order to get similar false positive rate. For example, the threshold set on the BSDS500 dataset to get 0.005 fpr for SIFT gives about 0.5 fpr on the Kaggle dataset. Thus comparing by only number of detection using the thresholds obtained on the previous dataset will be all except a fair comparison since SIFT (the algorithm for which it was the most critical) will give the false impression to perform quite well when half the detection are in fact wrong. My guess is that it has something to do with the text which is present on all images in the Kaggle dataset. Indeed, the detector may be finding edges of the text zones or the letters, which are in fact present on every images.
+Deciding on the thresholds is indeed something that we will have to do prior to deploying the system, because we won't have access to groundtruth at this time, but it should be done on a more representative dataset of the images we will get in the wild to avoid the same kind of problems.
+
+Apart from that, I read about DINO which is a self-supervised training technique for vision transformers that seemed very promising. I implemented it in the current framework, but tests on the BSDS500 dataset showed that it was performing very well, but not better than SimCLR v2. I will not push the investigation at this point since the goal is to move to the database search at scale, and not to pursue experiments on detections. I read papers on image retrieval, notably 
+
+- Neural Codes for Image Retrieval
+- Nested Invariance Pooling and RBM Hashing for Image Instance Retrieval
+- CNN Features off-the-shelf: an Astounding Baseline for Recognition
+- Visual Instance Retrieval with Deep Convolutional Networks
+- Large-Scale Image Retrieval with Compressed Fisher Vectors
+
+and some other that I just quickly looked at. 
