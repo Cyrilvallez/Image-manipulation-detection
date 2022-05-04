@@ -71,6 +71,16 @@ digest = hashing.total_hashing(algos, thresholds, path_database, positive_datase
 utils.save_digest(digest, save_folder)
 ```
 
-All this is contained in `main.py`.
+All this is contained in `main.py`. 
 
 The final digest is composed of 6 files : `general.json` with general metrics for all the experiment, `attacks.json` containing the metrics for each types of attack, `images_pos.json` and `images_neg.json` containing number of correct/incorrect detection for each image in the database respectively, and `match_time.json` and `db_time.json` respectively containing the time (s) for the matching phase and the the database creation phase.
+
+To process and create figures from the digest, one can look into `process.py`.
+
+# Datasets
+
+We personally used 3 datasets that can be found at <INSERT LINK !!!> and for which the splitting has already been done. They are the BSDS500 dataset, ImageNet validation set and a dataset from Kaggle containing memes from reddit.
+
+# Pre-trained SimCLR models 
+
+The pre-trained SimCLR models are not available in this repository due to their large size. They can be downloaded (along with their architecture definition) directly in the [github of the authors ](https://github.com/google-research/simclr) or downloaded directly at <INSERT LINK !!!> (folders SimCLRv1 and SimCLRv2) and then added to the `hashing` folder of the library.
