@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=fpr_bsds500
+#SBATCH --job-name=fpr_memes
 #SBATCH --output=%x.out
 #SBATCH --error=%x.err
 #SBATCH --time=10-00:00:00

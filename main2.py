@@ -20,13 +20,13 @@ import os
 save_folder = utils.parse_input()
 
 
-# path_database = 'Datasets/Kaggle_memes/Templates_experimental/'
-# path_experimental = 'Datasets/Kaggle_memes/Experimental/'
-# path_control = 'Datasets/Kaggle_memes/Control/'
+path_database = 'Datasets/Kaggle_memes/Templates_experimental/'
+path_experimental = 'Datasets/Kaggle_memes/Experimental/'
+path_control = 'Datasets/Kaggle_memes/Control/'
 
-path_database = 'Datasets/BSDS500/Experimental/'
-path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
-path_control = 'Datasets/BSDS500/Control_attacks/'
+# path_database = 'Datasets/BSDS500/Experimental/'
+# path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
+# path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
     hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=512),
@@ -78,6 +78,6 @@ negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset,
                                 negative_dataset, general_batch_size=64,
-                                artificial_attacks=True)
+                                artificial_attacks=False)
                                 
 utils.save_digest(digest, save_folder)
