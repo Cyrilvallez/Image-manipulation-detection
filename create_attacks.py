@@ -45,7 +45,7 @@ save_experimental = [destination1 + name.split('.')[0] for name \
                        in names_experimental[0:N]]
 save_control = [destination2 + name.split('.')[0] for name in names_control[0:N]]
 
-#generator.perform_all_and_save_list(images_experimental, save_name_list=save_experimental,
-#                             extension='PNG', **params)
+generator.perform_all_and_save_list(images_experimental, save_name_list=save_experimental,
+                            extension='PNG', **params)
 generator.perform_all_and_save_list(images_control, save_name_list=save_control,
                              extension='PNG', **params)

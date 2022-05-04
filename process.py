@@ -192,7 +192,32 @@ general, image_pos, image_neg, _, _ = utils.load_digest(experiment_folder, False
 #%%
 
 from PIL import Image
+import cv2
+import numpy as np
 
-image = 'Datasets/BSDS500/Control/data17.jpg'
-image = Image.open(image)
-image = image.convert("L").resize((16, 16), Image.ANTIALIAS)
+original = 'Datasets/BSDS500/Control/data17.jpg'
+original = Image.open(original)
+original = np.array(original.convert('L'))
+
+copy = 'Datasets/BSDS500/Control_attacks/data17_rotation_60_and_rescaling.png'
+copy = Image.open(copy)
+copy = np.array(copy.convert('L'))
+
+sift = cv2.SIFT_create()
+
+kp1, des1 = sift.detectAndCompute(original, None)
+kp2, des2 = sift.detectAndCompute(copy, None)
+
+bf = cv2.BFMatcher(cv2.NORM_L2, crossCheck=True)
+matches = bf.match(des1,des2)
+matches = sorted(matches, key = lambda x:x.distance)
+
+img3 = cv2.drawMatches(original,kp1,copy,kp2,matches[:30],None,flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
+out = Image.fromarray(img3)
+# out.save('test_feat.png')
+
+img = cv2.drawKeypoints(original, np.random.choice(kp1, 500, replace=False), None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+out_keypoints = Image.fromarray(img)
+out_keypoints.save('keypoints.png')
+
