@@ -24,6 +24,10 @@ path_database = 'Datasets/Kaggle_memes/Templates_experimental/'
 path_experimental = 'Datasets/Kaggle_memes/Experimental/'
 path_control = 'Datasets/Kaggle_memes/Control/'
 
+# path_database = 'Datasets/BSDS500/Experimental/'
+# path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
+# path_control = 'Datasets/BSDS500/Control_attacks/'
+
 algos = [
     hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=512),
     hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=512),
