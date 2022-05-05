@@ -1,0 +1,130 @@
+{
+	"Ahash 64 bits": {
+		"Threshold 0.0520": {
+			"accuracy": 0.5506642235455794,
+			"precision": 0.7311640519078055,
+			"recall": 0.17155192001817768,
+			"fpr": 0.064096051720157
+		}
+	},
+	"Phash 64 bits": {
+		"Threshold 0.2240": {
+			"accuracy": 0.6734310581768209,
+			"precision": 0.9759184174960068,
+			"recall": 0.3609634174051352,
+			"fpr": 0.00905102747633341
+		}
+	},
+	"Dhash 64 bits": {
+		"Threshold 0.1590": {
+			"accuracy": 0.6402656894182318,
+			"precision": 0.9982597690238886,
+			"recall": 0.2867530106793911,
+			"fpr": 0.0005079658277534057
+		}
+	},
+	"Whash 64 bits": {
+		"Threshold 0.0720": {
+			"accuracy": 0.5666284928996793,
+			"precision": 0.7165730337078652,
+			"recall": 0.23185639627357418,
+			"fpr": 0.09318864003694297
+		}
+	},
+	"Crop resistant hash 64 bits": {
+		"Threshold 0.0690": {
+			"accuracy": 0.6765689418231791,
+			"precision": 0.8791113675706866,
+			"recall": 0.4154055896387185,
+			"fpr": 0.05804664049873009
+		}
+	},
+	"SIFT 30 descriptors": {
+		"Threshold 67.7778": {
+			"accuracy": 0.50659642693541,
+			"precision": 0.5093994884079743,
+			"recall": 0.5701431492842536,
+			"fpr": 0.5579773724313092
+		}
+	},
+	"ORB 30 descriptors": {
+		"Threshold 0.0906": {
+			"accuracy": 0.5297068254695373,
+			"precision": 0.5685161050083783,
+			"recall": 0.2775278345830493,
+			"fpr": 0.21403832833063957
+		}
+	},
+	"FAST + DAISY 30 descriptors": {
+		"Threshold 0.0414": {
+			"accuracy": 0.5183005038937243,
+			"precision": 0.7864705882352941,
+			"recall": 0.060758918427630086,
+			"fpr": 0.016762872315862386
+		}
+	},
+	"FAST + LATCH 30 descriptors": {
+		"Threshold 0.1606": {
+			"accuracy": 0.5174988547869904,
+			"precision": 0.5415229503847174,
+			"recall": 0.27825494205862306,
+			"fpr": 0.2393904410066959
+		}
+	},
+	"Inception v3 raw features Jensen-Shannon": {
+		"Threshold 0.2611": {
+			"accuracy": 0.657810352725607,
+			"precision": 1.0,
+			"recall": 0.3210633946830266,
+			"fpr": 0.0
+		}
+	},
+	"EfficientNet B7 raw features Jensen-Shannon": {
+		"Threshold 0.3683": {
+			"accuracy": 0.708451672010994,
+			"precision": 0.999569151227919,
+			"recall": 0.4217223358327653,
+			"fpr": 0.00018471484645578388
+		}
+	},
+	"ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.2996": {
+			"accuracy": 0.8301420064131928,
+			"precision": 0.9524843371999255,
+			"recall": 0.6977959554646671,
+			"fpr": 0.035372893096282616
+		}
+	},
+	"ResNet101 2x raw features Jensen-Shannon": {
+		"Threshold 0.3168": {
+			"accuracy": 0.8421209344938159,
+			"precision": 0.9339535952216862,
+			"recall": 0.7390138604862532,
+			"fpr": 0.05310551835603786
+		}
+	},
+	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.5197": {
+			"accuracy": 0.8430142006413193,
+			"precision": 0.867190150744026,
+			"recall": 0.8130424903431038,
+			"fpr": 0.12652966982221195
+		}
+	},
+	"SimCLR v2 ResNet50 2x raw features Jensen-Shannon": {
+		"Threshold 0.5133": {
+			"accuracy": 0.8492212551534586,
+			"precision": 0.9891524993656432,
+			"recall": 0.7086116791638264,
+			"fpr": 0.007896559685984761
+		}
+	},
+	"SimCLR v2 ResNet101 2x raw features Jensen-Shannon": {
+		"Threshold 0.5208": {
+			"accuracy": 0.8598259276225378,
+			"precision": 0.98580952963484,
+			"recall": 0.7324244489888662,
+			"fpr": 0.010713461094435465
+		}
+	}
+}
