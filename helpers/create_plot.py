@@ -411,7 +411,6 @@ def _find_lowest_biggest_frequencies(image_wise_digest, kind, N):
     # The number of the images as randomly attributed ints
     img_numbers = np.arange(len(keys))
     
-    # REORDER ??
     
     ID = np.zeros((N_rows, N_cols, N))
     value = np.zeros((N_rows, N_cols, N))

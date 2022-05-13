@@ -2,7 +2,7 @@
 
 A library for image manipulation detection. This supports 3 classes of algorithms :
 
-- Perceptual hashing methods (fast and simple methods designed for image forensics). The following algorithms are implemented in `hashing/imagehash.py`:
+- Perceptual hashing methods (fast and simple methods designed for image forensics). The following algorithms are implemented in `hashing/imagehash.py` (taken and modified from [here](https://github.com/JohannesBuchner/imagehash)):
     - Average Hash
     - Perceptual hash
     - Difference hash

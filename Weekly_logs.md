@@ -14,7 +14,9 @@ These are logs that I will update every week in order to keep track of my work (
 9. [Week 9 : 04/04](#week9)
 10. [Week 10 : 11/04](#week10)
 11. [Week 11 : 18/04](#week11)
-11. [Week 12 : 25/04](#week12)
+12. [Week 12 : 25/04](#week12)
+12. [Week 13 : 02/05](#week13)
+12. [Week 14 : 09/05](#week14)
 
    
 
@@ -264,3 +266,17 @@ Apart from that, I read about DINO which is a self-supervised training technique
 - Large-Scale Image Retrieval with Compressed Fisher Vectors
 
 and some other that I just quickly looked at. 
+
+## Week 13 : 02/05 <a name="week13"></a>
+
+This week, monday and tuesday were used to make my slides and prepare for the student exchange presentation. Then on wednesday, I cleaned most of the main Github repository, wrote the Readme etc... for when we will submit the paper. Finally, the end of the week was devoted to read and discover how ElasticSearch and Faiss work for similarity search. After some time, it appeared that faiss would be easier to use and integrate into Python code, and is thus the preferred direction for now. There is no clear documentation, but some examples on their Github. 
+
+## Week 14 : 09/05 <a name="week14"></a>
+
+This week, the first trials with Faiss were performed. I first downloaded half of the [Flick1M dataset](https://press.liacs.nl/mirflickr/), resulting in 500K distractor images to emulate large scale image search, following what we discussed during the meeting the week before (we agreed that millions of images were not needed, and that we would go to the hundred thousands). Then I created a new Github repository that start this new part of the project, on which I added code to extract the features on the different datasets and save them to file for fast future access. I first had a lot of memory issues when dealing with such large arrays. At first, the problem seemed to come from Pytorch dataloader and the workers for subprocesses, but finally appeared to be due to numpy implementation of their function and copy process when creating new arrays. After this trouble, I was able to really start testing Faiss on the data. 
+
+Of course, I first tested with brute-force matching, to get a baseline both in term of search time and accuracy we could hope to obtain. As accuracy metric, I decided to use recall@k measure (proportion of target images present in the k nearest neighbors of the query images) which in my opinion make sense and seems to be used in this kind of context. I first tested with recall@1, meaning we only look for 1 nearest neighbor of each query. 
+
+The first observation is that Faiss is incredibly fast. When looking at 1 nearest neighbor, it takes only about 10-15s on GPU to get the results for ~40K queries on a database of about ~500K. This is at least the case for L2 and cosine distances (L1 is a bit longer, and Jensen-Shannon way more --> about 800s). The second observation is that we get pretty good results from the neural descriptors (SimCLRv2 Resnet50 2x) : the recall@1 for brute force cosine similarity is 0.806 on the Kaggle memes dataset (but remember : this dataset is pretty dirty !) and 0.95 on the artificial attacks BSDS500 dataset ! Of course, since this is brute-force we won't be able to improve those recall number, only the time needed to get results (may not even be true -> sometimes PCA improves on the baseline brute force results). However, checking for more neighbors (recall@5, recall@10,...), should improve results. In the end it seems that last months efforts were not for nothing. 
+
+I also compared the brute-force baseline to clustering and searching only to the nearest clusters. Of course this improves the time needed for the search, but does affect performances. However, when searching a relatively high number of clusters (50 to 100), we can get faster results without loosing much performances, which is a good start. I now want to experiment in priority with PCA for dimensionality reduction, since this may drastically improve search time while not affecting too much the recall. Then an analysis of the clusters would be nice to get a sense of how the data is partitioned. So those are the next objectives, along with refining the current framework for easier benchmarking of techniques.

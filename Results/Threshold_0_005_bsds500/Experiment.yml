@@ -1,0 +1,53 @@
+---
+name : Benchmark_memes_new
+date generated: Wednesday 04/05/2022
+GPU(s): 1 a100
+CPUs: 16
+dataset used: BSDS500 with attacks on disk
+thresholds: thresholds = [
+    [0.052],
+    [0.224],
+    [0.159],
+    [0.072],
+    [0.069],
+    [67.7778],
+    [0.0906],
+    [0.0414],
+    [0.1606],
+    [0.2611],
+    [0.3683],
+    [0.2996],
+    [0.3168],
+    [0.5197],
+    [0.5133],
+    [0.5208],
+    ]
+algorithms:  [
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=512),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=512),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=512),
+    hashing.ClassicalAlgorithm('Whash', hash_size=8, batch_size=512),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=512, cutoff=1),
+    hashing.FeatureAlgorithm('SIFT', batch_size=512, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('ORB', batch_size=512, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + DAISY', batch_size=512, n_features=30, cutoff=1),
+    hashing.FeatureAlgorithm('FAST + LATCH', batch_size=512, n_features=30, cutoff=1),
+    hashing.NeuralAlgorithm('Inception v3', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('EfficientNet B7', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('ResNet50 2x', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('ResNet101 2x', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
+    hashing.NeuralAlgorithm('SimCLR v2 ResNet101 2x', raw_features=True, batch_size=32,
+                            device='cuda', distance='Jensen-Shannon'),
+    ]
+general batch size: 64
+---
+purpose: |
+Check that those thresholds correspond to 0.005 fpr on BSDS500.
