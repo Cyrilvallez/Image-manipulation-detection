@@ -37,6 +37,10 @@ def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None
         The filename used to save the file. The default is None.
     legend : list, optional
         An optional legend to override algorithm names.
+    size_multiplier : float, optional
+        Multiply the figure size by this number.
+    log : Boolean, optional
+        Plot in log-scale or not.
 
     Raises
     ------

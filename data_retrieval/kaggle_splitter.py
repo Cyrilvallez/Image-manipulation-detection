@@ -87,5 +87,5 @@ def extract_templates():
 
 
 if __name__ == "__main__":
-    # get_ref_memes()
+    get_ref_memes()
     extract_templates()

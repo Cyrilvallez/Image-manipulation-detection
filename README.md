@@ -92,7 +92,7 @@ To process and create figures from the digest, one can look into `process.py`. F
 
 # Datasets
 
-We personally used 3 datasets that can be found online, and for which we performed the splitting. They are the [BSDS500 dataset](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html), [ImageNet validation set (ILSVRC2012)](https://www.image-net.org/) and the [Kaggle memes dataset](https://www.kaggle.com/datasets/gmorinan/most-viewed-memes-templates-of-2018).
+We personally used 3 datasets that can be found online, and for which we performed the splitting. They are the [BSDS500 dataset](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html), [ImageNet validation set (ILSVRC2012)](https://www.image-net.org/) and the [Kaggle memes dataset](https://www.kaggle.com/datasets/gmorinan/most-viewed-memes-templates-of-2018). For the kaggle memes dataset, one then need to run `data_retrieval/kaggle_splitter.py` to extract templates and annotates correctly the memes.
 
 # Pre-trained SimCLR models 
 
@@ -101,3 +101,9 @@ The pre-trained SimCLR models are not available in this repository due to their 
 # Computational setup
 
 For neural methods, use of a GPU is almost essential for computational efficiency. Other classes of methods do not rely on it, and their computations are performed exclusively on CPU.
+
+# Results
+
+The repository contains the folder `Results` containing digests from our own experiments. Each experiment contains a file `Experiment.yml` quickly summarizing the parameters for the experiment. You are free to look at it and perform the same benchmarks if you wish to verify reproducibility.
+
+Additionally, people may use the data from the digest of an experiment and just recreate figures, using the experiment name along with `helpers/create_plot.py` functions. The process is 

@@ -1,0 +1,30 @@
+---
+name : Compare_hash_length_BSDS500
+date generated: Monday 11/04/2022
+GPU(s): None
+CPUs: 8
+dataset used: BSDS500, with attacks on disk
+thresholds: thresholds = np.linspace(0, 0.8, 30)
+algorithms:  [
+    hashing.ClassicalAlgorithm('Ahash', hash_size=8, batch_size=1000),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=11, batch_size=1000),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=13, batch_size=1000),
+    hashing.ClassicalAlgorithm('Ahash', hash_size=16, batch_size=1000),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=8, batch_size=1000),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=11, batch_size=1000),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=13, batch_size=1000),
+    hashing.ClassicalAlgorithm('Dhash', hash_size=16, batch_size=1000),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8, batch_size=1000),
+    hashing.ClassicalAlgorithm('Phash', hash_size=11, batch_size=1000),
+    hashing.ClassicalAlgorithm('Phash', hash_size=13, batch_size=1000),
+    hashing.ClassicalAlgorithm('Phash', hash_size=16, batch_size=1000),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=8, batch_size=1000),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=11, batch_size=1000),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=13, batch_size=1000),
+    hashing.ClassicalAlgorithm('Crop resistant hash', hash_size=16, batch_size=1000),
+    ]
+general batch size: 1000
+
+---
+purpose: |
+Compare the different hash lengths for perceptual algorithms.

@@ -1,6 +1,0 @@
-{
-	"Inception v3 raw features cosine": 1.9381418228149414,
-	"Inception v3 raw features Jensen-Shannon": 1.4482979774475098,
-	"SimCLR v1 ResNet50 2x raw features cosine": 1.824141025543213,
-	"SimCLR v1 ResNet50 2x raw features Jensen-Shannon": 1.6966822147369385
-}
