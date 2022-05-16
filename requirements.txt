@@ -3,7 +3,8 @@ conda=4.11.0
 pip=21.2.4
 
 
-pytorch=1.10.1 + cudatoolkit=11.3.1
+pytorch=1.10.1
+cudatoolkit=11.3.1
 torchvision=0.11.3
 numpy=1.21.2
 scipy=1.7.3
