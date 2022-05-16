@@ -443,7 +443,7 @@ def hashing(algorithms, thresholds, databases, dataset, general_batch_size=512,
         default is 512.
     artificial_attacks : Bool, optional
         Whether the attacks are artificial and we need to record the attack-wise 
-        digest or not. The default is True.
+        digest or not. Set to False for the memes dataset. The default is True.
 
     Returns
     -------
@@ -625,7 +625,7 @@ def total_hashing(algorithms, thresholds, path_to_db, positive_dataset,
         default is 512.
     artificial_attacks : Bool, optional
         Whether the attacks are artificial and we need to record the attack-wise 
-        digest or not. The default is True.
+        digest or not. Set to False for the memes dataset. The default is True.
 
     Returns
     -------
