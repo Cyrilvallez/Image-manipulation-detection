@@ -27,7 +27,14 @@ A library for image manipulation detection. This supports 3 classes of algorithm
 
 The specific goal here is more to detect crude near duplicate image manipulations than to perform object or scene retrival.
 
+<p align="center">
+  <img alt="ROC_BSDS500" src="ROC_BSDS500.png" width=400> <img alt="time_BSDS500" src="time_BSDS500.png" width=400>
+  <br>
+    <em>Overall performances for each method on the BSDS500 dataset and artificial attacks</em>
+</p>
+
 # Usage
+
 
 This library was created to benchmark all these different methods. The easiest way for this is to choose a dataset, randomly split it in 2 parts (experimental and control groups), and sample a given number of images in both groups on which you can perform artificial attacks defined in `generator/generate_attacks.py`. The scripts `create_groups.py` and `create_attacks.py` perform those tasks, and save the images with correct name format for later matching.
 
