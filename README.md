@@ -28,7 +28,7 @@ A library for image manipulation detection. This supports 3 classes of algorithm
 The specific goal here is more to detect crude near duplicate image manipulations than to perform object or scene retrival.
 
 <p align="center">
-  <img alt="ROC_BSDS500" src="ROC_BSDS500.png" width=300> <img alt="time_BSDS500" src="time_BSDS500.png" width=300>
+  <img alt="ROC_BSDS500" src="ROC_BSDS500.png" width=350> <img alt="time_BSDS500" src="time_BSDS500.png" width=350>
   <br>
     <em>Overall performances for each method on the BSDS500 dataset and artificial attacks</em>
 </p>
