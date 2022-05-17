@@ -6,6 +6,10 @@ Created on Mon Mar 28 15:48:23 2022
 @author: cyrilvallez
 """
 
+# =============================================================================
+# Code for keypoint-related methods
+# =============================================================================
+
 from hashing.general_hash import Algorithm
 import cv2
 import numpy as np

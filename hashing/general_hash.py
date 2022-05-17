@@ -7,8 +7,8 @@ Created on Mon Mar 14 20:14:08 2022
 """
 
 # =============================================================================
-# Contains the hashing pipeline, linking neural and classical hashing in a
-# single fremework.
+# Contains the hashing pipeline, linking neural, perceptual and keypoint-related
+# algorithms in a single fremework.
 # =============================================================================
 
 import os

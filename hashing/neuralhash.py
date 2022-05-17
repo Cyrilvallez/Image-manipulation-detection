@@ -7,7 +7,7 @@ Created on Fri Mar  4 09:13:39 2022
 """
 
 # =============================================================================
-# Contains the neural hashing logic
+# Contains the neural methods logic
 # =============================================================================
 
 import numpy as np
