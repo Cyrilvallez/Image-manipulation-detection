@@ -612,7 +612,10 @@ class NeuralAlgorithm(Algorithm):
     def __init__(self, algorithm, hash_size=8, raw_features=True, distance='cosine',
                  batch_size=512, device='cuda'):
         
-        super().__init__(algorithm, hash_size, batch_size)
+        try:
+            super().__init__(algorithm, hash_size, batch_size)
+        except ValueError:
+            raise ValueError(f'Neural algorithm must be one of {*NEURAL_MODEL_LOADER.keys(),}')
             
         if ('cuda' not in device and device != 'cpu'):
             raise ValueError('device must be either `cuda`, `cuda:X` or `cpu`.')

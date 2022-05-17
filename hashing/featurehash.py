@@ -276,7 +276,10 @@ class FeatureAlgorithm(Algorithm):
     def __init__(self, algorithm, batch_size=512, n_features=20, matcher=None,
                  cutoff=1):
         
-        Algorithm.__init__(self, algorithm, batch_size=batch_size)
+        try:
+            Algorithm.__init__(self, algorithm, batch_size=batch_size)
+        except ValueError:
+            raise ValueError(f'Feature algorithm must be one of {*ALGORITHMS_MATCHER.keys(),}') 
         
         self.algorithm = FEATURE_MODEL_SWITCH[algorithm]
         if matcher is None:

@@ -13,7 +13,6 @@ Created on Thu Mar 17 17:08:12 2022
 import numpy as np
 import hashing 
 from helpers import utils
-import os
 
 # Force the use of a user input at run-time to specify the path 
 # so that we do not mistakenly reuse the path from previous experiments
@@ -25,13 +24,17 @@ path_experimental = 'Datasets/BSDS500/Experimental_attacks/'
 path_control = 'Datasets/BSDS500/Control_attacks/'
 
 algos = [
-    hashing.NeuralAlgorithm('DINO ViT B8', raw_features=True, batch_size=64,
-                            device='cuda', distance='Jensen-Shannon'),
-    hashing.NeuralAlgorithm('SimCLR v2 ResNet50 2x', raw_features=True, batch_size=64,
-                            device='cuda', distance='Jensen-Shannon'),
+    hashing.ClassicalAlgorithm('Phash', hash_size=8),
+    hashing.FeatureAlgorithm('ORB', n_features=30),
+    hashing.NeuralAlgorithm('SimCLR v1 ResNet50 2x', device='cuda',
+                            distance='Jensen-Shannon')
     ]
 
-thresholds = np.linspace(0, 1, 50)
+thresholds = [
+    np.linspace(0, 0.4, 20),
+    np.linspace(0, 0.3, 20),
+    np.linspace(0.3, 0.8, 20),
+    ]
     
 
 positive_dataset = hashing.create_dataset(path_experimental, existing_attacks=True)

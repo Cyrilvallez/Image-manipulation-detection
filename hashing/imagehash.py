@@ -871,7 +871,11 @@ class ClassicalAlgorithm(Algorithm):
     
     def __init__(self, algorithm, hash_size=8, batch_size=512, cutoff=1):
         
-        Algorithm.__init__(self, algorithm, hash_size, batch_size)
+        try:
+            Algorithm.__init__(self, algorithm, hash_size, batch_size)
+        except ValueError:
+            raise ValueError(f'Classical algorithm must be one of {*CLASSICAL_MODEL_SWITCH.keys(),}') 
+            
         self.algorithm = CLASSICAL_MODEL_SWITCH[algorithm]
         self.cutoff = cutoff
         
