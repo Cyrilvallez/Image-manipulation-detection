@@ -1,5 +1,5 @@
 ---
-name : Compare_distances_BSDS500
+name : Compare_metrics_BSDS500
 date generated: Monday 11/04/2022
 GPU(s): 1 rtx 3080
 CPUs: 8
