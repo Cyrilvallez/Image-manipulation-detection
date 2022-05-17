@@ -1,6 +1,6 @@
 # Image manipulation detection
 
-A library for image manipulation detection. This supports 3 classes of algorithms :
+A library for benchmarking of image manipulation detection. This supports 3 classes of algorithms :
 
 - Perceptual hashing methods (fast and simple methods designed for image forensics). The following algorithms are implemented in `hashing/imagehash.py` (taken and modified from [here](https://github.com/JohannesBuchner/imagehash)):
     - Average Hash
@@ -92,7 +92,7 @@ To process and create figures from the digest, one can look into `process.py`. F
 
 # Datasets
 
-We personally used 3 datasets that can be found online, and for which we performed the splitting. They are the [BSDS500 dataset](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html), [ImageNet validation set (ILSVRC2012)](https://www.image-net.org/) and the [Kaggle memes dataset](https://www.kaggle.com/datasets/gmorinan/most-viewed-memes-templates-of-2018). For the kaggle memes dataset, one then need to run `data_retrieval/kaggle_splitter.py` to extract templates and annotates correctly the memes.
+We personally used 3 datasets that can be found online, and for which we performed the splitting. They are the [BSDS500 dataset](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html), [ImageNet validation set (ILSVRC2012)](https://www.image-net.org/) and the [Kaggle memes dataset](https://www.kaggle.com/datasets/gmorinan/most-viewed-memes-templates-of-2018). For the kaggle memes dataset, one then need to run `data_retrieval/kaggle_splitter.py` to extract templates and annotate correctly the memes.
 
 # Pre-trained SimCLR models 
 
