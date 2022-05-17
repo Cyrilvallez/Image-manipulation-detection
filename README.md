@@ -72,6 +72,15 @@ thresholds = [
     ]
 ```
 
+A list of all valid algorithms names can be found in `hashing/general_hash.py`, or equivalently by accessing the variable `ADMISSIBLE_ALGORITHMS` : 
+
+```
+import hashing
+print(hashing.ADMISSIBLE_ALGORITHMS)
+```
+
+Valid arguments for an algorithm can be found looking at the docstrings for each of the three classes `hashing.ClassicalAlgorithm` (corresponding to perceptual hashing methods), `hashing.FeatureAlgorithm` (keypoint-related or *feature* extractors methods), and `hashing.NeuralAlgorithm` (obviously neural based methods).
+
 Finally perform the benchmark and save the results :
 
 ```
