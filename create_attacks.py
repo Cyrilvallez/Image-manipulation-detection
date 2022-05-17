@@ -7,7 +7,7 @@ Created on Thu Feb 17 09:28:50 2022
 """
 
 # =============================================================================
-# Performs the attacks in both groups
+# Performs the attacks in both groups (thus after having splitted the data)
 # =============================================================================
 
 import os
