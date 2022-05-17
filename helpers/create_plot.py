@@ -26,7 +26,7 @@ def ROC_curves(digest, common_ticks=True, save=False, filename=None, legend=None
 
     Parameters
     ----------
-    result_dic : Dictionary
+    digest : Dictionary
         General or attack-wise digest of an experiment.
     common_ticks : Boolean, optional.
         Whether or not to set ticks from 0 to 1 with step 0.1 in both directions.
@@ -167,7 +167,7 @@ def metrics_plot(general_digest, common_ticks=True, save=False, filename=None):
 
     Parameters
     ----------
-    result_dic : Dictionary
+    result_digest : Dictionary
         General digest of an experiment.
     common_ticks : Boolean, optional
         Whether to make all plots have the same ticks. The default is True.
@@ -323,7 +323,9 @@ def time_comparison_log(match_time_digest, db_time_digest, save=False, filename=
         Whether or not to save the plot. The default is False.
     filename : str, optional
         The filename used to save the file. The default is None.
-
+    labels : list, optional
+        Optional list of names for each algo overriding the default.
+        
     Raises
     ------
     ValueError
@@ -661,6 +663,8 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None,
         Whether to save the plots or not. The default is False.
     filename : String, optional
         Filename to save the plots. The default is None.
+    legend : list, optional
+        Optional legend overriding the default.
 
     Raises
     ------
@@ -779,6 +783,35 @@ def AUC_heatmap(attacks_digest, algo_names=None, save=False, filename=None,
     
     
 def heatmap_comparison_feature(general, time_general, time_db, algo_names=None, save=False, filename=None):
+    """
+    Create the heatmap comparison for the experiment `Compare_N_keypoints_BSDS500`.
+    Plot the AUC for different number of keypoints.
+
+    Parameters
+    ----------
+    general : Dictionary
+        General digest of an experiment.
+    time_general : Dictionary
+        Matching time digest of an experiment.
+    time_db : Dictionary
+        Database creation time digest of an experiment.
+    algo_names : list, optional
+        Optional list for overriding algorithms names. The default is None.
+    save : Boolean, optional
+        Whether to save the plots or not. The default is False.
+    filename : String, optional
+        Filename to save the plots. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
+
+    Returns
+    -------
+    None.
+    
+    """
     
     if save and filename is None:
         raise ValueError('You must specify a filename to save the figure.')
@@ -863,13 +896,40 @@ def heatmap_comparison_feature(general, time_general, time_db, algo_names=None, 
     if save:
         plt.savefig(filename + '_time.pdf', bbox_inches='tight')
     plt.show()
-    
-    return frame_AUC, frame_time
 
 
 
 def heatmap_comparison_classical(general, time_general, time_db, algo_names=None,
                                  save=False, filename=None):
+    """
+    Create the heatmap comparison for the experiment `Compare_hash_length_BSDS500`.
+    Plot the AUC for different number of hash lengths.
+
+    Parameters
+    ----------
+    general : Dictionary
+        General digest of an experiment.
+    time_general : Dictionary
+        Matching time digest of an experiment.
+    time_db : Dictionary
+        Database creation time digest of an experiment.
+    algo_names : list, optional
+        Optional list for overriding algorithms names. The default is None.
+    save : Boolean, optional
+        Whether to save the plots or not. The default is False.
+    filename : String, optional
+        Filename to save the plots. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
+
+    Returns
+    -------
+    None.
+    
+    """
     
     if save and filename is None:
         raise ValueError('You must specify a filename to save the figure.')
@@ -952,14 +1012,40 @@ def heatmap_comparison_classical(general, time_general, time_db, algo_names=None
     if save:
         plt.savefig(filename + '_time.pdf', bbox_inches='tight')
     plt.show()
-    
-    return frame_AUC, frame_time
-
 
 
 
 def heatmap_comparison_neural(general, time_general, time_db, algo_names=None,
                                  save=False, filename=None):
+    """
+    Create the heatmap comparison for the experiment `Compare_metrics_BSDS500`.
+    Plot the AUC for different distance metrics.
+
+    Parameters
+    ----------
+    general : Dictionary
+        General digest of an experiment.
+    time_general : Dictionary
+        Matching time digest of an experiment.
+    time_db : Dictionary
+        Database creation time digest of an experiment.
+    algo_names : list, optional
+        Optional list for overriding algorithms names. The default is None.
+    save : Boolean, optional
+        Whether to save the plots or not. The default is False.
+    filename : String, optional
+        Filename to save the plots. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
+
+    Returns
+    -------
+    None.
+    
+    """
     
     if save and filename is None:
         raise ValueError('You must specify a filename to save the figure.')
@@ -1050,12 +1136,36 @@ def heatmap_comparison_neural(general, time_general, time_db, algo_names=None,
     if save:
         plt.savefig(filename + '_time.pdf', bbox_inches='tight')
     plt.show()
-    
-    return frame_AUC, frame_time
 
 
 
 def heatmap_comparison_database(generals, algo_names=None, save=False, filename=None):
+    """
+    Create the heatmap comparison for the experiment when changing the database
+    size.
+    Plot the AUC for different database sizes.
+
+    Parameters
+    ----------
+    generals : list of dictionary
+        List of general digests for each experiment of the database size..
+    algo_names : list, optional
+        Optional list for overriding algorithms names. The default is None.
+    save : Boolean, optional
+        Whether to save the plots or not. The default is False.
+    filename : String, optional
+        Filename to save the plots. The default is None.
+
+    Raises
+    ------
+    ValueError
+        If save is True but filename is None.
+
+    Returns
+    -------
+    None.
+    
+    """
     
     if save and filename is None:
         raise ValueError('You must specify a filename to save the figure.')
@@ -1128,88 +1238,3 @@ def heatmap_comparison_database(generals, algo_names=None, save=False, filename=
     plt.show()
     
     
-
-def roc_comparison_database(generals, algo_names=None, save=False, filename=None):
-    
-    if save and filename is None:
-        raise ValueError('You must specify a filename to save the figure.')
-    
-    legend = [[], [], []]
-    fpr = [[], [], []]
-    recall = [[], [], []]
-    
-    for i, general in enumerate(generals):
-        
-        # Retrive the values as lists
-        for j, algorithm in enumerate(general.keys()):
-        
-            legend[i].append(algorithm)
-        
-            # Sort according to thresholds value (for consistency)
-            thresholds = np.array(list(general[algorithm].keys()))
-            thresholds_values = [float(threshold.rsplit(' ',1)[1]) for threshold in thresholds]
-            sorting = np.argsort(thresholds_values)
-            thresholds = thresholds[sorting]
-        
-            fpr_ = []
-            recall_ = []
-        
-            for threshold in thresholds:
-                    
-                fpr_.append(general[algorithm][threshold]['fpr'])
-                recall_.append(general[algorithm][threshold]['recall'])
-            
-            fpr[i].append(fpr_)
-            recall[i].append(recall_)
-            
-    assert((legend[0] == legend[1]) & (legend[1] == legend[2]))
-    
-    for i, name in enumerate(legend[0]):
-        
-        if 'bits' in name:
-            if 'Crop' in name:
-                new = 'Crop res'
-            else:
-                new = name.split(' 64', 1)[0]
-                
-        elif 'descriptors' in name:
-            new = name.rsplit(' ', 2)[0]
-            try:
-                new = new.rsplit(' ', 1)[1]
-            except: 
-                pass
-            
-        else:
-            new = name.split(' raw ')[0]
-            if 'SimCLR v1' in new:
-                new = '*' + new.split('SimCLR v1 ')[1]
-            elif 'SimCLR v2' in new:
-                new = '**' + new.split('SimCLR v2 ')[1]
-                
-        legend[0][i] = new
-    
-    index = ['250', '2500', '25000']
-    
-    for j in range(len(recall[0])):
-
-        plt.figure()
-        for i in range(3):
-            plt.plot(fpr[i][j], recall[i][j])
-        plt.xlabel('FPR')
-        plt.ylabel('Recall')
-        plt.legend(index)
-        # plt.xscale('log')
-        plt.title(legend[0][j])
-        plt.grid()
-        if save:
-            plt.savefig(filename, bbox_inches='tight')
-        plt.show()
-    
-
-    
-
-    
-        
-        
-        
-        

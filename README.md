@@ -104,6 +104,6 @@ For neural methods, use of a GPU is almost essential for computational efficienc
 
 # Results
 
-The repository contains the folder `Results` containing digests from our own experiments. Each experiment contains a file `Experiment.yml` quickly summarizing the parameters for the experiment. You are free to look at it and perform the same benchmarks if you wish to verify reproducibility.
+The repository contains the folder `Results` containing digests from our own experiments. Each experiment contains a file `Experiment.yml` quickly summarizing the parameters for the experiment. You are free to look at it and perform the same benchmarks if you wish to verify results.
 
-Additionally, people may use the data from the digest of an experiment and just recreate figures, using the experiment name along with `helpers/create_plot.py` functions. The process is 
+Additionally, people may use the data from the digest of our experiments and just recreate figures, using the experiment name along with `helpers/create_plot.py` functions. Examples are provided in `process.py`.
