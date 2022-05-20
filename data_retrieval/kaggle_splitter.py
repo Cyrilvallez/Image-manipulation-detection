@@ -3,13 +3,7 @@ from pathlib import Path
 from pprint import pprint
 import os
 import shutil
-
-
-reddit_posts_csv_location = "/Users/cyrilvallez/Desktop/archive/reddit_posts.csv"
-
-image_store = "/Users/cyrilvallez/Desktop/archive/images/kaggle_images"
-
-reference_store = "/Users/cyrilvallez/Desktop/Templates"
+import argparse
 
 
 def get_ref_memes():
@@ -84,8 +78,28 @@ def extract_templates():
                 met_memes.add(meme_ref)
                 shutil.copy(Path(image_store).joinpath(fname),
                             Path(reference_store).joinpath(meme_ref + Path(fname).suffix))
+                
+    # clearly mislabeled image that should not be become a template
+    os.remove(os.path.join(reference_store, 'EQKrGAq.png'))
+    # label it correctly 
+    os.rename(os.path.join(image_store, 'EQKrGAq_imgr.png'), 
+              os.path.join(image_store, 'bad-luck-brian_EQKrGAq-imgr.png'))
 
 
 if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser(description='Kaggle dataset splitter')
+    # e.g. "~/Desktop/archive/reddit_posts.csv"
+    parser.add_argument('csv_path', type=str, help='Path to reddit_posts.csv file')
+    # e.g. "~/Desktop/archive/images/kaggle_images"
+    parser.add_argument('images_path', type=str, help='Path to images folder')
+    # e.g. "~/Desktop/archive/images/Templates" 
+    parser.add_argument('template_loc', type=str, help='Where to store the templates')
+    args = parser.parse_args()
+    
+    reddit_posts_csv_location = args.csv_path
+    image_store = args.images_path
+    reference_store = args.template_loc
+    
     get_ref_memes()
     extract_templates()

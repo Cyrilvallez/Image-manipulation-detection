@@ -29,10 +29,15 @@ The specific goal here is more to detect crude near duplicate image manipulation
 
 # Usage
 
+The basic usage for performing an experiment is 
 
-This library was created to benchmark all these different methods. The easiest way for this is to choose a dataset, randomly split it in 2 parts (experimental and control groups), and sample a given number of images in both groups on which you can perform artificial attacks defined in `generator/generate_attacks.py`. The scripts `create_groups.py` and `create_attacks.py` perform those tasks, and save the images with correct name format for later matching.
+> python3 main.py result_folder
 
-Then given a database of images, an experimental group of images that are manipulations of some images in the database (all attacks on the images sampled from experimental group) and a control group containing images not present in the database (all attacks on the images sampled from control group), datasets can be declared in the following way :
+Digest from the experiment will then be saved into `Results/result_folder`. Details are given below.
+
+This library was created to benchmark all the different methods presented above. The easiest way for this is to choose a dataset, randomly split it in 2 parts (experimental and control groups), and sample a given number of images in both groups on which you can perform artificial attacks defined in `generator/generate_attacks.py`. The scripts `create_groups.py` and `create_attacks.py` perform those tasks, and save the images with correct name format for later matching.
+
+Then given a database of images, an experimental group of images that are manipulations of some images in the database (all attacks on the images sampled from experimental group) and a control group containing images not present in the database (all attacks on the images sampled from control group), datasets can be declared in the following way (here with the BSDS500 dataset as an example) :
 
 ```
 import hashing 
