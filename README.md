@@ -1,3 +1,7 @@
+# News
+
+Here is the link towards our [paper](https://arxiv.org/abs/2206.00282) reviewing image manipulation detection and image reuse detection techniques. If you use this repo, please consider citing us !
+
 # Image manipulation detection
 
 A library for benchmarking of image manipulation detection. This supports 3 classes of algorithms :
