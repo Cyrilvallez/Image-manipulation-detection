@@ -3,5 +3,5 @@
 .vscode
 __pycache__
 Datasets
-hashing/SimCLRv1
-hashing/SimCLRv2
+**/tf_checkpoints
+**/Pretrained

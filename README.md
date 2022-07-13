@@ -31,6 +31,28 @@ A library for benchmarking of image manipulation detection. This supports 3 clas
 
 The specific goal here is more to detect crude near duplicate image manipulations than to perform object or scene retrival.
 
+# Pre-trained SimCLR models 
+
+The pre-trained SimCLR models are not available in this repository due to their large size. To download them, please navigate to the path where you cloned the repo and run the following files from your terminal :
+
+```
+cd path_to_repo/hashing/SimCLRv1
+python3 download.py 
+```
+
+This will download the files containing the models definitions to the current folder and convert them to Pytorch. The folder `tf_checkpoints` contains the Tensorflow definition of the models (directly downloaded from the [github of the authors](https://github.com/google-research/simclr)), and can be safely erased if you wish to save some disk space. 
+
+The exact same procedure will download the models for SimCLRv2 : 
+
+```
+cd path_to_repo/hashing/SimCLRv2
+python3 download.py 
+```
+
+By default, this will only download one model. To download the others, please have a look at the `--model` argument. If unsure what is accepted, please have a look at the help message :
+
+> python3 download.py -h
+
 # Usage
 
 The basic usage for performing an experiment is 
@@ -111,10 +133,6 @@ To process and create figures from the digest, one can look into `process.py`. F
 # Datasets
 
 We personally used 3 datasets that can be found online, and for which we performed the splitting. They are the [BSDS500 dataset](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/resources.html), [ImageNet validation set (ILSVRC2012)](https://www.image-net.org/) and the [Kaggle memes dataset](https://www.kaggle.com/datasets/gmorinan/most-viewed-memes-templates-of-2018). For the kaggle memes dataset, one then need to run `data_retrieval/kaggle_splitter.py` to extract templates and annotate correctly the memes.
-
-# Pre-trained SimCLR models 
-
-The pre-trained SimCLR models are not available in this repository due to their large size. They can be downloaded (along with their architecture definition) directly in the [github of the authors ](https://github.com/google-research/simclr). Note that we used the PyTorch version of these models. They should then be added to `hashing/SimCLRv1/` and `hashing/SimCLRv2/` (folders SimCLRv1 and SimCLRv2). If unsure, see how these models are loaded directly in `hashing/neuralhash.py`.
 
 # Computational setup
 
