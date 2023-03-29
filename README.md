@@ -35,7 +35,7 @@ The specific goal here is more to detect crude near duplicate image manipulation
 
 The pre-trained SimCLR models are not available in this repository due to their large size. To download them, please navigate to the path where you cloned the repo and run the following files from your terminal :
 
-```
+```sh
 cd path_to_repo/hashing/SimCLRv1
 python3 download.py 
 ```
@@ -44,20 +44,24 @@ This will download the files containing the models definitions to the current fo
 
 The exact same procedure will download the models for SimCLRv2 : 
 
-```
+```sh
 cd path_to_repo/hashing/SimCLRv2
 python3 download.py 
 ```
 
 By default, this will only download one model. To download the others, please have a look at the `--model` argument. If unsure what is accepted, please have a look at the help message :
 
-> python3 download.py -h
+```sh
+python3 download.py -h
+```
 
 # Usage
 
 The basic usage for performing an experiment is 
 
-> python3 main.py result_folder
+```sh
+python3 main.py result_folder
+```
 
 Digest from the experiment will then be saved into `Results/result_folder`. Details are given below.
 
@@ -65,7 +69,7 @@ This library was created to benchmark all the different methods presented above.
 
 Then given a database of images, an experimental group of images that are manipulations of some images in the database (all attacks on the images sampled from experimental group) and a control group containing images not present in the database (all attacks on the images sampled from control group), datasets can be declared in the following way (here with the BSDS500 dataset as an example) :
 
-```
+```python
 import hashing 
 from helpers import utils
 
@@ -79,7 +83,7 @@ negative_dataset = hashing.create_dataset(path_control, existing_attacks=True)
 
 Additionally, if one wants to perform attacks at experiment time, without having to save them to disk (experiment will take more time but this will save storage space), it can be done as
 
-```
+```python
 path_dataset = 'Datasets/...'
 
 dataset = hashing.create_dataset(path_dataset, fraction=0.3, existing_attacks=False):
@@ -89,7 +93,7 @@ where `fraction` is the fraction of the dataset on which attacks will be perform
 
 Then declare the methods and algorithms you wish to use, along with thresholds for the matching logic, e.g :
 
-```
+```python
 algos = [
         hashing.ClassicalAlgorithm('Phash', hash_size=8),
         hashing.FeatureAlgorithm('ORB', n_features=30),
@@ -105,7 +109,7 @@ thresholds = [
 
 A list of all valid algorithms names can be found in `hashing/general_hash.py`, or equivalently by accessing the variable `ADMISSIBLE_ALGORITHMS` : 
 
-```
+```python
 import hashing
 print(hashing.ADMISSIBLE_ALGORITHMS)
 ```
@@ -114,7 +118,7 @@ Valid arguments for an algorithm can be found looking at the docstrings for each
 
 Finally perform the benchmark and save the results :
 
-```
+```python
 save_folder = utils.parse_input()
 
 digest = hashing.total_hashing(algos, thresholds, path_database, positive_dataset, negative_dataset, general_batch_size=64)
